@@ -1,0 +1,86 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "banner-image",
+      "settings": {
+        "full_width": true,
+        "image": "",
+        "banner_height": 400
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "page_alignment": "a-left"
+      }
+    },
+    "164149044837a86c50": {
+      "type": "rich-text",
+      "settings": {
+        "title": "Our Promise",
+        "rich_text": "<p>Always organic, products are manufactured in a dedicated facility free from the top eleven allergens, including peanuts, tree nuts, sesame, milk, eggs, gluten, mustard, crustaceans, fish, soy, and sulphites.</p>",
+        "page": "",
+        "heading_size": 40,
+        "text_size": 20,
+        "alignment": "a-center",
+        "content_width": 60,
+        "section_padding": "bottom",
+        "color_scheme": "none"
+      }
+    },
+    "1641570970f9afbfca": {
+      "type": "hero-image-with-text",
+      "settings": {
+        "image": "",
+        "image_height": "natural",
+        "desktop_height": 550,
+        "mobile_height": 400,
+        "desktop_image_placement": "right",
+        "text_align": "left",
+        "section_width": "narrow",
+        "vertical_align": "middle",
+        "title": "Say cheeze!",
+        "text": "<p>These nutrient-dense coconut chips are the perfect delicious and healthy late-night snack, or will hit the spot for when you need a “cheezy” afternoon pick-me-up</p>",
+        "heading_size": 64,
+        "text_size": 20,
+        "button": "Get The Details",
+        "link": "",
+        "section_padding": "bottom",
+        "color_scheme": "3",
+        "color_header": false
+      }
+    },
+    "164157104888fb9ed7": {
+      "type": "image-with-text",
+      "settings": {
+        "iwt_image": "",
+        "iwt_layout": "image_left",
+        "iwt_heading": "Get Your Fix",
+        "iwt_text": "<p>Foodie is a theme for Shopify</p>",
+        "iwt_button": "Shop Raw",
+        "iwt_link": "",
+        "show_box_shadow": false,
+        "color_scheme": "3",
+        "iwt_section_height": 500,
+        "section_padding": "both"
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "main",
+    "164149044837a86c50",
+    "1641570970f9afbfca",
+    "164157104888fb9ed7"
+  ]
+}

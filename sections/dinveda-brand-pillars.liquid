@@ -1,0 +1,315 @@
+{% comment %} DinVeda Brand Pillars Assets {% endcomment %}
+<link rel="preload" href="{{ 'section-dinveda-brand-pillars.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{{ 'section-dinveda-brand-pillars.css' | asset_url }}"></noscript>
+
+{% comment %} DinVeda Brand Pillars Logic {% endcomment %}
+{%- liquid
+  assign section_padding = ''
+  if section.settings.section_padding == 'top'
+    assign section_padding = 'pb0'
+  elsif section.settings.section_padding == 'bottom'
+    assign section_padding = 'mt0'
+  elsif section.settings.section_padding == 'none'
+    assign section_padding = 'mt0 pb0'
+  endif
+
+  case section.blocks.size
+    when 1
+      assign block_width = 'span-12 auto'
+    when 2
+      assign block_width = 'span-6 auto sm-span-6'
+    when 3
+      assign block_width = 'span-4 auto sm-span-6'
+    when 4
+      assign block_width = 'span-3 auto sm-span-6'
+    when 5
+      assign wrapper_class = 'wrapper-fifths'
+      assign block_width = 'span-3 auto sm-span-6'
+    when 6
+      assign block_width = 'span-4 auto sm-span-6'
+  endcase
+-%}
+
+{% style %}
+  .dinveda-brand-pillars-{{ section.id }} {
+    background-color: #FFF0DD;
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .dinveda-brand-pillars-{{ section.id }} .brand-pillars__heading {
+    color: #C17129;
+    font-size: {{ section.settings.heading_size }}px;
+  }
+  .dinveda-brand-pillars-{{ section.id }} .brand-pillars__subheading {
+    color: #C17129;
+    font-size: {{ section.settings.text_size }}px;
+  }
+  @media (max-width: 767px) {
+    .dinveda-brand-pillars-{{ section.id }} .brand-pillars__heading {
+      font-size: calc({{ section.settings.heading_size }}px - ({{ section.settings.heading_size }}px * 0.15));
+    }
+    .dinveda-brand-pillars-{{ section.id }} .brand-pillars__subheading {
+      font-size: calc({{ section.settings.text_size }}px - ({{ section.settings.text_size }}px * 0.15));
+    }
+  }
+{% endstyle %}
+
+{% comment %} DinVeda Brand Pillars Template {% endcomment %}
+<div
+  class="dinveda-brand-pillars dinveda-brand-pillars-{{ section.id }} global__section {{ section_padding }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="dinveda-brand-pillars">
+
+  <div class="grid__wrapper">
+    {% comment %} Heading and Subheading {% endcomment %}
+    <div class="brand-pillars__header span-12 auto a-center px4">
+      {% if section.settings.heading != blank %}
+        <h2 class="brand-pillars__heading mb4 animate--text">{{ section.settings.heading | escape }}</h2>
+      {% endif %}
+      {% if section.settings.subheading != blank %}
+        <div class="brand-pillars__subheading rte animate--text delay--1">
+          {{ section.settings.subheading }}
+        </div>
+      {% endif %}
+    </div>
+
+    {% comment %} Pillars Grid {% endcomment %}
+    <div class="brand-pillars__grid-wrapper span-12 auto px4">
+      <div class="dv-pillars-grid">
+        {% for block in section.blocks %}
+          {% if block.type == 'pillar' %}
+            <article class="dv-pillar-card" {{ block.shopify_attributes }}>
+              {% if block.settings.link != blank %}
+                <a href="{{ block.settings.link }}" class="dv-pillar-card-link">
+              {% endif %}
+              {% assign icon_index = forloop.index0 | modulo: 6 %}
+              {% case icon_index %}
+                {% when 0 %}
+                  <div class="dv-pillar-icon">
+                    <img src="{{ 'pillar-icon-leaf.svg' | asset_url }}" alt="Leaf icon" width="28" height="28">
+                  </div>
+                {% when 1 %}
+                  <div class="dv-pillar-icon">
+                    <img src="{{ 'pillar-icon-lotus.svg' | asset_url }}" alt="Lotus icon" width="28" height="28">
+                  </div>
+                {% when 2 %}
+                  <div class="dv-pillar-icon">
+                    <img src="{{ 'pillar-icon-mortar.svg' | asset_url }}" alt="Mortar icon" width="28" height="28">
+                  </div>
+                {% when 3 %}
+                  <div class="dv-pillar-icon">
+                    <img src="{{ 'pillar-icon-flask.svg' | asset_url }}" alt="Flask icon" width="28" height="28">
+                  </div>
+                {% when 4 %}
+                  <div class="dv-pillar-icon">
+                    <img src="{{ 'pillar-icon-seedling.svg' | asset_url }}" alt="Seedling icon" width="28" height="28">
+                  </div>
+                {% when 5 %}
+                  <div class="dv-pillar-icon">
+                    <img src="{{ 'pillar-icon-recycle.svg' | asset_url }}" alt="Recycle icon" width="28" height="28">
+                  </div>
+              {% endcase %}
+              <div class="dv-pillar-title">
+                {{ block.settings.title | escape }}
+              </div>
+              {% if block.settings.link != blank %}
+                </a>
+              {% endif %}
+            </article>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "DinVeda Brand Pillars",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "DinVeda Mischungen"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "<p>Jede Mischung erzählt eine Geschichte – inspiriert von der Natur und den Tieren, die Balance, Energie und Ruhe verkörpern.</p>"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 24,
+      "max": 64,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Subheading size",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "section_padding",
+      "label": "Section spacing",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        },
+        {
+          "value": "both",
+          "label": "Both"
+        },
+        {
+          "value": "none",
+          "label": "None"
+        }
+      ],
+      "default": "both",
+      "visible_if": "{{ settings.section_padding > 0 }}"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pillar",
+      "name": "Brand Pillar",
+      "settings": [
+        {
+          "type": "html",
+          "id": "icon",
+          "label": "Icon (HTML/SVG)",
+          "info": "Add SVG or HTML for the icon. Recommended size: 32-40px."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "BIO & NATÜRLICH"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "info": "Optional - currently hidden in tile layout"
+        },
+        {
+          "type": "color",
+          "id": "card_bg",
+          "label": "Card background color",
+          "default": "#f8f3ed"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#C17129"
+        },
+        {
+          "type": "range",
+          "id": "title_size",
+          "min": 14,
+          "max": 28,
+          "step": 1,
+          "unit": "px",
+          "label": "Title size",
+          "default": 18
+        },
+        {
+          "type": "range",
+          "id": "description_size",
+          "min": 12,
+          "max": 18,
+          "step": 1,
+          "unit": "px",
+          "label": "Description size",
+          "default": 14
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Optional"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "DinVeda Brand Pillars",
+      "blocks": [
+        {
+          "type": "pillar",
+          "settings": {
+            "title": "BIO & NATÜRLICH",
+            "card_bg": "#f5d5c4",
+            "text_color": "#C17129"
+          }
+        },
+        {
+          "type": "pillar",
+          "settings": {
+            "title": "AYURVEDISCH INSPIRIERT",
+            "card_bg": "#fae5b8",
+            "text_color": "#C17129"
+          }
+        },
+        {
+          "type": "pillar",
+          "settings": {
+            "title": "HANDWERKLICH IN DEUTSCHLAND HERGESTELLT",
+            "card_bg": "#eec4d4",
+            "text_color": "#C17129"
+          }
+        },
+        {
+          "type": "pillar",
+          "settings": {
+            "title": "OHNE ZUSÄTZE",
+            "card_bg": "#b8ddd6",
+            "text_color": "#C17129"
+          }
+        },
+        {
+          "type": "pillar",
+          "settings": {
+            "title": "IM EINKLANG MIT DER NATUR",
+            "card_bg": "#d5ede5",
+            "text_color": "#C17129"
+          }
+        },
+        {
+          "type": "pillar",
+          "settings": {
+            "title": "NACHHALTIG & FAIR",
+            "card_bg": "#d4cfe5",
+            "text_color": "#C17129"
+          }
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer", "aside"]
+  }
+}
+{% endschema %}
+

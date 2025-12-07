@@ -1,0 +1,356 @@
+{% comment %}
+  DinVeda – Simple Hero Animals Slider
+  Self-contained slider (no Flickity / carousel.js)
+{% endcomment %}
+
+<section id="dv-hero-{{ section.id }}" class="dv-hero dv-hero-animals">
+  <div class="dv-hero-inner">
+    <div class="dv-hero-media">
+      {% for block in section.blocks %}
+        <div
+          class="dv-hero-slide{% if forloop.first %} is-active{% endif %}"
+          data-slide-index="{{ forloop.index0 }}"
+          {{ block.shopify_attributes }}
+        >
+          {% if block.settings.image %}
+            {{ block.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', class: 'dv-hero-image' }}
+          {% else %}
+            <div class="dv-hero-image dv-hero-image--placeholder">
+              Slide {{ forloop.index }}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="dv-hero-content">
+      {% if section.settings.hero_title %}
+        <h2 class="dv-hero-title">
+          {{ section.settings.hero_title }}
+        </h2>
+      {% endif %}
+
+      {% if section.settings.hero_subheading %}
+        <div class="dv-hero-subheading">
+          {{ section.settings.hero_subheading }}
+        </div>
+      {% endif %}
+
+      <div class="dv-hero-text-blocks">
+        {% for block in section.blocks %}
+          <div
+            class="dv-hero-text-block{% if forloop.first %} is-active{% endif %}"
+            data-slide-index="{{ forloop.index0 }}"
+          >
+            {% if block.settings.animal_label %}
+              <div class="dv-hero-animal-label">
+                {{ block.settings.animal_label }}
+              </div>
+            {% endif %}
+
+            {% if block.settings.tagline %}
+              <div class="dv-hero-tagline">
+                {{ block.settings.tagline }}
+              </div>
+            {% endif %}
+
+            {% if block.settings.description %}
+              <div class="dv-hero-description rte">
+                {{ block.settings.description }}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+
+      {% if section.settings.button_label and section.settings.button_link %}
+        <a href="{{ section.settings.button_link }}" class="button dv-hero-button">
+          {{ section.settings.button_label }}
+        </a>
+      {% endif %}
+
+      {% if section.blocks.size > 1 %}
+        <div class="dv-hero-dots">
+          {% for block in section.blocks %}
+            <button
+              type="button"
+              class="dv-hero-dot{% if forloop.first %} is-active{% endif %}"
+              data-slide-index="{{ forloop.index0 }}"
+              aria-label="Slide {{ forloop.index }}"
+            ></button>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <style>
+    #dv-hero-{{ section.id }}.dv-hero {
+      padding: 3rem 1.5rem;
+    }
+
+    #dv-hero-{{ section.id }} .dv-hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 2rem;
+      align-items: center;
+    }
+
+    #dv-hero-{{ section.id }} .dv-hero-media {
+      position: relative;
+      overflow: hidden;
+    }
+
+    #dv-hero-{{ section.id }} .dv-hero-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 300ms ease;
+    }
+
+    #dv-hero-{{ section.id }} .dv-hero-slide.is-active {
+      opacity: 1;
+      position: relative;
+    }
+
+    #dv-hero-{{ section.id }} .dv-hero-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 0.75rem;
+    }
+
+    #dv-hero-{{ section.id }} .dv-hero-image--placeholder {
+      background: #f5f1ea;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 260px;
+      color: #c17129;
+    }
+
+    #dv-hero-{{ section.id }} .dv-hero-content {
+      max-width: 480px;
+    }
+
+    #dv-hero-{{ section.id }} .dv-hero-title {
+      margin: 0 0 0.5rem;
+    }
+
+    #dv-hero-{{ section.id }} .dv-hero-subheading {
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    #dv-hero-{{ section.id }} .dv-hero-text-block {
+      display: none;
+    }
+
+    #dv-hero-{{ section.id }} .dv-hero-text-block.is-active {
+      display: block;
+    }
+
+    #dv-hero-{{ section.id }} .dv-hero-animal-label {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.8rem;
+      margin-bottom: 0.4rem;
+    }
+
+    #dv-hero-{{ section.id }} .dv-hero-tagline {
+      font-style: italic;
+      margin-bottom: 0.6rem;
+    }
+
+    #dv-hero-{{ section.id }} .dv-hero-description {
+      margin-bottom: 1rem;
+    }
+
+    #dv-hero-{{ section.id }} .dv-hero-dots {
+      margin-top: 1rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    #dv-hero-{{ section.id }} .dv-hero-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      border: none;
+      padding: 0;
+      background: rgba(0, 0, 0, 0.18);
+      cursor: pointer;
+    }
+
+    #dv-hero-{{ section.id }} .dv-hero-dot.is-active {
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    @media (max-width: 767px) {
+      #dv-hero-{{ section.id }} .dv-hero-inner {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var sectionEl = document.getElementById('dv-hero-{{ section.id }}');
+      if (!sectionEl) return;
+
+      var slides = sectionEl.querySelectorAll('.dv-hero-slide');
+      var textBlocks = sectionEl.querySelectorAll('.dv-hero-text-block');
+      var dots = sectionEl.querySelectorAll('.dv-hero-dot');
+
+      if (!slides.length) return;
+
+      var currentIndex = 0;
+      var intervalMs = 6000;
+      var timer = null;
+
+      function showSlide(index) {
+        currentIndex = index;
+
+        slides.forEach(function(slide, i) {
+          slide.classList.toggle('is-active', i === index);
+        });
+
+        textBlocks.forEach(function(textBlock, i) {
+          textBlock.classList.toggle('is-active', i === index);
+        });
+
+        dots.forEach(function(dot, i) {
+          dot.classList.toggle('is-active', i === index);
+        });
+      }
+
+      function nextSlide() {
+        var next = (currentIndex + 1) % slides.length;
+        showSlide(next);
+      }
+
+      function startAutoPlay() {
+        if (slides.length <= 1) return;
+        stopAutoPlay();
+        timer = setInterval(nextSlide, intervalMs);
+      }
+
+      function stopAutoPlay() {
+        if (timer) {
+          clearInterval(timer);
+          timer = null;
+        }
+      }
+
+      dots.forEach(function(dot) {
+        dot.addEventListener('click', function() {
+          var index = parseInt(dot.getAttribute('data-slide-index'), 10);
+          showSlide(index);
+          stopAutoPlay();
+          setTimeout(startAutoPlay, intervalMs * 2);
+        });
+      });
+
+      if (slides.length > 1) {
+        startAutoPlay();
+
+        sectionEl.addEventListener('mouseenter', stopAutoPlay);
+        sectionEl.addEventListener('mouseleave', startAutoPlay);
+      }
+
+      document.addEventListener('shopify:section:load', function(event) {
+        if (event.target.contains(sectionEl)) {
+          if (slides.length > 1) {
+            currentIndex = 0;
+            showSlide(0);
+            startAutoPlay();
+          }
+        }
+      });
+    });
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "DinVeda Hero",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero title",
+      "default": "DinVeda – Bio-ayurvedische Ritualmischungen"
+    },
+    {
+      "type": "richtext",
+      "id": "hero_subheading",
+      "label": "Hero subheading",
+      "default": "<p>Bio-ayurvedische Pflanzenmischungen für deine täglichen Rituale</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Alle Mischungen entdecken"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "default": "/collections/all"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "animal_slide",
+      "name": "Animal slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Animal image"
+        },
+        {
+          "type": "text",
+          "id": "animal_label",
+          "label": "Animal label",
+          "default": "DEIN KOALA – MOON REST"
+        },
+        {
+          "type": "text",
+          "id": "tagline",
+          "label": "Tagline / Animal-Claim",
+          "default": "\"Ich finde Ruhe am Abend\" – sagt der Koala."
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Sanfte Abendrituale für wohlige Entspannung.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DinVeda Hero",
+      "blocks": [
+        {
+          "type": "animal_slide"
+        },
+        {
+          "type": "animal_slide"
+        },
+        {
+          "type": "animal_slide"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 7
+}
+{% endschema %}

@@ -1,0 +1,520 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "dinveda_hero": {
+      "type": "dv-hero-animal-carousel",
+      "settings": {
+        "hero_title": "DinVeda – Bio-ayurvedische Ritualmischungen",
+        "hero_subheading": "<p>Bio-ayurvedische Pflanzenmischungen für deine täglichen Rituale – von Morgenwärme über goldene Pausen bis zu Abendruhe.</p>",
+        "button_label": "Alle Mischungen entdecken",
+        "button_link": "/collections/all"
+      },
+      "blocks": {
+        "slide-koala": {
+          "type": "animal_slide",
+          "settings": {
+            "image": "shopify://shop_images/mr_uc1.png",
+            "animal_label": "DEIN KOALA – MOON REST",
+            "tagline": "\"Ich finde Ruhe am Abend\" – sagt der Koala.",
+            "description": "<p>Sanfte Abendrituale für wohlige Entspannung. Beruhigende Gewürzmischungen begleiten dich in eine ruhige Nacht und schenken tiefe Erholung.</p>"
+          }
+        },
+        "slide-fox": {
+          "type": "animal_slide",
+          "settings": {
+            "image": "shopify://shop_images/gb_uc2.png",
+            "animal_label": "DEIN FUCHS – GOLDEN BOOST",
+            "tagline": "\"Ich starte clever in den Tag\" – sagt der Fuchs.",
+            "description": "<p>Clever kombiniert für deine tägliche Routine. Die perfekte Balance aus wärmenden Gewürzen und sanften Aromen für einen gelassenen Start.</p>"
+          }
+        },
+        "slide-flamingo": {
+          "type": "animal_slide",
+          "settings": {
+            "image": "shopify://shop_images/fg_uc1.png",
+            "animal_label": "DEIN FLAMINGO – FLOW & GLOW",
+            "tagline": "\"Ich strahle von innen\" – sagt der Flamingo.",
+            "description": "<p>Leichte, luftige Mischungen für zwischendurch. Kleine Pausen mit zarten Aromen, die deinen Tag erhellen und neue Leichtigkeit schenken.</p>"
+          }
+        },
+        "slide-bee": {
+          "type": "animal_slide",
+          "settings": {
+            "image": "shopify://shop_images/oh_uc2_d2ee8cad-c7b2-425c-bb09-809211c037da.png",
+            "animal_label": "DEIN BIENE – OVA HARMONY",
+            "tagline": "\"Ich starte kraftvoll in den Tag\" – sagt die Biene.",
+            "description": "<p>Ein sanfter Morgenritual für einen kraftvollen Start. Warme Gewürze und wohltuende Kräuter wecken die Sinne und schenken neue Energie.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "slide-koala",
+        "slide-fox",
+        "slide-flamingo",
+        "slide-bee"
+      ]
+    },
+    "16260997139ae0f76a": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Unsere Blends",
+        "collection": "pflanzenmischungen",
+        "display_type": "carousel",
+        "items_per_row": 4,
+        "mobile_items_per_row": "2",
+        "items_per_page": 8,
+        "show_view_all": true,
+        "section_padding": "both"
+      }
+    },
+    "dinveda_brand_pillars_2024": {
+      "type": "dinveda-brand-pillars",
+      "blocks": {
+        "pillar_bio_2024": {
+          "type": "pillar",
+          "settings": {
+            "title": "BIO & NATÜRLICH",
+            "description": "",
+            "card_bg": "#f5d5c4",
+            "text_color": "#C17129",
+            "title_size": 18,
+            "description_size": 14,
+            "link": ""
+          }
+        },
+        "pillar_ayurveda_2024": {
+          "type": "pillar",
+          "settings": {
+            "title": "AYURVEDISCH INSPIRIERT",
+            "description": "",
+            "card_bg": "#fae5b8",
+            "text_color": "#C17129",
+            "title_size": 18,
+            "description_size": 14,
+            "link": ""
+          }
+        },
+        "pillar_handmade_2024": {
+          "type": "pillar",
+          "settings": {
+            "title": "HANDWERKLICH IN DEUTSCHLAND HERGESTELLT",
+            "description": "",
+            "card_bg": "#eec4d4",
+            "text_color": "#C17129",
+            "title_size": 18,
+            "description_size": 14,
+            "link": ""
+          }
+        },
+        "pillar_no_additives_2024": {
+          "type": "pillar",
+          "settings": {
+            "title": "OHNE ZUSÄTZE",
+            "description": "",
+            "card_bg": "#b8ddd6",
+            "text_color": "#C17129",
+            "title_size": 18,
+            "description_size": 14,
+            "link": ""
+          }
+        },
+        "pillar_nature_2024": {
+          "type": "pillar",
+          "settings": {
+            "title": "IM EINKLANG MIT DER NATUR",
+            "description": "",
+            "card_bg": "#d5ede5",
+            "text_color": "#C17129",
+            "title_size": 18,
+            "description_size": 14,
+            "link": ""
+          }
+        },
+        "pillar_sustainable_2024": {
+          "type": "pillar",
+          "settings": {
+            "title": "NACHHALTIG & FAIR",
+            "description": "",
+            "card_bg": "#d4cfe5",
+            "text_color": "#C17129",
+            "title_size": 18,
+            "description_size": 14,
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "pillar_bio_2024",
+        "pillar_ayurveda_2024",
+        "pillar_handmade_2024",
+        "pillar_no_additives_2024",
+        "pillar_nature_2024",
+        "pillar_sustainable_2024"
+      ],
+      "settings": {
+        "heading": "Dinveda Mischungen",
+        "subheading": "<p>Jede Mischung erzählt eine Geschichte – inspiriert von der Natur und den Tieren, die Balance, Energie und Ruhe verkörpern.</p>",
+        "heading_size": 48,
+        "text_size": 18,
+        "section_padding": "both"
+      }
+    },
+    "16415694471e16e863": {
+      "type": "image-gallery",
+      "blocks": {
+        "164156944712f457fe-0": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/gb_uc2.png",
+            "image_width": "33",
+            "title": "Golden Boost",
+            "subheading_text": "",
+            "link_text": "Shop Now",
+            "link": "",
+            "text_color": "#f8f3ed",
+            "button_text_color": "#edf2f4",
+            "button_bg": "#2b2d42",
+            "overlay_color": "#000000"
+          }
+        },
+        "164156944712f457fe-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/oh_uc2_d2ee8cad-c7b2-425c-bb09-809211c037da.png",
+            "image_width": "33",
+            "title": "Ova Harmony",
+            "subheading_text": "",
+            "link_text": "Shop Now",
+            "link": "",
+            "text_color": "#f8f3ed",
+            "button_text_color": "#edf2f4",
+            "button_bg": "#2b2d42",
+            "overlay_color": "#000000"
+          }
+        },
+        "164156944712f457fe-2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/mr_uc1.png",
+            "image_width": "33",
+            "title": "Moon Rest",
+            "subheading_text": "",
+            "link_text": "Shop Now",
+            "link": "",
+            "text_color": "#f8f3ed",
+            "button_text_color": "#e4e4e4",
+            "button_bg": "#2b2d42",
+            "overlay_color": "#2b2d42"
+          }
+        }
+      },
+      "block_order": [
+        "164156944712f457fe-0",
+        "164156944712f457fe-1",
+        "164156944712f457fe-2"
+      ],
+      "settings": {
+        "full_width": false,
+        "title": "",
+        "image_height": "fixed",
+        "desktop_height": 450,
+        "mobile_height": 350,
+        "heading_size": 29,
+        "subheading_size": 16,
+        "image_padding": "padding",
+        "section_padding": "top"
+      }
+    },
+    "16415696759e955046": {
+      "type": "featured-product",
+      "blocks": {
+        "76405b4e-c43e-4e95-90d8-1b2eaa1aa63b": {
+          "type": "title",
+          "settings": {}
+        },
+        "a849723b-1f73-4f81-a611-053d628c7c65": {
+          "type": "price",
+          "settings": {}
+        },
+        "a6aaa34d-59db-4c9b-ac85-1655074a9a12": {
+          "type": "variants",
+          "settings": {}
+        },
+        "ee564d0c-cbab-4be1-9cb8-7eae903a69a1": {
+          "type": "quantity",
+          "settings": {}
+        },
+        "0d9ad5c7-06cf-49b4-a44a-ee311fb65227": {
+          "type": "buttons",
+          "settings": {
+            "show_price_in_button": true,
+            "show_gift_card_recipient": false
+          }
+        },
+        "1f6566eb-93ad-436a-9f7d-3cc68e03f640": {
+          "type": "description",
+          "settings": {
+            "show_as_accordion": false,
+            "default_open_accordion": false
+          }
+        },
+        "e4af5c45-45c2-4130-ad88-e1d4fc99926e": {
+          "type": "payment_icons",
+          "settings": {
+            "title": "Secure online shopping",
+            "background_color": "rgba(0,0,0,0)"
+          }
+        },
+        "16415696758065d899-3": {
+          "type": "social_share",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "76405b4e-c43e-4e95-90d8-1b2eaa1aa63b",
+        "a849723b-1f73-4f81-a611-053d628c7c65",
+        "a6aaa34d-59db-4c9b-ac85-1655074a9a12",
+        "ee564d0c-cbab-4be1-9cb8-7eae903a69a1",
+        "0d9ad5c7-06cf-49b4-a44a-ee311fb65227",
+        "1f6566eb-93ad-436a-9f7d-3cc68e03f640",
+        "e4af5c45-45c2-4130-ad88-e1d4fc99926e",
+        "16415696758065d899-3"
+      ],
+      "disabled": true,
+      "settings": {
+        "featured_product": "",
+        "title": "Customer favorite",
+        "background_color": "#ffffff",
+        "thumbnail_position": "bottom",
+        "click_to_enlarge": true,
+        "enable_video_looping": false,
+        "show_box_shadow": false,
+        "section_padding": "both"
+      }
+    },
+    "9367b8eb-1772-4cf5-b431-aaf8e71dcdac": {
+      "type": "testimonials",
+      "blocks": {
+        "template--16137244770454__9367b8eb-1772-4cf5-b431-aaf8e71dcdac-product_block-1": {
+          "type": "product_block",
+          "settings": {
+            "product": "blueberry-with-acai-raw-crunch-granola",
+            "show_thumbnails": true,
+            "author": "Amazon review",
+            "title": "Delicious",
+            "richtext": "<p>Ticks off al of the boxes for me.<br/>It tastes abaolutely incredible</p>",
+            "stars": 5
+          }
+        },
+        "template--16137244770454__9367b8eb-1772-4cf5-b431-aaf8e71dcdac-product_block-2": {
+          "type": "product_block",
+          "settings": {
+            "product": "lemon-ginger-with-camu-camu-raw-crunch-granola",
+            "show_thumbnails": true,
+            "author": "Vivi",
+            "title": "Love Love Love",
+            "richtext": "<p>I suffer from allergies but can eat everything in this bag. Sensational!</p>",
+            "stars": 5
+          }
+        },
+        "template--16137244770454__9367b8eb-1772-4cf5-b431-aaf8e71dcdac-product_block-3": {
+          "type": "product_block",
+          "settings": {
+            "product": "apple-cinnamon-oat-clusters-with-probiotics",
+            "show_thumbnails": true,
+            "author": "Jane",
+            "title": "So Good",
+            "richtext": "<p>Love that I can enjoy these anytime<br/>They feel so indulgent</p>",
+            "stars": 5
+          }
+        }
+      },
+      "block_order": [
+        "template--16137244770454__9367b8eb-1772-4cf5-b431-aaf8e71dcdac-product_block-1",
+        "template--16137244770454__9367b8eb-1772-4cf5-b431-aaf8e71dcdac-product_block-2",
+        "template--16137244770454__9367b8eb-1772-4cf5-b431-aaf8e71dcdac-product_block-3"
+      ],
+      "settings": {
+        "title": "Recent Reviews",
+        "show_dropshadow": false,
+        "blocks_to_show": "2",
+        "star_color": "#2b2d42",
+        "text_color": "#2b2d42",
+        "background": "#edf2f4",
+        "section_padding": "both"
+      }
+    },
+    "164157008363148232": {
+      "type": "masonry-gallery",
+      "blocks": {
+        "164157008354a1bd3e-0": {
+          "type": "image",
+          "settings": {
+            "link": "",
+            "title": "",
+            "subheading": "",
+            "button_text": "Shop Apple",
+            "text_color": "#edf2f4",
+            "button_text_color": "#edf2f4",
+            "button_bg": "#2b2d42",
+            "overlay_color": "#2b2d42"
+          }
+        },
+        "164157008354a1bd3e-1": {
+          "type": "image",
+          "settings": {
+            "link": "",
+            "title": "",
+            "subheading": "",
+            "button_text": "Shop Berry",
+            "text_color": "#e4e4e4",
+            "button_text_color": "#e4e4e4",
+            "button_bg": "#2b2d42",
+            "overlay_color": "#2b2d42"
+          }
+        },
+        "164157008354a1bd3e-2": {
+          "type": "image",
+          "settings": {
+            "link": "",
+            "title": "",
+            "subheading": "",
+            "button_text": "Shop Chocolate",
+            "text_color": "#edf2f4",
+            "button_text_color": "#edf2f4",
+            "button_bg": "#2b2d42",
+            "overlay_color": "#2b2d42"
+          }
+        },
+        "164157008354a1bd3e-3": {
+          "type": "image",
+          "settings": {
+            "link": "",
+            "title": "",
+            "subheading": "",
+            "button_text": "Shop Apple",
+            "text_color": "#edf2f4",
+            "button_text_color": "#edf2f4",
+            "button_bg": "#2b2d42",
+            "overlay_color": "#2b2d42"
+          }
+        },
+        "164157008354a1bd3e-4": {
+          "type": "image",
+          "settings": {
+            "link": "",
+            "title": "",
+            "subheading": "",
+            "button_text": "Shop Berry",
+            "text_color": "#edf2f4",
+            "button_text_color": "#edf2f4",
+            "button_bg": "#2b2d42",
+            "overlay_color": "#2b2d42"
+          }
+        },
+        "164157008354a1bd3e-5": {
+          "type": "image",
+          "settings": {
+            "link": "",
+            "title": "",
+            "subheading": "",
+            "button_text": "Shop Blueberry",
+            "text_color": "#edf2f4",
+            "button_text_color": "#edf2f4",
+            "button_bg": "#2b2d42",
+            "overlay_color": "#2b2d42"
+          }
+        }
+      },
+      "block_order": [
+        "164157008354a1bd3e-0",
+        "164157008354a1bd3e-1",
+        "164157008354a1bd3e-2",
+        "164157008354a1bd3e-3",
+        "164157008354a1bd3e-4",
+        "164157008354a1bd3e-5"
+      ],
+      "disabled": true,
+      "settings": {
+        "full_width": false,
+        "title": "",
+        "item_base_height": 500,
+        "item_height_ratio": "2",
+        "image_padding": "padding",
+        "heading_size": 22,
+        "subheading_size": 16,
+        "section_padding": "both"
+      }
+    },
+    "176436146711bf27ef": {
+      "type": "_blocks",
+      "settings": {}
+    },
+    "1764361775e42990a8": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_98d9312_hA98Yn": {
+          "type": "ai_gen_block_98d9312",
+          "settings": {
+            "heading": "Wellness Rooted in Ancient Wisdom",
+            "subheading": "Organic Ayurvedic blends crafted for modern living",
+            "image": "shopify://shop_images/nh_usage2.jpg",
+            "primary_button_label": "Explore Blends",
+            "primary_button_link": "",
+            "primary_button_bg": "#c17129",
+            "primary_button_color": "#ffffff",
+            "primary_button_hover_bg": "#a85f1f",
+            "secondary_button_label": "About DINVEDA",
+            "secondary_button_link": "",
+            "secondary_button_bg": "rgba(0,0,0,0)",
+            "secondary_button_color": "#c17129",
+            "secondary_button_border": "#c17129",
+            "secondary_button_hover_bg": "#fff0dd",
+            "secondary_button_hover_border": "#a85f1f",
+            "background_color": "#fff0dd",
+            "heading_color": "#c17129",
+            "subheading_color": "#8b5a2b",
+            "heading_size": 48,
+            "subheading_size": 18,
+            "button_text_size": 16,
+            "max_width": 1400,
+            "padding_desktop": 80,
+            "padding_mobile": 40,
+            "mobile_layout": "image_top",
+            "button_border_radius": 4,
+            "image_border_radius": 12
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_98d9312_hA98Yn"
+      ],
+      "settings": {}
+    },
+    "1764362704c7ee19a4": {
+      "type": "_blocks",
+      "settings": {}
+    }
+  },
+  "order": [
+    "dinveda_hero",
+    "dinveda_brand_pillars_2024",
+    "16260997139ae0f76a",
+    "16415694471e16e863",
+    "16415696759e955046",
+    "9367b8eb-1772-4cf5-b431-aaf8e71dcdac",
+    "164157008363148232",
+    "176436146711bf27ef",
+    "1764361775e42990a8",
+    "1764362704c7ee19a4"
+  ]
+}

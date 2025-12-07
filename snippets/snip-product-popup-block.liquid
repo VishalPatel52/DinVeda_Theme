@@ -1,0 +1,59 @@
+{% comment %}
+  Product Popup Block
+  This block is used to display a popup on the product page.
+
+  Accepts:
+  - block: The block object containing settings for the popup.
+  - margin: Optional margin class for styling
+  - layout: Optional display style for the popup (default is 'none').
+
+  Usage:
+  {% render 'snip-product-popup-block', block: block, margin: margin, layout: layout %}
+{% endcomment %}
+{%- liquid
+  assign page = blank
+  assign has_image = false
+  assign has_text = false
+  assign has_page = false
+  assign has_content = false
+
+  if block.settings.page != blank
+    assign has_page = true
+    assign popup_content = block.settings.page.content
+    assign has_content = true
+  elsif block.settings.image != blank
+    assign has_image = true
+    assign has_content = true
+  elsif block.settings.text != blank
+    assign has_text = true
+    assign popup_content = block.settings.text
+    assign has_content = true
+  endif
+-%}
+
+{% if has_content %}
+  <div
+    class="product__section--popup pt2 mb2 {{ margin }} {{ block.settings.alignment }}"
+    style="display:  {{ layout }};"
+  >
+    <button
+      class="product__section--popup-trigger btn-as-link js-modal-open"
+      type="button"
+      name="button"
+      data-wau-modal-target="popup-content"
+      popovertarget="{{ block.id }}"
+      popovertargetaction="show"
+    >
+      {{ block.settings.title }}
+    </button>
+  </div>
+  {% capture modal_content %}
+    {%- if has_image -%}
+      {% render 'helper-image', type: block.settings.image, width: 1200 %}
+    {%- endif -%}
+    {%- if has_text or has_page -%}
+      {{ popup_content }}
+    {%- endif -%}
+  {% endcapture %}
+  {% render 'snip-modal', id: block.id, content: modal_content %}
+{% endif %}

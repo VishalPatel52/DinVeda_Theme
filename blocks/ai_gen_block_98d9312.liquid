@@ -1,0 +1,461 @@
+{% doc %}
+  @prompt
+    Create a hero banner for my store DINVEDA — an Ayurvedic wellness brand. Use a soft beige background (#FFF0DD) and warm primary text color (#C17129).
+    On the left side: a heading ‘Wellness Rooted in Ancient Wisdom’, a subheading ‘Organic Ayurvedic blends crafted for modern living’, and two buttons: ‘Explore Blends’ and ‘About DINVEDA’.
+    On the right side: leave a placeholder for an image of an animal mascot (I’ll upload later).
+    The layout must be responsive (desktop and mobile).
+    Use a premium, warm, minimalistic design — natural, clean, earthy feel.
+    No external scripts — just a simple banner block.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-hero-banner-{{ ai_gen_id }} {
+    background-color: {{ block.settings.background_color }};
+    padding: {{ block.settings.padding_desktop }}px 20px;
+  }
+
+  .ai-hero-banner__container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.max_width }}px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 60px;
+  }
+
+  .ai-hero-banner__content-{{ ai_gen_id }} {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .ai-hero-banner__heading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.heading_size }}px;
+    line-height: 1.2;
+    color: {{ block.settings.heading_color }};
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .ai-hero-banner__subheading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.subheading_size }}px;
+    line-height: 1.5;
+    color: {{ block.settings.subheading_color }};
+    margin: 0;
+  }
+
+  .ai-hero-banner__buttons-{{ ai_gen_id }} {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .ai-hero-banner__button-{{ ai_gen_id }} {
+    padding: 14px 32px;
+    font-size: {{ block.settings.button_text_size }}px;
+    text-decoration: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+  }
+
+  .ai-hero-banner__button--primary-{{ ai_gen_id }} {
+    background-color: {{ block.settings.primary_button_bg }};
+    color: {{ block.settings.primary_button_color }};
+  }
+
+  .ai-hero-banner__button--primary-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.primary_button_hover_bg }};
+    opacity: 0.9;
+  }
+
+  .ai-hero-banner__button--secondary-{{ ai_gen_id }} {
+    background-color: {{ block.settings.secondary_button_bg }};
+    color: {{ block.settings.secondary_button_color }};
+    border: 2px solid {{ block.settings.secondary_button_border }};
+  }
+
+  .ai-hero-banner__button--secondary-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.secondary_button_hover_bg }};
+    border-color: {{ block.settings.secondary_button_hover_border }};
+  }
+
+  .ai-hero-banner__image-{{ ai_gen_id }} {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-hero-banner__image-wrapper-{{ ai_gen_id }} {
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+  }
+
+  .ai-hero-banner__image-wrapper-{{ ai_gen_id }} img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: {{ block.settings.image_border_radius }}px;
+  }
+
+  .ai-hero-banner__image-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: #f9f5f0;
+    border-radius: {{ block.settings.image_border_radius }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .ai-hero-banner__image-placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .ai-hero-banner__empty-state-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 16px;
+    font-size: 14px;
+    color: #999;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-hero-banner-{{ ai_gen_id }} {
+      padding: {{ block.settings.padding_mobile }}px 20px;
+    }
+
+    .ai-hero-banner__container-{{ ai_gen_id }} {
+      flex-direction: {% if block.settings.mobile_layout == 'image_top' %}column-reverse{% else %}column{% endif %};
+      gap: 40px;
+    }
+
+    .ai-hero-banner__heading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_size | times: 0.7 }}px;
+    }
+
+    .ai-hero-banner__subheading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.subheading_size | times: 0.9 }}px;
+    }
+
+    .ai-hero-banner__buttons-{{ ai_gen_id }} {
+      flex-direction: column;
+    }
+
+    .ai-hero-banner__button-{{ ai_gen_id }} {
+      text-align: center;
+      width: 100%;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-hero-banner-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-hero-banner__container-{{ ai_gen_id }}">
+    <div class="ai-hero-banner__content-{{ ai_gen_id }}">
+      {% if block.settings.heading != blank %}
+        <h1 class="ai-hero-banner__heading-{{ ai_gen_id }}">
+          {{ block.settings.heading }}
+        </h1>
+      {% endif %}
+
+      {% if block.settings.subheading != blank %}
+        <p class="ai-hero-banner__subheading-{{ ai_gen_id }}">
+          {{ block.settings.subheading }}
+        </p>
+      {% endif %}
+
+      <div class="ai-hero-banner__buttons-{{ ai_gen_id }}">
+        {% if block.settings.primary_button_label != blank %}
+          <a
+            href="{{ block.settings.primary_button_link }}"
+            class="ai-hero-banner__button-{{ ai_gen_id }} ai-hero-banner__button--primary-{{ ai_gen_id }}"
+          >
+            {{ block.settings.primary_button_label }}
+          </a>
+        {% endif %}
+
+        {% if block.settings.secondary_button_label != blank %}
+          <a
+            href="{{ block.settings.secondary_button_link }}"
+            class="ai-hero-banner__button-{{ ai_gen_id }} ai-hero-banner__button--secondary-{{ ai_gen_id }}"
+          >
+            {{ block.settings.secondary_button_label }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="ai-hero-banner__image-{{ ai_gen_id }}">
+      <div class="ai-hero-banner__image-wrapper-{{ ai_gen_id }}">
+        {% if block.settings.image %}
+          <img
+            src="{{ block.settings.image | image_url: width: 1200 }}"
+            alt="{{ block.settings.image.alt | escape }}"
+            loading="lazy"
+            width="{{ block.settings.image.width }}"
+            height="{{ block.settings.image.height }}"
+          >
+        {% else %}
+          <div class="ai-hero-banner__image-placeholder-{{ ai_gen_id }}">
+            {{ 'image' | placeholder_svg_tag }}
+            <div class="ai-hero-banner__empty-state-{{ ai_gen_id }}">
+              Add your animal mascot image
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Hero banner",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Wellness Rooted in Ancient Wisdom"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Organic Ayurvedic blends crafted for modern living"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Primary button"
+    },
+    {
+      "type": "text",
+      "id": "primary_button_label",
+      "label": "Label",
+      "default": "Explore Blends"
+    },
+    {
+      "type": "url",
+      "id": "primary_button_link",
+      "label": "Link"
+    },
+    {
+      "type": "color",
+      "id": "primary_button_bg",
+      "label": "Background",
+      "default": "#C17129"
+    },
+    {
+      "type": "color",
+      "id": "primary_button_color",
+      "label": "Text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "primary_button_hover_bg",
+      "label": "Hover background",
+      "default": "#A85F1F"
+    },
+    {
+      "type": "header",
+      "content": "Secondary button"
+    },
+    {
+      "type": "text",
+      "id": "secondary_button_label",
+      "label": "Label",
+      "default": "About DINVEDA"
+    },
+    {
+      "type": "url",
+      "id": "secondary_button_link",
+      "label": "Link"
+    },
+    {
+      "type": "color",
+      "id": "secondary_button_bg",
+      "label": "Background",
+      "default": "transparent"
+    },
+    {
+      "type": "color",
+      "id": "secondary_button_color",
+      "label": "Text color",
+      "default": "#C17129"
+    },
+    {
+      "type": "color",
+      "id": "secondary_button_border",
+      "label": "Border",
+      "default": "#C17129"
+    },
+    {
+      "type": "color",
+      "id": "secondary_button_hover_bg",
+      "label": "Hover background",
+      "default": "#FFF0DD"
+    },
+    {
+      "type": "color",
+      "id": "secondary_button_hover_border",
+      "label": "Hover border",
+      "default": "#A85F1F"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFF0DD"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#C17129"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading",
+      "default": "#8B5A2B"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "subheading_size",
+      "min": 14,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Subheading size",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "button_text_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Button text size",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 1000,
+      "max": 1600,
+      "step": 100,
+      "unit": "px",
+      "label": "Maximum width",
+      "default": 1400
+    },
+    {
+      "type": "range",
+      "id": "padding_desktop",
+      "min": 40,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "label": "Padding (desktop)",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_mobile",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding (mobile)",
+      "default": 40
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Mobile layout",
+      "options": [
+        {
+          "value": "image_top",
+          "label": "Image on top"
+        },
+        {
+          "value": "image_bottom",
+          "label": "Image on bottom"
+        }
+      ],
+      "default": "image_top"
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Button border radius",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Image border radius",
+      "default": 12
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero banner"
+    }
+  ]
+}
+{% endschema %}

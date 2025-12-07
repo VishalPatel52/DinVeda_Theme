@@ -1,0 +1,176 @@
+.section-text-with-image {
+  background: -webkit-linear-gradient(var(--text-color) 80%, var(--background) 20%);
+  color: var(--background);
+  padding: 0 var(--space-11) var(--space-8) var(--space-11);
+}
+
+.section-text-with-image.py0 {
+  padding: 0 0 var(--space-8) 0;
+}
+
+.section-text-with-image .text-with-image {
+  position: relative;
+  z-index: 1;
+}
+
+.section-text-with-image h3 {
+  color: var(--background);
+  font-size: var(--h3-size);
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: var(--heading-spacing);
+  text-transform: unset;
+  word-break: break-word;
+}
+
+.section-text-with-image .rte p {
+  font-size: var(--font-size);
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.4;
+  letter-spacing: var(--main-spacing);
+}
+
+@media (max-width: 767px) {
+  .section-text-with-image {
+    background: -webkit-linear-gradient(var(--text-color) 35%, var(--background) 35%);
+    padding: 0;
+    color: var(--text-color) !important;
+  }
+
+  .section-text-with-image h3 {
+    color: var(--text-color) !important;
+  }
+
+  .section-text-with-image .rte p,
+  .section-text-with-image .rte p a {
+    color: var(--text-color) !important;
+  }
+
+  .section-text-with-image article.text {
+    order: 2;
+    text-align: center;
+  }
+
+  .section-text-with-image article.image {
+    order: 1;
+  }
+}
+
+@media (min-width: 768px) {
+  .section-text-with-image .grid__wrapper.reverse article:last-child {
+    order: -1;
+  }
+}
+
+.section-img-txt-overlay__bg-img {
+  height: var(--desktop-section-height);
+}
+.section-text-with-image .image-container.is--fixed .box-ratio {
+  padding-bottom: var(--desktop-section-height) !important;
+}
+.section-text-with-image .image-container.is--fixed img {
+  height: var(--desktop-section-height) !important;
+  object-fit: cover;
+}
+.section-text-with-image .image-container.is--fixed .placeholder-image {
+  height: var(--desktop-section-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.section-text-with-image .image-container.is--fixed .placeholder-image svg {
+  height: 100%;
+}
+@media screen and (max-width: 740px) {
+  .section-text-with-image .image-container.is--fixed .box-ratio {
+    padding-bottom: var(--mobile-section-height) !important;
+  }
+  .section-text-with-image .image-container.is--fixed img {
+    height: var(--mobile-section-height) !important;
+    object-fit: cover;
+  }
+  .section-text-with-image .image-container.is--fixed .placeholder-image {
+    height: var(--mobile-section-height);
+  }
+}
+
+/* Animal branding elements */
+.hero-animal-label {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.8;
+  font-weight: 600;
+}
+
+.hero-badge {
+  font-size: 0.85rem;
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  font-weight: 500;
+}
+
+@media (max-width: 767px) {
+  .hero-animal-label {
+    font-size: 0.8rem;
+  }
+  .hero-badge {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.7rem;
+  }
+}
+
+.dv-hero-full-bg {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: inherit;
+}
+
+/* Hide the separate image column when we use the background layout */
+.dv-hero-full-bg .dv-hero-media {
+  display: block;
+}
+
+/* Make the text act as an overlay area */
+.dv-hero-full-bg .dv-hero-content {
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 3rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .dv-hero-full-bg {
+    min-height: 550px; /* matches current desktop height setting */
+  }
+  .dv-hero-full-bg .dv-hero-content {
+    padding: 4rem 3rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .dv-hero-full-bg {
+    min-height: 400px; /* close to current mobile height setting */
+  }
+}
+
+/* Improve layout for DinVeda hero text */
+.dv-hero-full-bg .dv-hero-content {
+  text-align: left !important;
+  max-width: 520px;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .dv-hero-full-bg .dv-hero-content {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    margin-left: 2rem; /* Pull the text slightly toward the image */
+  }
+}

@@ -1,0 +1,30 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "Mobile navigation",
+  "type": "aside",
+  "sections": {
+    "mobile-navigation": {
+      "type": "mobile-navigation",
+      "settings": {
+        "main_nav": "main-menu",
+        "menu_image": "shopify://shop_images/DinVeda_Logo__own_design_2.jpg",
+        "logo": "shopify://shop_images/DinVeda_Logo__own_design_2.jpg",
+        "mobile_nav_scheme": "2",
+        "show_locale_selector": true,
+        "show_country_selector": true,
+        "show_flag": true
+      }
+    }
+  },
+  "order": [
+    "mobile-navigation"
+  ]
+}

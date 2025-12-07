@@ -1,0 +1,245 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "b05e579d-c9eb-4b26-accf-cec7c4a61b9a": {
+          "type": "title",
+          "settings": {}
+        },
+        "42215121-1010-434d-8ac6-dddf23a52f20": {
+          "type": "price",
+          "settings": {}
+        },
+        "683ea0e9-8d18-4398-ba27-9d7cb27207e5": {
+          "type": "variants",
+          "settings": {}
+        },
+        "0100f7a6-f6c4-49b4-b17e-2ed9ff4d17a2": {
+          "type": "popup",
+          "settings": {
+            "title": "Nutrition Facts",
+            "page": "",
+            "text": "<p>Add some text content to a popup modal</p>"
+          }
+        },
+        "c7cd0b80-6eb0-43ff-88af-209f6bcd6ddb": {
+          "type": "quantity",
+          "settings": {}
+        },
+        "c356b0b8-1d16-4646-b12e-21f4ae7ecf11": {
+          "type": "buttons",
+          "settings": {
+            "show_price_in_button": true,
+            "show_gift_card_recipient": false
+          }
+        },
+        "fa93d867-94af-47af-999d-e5cf78771b56": {
+          "type": "social_share",
+          "settings": {}
+        },
+        "b9ba35f4-05bd-4a2a-8066-a20c8ebf75b5": {
+          "type": "complementary_products",
+          "settings": {
+            "heading": "Pair it with",
+            "limit": 2
+          }
+        }
+      },
+      "block_order": [
+        "b05e579d-c9eb-4b26-accf-cec7c4a61b9a",
+        "42215121-1010-434d-8ac6-dddf23a52f20",
+        "683ea0e9-8d18-4398-ba27-9d7cb27207e5",
+        "0100f7a6-f6c4-49b4-b17e-2ed9ff4d17a2",
+        "c7cd0b80-6eb0-43ff-88af-209f6bcd6ddb",
+        "c356b0b8-1d16-4646-b12e-21f4ae7ecf11",
+        "fa93d867-94af-47af-999d-e5cf78771b56",
+        "b9ba35f4-05bd-4a2a-8066-a20c8ebf75b5"
+      ],
+      "settings": {
+        "form_bg_color": "#fff0dd",
+        "gallery_style": "thumbnail_gallery",
+        "thumbnail_position": "bottom",
+        "large_product_media": false,
+        "grid_two_up": false,
+        "click_to_enlarge": true,
+        "enable_video_looping": false
+      }
+    },
+    "d63d8d65-4a6d-4b72-81e5-cdc6c9e33323": {
+      "type": "text-with-icons",
+      "blocks": {
+        "template--16137245327510__d63d8d65-4a6d-4b72-81e5-cdc6c9e33323-text_block-1": {
+          "type": "text_block",
+          "settings": {
+            "media_type": "icon",
+            "icon": "favorite",
+            "link": "",
+            "title": "",
+            "subheading": "<p><strong> BIO-ZERTIFIZIERT</strong></p>"
+          }
+        },
+        "template--16137245327510__d63d8d65-4a6d-4b72-81e5-cdc6c9e33323-text_block-2": {
+          "type": "text_block",
+          "settings": {
+            "media_type": "icon",
+            "icon": "cookie",
+            "link": "",
+            "title": "",
+            "subheading": "<p><strong>VEGAN & NATÜRLICH</strong></p>"
+          }
+        },
+        "template--16137245327510__d63d8d65-4a6d-4b72-81e5-cdc6c9e33323-text_block-3": {
+          "type": "text_block",
+          "settings": {
+            "media_type": "icon",
+            "icon": "nature",
+            "link": "",
+            "title": "",
+            "subheading": "<p><strong>AYURVEDISCH INSPIRIERT</strong></p>"
+          }
+        },
+        "308897d5-0562-45ae-8231-ad3ebb99b360": {
+          "type": "text_block",
+          "settings": {
+            "media_type": "icon",
+            "icon": "plant",
+            "link": "",
+            "title": "",
+            "subheading": "<p><strong>HANDWERKLICH GEMISCHT</strong></p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--16137245327510__d63d8d65-4a6d-4b72-81e5-cdc6c9e33323-text_block-1",
+        "template--16137245327510__d63d8d65-4a6d-4b72-81e5-cdc6c9e33323-text_block-2",
+        "template--16137245327510__d63d8d65-4a6d-4b72-81e5-cdc6c9e33323-text_block-3",
+        "308897d5-0562-45ae-8231-ad3ebb99b360"
+      ],
+      "settings": {
+        "title": "",
+        "text_align": "left",
+        "size": 30,
+        "color_scheme": "3",
+        "section_padding": "none"
+      }
+    },
+    "product-details": {
+      "type": "main-product-details",
+      "blocks": {
+        "a3ec2846-2640-4d01-bcba-2a3e889128b8": {
+          "type": "product_description",
+          "settings": {}
+        },
+        "d1fafd22-8a86-4284-a422-a96fa258731c": {
+          "type": "product_inventory",
+          "settings": {}
+        },
+        "6f1f3608-16f5-4316-ae3c-31752e9d85c5": {
+          "type": "product_weight",
+          "settings": {}
+        },
+        "9baa0512-a43a-4ae2-8feb-e5ac17faadb3": {
+          "type": "product_type",
+          "settings": {}
+        },
+        "d12e3a4e-453a-4362-8144-0ffcf29965d7": {
+          "type": "product_sku",
+          "disabled": true,
+          "settings": {}
+        },
+        "87ab27ea-e73d-437e-897b-28d30835ed8b": {
+          "type": "product_vendor",
+          "settings": {}
+        },
+        "a739078f-4d98-4349-a399-c18c2f011733": {
+          "type": "product_collection",
+          "settings": {}
+        },
+        "9615aaac-2e40-4b4f-abfc-6d3db2a87d17": {
+          "type": "product_detail_image",
+          "settings": {}
+        },
+        "e82a0ed5-0689-426b-a018-f2dd22ba9124": {
+          "type": "product_metafield_multi",
+          "settings": {
+            "metafield_label": "Ingredients",
+            "metafield_content": ""
+          }
+        }
+      },
+      "block_order": [
+        "a3ec2846-2640-4d01-bcba-2a3e889128b8",
+        "d1fafd22-8a86-4284-a422-a96fa258731c",
+        "6f1f3608-16f5-4316-ae3c-31752e9d85c5",
+        "9baa0512-a43a-4ae2-8feb-e5ac17faadb3",
+        "d12e3a4e-453a-4362-8144-0ffcf29965d7",
+        "87ab27ea-e73d-437e-897b-28d30835ed8b",
+        "a739078f-4d98-4349-a399-c18c2f011733",
+        "9615aaac-2e40-4b4f-abfc-6d3db2a87d17",
+        "e82a0ed5-0689-426b-a018-f2dd22ba9124"
+      ],
+      "settings": {}
+    },
+    "5adb0e52-2c33-43f7-82e6-b71af86f0ffe": {
+      "type": "image-with-text-overlay",
+      "settings": {
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
+        "image_height": 300,
+        "mobile_height": 200,
+        "title": "",
+        "subheading_text": "",
+        "button_text": "",
+        "link": "",
+        "heading_size": 60,
+        "subheading_size": 18,
+        "text_color": "#ffffff",
+        "button_text_color": "#ffffff",
+        "button_bg": "#000000",
+        "full_width": true,
+        "section_padding": "none"
+      }
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "product_recommendations_heading": "Related Products",
+        "items_per_row": 4,
+        "items_shown": 4,
+        "section_padding": "both"
+      }
+    },
+    "image-with-text": {
+      "type": "image-with-text",
+      "settings": {
+        "iwt_layout": "image_left",
+        "iwt_heading": "Need Meal Inspiration?",
+        "iwt_text": "<p>We have a collection of tasty recipes to help you tackle meal planning this week!</p>",
+        "iwt_button": "View Recipes",
+        "iwt_link": "",
+        "show_box_shadow": false,
+        "color_scheme": "3",
+        "iwt_section_height": 500,
+        "section_padding": "both"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "d63d8d65-4a6d-4b72-81e5-cdc6c9e33323",
+    "product-details",
+    "5adb0e52-2c33-43f7-82e6-b71af86f0ffe",
+    "product-recommendations",
+    "image-with-text"
+  ]
+}

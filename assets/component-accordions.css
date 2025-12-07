@@ -1,0 +1,146 @@
+/* ---- WAU Accordion ---- */
+/* CSS API */
+:root {
+  --accordion-spacing: 1rem;
+  --accordion-border-color: var(--dotted-color);
+  --accordion-color: var(--text-color);
+  --accordion-background-color: var(--background);
+  --accordion-transition-duration: 0.5s;
+  --accordion-icon-width: var(--accordion-spacing);
+  --accordion-font-size: var(--font-size);
+  --accordion-border-bottom: 1px solid var(--accordion-border-color);
+  --accordion-summary-height: 44px;
+}
+.details__content {
+  padding-top: var(--accordion-spacing);
+}
+.details__content--padding-left {
+  padding-left: var(--accordion-spacing);
+}
+@supports selector(::details-content) and (block-size: calc-size(auto, size)) {
+  .details::details-content {
+    display: block;
+    block-size: 0;
+    overflow: hidden;
+    transition-property: block-size, content-visibility;
+    transition-duration: var(--accordion-transition-duration);
+    transition-behavior: allow-discrete;
+  }
+  @media (prefers-reduced-motion) {
+    .details::details-content {
+      transition-property: none;
+      transition-duration: none;
+      transition-behavior: none;
+    }
+  }
+  .details[open]::details-content {
+    block-size: auto;
+    block-size: calc-size(auto, size);
+  }
+}
+.details[open] > .details__summary .details__svg {
+  transition: rotate var(--accordion-transition-duration);
+  rotate: 180deg;
+}
+@media (prefers-reduced-motion) {
+  .details[open] > .details__summary .details__svg {
+    transition: none;
+  }
+}
+.details__summary {
+  height: var(--accordion-summary-height);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  /* Theming */
+  background: var(--accordion-background-color);
+  color: var(--accordion-color);
+}
+/* Only add border bottom to first level "details__summary" elements */
+.details__summary:not(.details__content .details__summary) {
+  border-bottom: var(--accordion-border-bottom);
+}
+.details__summary::-webkit-details-marker {
+  display: none;
+}
+.details__summary::marker {
+  content: none;
+}
+.details__title {
+  margin: 0;
+  font-size: var(--accordion-font-size);
+}
+.details__icon {
+  margin-right: 0;
+}
+.details__svg {
+  transition: rotate var(--accordion-transition-duration);
+  width: var(--accordion-icon-width);
+}
+@media (prefers-reduced-motion) {
+  .details__svg {
+    transition: none;
+  }
+}
+
+/* WIP: Add Fade in transition */
+.product__section-details .details[open] > .details__content {
+  animation: fadeIn .75s ease-in-out forwards;
+}
+@media (prefers-reduced-motion) {
+  .product__section-details .details[open] > .details__content {
+    animation: none;
+  }
+}
+
+/* Menu accordion */
+.menu__link {
+  display: block;
+  color: var(--accordion-color);
+  height: var(--accordion-summary-height);
+  transition: none;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.menu__link:not(.menu__list .menu__list .menu__link, .mobile-menu__item .menu__link, .collection__sidebar-block .menu__link, .c-accordion__top-level.menu__item) {
+  border-bottom: 1px solid var(--accordion-border-color);
+}
+.menu__list {
+  margin: 0;
+  list-style-type: none;
+}
+.menu__item .details__content {
+  padding-top: 0;
+  padding-left: var(--accordion-spacing);
+  font-size: 0.75rem;
+}
+/* Reduce font size for sub menus */
+.menu__item .details__content a {
+  font-size: calc(var(--font-size) * 0.8);
+}
+
+/* Cart form accordion */
+.ajax-cart__accordion {
+  --accordion-border-bottom: none;
+}
+
+/* Product accordions */
+:where([class^="product-block"]):has(.details) {
+  --accordion-background-color: transparent;
+  --accordion-border-bottom: .8px solid var(--dotted-color);
+  --accordion-summary-height: 53px;
+}
+
+:where([class^="product-block"]) .details__summary {
+  cursor: pointer;
+}
+
+:where([class^="product-block"]) .details__title {
+  font-family: var(--main-family)
+}
+:where(#c-accordion--search-mobile-filters),
+:where(#c-accordion--collection-mobile-filters) {
+  --accordion-summary-height: 60px;
+}
