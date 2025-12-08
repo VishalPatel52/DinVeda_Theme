@@ -74,6 +74,26 @@
   right: 3%;
 }
 
+/* Ensure grid wrapper uses consistent gap without adding padding to cards */
+.section-featured-collection .grid__wrapper.edge {
+  gap: 0;
+  column-gap: 1.5rem;
+  row-gap: 1.5rem;
+}
+
+.section-featured-collection .featured-collection__wrapper--loop .grid__wrapper.edge {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Ensure all product cards have identical dimensions */
+.section-featured-collection__wrapper--grid .product-loop__item {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  flex: 1 1 0% !important;
+}
+
 /* Override forced aspect ratio for featured-collection images */
 .section-featured-collection .product-image {
   width: 100%;
@@ -108,19 +128,115 @@
   -o-transform: none !important;
 }
 
-/* DinVeda Product Card Styling */
-.section-featured-collection .product-loop__item {
+/* DinVeda Product Card Styling - Consistent padding for all cards */
+.section-featured-collection .product-loop__item,
+.section-featured-collection .product-loop__item.dv-product-card {
   background: rgba(193, 113, 41, 0.04);
   border-radius: 16px;
   padding: 1rem 1rem 1.25rem !important;
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
   text-align: center;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
   transition: transform 0.18s ease, box-shadow 0.18s ease;
-  margin-bottom: 0;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Remove any first/last child margins or padding overrides */
+.section-featured-collection .product-loop__item:first-child,
+.section-featured-collection .product-loop__item:last-child,
+.section-featured-collection .product-loop__item:nth-child(1),
+.section-featured-collection .product-loop__item:nth-child(2),
+.section-featured-collection .product-loop__item:nth-child(3),
+.section-featured-collection .product-loop__item:nth-child(4) {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* CRITICAL: Ensure first card matches other 3 exactly - override ALL possible inline styles */
+.section-featured-collection .product-loop__item:first-child .product-image,
+.section-featured-collection .product-loop__item:nth-child(1) .product-image {
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  position: static !important;
+}
+
+.section-featured-collection .product-loop__item:first-child .product-loop__img-wrapper,
+.section-featured-collection .product-loop__item:nth-child(1) .product-loop__img-wrapper {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  position: relative !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: auto !important;
+}
+
+/* Force first card box-ratio to match others - override inline style padding-bottom */
+.section-featured-collection .product-loop__item:first-child .box-ratio[style*="padding-bottom"],
+.section-featured-collection .product-loop__item:nth-child(1) .box-ratio[style*="padding-bottom"],
+.section-featured-collection .product-loop__item:first-child .product-loop__img-wrapper .box-ratio[style*="padding-bottom"],
+.section-featured-collection .product-loop__item:nth-child(1) .product-loop__img-wrapper .box-ratio[style*="padding-bottom"],
+.section-featured-collection .product-loop__item:first-child .box-ratio,
+.section-featured-collection .product-loop__item:nth-child(1) .box-ratio,
+.section-featured-collection .product-loop__item:first-child .product-loop__img-wrapper .box-ratio,
+.section-featured-collection .product-loop__item:nth-child(1) .product-loop__img-wrapper .box-ratio {
+  padding-bottom: 100% !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  height: 0 !important;
+  position: relative !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Force first card image to match others exactly */
+.section-featured-collection .product-loop__item:first-child .box-ratio img,
+.section-featured-collection .product-loop__item:nth-child(1) .box-ratio img,
+.section-featured-collection .product-loop__item:first-child .product-loop__img-wrapper .box-ratio img,
+.section-featured-collection .product-loop__item:nth-child(1) .product-loop__img-wrapper .box-ratio img,
+.section-featured-collection .product-loop__item:first-child .product-image .box-ratio img,
+.section-featured-collection .product-loop__item:nth-child(1) .product-image .box-ratio img {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block !important;
+  transform: none !important;
+  -webkit-transform: none !important;
+  -ms-transform: none !important;
+  -moz-transform: none !important;
+  -o-transform: none !important;
 }
 
 .section-featured-collection .product-loop__item.padding--true {
   padding: 1rem 1rem 1.25rem !important;
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
 }
 
 /* Override forced aspect ratio - Image Container */
@@ -135,11 +251,10 @@
   padding: 0 !important;
 }
 
-/* Image Wrapper - Remove forced height */
+/* Image Wrapper - Fixed height container */
 .section-featured-collection .product-loop__img-wrapper {
   width: 100% !important;
-  height: auto !important;
-  position: static !important;
+  position: relative !important;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
@@ -147,29 +262,30 @@
   transform: none !important;
 }
 
-/* Box Ratio Container - Disable forced aspect ratio */
+/* Box Ratio Container - Force consistent square aspect ratio for all images */
 .section-featured-collection .product-loop__img-wrapper .box-ratio,
 .section-featured-collection .product-image .box-ratio {
-  padding-bottom: 0 !important;
-  height: auto !important;
-  position: static !important;
+  padding-bottom: 100% !important; /* Square aspect ratio - ensures all images have same height */
+  height: 0 !important;
+  position: relative !important;
   width: 100% !important;
   max-width: 100% !important;
+  overflow: hidden;
 }
 
-/* Images inside box-ratio - Remove absolute positioning */
+/* Images inside box-ratio - Fill container with consistent dimensions */
 .section-featured-collection .product-loop__img-wrapper .box-ratio img,
 .section-featured-collection .product-image .box-ratio img {
-  position: static !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
   width: 100% !important;
-  height: auto !important;
+  height: 100% !important;
   object-fit: cover !important;
   object-position: center !important;
   display: block;
   transform: none !important;
   transition: none !important;
-  top: auto !important;
-  left: auto !important;
   -webkit-transform: none !important;
   -ms-transform: none !important;
   -moz-transform: none !important;
@@ -189,22 +305,24 @@
   position: static !important;
 }
 
-/* Override theme's square/vertical/horizontal ratio classes */
+/* Override theme's square/vertical/horizontal ratio classes - force square for all */
 .section-featured-collection .product-loop__item--square .box-ratio,
 .section-featured-collection .product-loop__item--vertical .box-ratio,
 .section-featured-collection .product-loop__item--horizontal .box-ratio {
-  padding-bottom: 0 !important;
-  height: auto !important;
-  position: static !important;
+  padding-bottom: 100% !important; /* Force square for consistency */
+  height: 0 !important;
+  position: relative !important;
 }
 
 .section-featured-collection .product-loop__item--square .box-ratio img,
 .section-featured-collection .product-loop__item--vertical .box-ratio img,
 .section-featured-collection .product-loop__item--horizontal .box-ratio img {
-  position: static !important;
-  height: auto !important;
-  top: auto !important;
-  left: auto !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
   -webkit-transform: none !important;
   -ms-transform: none !important;
   -moz-transform: none !important;
@@ -286,6 +404,19 @@
 @media (max-width: 767px) {
   .section-featured-collection .product-loop__item {
     padding: 1rem 1rem 1.25rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+  }
+  
+  .section-featured-collection .product-loop__item:first-child,
+  .section-featured-collection .product-loop__item:last-child {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
   }
   
   .section-featured-collection .product-loop__item:hover,
