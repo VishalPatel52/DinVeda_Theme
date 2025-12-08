@@ -87,6 +87,7 @@
 {% endstyle %}
 
 {% comment %} Gallery Template {% endcomment %}
+{%- if section.settings.enable_section != false -%}
 <div
   class="section-gallery gallery-{{ section.id }} global__section {{ section_padding }}"
   data-section-id="{{ section.id }}"
@@ -226,6 +227,7 @@
   <div class="clear"></div>
 
 </div>
+{%- endif -%}
 
 {% schema %}
   {
@@ -233,6 +235,13 @@
     "tag": "section",
     "max_blocks": 12,
     "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_section",
+        "label": "Show section",
+        "default": true,
+        "info": "Uncheck to hide this section on the page"
+      },
       {
         "type": "checkbox",
         "id": "full_width",

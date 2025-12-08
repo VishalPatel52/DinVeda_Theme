@@ -300,58 +300,6 @@
         "section_padding": "both"
       }
     },
-    "9367b8eb-1772-4cf5-b431-aaf8e71dcdac": {
-      "type": "testimonials",
-      "blocks": {
-        "template--16137244770454__9367b8eb-1772-4cf5-b431-aaf8e71dcdac-product_block-1": {
-          "type": "product_block",
-          "settings": {
-            "product": "blueberry-with-acai-raw-crunch-granola",
-            "show_thumbnails": true,
-            "author": "Amazon review",
-            "title": "Delicious",
-            "richtext": "<p>Ticks off al of the boxes for me.<br/>It tastes abaolutely incredible</p>",
-            "stars": 5
-          }
-        },
-        "template--16137244770454__9367b8eb-1772-4cf5-b431-aaf8e71dcdac-product_block-2": {
-          "type": "product_block",
-          "settings": {
-            "product": "lemon-ginger-with-camu-camu-raw-crunch-granola",
-            "show_thumbnails": true,
-            "author": "Vivi",
-            "title": "Love Love Love",
-            "richtext": "<p>I suffer from allergies but can eat everything in this bag. Sensational!</p>",
-            "stars": 5
-          }
-        },
-        "template--16137244770454__9367b8eb-1772-4cf5-b431-aaf8e71dcdac-product_block-3": {
-          "type": "product_block",
-          "settings": {
-            "product": "apple-cinnamon-oat-clusters-with-probiotics",
-            "show_thumbnails": true,
-            "author": "Jane",
-            "title": "So Good",
-            "richtext": "<p>Love that I can enjoy these anytime<br/>They feel so indulgent</p>",
-            "stars": 5
-          }
-        }
-      },
-      "block_order": [
-        "template--16137244770454__9367b8eb-1772-4cf5-b431-aaf8e71dcdac-product_block-1",
-        "template--16137244770454__9367b8eb-1772-4cf5-b431-aaf8e71dcdac-product_block-2",
-        "template--16137244770454__9367b8eb-1772-4cf5-b431-aaf8e71dcdac-product_block-3"
-      ],
-      "settings": {
-        "title": "Recent Reviews",
-        "show_dropshadow": false,
-        "blocks_to_show": "2",
-        "star_color": "#2b2d42",
-        "text_color": "#2b2d42",
-        "background": "#edf2f4",
-        "section_padding": "both"
-      }
-    },
     "164157008363148232": {
       "type": "masonry-gallery",
       "blocks": {
@@ -511,7 +459,6 @@
     "16260997139ae0f76a",
     "16415694471e16e863",
     "16415696759e955046",
-    "9367b8eb-1772-4cf5-b431-aaf8e71dcdac",
     "164157008363148232",
     "176436146711bf27ef",
     "1764361775e42990a8",

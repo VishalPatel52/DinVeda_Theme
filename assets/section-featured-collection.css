@@ -74,3 +74,230 @@
   right: 3%;
 }
 
+/* Override forced aspect ratio for featured-collection images */
+.section-featured-collection .product-image {
+  width: 100%;
+  padding: 0 !important;
+}
+
+.section-featured-collection .product-loop__img-wrapper {
+  width: 100%;
+  position: static !important;
+  overflow: hidden;
+}
+
+.section-featured-collection .product-loop__img-wrapper .box-ratio {
+  padding-bottom: 0 !important;
+  height: auto !important;
+  position: static !important;
+  width: 100%;
+}
+
+.section-featured-collection .product-loop__img-wrapper .box-ratio img {
+  position: static !important;
+  width: 100% !important;
+  height: auto !important;
+  object-fit: cover !important;
+  display: block;
+  transform: none !important;
+  top: auto !important;
+  left: auto !important;
+  -webkit-transform: none !important;
+  -ms-transform: none !important;
+  -moz-transform: none !important;
+  -o-transform: none !important;
+}
+
+/* DinVeda Product Card Styling */
+.section-featured-collection .product-loop__item {
+  background: rgba(193, 113, 41, 0.04);
+  border-radius: 16px;
+  padding: 1rem 1rem 1.25rem !important;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  margin-bottom: 0;
+}
+
+.section-featured-collection .product-loop__item.padding--true {
+  padding: 1rem 1rem 1.25rem !important;
+}
+
+/* Override forced aspect ratio - Image Container */
+.section-featured-collection .product-image {
+  width: 100% !important;
+  margin-bottom: 0;
+  padding: 0 !important;
+  position: static !important;
+}
+
+.section-featured-collection .product-image.px6 {
+  padding: 0 !important;
+}
+
+/* Image Wrapper - Remove forced height */
+.section-featured-collection .product-loop__img-wrapper {
+  width: 100% !important;
+  height: auto !important;
+  position: static !important;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  display: block;
+  transform: none !important;
+}
+
+/* Box Ratio Container - Disable forced aspect ratio */
+.section-featured-collection .product-loop__img-wrapper .box-ratio,
+.section-featured-collection .product-image .box-ratio {
+  padding-bottom: 0 !important;
+  height: auto !important;
+  position: static !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Images inside box-ratio - Remove absolute positioning */
+.section-featured-collection .product-loop__img-wrapper .box-ratio img,
+.section-featured-collection .product-image .box-ratio img {
+  position: static !important;
+  width: 100% !important;
+  height: auto !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block;
+  transform: none !important;
+  transition: none !important;
+  top: auto !important;
+  left: auto !important;
+  -webkit-transform: none !important;
+  -ms-transform: none !important;
+  -moz-transform: none !important;
+  -o-transform: none !important;
+}
+
+/* Images - Natural sizing */
+.section-featured-collection .product-loop__img-wrapper img,
+.section-featured-collection .product-image img {
+  width: 100% !important;
+  height: auto !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block;
+  transform: none !important;
+  transition: none !important;
+  position: static !important;
+}
+
+/* Override theme's square/vertical/horizontal ratio classes */
+.section-featured-collection .product-loop__item--square .box-ratio,
+.section-featured-collection .product-loop__item--vertical .box-ratio,
+.section-featured-collection .product-loop__item--horizontal .box-ratio {
+  padding-bottom: 0 !important;
+  height: auto !important;
+  position: static !important;
+}
+
+.section-featured-collection .product-loop__item--square .box-ratio img,
+.section-featured-collection .product-loop__item--vertical .box-ratio img,
+.section-featured-collection .product-loop__item--horizontal .box-ratio img {
+  position: static !important;
+  height: auto !important;
+  top: auto !important;
+  left: auto !important;
+  -webkit-transform: none !important;
+  -ms-transform: none !important;
+  -moz-transform: none !important;
+  -o-transform: none !important;
+}
+
+/* Card Hover - Only Soft Lift, No Image Changes */
+.section-featured-collection .product-loop__item:hover,
+.section-featured-collection .product-loop__item:focus-within {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background-color: rgba(193, 113, 41, 0.04);
+}
+
+/* Ensure images never transform on hover */
+.section-featured-collection .product-loop__item:hover .product-loop__img-wrapper,
+.section-featured-collection .product-loop__item:hover .product-loop__img-wrapper img,
+.section-featured-collection .product-loop__item:hover .product-loop__img-wrapper .box-ratio,
+.section-featured-collection .product-loop__item:hover .product-loop__img-wrapper .box-ratio img,
+.section-featured-collection .product-loop__item:hover .product-image img,
+.section-featured-collection .product-loop__item:hover .product-image .box-ratio img,
+.section-featured-collection .product-loop__item:focus-within .product-loop__img-wrapper,
+.section-featured-collection .product-loop__item:focus-within .product-loop__img-wrapper img,
+.section-featured-collection .product-loop__item:focus-within .product-loop__img-wrapper .box-ratio img,
+.section-featured-collection .product-loop__item:focus-within .product-image img,
+.section-featured-collection .product-loop__item:focus-within .product-image .box-ratio img {
+  transform: none !important;
+}
+
+/* Remove existing harsh hover effects from component-product-grid.css */
+@media (min-width: 1024px) {
+  .section-featured-collection .product-loop__item:hover {
+    background-color: rgba(193, 113, 41, 0.04) !important;
+  }
+  
+  .section-featured-collection .product-loop__item.dropshadow--true:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+    -webkit-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+    -moz-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  }
+}
+
+/* Typography - Title */
+.section-featured-collection .product-loop__title,
+.section-featured-collection .product-loop__title a,
+.section-featured-collection .product-title,
+.section-featured-collection .product-title a {
+  color: #C17129;
+  font-weight: 500;
+  line-height: 1.3;
+  margin-top: 1rem;
+}
+
+/* Typography - Price */
+.section-featured-collection .product-loop__price,
+.section-featured-collection .product-price {
+  color: #C17129;
+  font-weight: 500;
+  margin-top: 0.75rem;
+}
+
+/* Separator line */
+.section-featured-collection .product-loop__price:before,
+.section-featured-collection .product-price:before {
+  width: 32px;
+  height: 2px;
+  background-color: #C17129;
+  opacity: 0.4;
+  margin: 0.75rem auto 0.5rem;
+}
+
+/* Product info wrapper */
+.section-featured-collection .product-info {
+  margin-top: 0;
+  padding: 0;
+}
+
+/* Mobile adjustments */
+@media (max-width: 767px) {
+  .section-featured-collection .product-loop__item {
+    padding: 1rem 1rem 1.25rem !important;
+  }
+  
+  .section-featured-collection .product-loop__item:hover,
+  .section-featured-collection .product-loop__item:focus-within {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
+  }
+  
+  /* Ensure images don't transform on mobile hover */
+  .section-featured-collection .product-loop__item:hover .product-loop__img-wrapper img,
+  .section-featured-collection .product-loop__item:hover .product-loop__img-wrapper .box-ratio img {
+    transform: none !important;
+  }
+}
+
