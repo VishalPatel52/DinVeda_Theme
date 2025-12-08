@@ -180,13 +180,13 @@
   }
 
   .dv-pillar-icon {
-    width: 28px;
-    height: 28px;
+    width: 28px !important;
+    height: 28px !important;
   }
 
   .dv-pillar-icon svg {
-    width: 28px;
-    height: 28px;
+    width: 28px !important;
+    height: 28px !important;
   }
 
   .dv-pillar-title {
