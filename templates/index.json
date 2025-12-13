@@ -404,6 +404,8 @@
     },
     "176436146711bf27ef": {
       "type": "_blocks",
+      "blocks": {},
+      "block_order": [],
       "settings": {}
     },
     "1764361775e42990a8": {
@@ -440,7 +442,8 @@
             "button_border_radius": 4,
             "image_border_radius": 12
           },
-          "blocks": {}
+          "blocks": {},
+          "block_order": []
         }
       },
       "block_order": [
@@ -450,6 +453,8 @@
     },
     "1764362704c7ee19a4": {
       "type": "_blocks",
+      "blocks": {},
+      "block_order": [],
       "settings": {}
     }
   },
