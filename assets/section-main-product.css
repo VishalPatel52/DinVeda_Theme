@@ -1250,3 +1250,78 @@ p.line-item-property__field textarea {
   pointer-events: none;
   transition: opacity 0.2s ease;
 }
+
+/*---- DinVeda Product Content Section ----*/
+.product-block--dinveda-content {
+  color: var(--text-color);
+}
+
+.dinveda-product-content {
+  font-size: var(--font-size);
+  line-height: 1.6;
+}
+
+.dinveda-ritual-tagline {
+  font-size: var(--h3-size);
+  font-weight: var(--heading-weight);
+  color: var(--text-color);
+}
+
+.dinveda-animal-quote {
+  margin: var(--section-padding, 20px) 0;
+}
+
+.dinveda-quote-text {
+  font-style: italic;
+  font-size: var(--font-size);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.dinveda-quote-attribution {
+  font-size: var(--font-size);
+  color: var(--text-color);
+  text-align: right;
+}
+
+.dinveda-blend-story,
+.dinveda-ritual-context-group,
+.dinveda-quality-note {
+  font-size: var(--font-size);
+  color: var(--text-color);
+}
+
+.dinveda-ritual-context-group > div {
+  margin-bottom: var(--space-3, 15px);
+}
+
+.dinveda-ritual-context-group strong {
+  font-weight: var(--heading-weight);
+  display: block;
+  margin-bottom: var(--space-1, 5px);
+}
+
+.dinveda-ayurvedic-context {
+  margin: var(--section-padding, 20px) 0;
+}
+
+.dinveda-nutrition h4 {
+  font-size: var(--h3-size);
+  font-weight: var(--heading-weight);
+  color: var(--text-color);
+  margin-bottom: var(--space-2, 10px);
+}
+
+.dinveda-nutrition-content {
+  font-size: var(--font-size);
+  color: var(--text-color);
+}
+
+.dinveda-legal-note {
+  font-size: var(--font-size-sm);
+  color: var(--text-color-light);
+  line-height: 1.5;
+  margin-top: var(--section-padding, 20px);
+}

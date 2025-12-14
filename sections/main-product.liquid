@@ -294,6 +294,255 @@
               </div>
             {% when 'product_pickup' %}
               {% render 'snip-product-pickup-availability', product: product, current_variant: current_variant, block: block, shop: shop, routes: routes %}
+            {% when 'dinveda_content' %}
+              {%- liquid
+                assign ritual_tagline = product.metafields.dinveda.ritual_tagline
+                assign animal_quote = product.metafields.dinveda.animal_quote
+                assign animal_name = product.metafields.dinveda.animal_name
+                assign blend_story = product.metafields.dinveda.blend_story
+                assign ritual_timing = product.metafields.dinveda.ritual_timing
+                assign ritual_usage = product.metafields.dinveda.ritual_usage
+                assign taste_character = product.metafields.dinveda.taste_character
+                assign ayurvedic_context = product.metafields.dinveda.ayurvedic_context
+                assign quality_note = product.metafields.dinveda.quality_note
+                assign nutrition_100g = product.metafields.dinveda.nutrition_100g
+                assign legal_note = product.metafields.dinveda.legal_note
+                
+                assign has_any_content = false
+                if ritual_tagline != blank or animal_quote != blank or blend_story != blank or ritual_timing != blank or ritual_usage != blank or taste_character != blank or ayurvedic_context != blank or quality_note != blank or nutrition_100g != blank or legal_note != blank
+                  assign has_any_content = true
+                endif
+              -%}
+              {%- if has_any_content -%}
+                <div class="product-block product-block--dinveda-content pt2 mb2" {{ block.shopify_attributes }}>
+                  <div class="dinveda-product-content rte">
+                    
+                    {%- comment -%} 1. Ritual tagline {%- endcomment -%}
+                    {%- if ritual_tagline != blank -%}
+                      <p class="dinveda-ritual-tagline mb3">{{ ritual_tagline }}</p>
+                    {%- endif -%}
+                    
+                    {%- comment -%} 2. Animal quote block {%- endcomment -%}
+                    {%- if animal_quote != blank -%}
+                      <div class="dinveda-animal-quote mb4">
+                        <blockquote class="dinveda-quote-text" style="font-style: italic;">
+                          {{ animal_quote }}
+                        </blockquote>
+                        {%- if animal_name != blank -%}
+                          <p class="dinveda-quote-attribution mt2">
+                            — {{ animal_name }}
+                          </p>
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+                    
+                    {%- comment -%} 3. Blend story {%- endcomment -%}
+                    {%- if blend_story != blank -%}
+                      <div class="dinveda-blend-story mb4">
+                        {{ blend_story }}
+                      </div>
+                    {%- endif -%}
+                    
+                    {%- comment -%} 4. Ritual context group (grouped, not separated) {%- endcomment -%}
+                    {%- if ritual_timing != blank or ritual_usage != blank or taste_character != blank -%}
+                      <div class="dinveda-ritual-context-group mb4">
+                        {%- if ritual_timing != blank -%}
+                          <div class="dinveda-ritual-timing mb3">
+                            <strong>Ritual Timing:</strong>
+                            <div class="mt1">{{ ritual_timing }}</div>
+                          </div>
+                        {%- endif -%}
+                        {%- if ritual_usage != blank -%}
+                          <div class="dinveda-ritual-usage mb3">
+                            <strong>Ritual Usage:</strong>
+                            <div class="mt1">{{ ritual_usage }}</div>
+                          </div>
+                        {%- endif -%}
+                        {%- if taste_character != blank -%}
+                          <div class="dinveda-taste-character mb3">
+                            <strong>Taste Character:</strong>
+                            <div class="mt1">{{ taste_character }}</div>
+                          </div>
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+                    
+                    {%- comment -%} 5. Ayurvedische Einordnung (collapsible) {%- endcomment -%}
+                    {%- if ayurvedic_context != blank -%}
+                      <div class="dinveda-ayurvedic-context mb4">
+                        <details class="details">
+                          <summary class="details__summary pr4">
+                            <h3 class="details__title">Ayurvedische Einordnung</h3>
+                            <div class="details__icon">
+                              {% render 'snip-icons',
+                                wrapper: '',
+                                type: 'theme',
+                                icon: 'down-carrot',
+                                size: '8px',
+                                classes: 'details__svg vib-center',
+                                fill: 'var(--accordion-color)',
+                                hover: 'var(--accordion-color)' %}
+                            </div>
+                          </summary>
+                          <div class="details__content rte">
+                            {{ ayurvedic_context }}
+                          </div>
+                        </details>
+                      </div>
+                    {%- endif -%}
+                    
+                    {%- comment -%} 6. Quality note {%- endcomment -%}
+                    {%- if quality_note != blank -%}
+                      <div class="dinveda-quality-note mb4">
+                        {{ quality_note }}
+                      </div>
+                    {%- endif -%}
+                    
+                    {%- comment -%} 7. Nährwertangaben (pro 100 g) - only if exists {%- endcomment -%}
+                    {%- if nutrition_100g != blank -%}
+                      <div class="dinveda-nutrition mb4">
+                        <h4 class="mb2">Nährwertangaben (pro 100 g)</h4>
+                        <div class="dinveda-nutrition-content">
+                          {{ nutrition_100g }}
+                        </div>
+                      </div>
+                    {%- endif -%}
+                    
+                    {%- comment -%} 8. Legal note (always last, small, muted) {%- endcomment -%}
+                    {%- if legal_note != blank -%}
+                      <div class="dinveda-legal-note mt4" style="font-size: var(--font-size-sm); color: var(--text-color-light);">
+                        {{ legal_note }}
+                      </div>
+                    {%- endif -%}
+                    
+                  </div>
+                </div>
+              {%- endif -%}
+            {%- comment -%} TEMP: HARDCODE TEST - Remove this block after testing {%- endcomment -%}
+            {%- if product.handle == 'moon-rest' -%}
+              {%- comment -%} TEMP: HARDCODE TEST – variables for Moon Rest {%- endcomment -%}
+              {%- liquid
+                assign dv_ritual_tagline = 'Sanfte Abendrituale für Ruhe & Geborgenheit'
+                assign dv_animal_quote = '„Ich begleite dich sanft in die Abendruhe"'
+                assign dv_animal_name = 'Koala'
+                assign dv_blend_story = 'Willkommen zu Moon Rest – einer ayurvedisch inspirierten Bio-Kräutermischung für deine Abendmomente voller Ruhe, Geborgenheit und innerer Harmonie. Unser Koala liebt diese Mischung, weil sie an traditionelle Kräuterrezepte erinnert, die seit Jahrhunderten in ruhigen Abendritualen verwendet werden: mild, warm, duftend und sanft ausgleichend.'
+                assign dv_ritual_timing = 'Abends · 1–2 Stunden vor dem Schlafengehen'
+                assign dv_ritual_usage = 'Perfekt für Moon Milk, warme Drinks, milde Desserts & ruhige Genussmomente'
+                assign dv_taste_character = 'Warm · mild · blumig · aromatisch'
+                assign dv_ayurvedic_context = 'Ayurvedisch inspiriert und klassisch dem Abend zugeordnet: eine Mischung für ruhige Tagesphasen und warme Rituale. Diese Einordnung dient der traditionellen Orientierung und ersetzt keine medizinische Beratung.'
+                assign dv_quality_note = '100 % Bio · vegan · in Deutschland handgemischt & abgefüllt'
+                assign dv_nutrition_100g = 'Brennwert: 1315 kJ / 315 kcal' | append: '\n' | append: 'Fett: 3,2 g (davon gesättigte Fettsäuren: 1,1 g)' | append: '\n' | append: 'Kohlenhydrate: 53 g (davon Zucker: 6 g)' | append: '\n' | append: 'Ballaststoffe: 26 g' | append: '\n' | append: 'Eiweiß: 9 g' | append: '\n' | append: 'Salz: 0,12 g'
+                assign dv_legal_note = 'Kann Spuren von Nüssen, Soja, Senf, Sesam und anderen Saaten enthalten.' | append: '\n' | append: 'Für Kinder weniger geeignet.' | append: '\n' | append: 'Nicht empfohlen für Schwangere oder Stillende.' | append: '\n' | append: 'Bei bekannten Unverträglichkeiten bitte ärztlichen Rat einholen.' | append: '\n' | append: 'Kühl, trocken und lichtgeschützt lagern.' | append: '\n' | append: 'Nach dem Öffnen gut verschließen.'
+                
+                assign dv_has_any_content = true
+              -%}
+              {%- if dv_has_any_content -%}
+                <div class="product-block product-block--dinveda-content pt2 mb2">
+                  <div class="dinveda-product-content rte">
+                    
+                    {%- comment -%} TEMP: HARDCODE TEST - 1. Ritual tagline {%- endcomment -%}
+                    {%- if dv_ritual_tagline != blank -%}
+                      <p class="dinveda-ritual-tagline mb3">{{ dv_ritual_tagline }}</p>
+                    {%- endif -%}
+                    
+                    {%- comment -%} TEMP: HARDCODE TEST - 2. Animal quote block {%- endcomment -%}
+                    {%- if dv_animal_quote != blank -%}
+                      <div class="dinveda-animal-quote mb4">
+                        <blockquote class="dinveda-quote-text" style="font-style: italic;">
+                          {{ dv_animal_quote }}
+                        </blockquote>
+                        {%- if dv_animal_name != blank -%}
+                          <p class="dinveda-quote-attribution mt2">
+                            — {{ dv_animal_name }}
+                          </p>
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+                    
+                    {%- comment -%} TEMP: HARDCODE TEST - 3. Blend story {%- endcomment -%}
+                    {%- if dv_blend_story != blank -%}
+                      <div class="dinveda-blend-story mb4">
+                        {{ dv_blend_story }}
+                      </div>
+                    {%- endif -%}
+                    
+                    {%- comment -%} TEMP: HARDCODE TEST - 4. Ritual context group (grouped, not separated) {%- endcomment -%}
+                    {%- if dv_ritual_timing != blank or dv_ritual_usage != blank or dv_taste_character != blank -%}
+                      <div class="dinveda-ritual-context-group mb4">
+                        {%- if dv_ritual_timing != blank -%}
+                          <div class="dinveda-ritual-timing mb3">
+                            <strong>Ritual Timing:</strong>
+                            <div class="mt1">{{ dv_ritual_timing }}</div>
+                          </div>
+                        {%- endif -%}
+                        {%- if dv_ritual_usage != blank -%}
+                          <div class="dinveda-ritual-usage mb3">
+                            <strong>Ritual Usage:</strong>
+                            <div class="mt1">{{ dv_ritual_usage }}</div>
+                          </div>
+                        {%- endif -%}
+                        {%- if dv_taste_character != blank -%}
+                          <div class="dinveda-taste-character mb3">
+                            <strong>Taste Character:</strong>
+                            <div class="mt1">{{ dv_taste_character }}</div>
+                          </div>
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+                    
+                    {%- comment -%} TEMP: HARDCODE TEST - 7. Ayurvedische Einordnung (collapsible) {%- endcomment -%}
+                    {%- if dv_ayurvedic_context != blank -%}
+                      <div class="dinveda-ayurvedic-context mb4">
+                        <details class="details">
+                          <summary class="details__summary pr4">
+                            <h3 class="details__title">Ayurvedische Einordnung</h3>
+                            <div class="details__icon">
+                              {% render 'snip-icons',
+                                wrapper: '',
+                                type: 'theme',
+                                icon: 'down-carrot',
+                                size: '8px',
+                                classes: 'details__svg vib-center',
+                                fill: 'var(--accordion-color)',
+                                hover: 'var(--accordion-color)' %}
+                            </div>
+                          </summary>
+                          <div class="details__content rte">
+                            {{ dv_ayurvedic_context }}
+                          </div>
+                        </details>
+                      </div>
+                    {%- endif -%}
+                    
+                    {%- comment -%} TEMP: HARDCODE TEST - 8. Quality note {%- endcomment -%}
+                    {%- if dv_quality_note != blank -%}
+                      <div class="dinveda-quality-note mb4">
+                        {{ dv_quality_note }}
+                      </div>
+                    {%- endif -%}
+                    
+                    {%- comment -%} TEMP: HARDCODE TEST - 9. Nährwertangaben (pro 100 g) {%- endcomment -%}
+                    {%- if dv_nutrition_100g != blank -%}
+                      <div class="dinveda-nutrition mb4">
+                        <h4 class="mb2">Nährwertangaben (pro 100 g)</h4>
+                        <div class="dinveda-nutrition-content" style="white-space: pre-line;">
+                          {{ dv_nutrition_100g }}
+                        </div>
+                      </div>
+                    {%- endif -%}
+                    
+                    {%- comment -%} TEMP: HARDCODE TEST - 10. Legal note (always last, small, muted) {%- endcomment -%}
+                    {%- if dv_legal_note != blank -%}
+                      <div class="dinveda-legal-note mt4" style="font-size: var(--font-size-sm); color: var(--text-color-light); white-space: pre-line;">
+                        {{ dv_legal_note }}
+                      </div>
+                    {%- endif -%}
+                    
+                  </div>
+                </div>
+              {%- endif -%}
+            {%- endif -%}
+            {%- comment -%} END TEMP: HARDCODE TEST {%- endcomment -%}
             {% when 'description' %}
               {%- if product.description != blank -%}
                 {% if block.settings.show_as_accordion %}
@@ -624,6 +873,12 @@
           "info": "Gift card products can optionally be sent direct to a recipient along with a personal message. [Learn more](https:\/\/help.shopify.com\/manual\/online-store\/themes\/customizing-themes\/add-gift-card-recipient-fields)"
         }
       ]
+    },
+    {
+      "type": "dinveda_content",
+      "name": "DinVeda Product Content",
+      "limit": 1,
+      "settings": []
     },
     {
       "type": "description",
