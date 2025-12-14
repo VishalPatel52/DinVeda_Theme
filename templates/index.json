@@ -9,6 +9,113 @@
  */
 {
   "sections": {
+    "dinveda_hero_v2": {
+      "type": "dinveda-hero-v2",
+      "settings": {
+        "headline": "Bio-ayurvedische Ritualmischungen",
+        "highlight_word": "Ritualmischungen",
+        "subheadline": "Für Morgenwärme, goldene Pausen und Abendruhe.",
+        "primary_cta_label": "Alle Mischungen entdecken",
+        "primary_cta_link": "/collections/all",
+        "secondary_cta_label": "Unser Ritual-Prinzip",
+        "secondary_cta_link": "",
+        "text_alignment": "left",
+        "background_mode": "design_bg",
+        "show_trust_row": true
+      },
+      "blocks": {
+        "trust_eu_bio": {
+          "type": "trust_item",
+          "settings": {
+            "text": "EU-BIO Certified"
+          }
+        },
+        "trust_germany": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Made in Germany"
+          }
+        },
+        "trust_natural": {
+          "type": "trust_item",
+          "settings": {
+            "text": "100% Natural"
+          }
+        }
+      },
+      "block_order": [
+        "trust_eu_bio",
+        "trust_germany",
+        "trust_natural"
+      ]
+    },
+    "dinveda_ritual_picker": {
+      "type": "dinveda-ritual-picker",
+      "settings": {
+        "title": "Dein Tag in Balance",
+        "subtitle": "Ayurvedische Rituale für jeden Moment deines Tages",
+        "layout": "grid_4",
+        "background_mode": "design_bg",
+        "emphasize_center_card": true,
+        "section_spacing": "medium"
+      },
+      "blocks": {
+        "ritual_morgen": {
+          "type": "ritual_card",
+          "settings": {
+            "phase_label": "MORGEN · ACTIVATE",
+            "blend_name": "Golden Boost",
+            "animal_name": "Fuchs",
+            "quote_line": "Ich starte clever und klar in den Tag.",
+            "descriptor": "Für Energie, Fokus & innere Wärme",
+            "button_label": "Zu diesem Ritual",
+            "link": ""
+          }
+        },
+        "ritual_tag": {
+          "type": "ritual_card",
+          "settings": {
+            "phase_label": "TAG · ZENTRIEREN",
+            "blend_name": "Flow & Glow",
+            "animal_name": "Panda",
+            "quote_line": "Ich genieße Balance und Ruhe.",
+            "descriptor": "Für Leichtigkeit, Balance & innere Strahlkraft",
+            "button_label": "Zu diesem Ritual",
+            "link": ""
+          }
+        },
+        "ritual_nachmittag": {
+          "type": "ritual_card",
+          "settings": {
+            "phase_label": "NACHMITTAG · HARMONISIEREN",
+            "blend_name": "Ova Harmony",
+            "animal_name": "Schmetterling",
+            "quote_line": "Ich blühe in Leichtigkeit & Harmonie",
+            "descriptor": "Für Ausgleich, Harmonie & sanfte Energie",
+            "button_label": "Zu diesem Ritual",
+            "link": ""
+          }
+        },
+        "ritual_abend": {
+          "type": "ritual_card",
+          "settings": {
+            "phase_label": "ABEND · LOSLASSEN",
+            "blend_name": "Moon Rest",
+            "animal_name": "Koala",
+            "quote_line": "Ich finde Ruhe am Abend und lasse los.",
+            "descriptor": "Für Entspannung, Ruhe & erholsamen Schlaf",
+            "button_label": "Zu diesem Ritual",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "ritual_morgen",
+        "ritual_tag",
+        "ritual_nachmittag",
+        "ritual_abend"
+      ]
+    },
     "dinveda_hero": {
       "type": "dv-hero-animal-carousel",
       "settings": {
@@ -18,15 +125,6 @@
         "button_link": "/collections/all"
       },
       "blocks": {
-        "slide-koala": {
-          "type": "animal_slide",
-          "settings": {
-            "image": "shopify://shop_images/mr_uc1.png",
-            "animal_label": "DEIN KOALA – MOON REST",
-            "tagline": "\"Ich finde Ruhe am Abend\" – sagt der Koala.",
-            "description": "<p>Sanfte Abendrituale für wohlige Entspannung. Beruhigende Gewürzmischungen begleiten dich in eine ruhige Nacht und schenken tiefe Erholung.</p>"
-          }
-        },
         "slide-fox": {
           "type": "animal_slide",
           "settings": {
@@ -36,12 +134,12 @@
             "description": "<p>Clever kombiniert für deine tägliche Routine. Die perfekte Balance aus wärmenden Gewürzen und sanften Aromen für einen gelassenen Start.</p>"
           }
         },
-        "slide-flamingo": {
+        "slide-Panda": {
           "type": "animal_slide",
           "settings": {
             "image": "shopify://shop_images/fg_uc1.png",
-            "animal_label": "DEIN FLAMINGO – FLOW & GLOW",
-            "tagline": "\"Ich strahle von innen\" – sagt der Flamingo.",
+            "animal_label": "DEIN Panda – FLOW & GLOW",
+            "tagline": "\"Ich strahle von innen\" – sagt der Panda.",
             "description": "<p>Leichte, luftige Mischungen für zwischendurch. Kleine Pausen mit zarten Aromen, die deinen Tag erhellen und neue Leichtigkeit schenken.</p>"
           }
         },
@@ -49,16 +147,15 @@
           "type": "animal_slide",
           "settings": {
             "image": "shopify://shop_images/oh_uc2_d2ee8cad-c7b2-425c-bb09-809211c037da.png",
-            "animal_label": "DEIN BIENE – OVA HARMONY",
-            "tagline": "\"Ich starte kraftvoll in den Tag\" – sagt die Biene.",
+            "animal_label": "DEIN Schmetterling – OVA HARMONY",
+            "tagline": "\"Ich starte kraftvoll in den Tag\" – sagt die Schmetterling.",
             "description": "<p>Ein sanfter Morgenritual für einen kraftvollen Start. Warme Gewürze und wohltuende Kräuter wecken die Sinne und schenken neue Energie.</p>"
           }
         }
       },
       "block_order": [
-        "slide-koala",
         "slide-fox",
-        "slide-flamingo",
+        "slide-Panda",
         "slide-bee"
       ]
     },
@@ -459,6 +556,8 @@
     }
   },
   "order": [
+    "dinveda_hero_v2",
+    "dinveda_ritual_picker",
     "dinveda_hero",
     "dinveda_brand_pillars_2024",
     "16260997139ae0f76a",

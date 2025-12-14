@@ -9,6 +9,15 @@
  */
 {
   "sections": {
+    "collection_hero": {
+      "type": "dv-collection-hero",
+      "settings": {
+        "hero_image": "",
+        "subtitle": "Ayurvedische Pflanzenmischungen für dein tägliches Wohlbefinden.",
+        "text_alignment": "center",
+        "show_overlay": false
+      }
+    },
     "banner": {
       "type": "main-collection-banner",
       "settings": {
@@ -58,6 +67,7 @@
     }
   },
   "order": [
+    "collection_hero",
     "banner",
     "main",
     "image-with-text"

@@ -1,7 +1,7 @@
 /* DinVeda Brand Pillars Section */
 .dinveda-brand-pillars {
   padding: 3.5rem 0; /* Reduced by 30% from 5rem */
-  background-color: #FFF0DD;
+  background-color: var(--design-bg-color, var(--background));
 }
 
 .dinveda-brand-pillars .grid__wrapper {
@@ -70,7 +70,7 @@
 }
 
 .dv-pillar-card {
-  background: #FFF0DD;
+  background: var(--design-secondary-bg, var(--secondary-bg));
   padding: 0.6rem 0.3rem; /* Reduced by 40% from 1rem 0.5rem */
   border-radius: 12px;
   border: 1px solid rgba(193, 113, 41, 0.2);
@@ -82,7 +82,7 @@
   justify-content: center;
   gap: 0.4rem;
   text-align: center;
-  color: #C17129;
+  color: var(--design-text-color, var(--text-color));
   width: 100%;
   height: auto;
   min-height: auto;
@@ -113,7 +113,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: #C17129;
+  color: var(--design-text-color, var(--text-color));
 }
 
 .dv-pillar-icon svg {
@@ -123,7 +123,7 @@
 }
 
 .dv-pillar-title {
-  color: #C17129;
+  color: var(--design-text-color, var(--text-color));
   font-family: var(--main-family);
   font-size: 0.85rem;
   font-weight: var(--main-weight);

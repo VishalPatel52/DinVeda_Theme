@@ -110,18 +110,37 @@
   --nav-spacing: {{ nav_spacing }};
   --nav-transform: {{ nav_transform }};
 
-  --font-size: {{ settings.font_size}}px;
+  /* DinVeda Design System - Typography */
+  {%- comment -%} Precedence: Design System > Original Theme Setting > Hardcoded Fallback {%- endcomment -%}
+  {%- assign design_body_size = settings.design_body_font_size | default: settings.font_size | default: 16 -%}
+  {%- assign design_h1_size = settings.design_h1_size | default: settings.h1_size | default: 40 -%}
+  {%- assign design_h2_size = settings.design_h2_size | default: settings.h2_size | default: 28 -%}
+  {%- assign design_h3_size = settings.design_h3_size | default: settings.h3_size | default: 22 -%}
+  
+  --design-body-font-size: {{ design_body_size }}px;
+  --design-h1-size: {{ design_h1_size }}px;
+  --design-h2-size: {{ design_h2_size }}px;
+  --design-h3-size: {{ design_h3_size }}px;
+
+  /* Backwards compatibility - legacy variables map to design system */
+  --font-size: {{ design_body_size }}px;
   --nav-size: {{ settings.nav_size }}px;
-  --h1-size: {{ settings.h1_size }}px;
-  --h2-size: {{ settings.h2_size }}px;
-  --h3-size: {{ settings.h3_size }}px;
+  --h1-size: {{ design_h1_size }}px;
+  --h2-size: {{ design_h2_size }}px;
+  --h3-size: {{ design_h3_size }}px;
 
-  --font-size-sm: calc({{ settings.font_size}}px - 2px);
-  --font-size-reset: {{ settings.font_size}}px;
+  --font-size-sm: calc({{ design_body_size }}px - 2px);
+  --font-size-reset: {{ design_body_size }}px;
 
+  /* DinVeda Design System - Buttons */
+  {%- comment -%} Precedence: Design System > Original Theme Setting > Hardcoded Fallback {%- endcomment -%}
+  {%- assign design_button_radius = settings.design_button_radius | default: 0 -%}
+  --design-button-radius: {{ design_button_radius }}px;
+
+  /* Backwards compatibility - legacy variables map to design system */
   --buttons-transform: {{ button_transform }};
   --buttons-border-weight: 1px;
-  --buttons-corners: 0;
+  --buttons-corners: {{ design_button_radius }}px;
   --buttons-spacing: {{ buttons_spacing }};
   --form-border-weight: 1px;
 
@@ -154,10 +173,23 @@
   --scheme-3-button-text: {{ settings.scheme_3_button_text }};
   --scheme-3-button-bg: {{ settings.scheme_3_button_bg }};
 
-  --background: {{ settings.background }};
-  --background-dark: {{ settings.background | color_darken: 20 }};
-  --text-color-light: {{ settings.text_color | color_lighten: 20 }};
-  --text-color: {{ settings.text_color }};
+  /* DinVeda Design System - Core Colors */
+  {%- comment -%} Precedence: Design System > Original Theme Setting > Hardcoded Fallback {%- endcomment -%}
+  {%- assign design_bg = settings.design_bg_color | default: settings.background | default: '#FFF0DD' -%}
+  {%- assign design_secondary_bg = settings.design_secondary_bg | default: settings.secondary_bg | default: '#FFF6EA' -%}
+  {%- assign design_text = settings.design_text_color | default: settings.text_color | default: '#C17129' -%}
+  {%- assign design_accent = settings.design_accent_color | default: settings.text_color | color_darken: 15 | default: '#8B5A2B' -%}
+  
+  --design-bg-color: {{ design_bg }};
+  --design-secondary-bg: {{ design_secondary_bg }};
+  --design-text-color: {{ design_text }};
+  --design-accent-color: {{ design_accent }};
+
+  /* Backwards compatibility - legacy variables map to design system */
+  --background: {{ design_bg }};
+  --background-dark: {{ design_bg | color_darken: 20 }};
+  --text-color-light: {{ design_text | color_lighten: 20 }};
+  --text-color: {{ design_text }};
   --dotted-color: {{ settings.border_color }};
   --sale-color: {{ settings.sale_color }};
   --sale-color-dark: {{ settings.sale_color | color_darken: 20 }};
@@ -179,21 +211,32 @@
   --footer-text: {{ settings.footer_text }};
   --error-msg-dark: #BF3333;
   --error-msg-light: {{ '#BF3333' | color_lighten: 30 }};
-  --success-msg-dark: {{ settings.text_color }};
-  --success-msg-light: {{ settings.secondary_bg }};
+  --success-msg-dark: {{ design_text }};
+  --success-msg-light: {{ design_secondary_bg }};
   --slideshow-btn-height: 34px;
   --slideshow-btn-width: 34px;
-  --masonry-padding: 20px;
-  --section-padding: {{ settings.section_padding }}px;
+  /* DinVeda Design System - Section Spacing */
+  {%- comment -%} Precedence: Design System > Original Theme Setting > Hardcoded Fallback {%- endcomment -%}
+  {%- assign design_spacing_small = settings.design_section_spacing_small | default: 40 -%}
+  {%- assign design_spacing_medium = settings.design_section_spacing_medium | default: settings.section_padding | default: 70 -%}
+  {%- assign design_spacing_large = settings.design_section_spacing_large | default: 110 -%}
+  
+  --design-section-spacing-small: {{ design_spacing_small }}px;
+  --design-section-spacing-medium: {{ design_spacing_medium }}px;
+  --design-section-spacing-large: {{ design_spacing_large }}px;
 
-  --star-active: {{ settings.text_color | color_to_rgb }};
-  --star-inactive: {{ settings.text_color | color_lighten: 30 | color_to_rgb }};
+  /* Backwards compatibility - legacy variables map to design system */
+  --masonry-padding: 20px;
+  --section-padding: {{ design_spacing_medium }}px;
+
+  --star-active: {{ design_text | color_to_rgb }};
+  --star-inactive: {{ design_text | color_lighten: 30 | color_to_rgb }};
 
   --phone-number-text: {{ settings.phone_number_text }};
   --phone-number-background: {{ settings.phone_number_background }};
   --shop-note-text: {{ settings.shop_note_text }};
   --shop-note-background: {{ settings.shop_note_background }};
-  --secondary-bg: {{ settings.secondary_bg }};
+  --secondary-bg: {{ design_secondary_bg }};
   --box-shadow-color: {{ settings.box_shadow_color }};
   --prefooter-bg: {{ settings.prefooter_bg }};
   --prefooter-text: {{ settings.prefooter_text }};
@@ -202,8 +245,8 @@
   --age-text-color: {{ settings.age_text_color }};
   --age-bg-color: {{ settings.age_bg_color }};
 
-  --text-color-reset: {{ settings.text_color }};
-  --background-reset: {{ settings.background }};
+  --text-color-reset: {{ design_text }};
+  --background-reset: {{ design_bg }};
 
   --slideout-background: var(--background);
   --slideout-width: var(--slideout-desktop);
@@ -224,12 +267,16 @@
 }
 @media (max-width: 740px) {
   :root {
-    --font-size: calc({{ settings.font_size }}px - ({{ settings.font_size }}px * 0.15));
+    --font-size: calc({{ design_body_size }}px - ({{ design_body_size }}px * 0.15));
     --nav-size: calc({{ settings.nav_size }}px - ({{ settings.nav_size }}px * 0.15));
-    --h1-size: calc({{ settings.h1_size }}px - ({{ settings.h1_size }}px * 0.15));
-    --h2-size: calc({{ settings.h2_size }}px - ({{ settings.h2_size }}px * 0.15));
-    --h3-size: calc({{ settings.h3_size }}px - ({{ settings.h3_size }}px * 0.15));
-    --font-size-reset: calc({{ settings.font_size }}px - ({{ settings.font_size }}px * 0.15));
+    --h1-size: calc({{ design_h1_size }}px - ({{ design_h1_size }}px * 0.15));
+    --h2-size: calc({{ design_h2_size }}px - ({{ design_h2_size }}px * 0.15));
+    --h3-size: calc({{ design_h3_size }}px - ({{ design_h3_size }}px * 0.15));
+    --font-size-reset: calc({{ design_body_size }}px - ({{ design_body_size }}px * 0.15));
+    --design-body-font-size: calc({{ design_body_size }}px - ({{ design_body_size }}px * 0.15));
+    --design-h1-size: calc({{ design_h1_size }}px - ({{ design_h1_size }}px * 0.15));
+    --design-h2-size: calc({{ design_h2_size }}px - ({{ design_h2_size }}px * 0.15));
+    --design-h3-size: calc({{ design_h3_size }}px - ({{ design_h3_size }}px * 0.15));
   }
 }
 {% endstyle %}

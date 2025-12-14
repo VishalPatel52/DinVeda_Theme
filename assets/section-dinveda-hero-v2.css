@@ -1,0 +1,305 @@
+/* DinVeda Hero V2 - Premium Minimal Hero Section */
+
+.dinveda-hero-v2 {
+  padding: var(--design-section-spacing-large) 0;
+  width: 100%;
+}
+
+.dinveda-hero-v2__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+
+.dinveda-hero-v2__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+/* Image Column */
+.dinveda-hero-v2__image-column {
+  order: 1;
+}
+
+.dinveda-hero-v2__picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.dinveda-hero-v2__image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  border-radius: var(--design-button-radius);
+}
+
+.dinveda-hero-v2__placeholder {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background-color: var(--design-secondary-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--design-button-radius);
+}
+
+.dinveda-hero-v2__placeholder .placeholder-svg {
+  width: 100%;
+  height: 100%;
+  fill: var(--design-text-color);
+  opacity: 0.2;
+}
+
+/* Text Column */
+.dinveda-hero-v2__text-column {
+  order: 2;
+}
+
+.dinveda-hero-v2__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.dinveda-hero-v2__text-column--left .dinveda-hero-v2__content {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.dinveda-hero-v2__text-column--center .dinveda-hero-v2__content {
+  align-items: center;
+  text-align: center;
+}
+
+/* Eyebrow */
+.dinveda-hero-v2__eyebrow {
+  font-family: var(--main-family);
+  font-size: var(--font-size);
+  font-weight: var(--main-weight);
+  letter-spacing: var(--main-spacing);
+  text-transform: uppercase;
+  color: var(--design-accent-color);
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* Headline */
+.dinveda-hero-v2__headline {
+  font-family: var(--heading-family);
+  font-size: var(--design-h1-size);
+  font-weight: var(--heading-weight);
+  font-style: var(--heading-style);
+  letter-spacing: var(--heading-spacing);
+  line-height: 1.2;
+  color: var(--design-text-color);
+  margin: 0;
+}
+
+.dinveda-hero-v2__highlight {
+  position: relative;
+  color: var(--design-accent-color);
+  display: inline-block;
+}
+
+.dinveda-hero-v2__highlight::after {
+  content: '';
+  position: absolute;
+  bottom: 0.15em;
+  left: 0;
+  right: 0;
+  height: 0.2em;
+  background-color: var(--design-accent-color);
+  opacity: 0.3;
+  border-radius: 2px;
+}
+
+/* Subheadline */
+.dinveda-hero-v2__subheadline {
+  font-family: var(--main-family);
+  font-size: var(--design-body-font-size);
+  font-weight: var(--main-weight);
+  line-height: 1.6;
+  color: var(--design-text-color);
+  margin: 0;
+  opacity: 0.85;
+  max-width: 90%;
+}
+
+.dinveda-hero-v2__text-column--center .dinveda-hero-v2__subheadline {
+  max-width: 100%;
+}
+
+/* Buttons */
+.dinveda-hero-v2__buttons {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-top: var(--space-2);
+}
+
+.dinveda-hero-v2__text-column--center .dinveda-hero-v2__buttons {
+  justify-content: center;
+}
+
+.dinveda-hero-v2__button {
+  border-radius: var(--design-button-radius);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.dinveda-hero-v2__button--primary {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border-color: var(--button-bg);
+}
+
+.dinveda-hero-v2__button--primary:hover {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dinveda-hero-v2__button--secondary {
+  background-color: transparent;
+  color: var(--design-text-color);
+  border-color: var(--design-text-color);
+}
+
+.dinveda-hero-v2__button--secondary:hover {
+  background-color: var(--design-text-color);
+  color: var(--design-bg-color);
+}
+
+/* Trust Row */
+.dinveda-hero-v2__trust-row {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.dinveda-hero-v2__text-column--center .dinveda-hero-v2__trust-row {
+  justify-content: center;
+}
+
+.dinveda-hero-v2__trust-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  text-align: center;
+  min-width: 0;
+  flex: 0 1 auto;
+}
+
+.dinveda-hero-v2__trust-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dinveda-hero-v2__trust-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.dinveda-hero-v2__trust-text {
+  font-family: var(--main-family);
+  font-size: calc(var(--design-body-font-size) - 2px);
+  font-weight: var(--main-weight);
+  color: var(--design-text-color);
+  margin: 0;
+  opacity: 0.75;
+  line-height: 1.4;
+}
+
+/* Mobile Styles */
+@media (max-width: 767px) {
+  .dinveda-hero-v2 {
+    padding: var(--design-section-spacing-medium) 0;
+  }
+
+  .dinveda-hero-v2__container {
+    padding: 0 var(--space-3);
+  }
+
+  .dinveda-hero-v2__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .dinveda-hero-v2__image-column {
+    order: 1;
+  }
+
+  .dinveda-hero-v2__text-column {
+    order: 2;
+  }
+
+  .dinveda-hero-v2__headline {
+    font-size: calc(var(--design-h1-size) * 0.75);
+  }
+
+  .dinveda-hero-v2__subheadline {
+    font-size: calc(var(--design-body-font-size) * 0.95);
+    max-width: 100%;
+  }
+
+  .dinveda-hero-v2__buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .dinveda-hero-v2__button {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .dinveda-hero-v2__trust-row {
+    flex-direction: column;
+    gap: var(--space-4);
+    align-items: center;
+  }
+
+  .dinveda-hero-v2__trust-item {
+    width: 100%;
+    max-width: 200px;
+  }
+}
+
+/* Tablet Styles */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .dinveda-hero-v2__container {
+    padding: 0 var(--space-4);
+  }
+
+  .dinveda-hero-v2__grid {
+    gap: var(--space-6);
+  }
+
+  .dinveda-hero-v2__headline {
+    font-size: calc(var(--design-h1-size) * 0.9);
+  }
+}
+
+/* Ensure no carousel dots appear */
+.dinveda-hero-v2 .flickity-page-dots,
+.dinveda-hero-v2 .carousel-dots,
+.dinveda-hero-v2 [class*="dots"] {
+  display: none !important;
+}
+

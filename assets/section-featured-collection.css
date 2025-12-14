@@ -370,7 +370,7 @@
 .section-featured-collection .product-loop__title a,
 .section-featured-collection .product-title,
 .section-featured-collection .product-title a {
-  color: #C17129;
+  color: var(--design-text-color, var(--text-color));
   font-weight: 500;
   line-height: 1.3;
   margin-top: 1rem;
@@ -379,7 +379,7 @@
 /* Typography - Price */
 .section-featured-collection .product-loop__price,
 .section-featured-collection .product-price {
-  color: #C17129;
+  color: var(--design-text-color, var(--text-color));
   font-weight: 500;
   margin-top: 0.75rem;
 }
@@ -389,7 +389,7 @@
 .section-featured-collection .product-price:before {
   width: 32px;
   height: 2px;
-  background-color: #C17129;
+  background-color: var(--design-text-color, var(--text-color));
   opacity: 0.4;
   margin: 0.75rem auto 0.5rem;
 }

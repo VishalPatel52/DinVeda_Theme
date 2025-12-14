@@ -99,12 +99,14 @@
 >
   {% paginate collection.products by page_limit %}
     <div id="CollectionProductGrid" class="grid__wrapper rg0">
+      {% unless section.settings.hide_collection_header %}
       <div class="collection__page--description collection-description {{ header_width }} auto mt2 mb2 a-center">
         <h1>{{ collection.title }}</h1>
         <div class="rte">
           {{ collection.description | remove: '[banner]' }}
         </div>
       </div>
+      {% endunless %}
 
       {%- if collection_image -%}
         {% liquid
@@ -331,6 +333,13 @@
       "id": "collection_image",
       "label": "Show collection image",
       "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_collection_header",
+      "label": "Hide collection header",
+      "default": false,
+      "info": "Hide the default collection title and description (useful when using a custom hero section)"
     },
     {
       "type": "radio",

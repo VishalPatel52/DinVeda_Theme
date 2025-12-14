@@ -246,13 +246,13 @@
         "type": "color",
         "id": "header_bg",
         "label": "Background",
-        "default": "#ffffff"
+        "default": "#FFF6EA"
       },
       {
         "type": "color",
         "id": "header_text",
         "label": "Text",
-        "default": "#292929"
+        "default": "#8B5A2B"
       },
       {
         "type": "color",
@@ -268,13 +268,13 @@
         "type": "color",
         "id": "button_bg",
         "label": "Background",
-        "default": "#292929"
+        "default": "#8B5A2B"
       },
       {
         "type": "color",
         "id": "button_text",
         "label": "Text",
-        "default": "#ffffff"
+        "default": "#FFF0DD"
       },
       {
         "type": "header",
@@ -322,13 +322,13 @@
         "type": "color",
         "id": "footer_bg",
         "label": "Background",
-        "default": "#292929"
+        "default": "#8B5A2B"
       },
       {
         "type": "color",
         "id": "footer_text",
         "label": "Text",
-        "default": "#ffffff"
+        "default": "#FFF0DD"
       },
       {
         "type": "header",
@@ -413,6 +413,152 @@
         "id": "scheme_3_button_text",
         "label": "Button text",
         "default": "#ffffff"
+      }
+    ]
+  },
+  {
+    "name": "DinVeda Design System",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Core Colors"
+      },
+      {
+        "type": "paragraph",
+        "content": "Centralize your brand colors for consistent styling across the entire site. These settings control the foundation of your design system."
+      },
+      {
+        "type": "color",
+        "id": "design_bg_color",
+        "label": "Background color",
+        "default": "#FFF0DD",
+        "info": "Primary background color used throughout the site"
+      },
+      {
+        "type": "color",
+        "id": "design_secondary_bg",
+        "label": "Secondary background",
+        "default": "#FFF6EA",
+        "info": "Secondary background for alternating sections and cards"
+      },
+      {
+        "type": "color",
+        "id": "design_text_color",
+        "label": "Primary text color",
+        "default": "#C17129",
+        "info": "Main text color for body content and headings"
+      },
+      {
+        "type": "color",
+        "id": "design_accent_color",
+        "label": "Accent color",
+        "default": "#8B5A2B",
+        "info": "Accent color for highlights, links, and interactive elements"
+      },
+      {
+        "type": "header",
+        "content": "Typography"
+      },
+      {
+        "type": "paragraph",
+        "content": "Base font sizes for body text and headings. These can be further customized in the Typography section."
+      },
+      {
+        "type": "range",
+        "id": "design_body_font_size",
+        "min": 12,
+        "max": 20,
+        "step": 1,
+        "unit": "px",
+        "label": "Body font size",
+        "default": 16,
+        "info": "Base font size for body text"
+      },
+      {
+        "type": "range",
+        "id": "design_h1_size",
+        "min": 24,
+        "max": 80,
+        "step": 2,
+        "unit": "px",
+        "label": "H1 (Page titles)",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "design_h2_size",
+        "min": 20,
+        "max": 70,
+        "step": 2,
+        "unit": "px",
+        "label": "H2 (Section titles)",
+        "default": 28
+      },
+      {
+        "type": "range",
+        "id": "design_h3_size",
+        "min": 16,
+        "max": 60,
+        "step": 2,
+        "unit": "px",
+        "label": "H3 (Subheadings)",
+        "default": 22
+      },
+      {
+        "type": "header",
+        "content": "Buttons"
+      },
+      {
+        "type": "range",
+        "id": "design_button_radius",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Button border radius",
+        "default": 16,
+        "info": "Controls the roundness of button corners. 0 = square, higher values = more rounded"
+      },
+      {
+        "type": "header",
+        "content": "Section Spacing"
+      },
+      {
+        "type": "paragraph",
+        "content": "Vertical spacing options for sections. Choose Small, Medium, or Large spacing to control the padding between sections."
+      },
+      {
+        "type": "range",
+        "id": "design_section_spacing_small",
+        "min": 20,
+        "max": 80,
+        "step": 5,
+        "unit": "px",
+        "label": "Small spacing",
+        "default": 40,
+        "info": "Used for compact sections"
+      },
+      {
+        "type": "range",
+        "id": "design_section_spacing_medium",
+        "min": 40,
+        "max": 120,
+        "step": 5,
+        "unit": "px",
+        "label": "Medium spacing",
+        "default": 70,
+        "info": "Standard spacing for most sections"
+      },
+      {
+        "type": "range",
+        "id": "design_section_spacing_large",
+        "min": 60,
+        "max": 160,
+        "step": 5,
+        "unit": "px",
+        "label": "Large spacing",
+        "default": 110,
+        "info": "Used for hero sections and major content breaks"
       }
     ]
   },

@@ -826,7 +826,6 @@ span.filter__count {
   padding: 1rem 1rem 1.25rem !important;
   text-align: center;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
   margin-bottom: 0;
 }
 
@@ -922,11 +921,9 @@ span.filter__count {
   -o-transform: none !important;
 }
 
-/* Card Hover - Only Soft Lift, No Image Changes */
+/* Card Hover - No shadow or animation */
 .template-collection .product-loop__item:hover,
 .template-collection .product-loop__item:focus-within {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   background-color: rgba(193, 113, 41, 0.04);
 }
 
@@ -950,7 +947,7 @@ span.filter__count {
 .template-collection .product-loop__title a,
 .template-collection .product-title,
 .template-collection .product-title a {
-  color: #C17129;
+  color: var(--design-text-color, var(--text-color));
   font-weight: 500;
   line-height: 1.3;
   margin-top: 1rem;
@@ -959,7 +956,7 @@ span.filter__count {
 /* Typography - Price */
 .template-collection .product-loop__price,
 .template-collection .product-price {
-  color: #C17129;
+  color: var(--design-text-color, var(--text-color));
   font-weight: 500;
   margin-top: 0.75rem;
 }
@@ -972,8 +969,7 @@ span.filter__count {
   
   .template-collection .product-loop__item:hover,
   .template-collection .product-loop__item:focus-within {
-    transform: translateY(-2px);
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
+    background-color: rgba(193, 113, 41, 0.04);
   }
   
   /* Ensure images don't transform on mobile hover */
