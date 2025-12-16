@@ -46,6 +46,23 @@
 
   {{ 'theme.css' | asset_url | stylesheet_tag }}
 
+  {%- comment -%} Load Material Symbols font for DinVeda sections {%- endcomment -%}
+  {%- if template.name == 'product' and template.suffix == 'dinveda-premium' -%}
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  {%- endif -%}
+
+  {%- comment -%} Load DinVeda premium product CSS only for product.dinveda-premium template {%- endcomment -%}
+  {%- if template.name == 'product' and template.suffix == 'dinveda-premium' -%}
+    <link rel="preload" href="{{ 'dinveda-product.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ 'dinveda-product.css' | asset_url }}"></noscript>
+  {%- endif -%}
+
+  {%- comment -%} Load DinVeda homepage CSS only for homepage template {%- endcomment -%}
+  {%- if template == 'index' -%}
+    <link rel="preload" href="{{ 'dinveda-home.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ 'dinveda-home.css' | asset_url }}"></noscript>
+  {%- endif -%}
+
   {%- unless settings.main_font.system? -%}
     <link rel="preload" as="font" href="{{ settings.main_font | font_url }}" type="font/woff2" crossorigin>
   {%- endunless -%}
