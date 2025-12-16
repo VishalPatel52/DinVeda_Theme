@@ -1,0 +1,123 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {},
+      "block_order": [],
+      "settings": {
+        "form_bg_color": "#fff0dd",
+        "gallery_style": "thumbnail_gallery",
+        "thumbnail_position": "bottom",
+        "large_product_media": false,
+        "grid_two_up": false,
+        "click_to_enlarge": true,
+        "enable_video_looping": false
+      }
+    },
+    "dinveda_product_hero": {
+      "type": "dinveda-product-hero",
+      "settings": {
+        "ritual_timing_label_fallback": "MORGEN | AKTIVIEREN",
+        "badge_1_label": "BIO",
+        "badge_2_label": "VEGAN",
+        "price_suffix": "inkl. MwSt. / 100g Dose",
+        "atc_button_label": "In den Warenkorb",
+        "shipping_note": "Kostenloser Versand ab 50€ innerhalb DE"
+      },
+      "blocks": {
+        "trust_item_1": {
+          "type": "trust_item",
+          "settings": {
+            "icon_svg": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+            "text": "100% Bio-zertifiziert"
+          }
+        },
+        "trust_item_2": {
+          "type": "trust_item",
+          "settings": {
+            "icon_svg": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><polyline points=\"9 22 9 12 15 12 15 22\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+            "text": "Made in Germany"
+          }
+        }
+      },
+      "block_order": [
+        "trust_item_1",
+        "trust_item_2"
+      ]
+    },
+    "dinveda_ritual_story": {
+      "type": "dinveda-ritual-story",
+      "settings": {
+        "eyebrow": "DIE RITUAL-GESCHICHTE"
+      }
+    },
+    "dinveda_ritual_details": {
+      "type": "dinveda-ritual-details",
+      "settings": {
+        "ingredients_title": "Ehrliche Zutaten",
+        "ingredients_note": "*AUS KONTROLLIERT BIOLOGISCHEM ANBAU (DE-ÖKO-001)",
+        "ritual_title": "Dein Morgen-Ritual"
+      }
+    },
+    "dinveda_complete_your_day": {
+      "type": "dinveda-complete-your-day",
+      "settings": {
+        "heading": "Vervollständige deinen Tag",
+        "subheading": "WEITERE RITUALE FÜR BALANCE & RUHE",
+        "view_all_label": "Alle Rituale ansehen",
+        "view_all_link": "/collections/all"
+      },
+      "blocks": {
+        "ritual_card_1": {
+          "type": "ritual_card",
+          "settings": {
+            "label": "TAG | ZENTRIEREN",
+            "title": "Flow & Glow",
+            "benefit": "Für Leichtigkeit & Balance",
+            "button_label": "ANSEHEN"
+          }
+        },
+        "ritual_card_2": {
+          "type": "ritual_card",
+          "settings": {
+            "label": "BALANCE | AUSGLEICHEN",
+            "title": "Ova Harmony",
+            "benefit": "Für Harmonie & sanfte Energie",
+            "button_label": "ANSEHEN"
+          }
+        },
+        "ritual_card_3": {
+          "type": "ritual_card",
+          "settings": {
+            "label": "ABEND | LOSLASSEN",
+            "title": "Moon Rest",
+            "benefit": "Für Entspannung & Schlaf",
+            "button_label": "ANSEHEN"
+          }
+        }
+      },
+      "block_order": [
+        "ritual_card_1",
+        "ritual_card_2",
+        "ritual_card_3"
+      ]
+    },
+    "product_recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "product_recommendations_heading": "Ähnliche Produkte",
+        "items_per_row": 2,
+        "items_shown": 2,
+        "section_padding": "both"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "dinveda_product_hero",
+    "dinveda_ritual_story",
+    "dinveda_ritual_details",
+    "dinveda_complete_your_day",
+    "product_recommendations"
+  ]
+}

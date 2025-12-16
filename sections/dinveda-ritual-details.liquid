@@ -1,0 +1,223 @@
+{% comment %}
+  DinVeda Ritual Details - Two-column section with ingredients and ritual steps
+{% endcomment %}
+
+{%- liquid
+  # Support both old and new metafield names
+  assign ingredients = product.metafields.dinveda.ingredients | default: product.metafields.dinveda.ingredients_list
+  assign ritual_steps = product.metafields.dinveda.ritual_steps
+  assign ritual_step_1_title = product.metafields.dinveda.ritual_step_1_title
+  assign ritual_step_1_body = product.metafields.dinveda.ritual_step_1_body
+  assign ritual_step_2_title = product.metafields.dinveda.ritual_step_2_title
+  assign ritual_step_2_body = product.metafields.dinveda.ritual_step_2_body
+  assign ritual_step_3_title = product.metafields.dinveda.ritual_step_3_title
+  assign ritual_step_3_body = product.metafields.dinveda.ritual_step_3_body
+  
+  # Dynamic ritual title based on timing
+  assign phase_label = product.metafields.dinveda.phase_label | default: product.metafields.dinveda.ritual_timing_label
+  assign ritual_timing = phase_label | downcase
+  assign ritual_title_default = 'Dein Morgen-Ritual'
+  if ritual_timing contains 'tag'
+    assign ritual_title_default = 'Dein Tag-Ritual'
+  elsif ritual_timing contains 'balance'
+    assign ritual_title_default = 'Dein Balance-Ritual'
+  elsif ritual_timing contains 'abend'
+    assign ritual_title_default = 'Dein Abend-Ritual'
+  endif
+-%}
+
+<section
+  id="dinveda-ritual-details-{{ section.id }}"
+  class="dinveda-ritual-details"
+  data-section-id="{{ section.id }}"
+  data-section-type="dinveda-ritual-details"
+>
+  <div class="dinveda-ritual-details__container">
+    <div class="dinveda-ritual-details__grid">
+      
+      {%- comment -%} Left: Ingredients {%- endcomment -%}
+      <div class="dinveda-ritual-details__card dinveda-ritual-details__card--ingredients">
+        <div class="dinveda-ritual-details__card-header">
+          <span class="material-symbols-outlined dinveda-ritual-details__icon">grain</span>
+          <h3 class="dinveda-ritual-details__card-title">{{ section.settings.ingredients_title | default: 'Ehrliche Zutaten' }}</h3>
+        </div>
+        {% if ingredients != blank %}
+          <div class="dinveda-ritual-details__ingredients-list">
+            {% assign ingredients_lines = ingredients | newline_to_br | split: '<br />' %}
+            {% for line in ingredients_lines %}
+              {% assign trimmed_line = line | strip %}
+              {% if trimmed_line != blank %}
+                {%- comment -%} Parse ingredient line: "Name - Description" or "Name (XX%) - Description" {%- endcomment -%}
+                {% assign parts = trimmed_line | split: ' - ' %}
+                {% if parts.size == 2 %}
+                  <div class="dinveda-ritual-details__ingredient-item">
+                    <span class="dinveda-ritual-details__ingredient-name">{{ parts[0] | strip }}</span>
+                    <span class="dinveda-ritual-details__ingredient-desc">{{ parts[1] | strip }}</span>
+                  </div>
+                {% else %}
+                  <div class="dinveda-ritual-details__ingredient-item">
+                    <span class="dinveda-ritual-details__ingredient-name">{{ trimmed_line }}</span>
+                  </div>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% elsif section.blocks.size > 0 %}
+          {%- comment -%} Fallback to blocks if metafield is empty {%- endcomment -%}
+          <div class="dinveda-ritual-details__ingredients-list">
+            {% for block in section.blocks %}
+              {% if block.type == 'ingredient' %}
+                <div class="dinveda-ritual-details__ingredient-item" {{ block.shopify_attributes }}>
+                  <span class="dinveda-ritual-details__ingredient-name">{{ block.settings.name | escape }}</span>
+                  {% if block.settings.description != blank %}
+                    <span class="dinveda-ritual-details__ingredient-desc">{{ block.settings.description | escape }}</span>
+                  {% endif %}
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+        {% if section.settings.ingredients_note != blank %}
+          <p class="dinveda-ritual-details__note">{{ section.settings.ingredients_note | escape }}</p>
+        {% endif %}
+      </div>
+
+      {%- comment -%} Right: Ritual Steps {%- endcomment -%}
+      <div class="dinveda-ritual-details__card dinveda-ritual-details__card--ritual">
+        <div class="dinveda-ritual-details__card-header">
+          <span class="material-symbols-outlined dinveda-ritual-details__icon">self_improvement</span>
+          <h3 class="dinveda-ritual-details__card-title">{{ section.settings.ritual_title | default: ritual_title_default }}</h3>
+        </div>
+        <div class="dinveda-ritual-details__steps">
+          {%- comment -%} Support ritual_steps metafield (list) or individual step metafields {%- endcomment -%}
+          {% if ritual_steps != blank %}
+            {% assign steps_lines = ritual_steps | newline_to_br | split: '<br />' %}
+            {% for line in steps_lines %}
+              {% assign trimmed_line = line | strip %}
+                {% if trimmed_line != blank %}
+                <div class="dinveda-ritual-details__step">
+                  <div class="dinveda-ritual-details__step-icon"></div>
+                  <div class="dinveda-ritual-details__step-content">
+                    <p class="dinveda-ritual-details__step-body">{{ trimmed_line }}</p>
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+          {% elsif ritual_step_1_title != blank or ritual_step_1_body != blank %}
+            <div class="dinveda-ritual-details__step">
+              <div class="dinveda-ritual-details__step-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24M2 12h6m6 0h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="dinveda-ritual-details__step-content">
+                {% if ritual_step_1_title != blank %}
+                  <h4 class="dinveda-ritual-details__step-title">{{ ritual_step_1_title | escape }}</h4>
+                {% endif %}
+                {% if ritual_step_1_body != blank %}
+                  <p class="dinveda-ritual-details__step-body">{{ ritual_step_1_body | escape }}</p>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+
+          {% if ritual_step_2_title != blank or ritual_step_2_body != blank %}
+            <div class="dinveda-ritual-details__step">
+              <div class="dinveda-ritual-details__step-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24M2 12h6m6 0h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="dinveda-ritual-details__step-content">
+                {% if ritual_step_2_title != blank %}
+                  <h4 class="dinveda-ritual-details__step-title">{{ ritual_step_2_title | escape }}</h4>
+                {% endif %}
+                {% if ritual_step_2_body != blank %}
+                  <p class="dinveda-ritual-details__step-body">{{ ritual_step_2_body | escape }}</p>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+
+          {% if ritual_step_3_title != blank or ritual_step_3_body != blank %}
+            <div class="dinveda-ritual-details__step">
+              <div class="dinveda-ritual-details__step-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24M2 12h6m6 0h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="dinveda-ritual-details__step-content">
+                {% if ritual_step_3_title != blank %}
+                  <h4 class="dinveda-ritual-details__step-title">{{ ritual_step_3_title | escape }}</h4>
+                {% endif %}
+                {% if ritual_step_3_body != blank %}
+                  <p class="dinveda-ritual-details__step-body">{{ ritual_step_3_body | escape }}</p>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% style %}
+  #dinveda-ritual-details-{{ section.id }} {
+    background-color: var(--design-bg-color, #FFF0DD);
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "DinVeda Ritual Details",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ingredients_title",
+      "label": "Ingredients card title",
+      "default": "Ehrliche Zutaten"
+    },
+    {
+      "type": "text",
+      "id": "ingredients_note",
+      "label": "Ingredients note",
+      "default": "*AUS KONTROLLIERT BIOLOGISCHEM ANBAU (DE-ÖKO-001)"
+    },
+    {
+      "type": "text",
+      "id": "ritual_title",
+      "label": "Ritual card title",
+      "default": "Dein Morgen-Ritual"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingredient",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Ingredient name"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description/Origin",
+          "info": "Optional: Description or origin (e.g., 'Indien, Bio-Qualität')"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DinVeda Ritual Details"
+    }
+  ]
+}
+{% endschema %}
+
