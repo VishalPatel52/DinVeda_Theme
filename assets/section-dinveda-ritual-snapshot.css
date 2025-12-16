@@ -1,0 +1,98 @@
+/* DinVeda Ritual Snapshot Section */
+
+.dinveda-ritual-snapshot {
+  background-color: var(--design-bg-color, var(--background));
+  color: var(--design-text-color, var(--text-color));
+  padding: var(--design-section-spacing-small, 40px) 0;
+}
+
+.dinveda-ritual-snapshot__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-4, 20px);
+}
+
+.dinveda-ritual-snapshot__heading {
+  font-size: var(--design-h2-size, var(--h2-size, 28px));
+  font-weight: var(--heading-weight);
+  font-family: var(--heading-family);
+  color: var(--design-text-color, var(--text-color));
+  margin-bottom: var(--space-5, 25px);
+  line-height: 1.3;
+  text-align: left;
+}
+
+.dinveda-ritual-snapshot__grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4, 20px);
+}
+
+.dinveda-ritual-snapshot__item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.dinveda-ritual-snapshot__label {
+  font-size: var(--font-size-sm, calc(var(--font-size, 16px) - 2px));
+  color: var(--text-color-light, var(--design-text-color));
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-1, 5px);
+  font-weight: var(--main-weight);
+  line-height: 1.4;
+}
+
+.dinveda-ritual-snapshot__value {
+  font-size: var(--design-body-font-size, var(--font-size, 16px));
+  color: var(--design-text-color, var(--text-color));
+  line-height: 1.6;
+  font-weight: var(--main-weight);
+}
+
+/* Desktop: Horizontal layout */
+@media (min-width: 741px) {
+  .dinveda-ritual-snapshot__grid {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-6, 30px);
+  }
+  
+  .dinveda-ritual-snapshot__item {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+}
+
+/* Tablet: 2 columns if 3 items */
+@media (min-width: 741px) and (max-width: 1023px) {
+  .dinveda-ritual-snapshot__grid {
+    flex-wrap: wrap;
+  }
+  
+  .dinveda-ritual-snapshot__item {
+    flex: 1 1 calc(50% - var(--space-6, 30px) / 2);
+  }
+  
+  .dinveda-ritual-snapshot__item:last-child {
+    flex: 1 1 100%;
+  }
+}
+
+/* Mobile: Stacked vertically (default) */
+@media (max-width: 740px) {
+  .dinveda-ritual-snapshot {
+    padding: var(--design-section-spacing-small, 40px) 0;
+  }
+  
+  .dinveda-ritual-snapshot__container {
+    padding: 0 var(--space-3, 15px);
+  }
+  
+  .dinveda-ritual-snapshot__grid {
+    gap: var(--space-5, 25px);
+  }
+}

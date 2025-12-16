@@ -1,0 +1,94 @@
+{% comment %}
+  DinVeda Ritual Story - Story section with background and metafield content
+{% endcomment %}
+
+{%- liquid
+  # Support both old and new metafield names
+  assign story_title = product.metafields.dinveda.story_title | default: product.metafields.dinveda.ritual_story_title | default: section.settings.story_title_fallback
+  assign story_body = product.metafields.dinveda.story_body | default: product.metafields.dinveda.ritual_story_body
+  assign background_image = section.settings.background_image
+-%}
+
+{% if story_title != blank or story_body != blank %}
+  <section
+    id="dinveda-ritual-story-{{ section.id }}"
+    class="dinveda-ritual-story"
+    data-section-id="{{ section.id }}"
+    data-section-type="dinveda-ritual-story"
+  >
+    <div class="dinveda-ritual-story__container">
+      <div class="dinveda-ritual-story__content">
+        
+        {% if section.settings.eyebrow != blank %}
+          <p class="dinveda-ritual-story__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {% endif %}
+
+        {% if story_title != blank %}
+          <h2 class="dinveda-ritual-story__title">{{ story_title | escape }}</h2>
+        {% endif %}
+
+        {% if story_body != blank %}
+          <div class="dinveda-ritual-story__body">
+            {{ story_body }}
+          </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </section>
+
+  {% style %}
+    #dinveda-ritual-story-{{ section.id }} {
+      background-color: var(--design-secondary-bg, #FFF6EA);
+      {% if background_image != blank %}
+        background-image: url('{{ background_image | image_url: width: 1200 }}');
+        background-size: cover;
+        background-position: center;
+        background-blend-mode: overlay;
+      {% endif %}
+    }
+  {% endstyle %}
+{% endif %}
+
+{% schema %}
+{
+  "name": "DinVeda Ritual Story",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow label",
+      "default": "DIE RITUAL-GESCHICHTE"
+    },
+    {
+      "type": "text",
+      "id": "story_title_fallback",
+      "label": "Story title (fallback)",
+      "default": "Warum der Fuchs?",
+      "info": "Used if product metafield dinveda.story_title is not set"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image/texture",
+      "info": "Optional decorative watermark or texture"
+    }
+  ],
+  "presets": [
+    {
+      "name": "DinVeda Ritual Story"
+    }
+  ]
+}
+{% endschema %}
+

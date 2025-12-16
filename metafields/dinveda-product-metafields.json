@@ -1,0 +1,70 @@
+{
+  "namespace": "dinveda",
+  "key": "product",
+  "metafields": [
+    {
+      "key": "ritual_tagline",
+      "name": "Ritual Tagline",
+      "type": "single_line_text_field",
+      "description": "Short poetic ritual tagline",
+      "validations": []
+    },
+    {
+      "key": "animal_quote",
+      "name": "Animal Quote",
+      "type": "multi_line_text_field",
+      "description": "Symbolic quote spoken by the animal (no health claims)",
+      "validations": []
+    },
+    {
+      "key": "animal_name",
+      "name": "Animal Name",
+      "type": "single_line_text_field",
+      "description": "Animal attribution for the quote",
+      "validations": []
+    },
+    {
+      "key": "ritual_timing",
+      "name": "Ritual Timing",
+      "type": "multi_line_text_field",
+      "description": "When the ritual fits into the day (context only)",
+      "validations": []
+    },
+    {
+      "key": "ritual_usage",
+      "name": "Ritual Usage",
+      "type": "multi_line_text_field",
+      "description": "How to enjoy the ritual (no effects)",
+      "validations": []
+    },
+    {
+      "key": "taste_character",
+      "name": "Taste Character",
+      "type": "multi_line_text_field",
+      "description": "Sensory and taste description only",
+      "validations": []
+    },
+    {
+      "key": "blend_story",
+      "name": "Blend Story",
+      "type": "multi_line_text_field",
+      "description": "Brand story and symbolism",
+      "validations": []
+    },
+    {
+      "key": "quality_note",
+      "name": "Quality Note",
+      "type": "multi_line_text_field",
+      "description": "Factual quality and production note",
+      "validations": []
+    },
+    {
+      "key": "legal_note",
+      "name": "Legal Note",
+      "type": "multi_line_text_field",
+      "description": "Optional legal disclaimer",
+      "validations": []
+    }
+  ]
+}
+

@@ -1,0 +1,5 @@
+# Shopify CLI ignore file
+# Files and directories listed here will be ignored when pushing to Shopify
+
+# Theme settings data (contains store-specific configuration)
+config/settings_data.json

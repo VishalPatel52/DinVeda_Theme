@@ -1,0 +1,65 @@
+{% comment %}
+  DinVeda Ritual Guide Section
+  Displays calm, non-medical usage guidance for DinVeda products
+{% endcomment %}
+
+{%- liquid
+  assign ritual_guide = product.metafields.dinveda.ritual_guide | default: ''
+  assign section_title = section.settings.title | default: 'Das Ritual'
+  assign show_title = section.settings.show_title
+-%}
+
+{%- if ritual_guide != blank -%}
+  <link rel="preload" href="{{ 'section-dinveda-ritual-guide.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="{{ 'section-dinveda-ritual-guide.css' | asset_url }}"></noscript>
+
+  <section
+    id="dinveda-ritual-guide-{{ section.id }}"
+    class="dinveda-ritual-guide section-{{ section.id }}"
+    data-section-id="{{ section.id }}"
+    data-section-type="dinveda-ritual-guide"
+  >
+    <div class="dinveda-ritual-guide__container">
+      <div class="dinveda-ritual-guide__content">
+        {%- if show_title and section_title != blank -%}
+          <h2 class="dinveda-ritual-guide__title">
+            {{ section_title }}
+          </h2>
+        {%- endif -%}
+        
+        {%- if ritual_guide != blank -%}
+          <div class="dinveda-ritual-guide__text rte">
+            {{ ritual_guide }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "DinVeda – Ritual Guide",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Das Ritual",
+      "info": "Section heading displayed above the content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Show title",
+      "default": true,
+      "info": "Toggle to show or hide the section title"
+    }
+  ],
+  "presets": [
+    {
+      "name": "DinVeda – Ritual Guide"
+    }
+  ]
+}
+{% endschema %}

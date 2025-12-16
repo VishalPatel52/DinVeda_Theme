@@ -1,0 +1,285 @@
+{% comment %}
+  DinVeda Complete Your Day - Related rituals section with 3 product cards
+{% endcomment %}
+
+<section
+  id="dinveda-complete-your-day-{{ section.id }}"
+  class="dinveda-complete-your-day"
+  data-section-id="{{ section.id }}"
+  data-section-type="dinveda-complete-your-day"
+>
+  <div class="dinveda-complete-your-day__container">
+    
+    {% if section.settings.heading != blank %}
+      <div class="dinveda-complete-your-day__header">
+        <h2 class="dinveda-complete-your-day__title">{{ section.settings.heading | escape }}</h2>
+        {% if section.settings.subheading != blank %}
+          <p class="dinveda-complete-your-day__subtitle">{{ section.settings.subheading | escape }}</p>
+        {% endif %}
+        {% if section.settings.view_all_link != blank %}
+          <a href="{{ section.settings.view_all_link }}" class="dinveda-complete-your-day__view-all">
+            {{ section.settings.view_all_label | default: 'Alle Rituale ansehen' }}
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="dinveda-complete-your-day__grid">
+        {% for block in section.blocks %}
+          {% if block.type == 'ritual_card' %}
+            {%- liquid
+              assign card_image = block.settings.image
+              assign card_link = block.settings.link
+              assign card_product = block.settings.product
+              
+              if card_product != blank
+                assign card_link = card_product.url
+                unless card_image != blank
+                  assign card_image = card_product.featured_image
+                endunless
+              endif
+            -%}
+            
+            <article class="dinveda-complete-your-day__card" {{ block.shopify_attributes }}>
+              {% if card_link != blank %}
+                <a href="{{ card_link }}" class="dinveda-complete-your-day__card-link">
+              {% endif %}
+              
+              <div class="dinveda-complete-your-day__card-inner">
+                
+                {%- comment -%} Image {%- endcomment -%}
+                {% if card_image != blank %}
+                  <div class="dinveda-complete-your-day__image-wrapper">
+                    {{ card_image | image_url: width: 400 | image_tag: alt: card_image.alt | default: block.settings.title, loading: 'lazy', class: 'dinveda-complete-your-day__image' }}
+                  </div>
+                {% else %}
+                  <div class="dinveda-complete-your-day__image-wrapper dinveda-complete-your-day__placeholder">
+                    {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+                {% endif %}
+
+                {%- comment -%} Content {%- endcomment -%}
+                <div class="dinveda-complete-your-day__content">
+                  {% if block.settings.label != blank %}
+                    <p class="dinveda-complete-your-day__label">{{ block.settings.label | escape }}</p>
+                  {% endif %}
+                  
+                  {% if block.settings.title != blank %}
+                    <h3 class="dinveda-complete-your-day__card-title">{{ block.settings.title | escape }}</h3>
+                  {% endif %}
+                  
+                  {% if block.settings.benefit != blank %}
+                    <p class="dinveda-complete-your-day__benefit">{{ block.settings.benefit | escape }}</p>
+                  {% endif %}
+                  
+                  <div class="dinveda-complete-your-day__button-wrapper">
+                    <span class="dinveda-complete-your-day__button">
+                      {{ block.settings.button_label | default: 'ANSEHEN' }}
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+
+              {% if card_link != blank %}
+                </a>
+              {% endif %}
+            </article>
+
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% else %}
+      {%- comment -%} Fallback: Show message or use collection {%- endcomment -%}
+      {% if section.settings.fallback_collection != blank %}
+        {% assign fallback_collection = collections[section.settings.fallback_collection] %}
+        {% if fallback_collection.products.size > 0 %}
+          <div class="dinveda-complete-your-day__grid">
+            {% for recommendation in fallback_collection.products limit: 3 %}
+              {% unless recommendation.id == product.id %}
+                <article class="dinveda-complete-your-day__card">
+                  <a href="{{ recommendation.url }}" class="dinveda-complete-your-day__card-link">
+                    <div class="dinveda-complete-your-day__card-inner">
+                      
+                      {%- comment -%} Image {%- endcomment -%}
+                      {% if recommendation.featured_image != blank %}
+                        <div class="dinveda-complete-your-day__image-wrapper">
+                          {{ recommendation.featured_image | image_url: width: 400 | image_tag: alt: recommendation.title, loading: 'lazy', class: 'dinveda-complete-your-day__image' }}
+                        </div>
+                      {% else %}
+                        <div class="dinveda-complete-your-day__image-wrapper dinveda-complete-your-day__placeholder">
+                          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                        </div>
+                      {% endif %}
+
+                      {%- comment -%} Content {%- endcomment -%}
+                      <div class="dinveda-complete-your-day__content">
+                        {%- liquid
+                          assign rec_phase_label = recommendation.metafields.dinveda.phase_label | default: recommendation.metafields.dinveda.ritual_timing_label
+                        -%}
+                        {% if rec_phase_label != blank %}
+                          <p class="dinveda-complete-your-day__label">{{ rec_phase_label | escape }}</p>
+                        {% endif %}
+                        
+                        <h3 class="dinveda-complete-your-day__card-title">{{ recommendation.title | escape }}</h3>
+                        
+                        {%- liquid
+                          assign rec_benefit = recommendation.metafields.dinveda.blend_story_short | default: recommendation.description | truncate: 80
+                        -%}
+                        {% if rec_benefit != blank %}
+                          <p class="dinveda-complete-your-day__benefit">{{ rec_benefit | escape }}</p>
+                        {% endif %}
+                        
+                        <div class="dinveda-complete-your-day__button-wrapper">
+                          <span class="dinveda-complete-your-day__button">
+                            {{ section.settings.button_label_fallback | default: 'ANSEHEN' }}
+                          </span>
+                        </div>
+                      </div>
+
+                    </div>
+                  </a>
+                </article>
+              {% endunless %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endif %}
+    {% endif %}
+
+  </div>
+</section>
+
+{% style %}
+  #dinveda-complete-your-day-{{ section.id }} {
+    background-color: var(--design-bg-color, #FFF0DD);
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "DinVeda Complete Your Day",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Vervollständige deinen Tag"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "WEITERE RITUALE FÜR BALANCE & RUHE"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View all link label",
+      "default": "Alle Rituale ansehen"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View all link"
+    },
+    {
+      "type": "text",
+      "id": "button_label_fallback",
+      "label": "Button label (fallback for recommendations)",
+      "default": "ANSEHEN"
+    },
+    {
+      "type": "collection",
+      "id": "fallback_collection",
+      "label": "Fallback collection",
+      "info": "Used if no blocks are added. Shows products from this collection."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ritual_card",
+      "name": "Ritual Card",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product",
+          "info": "Optional: Link to a product (image will use product featured image if not set)"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Used if product is not set"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "TAG | ZENTRIEREN"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Flow & Glow"
+        },
+        {
+          "type": "text",
+          "id": "benefit",
+          "label": "Benefit",
+          "default": "Für Leichtigkeit & Balance"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "ANSEHEN"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DinVeda Complete Your Day",
+      "blocks": [
+        {
+          "type": "ritual_card",
+          "settings": {
+            "label": "TAG | ZENTRIEREN",
+            "title": "Flow & Glow",
+            "benefit": "Für Leichtigkeit & Balance"
+          }
+        },
+        {
+          "type": "ritual_card",
+          "settings": {
+            "label": "BALANCE | AUSGLEICHEN",
+            "title": "Ova Harmony",
+            "benefit": "Für Harmonie & sanfte Energie"
+          }
+        },
+        {
+          "type": "ritual_card",
+          "settings": {
+            "label": "ABEND | LOSLASSEN",
+            "title": "Moon Rest",
+            "benefit": "Für Entspannung & Schlaf"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

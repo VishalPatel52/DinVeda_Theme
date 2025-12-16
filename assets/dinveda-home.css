@@ -1,0 +1,508 @@
+/* 
+ * DinVeda Homepage Styles
+ * Scoped only to homepage template (template == 'index')
+ * Premium German-first homepage styling
+ */
+
+/* ============================================
+   Hero Section
+   ============================================ */
+
+.dinveda-hero {
+  position: relative;
+  width: 100%;
+  min-height: var(--hero-min-height-desktop, 700px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  overflow: hidden;
+  padding: 0 var(--design-section-spacing-medium);
+  margin-bottom: 0;
+}
+
+.dinveda-hero__wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: var(--hero-min-height-desktop, 700px);
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+/* Background container - always present */
+.dinveda-hero__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Fallback background - warm beige when no image */
+.dinveda-hero__background--fallback {
+  background-color: var(--design-bg-color, #FFF0DD);
+  background-image: linear-gradient(135deg, var(--design-bg-color, #FFF0DD) 0%, var(--design-secondary-bg, #FFF6EA) 100%);
+}
+
+/* Image background - when image is set */
+.dinveda-hero__background--has-image {
+  background-color: #000000;
+}
+
+.dinveda-hero__background--has-image .dinveda-hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.dinveda-hero__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, calc(0.15 * var(--hero-overlay-opacity, 0.7))), rgba(0, 0, 0, calc(0.75 * var(--hero-overlay-opacity, 0.7))));
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* When no image, overlay should be lighter for readability on beige */
+.dinveda-hero__background--fallback .dinveda-hero__overlay {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, calc(0.05 * var(--hero-overlay-opacity, 0.7))), rgba(0, 0, 0, calc(0.15 * var(--hero-overlay-opacity, 0.7))));
+}
+
+.dinveda-hero__content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 100px var(--design-section-spacing-medium) 80px;
+  min-height: var(--hero-min-height-desktop, 700px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+.dinveda-hero__inner {
+  max-width: 560px;
+  width: 100%;
+  padding-bottom: 80px;
+}
+
+.dinveda-hero__heading {
+  font-family: var(--heading-family);
+  font-size: var(--design-h1-size);
+  font-weight: var(--heading-weight);
+  font-style: var(--heading-style);
+  letter-spacing: var(--heading-spacing);
+  line-height: 1.2;
+  color: #ffffff;
+  margin: 0 0 28px 0;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+.dinveda-hero__subheading {
+  font-family: var(--main-family);
+  font-size: calc(var(--design-body-font-size) + 2px);
+  font-weight: var(--main-weight);
+  line-height: 1.7;
+  color: #ffffff;
+  margin: 0 0 40px 0;
+  opacity: 0.95;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* When no image, text should be dark for readability on beige */
+.dinveda-hero--no-image .dinveda-hero__heading {
+  color: var(--design-text-color, #C17129);
+  text-shadow: none;
+}
+
+.dinveda-hero--no-image .dinveda-hero__subheading {
+  color: var(--design-text-color, #C17129);
+  opacity: 0.85;
+  text-shadow: none;
+}
+
+.dinveda-hero__button {
+  display: inline-block;
+  padding: 16px 40px;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: 1px solid var(--button-bg);
+  border-radius: 8px;
+  text-decoration: none;
+  font-family: var(--main-family);
+  font-size: var(--design-body-font-size);
+  font-weight: var(--main-weight);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.dinveda-hero__button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================
+   Trust Cards Section
+   ============================================ */
+
+.dinveda-trust-cards {
+  padding: var(--design-section-spacing-large) 0;
+  width: 100%;
+  background-color: var(--design-bg-color);
+}
+
+.dinveda-trust-cards__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--design-section-spacing-medium);
+}
+
+.dinveda-trust-cards__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  align-items: stretch;
+}
+
+.dinveda-trust-cards__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 48px 32px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+}
+
+.dinveda-trust-cards__card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+.dinveda-trust-cards__icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  color: var(--design-text-color);
+  flex-shrink: 0;
+}
+
+.dinveda-trust-cards__icon svg {
+  width: 100%;
+  height: 100%;
+  max-width: 56px;
+  max-height: 56px;
+}
+
+.dinveda-trust-cards__title {
+  font-family: var(--heading-family);
+  font-size: var(--design-h3-size);
+  font-weight: var(--heading-weight);
+  font-style: var(--heading-style);
+  letter-spacing: var(--heading-spacing);
+  color: var(--design-text-color);
+  margin: 0 0 16px 0;
+  line-height: 1.3;
+}
+
+.dinveda-trust-cards__text {
+  font-family: var(--main-family);
+  font-size: var(--design-body-font-size);
+  font-weight: var(--main-weight);
+  line-height: 1.7;
+  color: var(--design-text-color);
+  margin: 0;
+  opacity: 0.85;
+  flex: 1;
+}
+
+/* ============================================
+   Ritual Picker Section
+   ============================================ */
+/* Note: Ritual picker uses its own CSS file: section-dinveda-ritual-picker.css */
+
+/* ============================================
+   Split Story Section
+   ============================================ */
+
+.dinveda-split-story {
+  padding: var(--design-section-spacing-large) 0;
+  width: 100%;
+}
+
+.dinveda-split-story__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--design-section-spacing-medium);
+}
+
+.dinveda-split-story__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.dinveda-split-story__image-column {
+  order: 1;
+}
+
+.dinveda-split-story__image-wrapper {
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  aspect-ratio: 1 / 1;
+}
+
+.dinveda-split-story__image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.dinveda-split-story__placeholder {
+  background-color: var(--design-secondary-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+}
+
+.dinveda-split-story__placeholder .placeholder-svg {
+  width: 100%;
+  height: 100%;
+  fill: var(--design-text-color);
+  opacity: 0.2;
+}
+
+.dinveda-split-story__text-column {
+  order: 2;
+}
+
+.dinveda-split-story__content {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.dinveda-split-story__eyebrow {
+  font-family: var(--main-family);
+  font-size: calc(var(--design-body-font-size) - 2px);
+  font-weight: var(--main-weight);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--design-accent-color);
+  margin: 0 0 8px 0;
+  opacity: 0.85;
+}
+
+.dinveda-split-story__title {
+  font-family: var(--heading-family);
+  font-size: var(--design-h2-size);
+  font-weight: var(--heading-weight);
+  font-style: var(--heading-style);
+  letter-spacing: var(--heading-spacing);
+  line-height: 1.25;
+  color: var(--design-text-color);
+  margin: 0 0 12px 0;
+}
+
+.dinveda-split-story__body {
+  font-family: var(--main-family);
+  font-size: var(--design-body-font-size);
+  font-weight: var(--main-weight);
+  line-height: 1.8;
+  color: var(--design-text-color);
+  margin: 0;
+  opacity: 0.9;
+}
+
+.dinveda-split-story__body p {
+  margin: 0 0 20px 0;
+}
+
+.dinveda-split-story__body p:last-child {
+  margin-bottom: 0;
+}
+
+.dinveda-split-story__cta {
+  display: inline-block;
+  padding: 16px 40px;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: 1px solid var(--button-bg);
+  border-radius: 8px;
+  text-decoration: none;
+  font-family: var(--main-family);
+  font-size: var(--design-body-font-size);
+  font-weight: var(--main-weight);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  align-self: flex-start;
+  margin-top: 8px;
+}
+
+.dinveda-split-story__cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ============================================
+   Mobile Responsive Styles
+   ============================================ */
+
+@media (max-width: 767px) {
+  /* Hero Mobile */
+  .dinveda-hero,
+  .dinveda-hero__wrapper {
+    min-height: var(--hero-min-height-mobile, 520px);
+  }
+
+  .dinveda-hero__content {
+    padding: 60px 24px 50px;
+    min-height: var(--hero-min-height-mobile, 520px);
+  }
+
+  .dinveda-hero__inner {
+    max-width: 100%;
+    padding-bottom: 0;
+  }
+
+  .dinveda-hero__heading {
+    font-size: calc(var(--design-h1-size) * 0.75);
+    margin-bottom: 16px;
+  }
+
+  .dinveda-hero__subheading {
+    font-size: calc(var(--design-body-font-size) * 0.95);
+    margin-bottom: 32px;
+  }
+
+  .dinveda-hero__button {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Trust Cards Mobile */
+  .dinveda-trust-cards {
+    padding: var(--design-section-spacing-medium) 0;
+  }
+
+  .dinveda-trust-cards__container {
+    padding: 0 24px;
+  }
+
+  .dinveda-trust-cards__grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .dinveda-trust-cards__card {
+    padding: 32px 24px;
+  }
+
+  .dinveda-trust-cards__icon {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 20px;
+  }
+
+  .dinveda-trust-cards__title {
+    font-size: calc(var(--design-h3-size) * 0.9);
+    margin-bottom: 12px;
+  }
+
+  .dinveda-trust-cards__text {
+    font-size: calc(var(--design-body-font-size) * 0.95);
+  }
+
+  /* Ritual Picker Mobile - handled by section-dinveda-ritual-picker.css */
+
+  /* Split Story Mobile */
+  .dinveda-split-story {
+    padding: var(--design-section-spacing-medium) 0;
+  }
+
+  .dinveda-split-story__container {
+    padding: 0 24px;
+  }
+
+  .dinveda-split-story__grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .dinveda-split-story__image-column {
+    order: 1;
+  }
+
+  .dinveda-split-story__text-column {
+    order: 2;
+  }
+
+  .dinveda-split-story__title {
+    font-size: calc(var(--design-h2-size) * 0.85);
+  }
+
+  .dinveda-split-story__body {
+    font-size: calc(var(--design-body-font-size) * 0.95);
+  }
+
+  .dinveda-split-story__cta {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Tablet Styles */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .dinveda-hero__content {
+    padding: 70px var(--design-section-spacing-medium);
+  }
+
+  .dinveda-trust-cards__grid {
+    gap: 32px;
+  }
+
+  /* Ritual picker tablet styles handled by section-dinveda-ritual-picker.css */
+
+  .dinveda-split-story__grid {
+    gap: 60px;
+  }
+}
+
+/* ============================================
+   Footer (Homepage Override)
+   ============================================ */
+
+/* Match footer background to reference beige/cream color on homepage */
+body.template-index .section-footer {
+  background-color: var(--design-bg-color, #FFF0DD);
+}
+
+body.template-index .section-footer a,
+body.template-index .section-footer p,
+body.template-index .section-footer small,
+body.template-index .section-footer h1,
+body.template-index .section-footer h2,
+body.template-index .section-footer h3,
+body.template-index .section-footer h4,
+body.template-index .section-footer h5,
+body.template-index .section-footer h6 {
+  color: var(--design-text-color, #C17129);
+}
+

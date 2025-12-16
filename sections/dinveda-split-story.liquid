@@ -1,0 +1,173 @@
+{% comment %}
+  DinVeda Split Story - Image left, text right
+  Philosophy section with eyebrow, title, body, and CTA
+{% endcomment %}
+
+{%- liquid
+  assign background_mode = section.settings.background_mode | default: 'design_bg'
+  assign story_image = section.settings.image
+-%}
+
+<section
+  id="dinveda-split-story-{{ section.id }}"
+  class="dinveda-split-story"
+  data-section-id="{{ section.id }}"
+  data-section-type="dinveda-split-story"
+>
+  <div class="dinveda-split-story__container">
+    <div class="dinveda-split-story__grid">
+      
+      {%- comment -%} Image Column {%- endcomment -%}
+      <div class="dinveda-split-story__image-column">
+        {% if story_image != blank %}
+          <div class="dinveda-split-story__image-wrapper">
+            <img
+              src="{{ story_image | image_url: width: 800 }}"
+              srcset="{{ story_image | image_url: width: 800 }} 1x, {{ story_image | image_url: width: 1600 }} 2x"
+              alt="{{ story_image.alt | escape }}"
+              class="dinveda-split-story__image"
+              loading="lazy"
+              width="{{ story_image.width }}"
+              height="{{ story_image.height }}"
+            >
+          </div>
+        {% else %}
+          <div class="dinveda-split-story__image-wrapper dinveda-split-story__placeholder">
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        {% endif %}
+      </div>
+
+      {%- comment -%} Text Column {%- endcomment -%}
+      <div class="dinveda-split-story__text-column">
+        <div class="dinveda-split-story__content">
+          {% if section.settings.eyebrow != blank %}
+            <p class="dinveda-split-story__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+          {% endif %}
+
+          {% if section.settings.title != blank %}
+            <h2 class="dinveda-split-story__title">{{ section.settings.title | escape }}</h2>
+          {% endif %}
+
+          {% if section.settings.body != blank %}
+            <div class="dinveda-split-story__body">
+              {{ section.settings.body }}
+            </div>
+          {% endif %}
+
+          {% if section.settings.cta_label != blank and section.settings.cta_link != blank %}
+            <a
+              href="{{ section.settings.cta_link }}"
+              class="dinveda-split-story__cta"
+            >
+              {{ section.settings.cta_label | escape }}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% style %}
+  #dinveda-split-story-{{ section.id }} {
+    {% case background_mode %}
+      {% when 'design_bg' %}
+        background-color: var(--design-bg-color);
+      {% when 'design_secondary_bg' %}
+        background-color: var(--design-secondary-bg);
+      {% when 'philosophy_beige' %}
+        background-color: #f3e9dc;
+      {% when 'transparent' %}
+        background-color: transparent;
+    {% endcase %}
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "DinVeda Split Story",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Recommended: 800x1000px or similar portrait ratio"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow label",
+      "default": "Unsere Philosophie"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Geführt von der Weisheit der Natur"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body text",
+      "default": "<p>Wir glauben an den Rhythmus des Tages – an Momente der Aktivierung, der Zentrierung, des Ausgleichs und der Ruhe. Jede unserer Mischungen ist inspiriert von der ayurvedischen Tradition und den Tieren, die diese Qualitäten verkörpern.</p><p>Unsere Rituale sind keine medizinischen Produkte, sondern kleine tägliche Pausen für dein Wohlbefinden. Handwerklich gemischt in Deutschland, mit Zutaten aus kontrolliert biologischem Anbau.</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA button label",
+      "default": "Unsere Geschichte"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA button link"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "background_mode",
+      "label": "Background color",
+      "options": [
+        {
+          "value": "design_bg",
+          "label": "Design System Background"
+        },
+        {
+          "value": "design_secondary_bg",
+          "label": "Design System Secondary Background"
+        },
+        {
+          "value": "philosophy_beige",
+          "label": "Philosophy Beige (#f3e9dc)"
+        },
+        {
+          "value": "transparent",
+          "label": "Transparent"
+        }
+      ],
+      "default": "philosophy_beige"
+    }
+  ],
+  "presets": [
+    {
+      "name": "DinVeda Split Story"
+    }
+  ]
+}
+{% endschema %}
+

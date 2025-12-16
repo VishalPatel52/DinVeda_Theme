@@ -1,0 +1,137 @@
+{% comment %}
+  DinVeda Ritual Snapshot Section
+  Displays 3 configurable items with labels and metafield values
+{% endcomment %}
+
+{%- if section.blocks.size > 0 -%}
+  <link rel="preload" href="{{ 'section-dinveda-ritual-snapshot.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="{{ 'section-dinveda-ritual-snapshot.css' | asset_url }}"></noscript>
+
+  <section
+    id="dinveda-ritual-snapshot-{{ section.id }}"
+    class="dinveda-ritual-snapshot section-{{ section.id }}"
+    data-section-id="{{ section.id }}"
+    data-section-type="dinveda-ritual-snapshot"
+  >
+    <div class="dinveda-ritual-snapshot__container">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="dinveda-ritual-snapshot__heading">
+          {{ section.settings.heading }}
+        </h2>
+      {%- endif -%}
+      <div class="dinveda-ritual-snapshot__grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'ritual_item' -%}
+            {%- liquid
+              assign metafield_key = block.settings.metafield_key
+              assign metafield_value = ''
+              
+              case metafield_key
+                when 'ritual_timing'
+                  assign metafield_value = product.metafields.dinveda.ritual_timing | default: ''
+                when 'ritual_usage'
+                  assign metafield_value = product.metafields.dinveda.ritual_usage | default: ''
+                when 'ritual_taste'
+                  assign metafield_value = product.metafields.dinveda.ritual_taste | default: ''
+              endcase
+            -%}
+            
+            {%- if block.settings.label != blank or metafield_value != blank -%}
+              <div class="dinveda-ritual-snapshot__item" {{ block.shopify_attributes }}>
+                {%- if block.settings.label != blank -%}
+                  <div class="dinveda-ritual-snapshot__label">
+                    {{ block.settings.label }}
+                  </div>
+                {%- endif -%}
+                {%- if metafield_value != blank -%}
+                  <div class="dinveda-ritual-snapshot__value">
+                    {{ metafield_value }}
+                  </div>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "DinVeda – Ritual Snapshot",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Ritual auf einen Blick",
+      "info": "Section heading displayed above the items"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ritual_item",
+      "name": "Ritual Item",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "info": "The label text displayed above the value"
+        },
+        {
+          "type": "select",
+          "id": "metafield_key",
+          "label": "Metafield",
+          "options": [
+            {
+              "value": "ritual_timing",
+              "label": "Ritual Timing"
+            },
+            {
+              "value": "ritual_usage",
+              "label": "Ritual Usage"
+            },
+            {
+              "value": "ritual_taste",
+              "label": "Ritual Taste"
+            }
+          ],
+          "default": "ritual_timing",
+          "info": "Select which product metafield to display"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DinVeda – Ritual Snapshot",
+      "blocks": [
+        {
+          "type": "ritual_item",
+          "settings": {
+            "label": "Tageszeit",
+            "metafield_key": "ritual_timing"
+          }
+        },
+        {
+          "type": "ritual_item",
+          "settings": {
+            "label": "Anwendung",
+            "metafield_key": "ritual_usage"
+          }
+        },
+        {
+          "type": "ritual_item",
+          "settings": {
+            "label": "Geschmack",
+            "metafield_key": "ritual_taste"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

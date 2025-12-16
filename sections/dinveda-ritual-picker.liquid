@@ -6,8 +6,6 @@
 {%- liquid
   assign background_mode = section.settings.background_mode | default: 'design_bg'
   assign layout = section.settings.layout | default: 'grid_4'
-  assign emphasize_center = section.settings.emphasize_center_card
-  assign section_spacing = section.settings.section_spacing | default: 'medium'
 -%}
 
 <link rel="preload" href="{{ 'section-dinveda-ritual-picker.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -22,18 +20,13 @@
   <div class="dinveda-ritual-picker__container">
     
     {%- comment -%} Section Header {%- endcomment -%}
-    {% if section.settings.title != blank or section.settings.subtitle != blank or section.settings.intro != blank %}
+    {% if section.settings.title != blank or section.settings.subtitle != blank %}
       <div class="dinveda-ritual-picker__header">
         {% if section.settings.title != blank %}
           <h2 class="dinveda-ritual-picker__title">{{ section.settings.title | escape }}</h2>
         {% endif %}
         {% if section.settings.subtitle != blank %}
           <p class="dinveda-ritual-picker__subtitle">{{ section.settings.subtitle | escape }}</p>
-        {% endif %}
-        {% if section.settings.intro != blank %}
-          <div class="dinveda-ritual-picker__intro">
-            {{ section.settings.intro }}
-          </div>
         {% endif %}
       </div>
     {% endif %}
@@ -44,82 +37,32 @@
         {% for block in section.blocks %}
           {% if block.type == 'ritual_card' %}
             {%- liquid
-              assign selected_product = block.settings.product
+              assign card_image = block.settings.image
+              assign card_link = block.settings.link
               
-              # Resolve link: product.url > block.settings.link > blank
-              if selected_product != blank
-                assign card_link = selected_product.url
-              elsif block.settings.link != blank
-                assign card_link = block.settings.link
-              else
-                assign card_link = blank
-              endif
-              
-              # Fallbacks: use product data if custom fields are blank
-              assign phase_label = block.settings.phase_label
-              
-              if block.settings.blend_name != blank
-                assign blend_name = block.settings.blend_name
-              elsif selected_product != blank
-                assign blend_name = selected_product.title
-              else
-                assign blend_name = blank
-              endif
-              
-              assign animal_name = block.settings.animal_name
-              assign quote_line = block.settings.quote_line
-              assign descriptor = block.settings.descriptor
-              
-              # Image fallback: custom image > product featured image > placeholder
+              # Image alt fallback
               if block.settings.image != blank
-                assign card_image = block.settings.image
-              elsif selected_product != blank and selected_product.featured_image != blank
-                assign card_image = selected_product.featured_image
+                assign image_alt = block.settings.image.alt | default: block.settings.blend_name | default: block.settings.phase_label
               else
-                assign card_image = blank
-              endif
-              
-              # Image alt fallback: custom alt > blend_name > product title > phase_label
-              if block.settings.image_alt != blank
-                assign image_alt = block.settings.image_alt
-              elsif blend_name != blank
-                assign image_alt = blend_name
-              elsif selected_product != blank
-                assign image_alt = selected_product.title
-              else
-                assign image_alt = phase_label
+                assign image_alt = block.settings.blend_name | default: block.settings.phase_label
               endif
               
               assign button_label = block.settings.button_label | default: 'Zu diesem Ritual'
-              assign badge_text = block.settings.badge
-              assign accent_variant = block.settings.accent_variant | default: 'none'
-              assign is_center = false
-              if emphasize_center and forloop.index == 2
-                assign is_center = true
-              endif
             -%}
             
             <article 
-              class="dinveda-ritual-picker__card dinveda-ritual-picker__card--accent-{{ accent_variant }}{% if is_center %} dinveda-ritual-picker__card--emphasized{% endif %}{% if card_link != blank %} dinveda-ritual-picker__card--has-link{% endif %}" 
+              class="dinveda-ritual-picker__card{% if card_link != blank %} dinveda-ritual-picker__card--has-link{% endif %}" 
               {{ block.shopify_attributes }}
             >
+              {% if card_link != blank %}
+                {%- liquid
+                  assign link_aria_label = block.settings.blend_name | default: block.settings.phase_label | default: 'Ritual card'
+                -%}
+                <a href="{{ card_link }}" class="dinveda-ritual-picker__card-link" aria-label="{{ link_aria_label | escape }}">
+              {% endif %}
+              
               <div class="dinveda-ritual-picker__card-inner">
                 
-                {%- comment -%} Stretched link for entire card clickability (first child) {%- endcomment -%}
-                {% if card_link != blank %}
-                  {%- liquid
-                    assign link_aria_label = blend_name | default: phase_label | default: 'Ritual card'
-                  -%}
-                  <a href="{{ card_link }}" class="dinveda-ritual-picker__stretched-link" aria-label="{{ link_aria_label | escape }}"></a>
-                {% endif %}
-                
-                {%- comment -%} Badge {%- endcomment -%}
-                {% if badge_text != blank %}
-                  <div class="dinveda-ritual-picker__badge">
-                    {{ badge_text | escape }}
-                  </div>
-                {% endif %}
-
                 {%- comment -%} Image {%- endcomment -%}
                 {% if card_image != blank %}
                   {%- liquid
@@ -137,58 +80,48 @@
                 {%- comment -%} Content {%- endcomment -%}
                 <div class="dinveda-ritual-picker__content">
                   
-                  {% if phase_label != blank %}
-                    <p class="dinveda-ritual-picker__phase-label">{{ phase_label | escape }}</p>
+                  {% if block.settings.phase_label != blank %}
+                    <p class="dinveda-ritual-picker__phase-label">{{ block.settings.phase_label | escape }}</p>
                   {% endif %}
 
-                  {% if blend_name != blank %}
-                    <h3 class="dinveda-ritual-picker__blend-name">{{ blend_name | escape }}</h3>
+                  {% if block.settings.blend_name != blank %}
+                    <h3 class="dinveda-ritual-picker__blend-name">{{ block.settings.blend_name | escape }}</h3>
                   {% endif %}
 
-                  {% if quote_line != blank %}
+                  {% if block.settings.quote_line != blank or block.settings.descriptor != blank or block.settings.attribution_line != blank %}
                     <div class="dinveda-ritual-picker__quote-block">
-                      <p class="dinveda-ritual-picker__quote-line">{{ quote_line | escape }}</p>
-                      {% if animal_name != blank %}
-                        <p class="dinveda-ritual-picker__animal-name">— {{ animal_name | escape }}</p>
+                      {% if block.settings.quote_line != blank %}
+                        <p class="dinveda-ritual-picker__quote-line">{{ block.settings.quote_line | escape }}</p>
+                      {% endif %}
+                      {% if block.settings.descriptor != blank %}
+                        <p class="dinveda-ritual-picker__descriptor">{{ block.settings.descriptor | escape }}</p>
+                      {% endif %}
+                      {% if block.settings.attribution_line != blank %}
+                        <p class="dinveda-ritual-picker__animal-name">{{ block.settings.attribution_line | escape }}</p>
                       {% endif %}
                     </div>
                   {% endif %}
 
-                  {% if descriptor != blank %}
-                    <p class="dinveda-ritual-picker__descriptor">{{ descriptor | escape }}</p>
-                  {% endif %}
-
-                  {%- comment -%} CTA Button as real link (takes priority over stretched link) {%- endcomment -%}
+                  {%- comment -%} CTA Button - visual only, not interactive {%- endcomment -%}
                   {% if button_label != blank %}
                     <div class="dinveda-ritual-picker__button-wrapper">
-                      {% if card_link != blank %}
-                        <a href="{{ card_link }}" class="dinveda-ritual-picker__button button btn-outline">
-                          {{ button_label | escape }}
-                        </a>
-                      {% else %}
-                        <span class="dinveda-ritual-picker__button button btn-outline">
-                          {{ button_label | escape }}
-                        </span>
-                      {% endif %}
+                      <span class="dinveda-ritual-picker__button button btn-outline">
+                        {{ button_label | escape }}
+                      </span>
                     </div>
                   {% endif %}
 
                 </div>
 
               </div>
+
+              {% if card_link != blank %}
+                </a>
+              {% endif %}
             </article>
 
           {% endif %}
         {% endfor %}
-      </div>
-    {% endif %}
-
-    {%- comment -%} Section CTA {%- endcomment -%}
-    {% if section.settings.cta_label != blank and section.settings.cta_link != blank %}
-      <div class="dinveda-ritual-picker__cta">
-        <a href="{{ section.settings.cta_link }}" class="button btn-outline">
-          {{ section.settings.cta_label | escape }}
-        </a>
       </div>
     {% endif %}
 
@@ -205,21 +138,12 @@
       {% when 'transparent' %}
         background-color: transparent;
     {% endcase %}
-    
-    {% case section_spacing %}
-      {% when 'small' %}
-        padding: var(--design-section-spacing-small) 0;
-      {% when 'medium' %}
-        padding: var(--design-section-spacing-medium) 0;
-      {% when 'large' %}
-        padding: var(--design-section-spacing-large) 0;
-    {% endcase %}
   }
 {% endstyle %}
 
 {% schema %}
 {
-  "name": "DinVeda — Ritual Picker",
+  "name": "DinVeda Ritual Picker",
   "tag": "section",
   "class": "dynamic-section",
   "settings": [
@@ -230,20 +154,14 @@
     {
       "type": "text",
       "id": "title",
-      "label": "Title",
+      "label": "Heading",
       "default": "Dein Tag in Balance"
     },
     {
-      "type": "text",
+      "type": "textarea",
       "id": "subtitle",
       "label": "Subtitle",
-      "default": "Vier Momente am Tag — ein kleines Ritual für dich"
-    },
-    {
-      "type": "textarea",
-      "id": "intro",
-      "label": "Intro text (optional)",
-      "info": "Optional introductory text below subtitle"
+      "default": "Ayurvedische Rituale für jeden Moment deines Tages"
     },
     {
       "type": "header",
@@ -256,45 +174,15 @@
       "options": [
         {
           "value": "grid_4",
-          "label": "4 cards grid (desktop) / 1 card (mobile)"
+          "label": "4 cards desktop / 2x2 tablet / slider mobile"
         },
         {
           "value": "grid_2x2",
-          "label": "2x2 grid (desktop) / 1 card (mobile)"
-        },
-        {
-          "value": "slider_mobile",
-          "label": "4 cards grid (desktop) / slider (mobile)"
+          "label": "2x2 desktop/tablet / slider mobile"
         }
       ],
-      "default": "grid_4"
-    },
-    {
-      "type": "checkbox",
-      "id": "emphasize_center_card",
-      "label": "Emphasize center card",
-      "default": true,
-      "info": "Visually emphasize the 2nd card on desktop"
-    },
-    {
-      "type": "select",
-      "id": "section_spacing",
-      "label": "Section spacing",
-      "options": [
-        {
-          "value": "small",
-          "label": "Small"
-        },
-        {
-          "value": "medium",
-          "label": "Medium"
-        },
-        {
-          "value": "large",
-          "label": "Large"
-        }
-      ],
-      "default": "medium"
+      "default": "grid_4",
+      "info": "Mobile always shows 2x2 grid (no slider)"
     },
     {
       "type": "select",
@@ -315,40 +203,24 @@
         }
       ],
       "default": "design_bg"
-    },
-    {
-      "type": "header",
-      "content": "Call to Action"
-    },
-    {
-      "type": "text",
-      "id": "cta_label",
-      "label": "CTA button label (optional)"
-    },
-    {
-      "type": "url",
-      "id": "cta_link",
-      "label": "CTA button link (optional)"
     }
   ],
   "blocks": [
     {
       "type": "ritual_card",
-      "name": "Ritual card",
+      "name": "Ritual Card",
       "limit": 4,
       "settings": [
         {
-          "type": "product",
-          "id": "product",
-          "label": "Product (recommended)",
-          "info": "Select a product to automatically link this card. Product title and image will be used as fallbacks if fields below are empty."
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
         },
         {
           "type": "text",
           "id": "phase_label",
           "label": "Phase label",
-          "default": "MORGEN · ACTIVATE",
-          "info": "e.g., 'MORGEN · ACTIVATE', 'TAG · ZENTRIEREN'"
+          "default": "MORGEN | AKTIVIEREN"
         },
         {
           "type": "text",
@@ -358,40 +230,21 @@
         },
         {
           "type": "text",
-          "id": "animal_name",
-          "label": "Animal name",
-          "default": "Fuchs",
-          "info": "e.g., 'Fuchs', 'Bär', 'Eule'"
-        },
-        {
-          "type": "text",
           "id": "quote_line",
-          "label": "Quote line",
-          "default": "Ich starte kraftvoll und klar in den Tag."
+          "label": "Quote line (italic)",
+          "default": "Ich starte clever und klar in den Tag."
         },
         {
-          "type": "text",
+          "type": "textarea",
           "id": "descriptor",
-          "label": "Descriptor",
+          "label": "Descriptor (bold)",
           "default": "Für Energie, Fokus & innere Wärme"
         },
         {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Image",
-          "info": "Animal illustration or pouch photo"
-        },
-        {
           "type": "text",
-          "id": "image_alt",
-          "label": "Image alt text (optional)",
-          "info": "If not set, uses blend name"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Link (fallback)",
-          "info": "Optional URL fallback if product is not selected. Product URL takes priority."
+          "id": "attribution_line",
+          "label": "Attribution line",
+          "default": "— sagt der Fuchs"
         },
         {
           "type": "text",
@@ -400,88 +253,58 @@
           "default": "Zu diesem Ritual"
         },
         {
-          "type": "text",
-          "id": "badge",
-          "label": "Badge (optional)",
-          "info": "Optional badge text, e.g., 'Bestseller'"
-        },
-        {
-          "type": "select",
-          "id": "accent_variant",
-          "label": "Accent variant",
-          "options": [
-            {
-              "value": "none",
-              "label": "None"
-            },
-            {
-              "value": "warm",
-              "label": "Warm"
-            },
-            {
-              "value": "calm",
-              "label": "Calm"
-            },
-            {
-              "value": "floral",
-              "label": "Floral"
-            },
-            {
-              "value": "night",
-              "label": "Night"
-            }
-          ],
-          "default": "none",
-          "info": "Subtle accent styling using design system accent color"
+          "type": "url",
+          "id": "link",
+          "label": "Link"
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "DinVeda — Ritual Picker",
+      "name": "DinVeda Ritual Picker",
       "blocks": [
         {
           "type": "ritual_card",
           "settings": {
-            "phase_label": "MORGEN · ACTIVATE",
+            "phase_label": "MORGEN | AKTIVIEREN",
             "blend_name": "Golden Boost",
-            "animal_name": "Fuchs",
-            "quote_line": "Ich starte clever in den Tag.",
+            "quote_line": "Ich starte clever und klar in den Tag.",
             "descriptor": "Für Energie, Fokus & innere Wärme",
+            "attribution_line": "— sagt der Fuchs",
             "button_label": "Zu diesem Ritual"
           }
         },
         {
           "type": "ritual_card",
           "settings": {
-            "phase_label": "TAG · ZENTRIEREN",
+            "phase_label": "TAG | ZENTRIEREN",
             "blend_name": "Flow & Glow",
-            "animal_name": "Panda",
             "quote_line": "Ich genieße Balance und Ruhe.",
             "descriptor": "Für Leichtigkeit, Balance & innere Strahlkraft",
+            "attribution_line": "— sagt der Panda",
             "button_label": "Zu diesem Ritual"
           }
         },
         {
           "type": "ritual_card",
           "settings": {
-            "phase_label": "NACHMITTAG · HARMONISIEREN",
+            "phase_label": "BALANCE | AUSGLEICHEN",
             "blend_name": "Ova Harmony",
-            "animal_name": "Schmetterling",
             "quote_line": "Ich blühe in Leichtigkeit & Harmonie.",
             "descriptor": "Für Ausgleich, Harmonie & sanfte Energie",
+            "attribution_line": "— sagt der Schmetterling",
             "button_label": "Zu diesem Ritual"
           }
         },
         {
           "type": "ritual_card",
           "settings": {
-            "phase_label": "ABEND · LOSLASSEN",
+            "phase_label": "ABEND | LOSLASSEN",
             "blend_name": "Moon Rest",
-            "animal_name": "Koala",
             "quote_line": "Ich finde Ruhe am Abend und lasse los.",
             "descriptor": "Für Entspannung, Ruhe & erholsamen Schlaf",
+            "attribution_line": "— sagt der Koala",
             "button_label": "Zu diesem Ritual"
           }
         }

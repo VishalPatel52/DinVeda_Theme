@@ -1,0 +1,159 @@
+{% comment %}
+  DinVeda Trust Cards - 3 trust indicator cards
+  Premium trust badges with icons, titles, and descriptions
+{% endcomment %}
+
+<section
+  id="dinveda-trust-cards-{{ section.id }}"
+  class="dinveda-trust-cards"
+  data-section-id="{{ section.id }}"
+  data-section-type="dinveda-trust-cards"
+>
+  <div class="dinveda-trust-cards__container">
+    <div class="dinveda-trust-cards__grid">
+      {% for block in section.blocks %}
+        {% if block.type == 'trust_card' %}
+          <div class="dinveda-trust-cards__card" {{ block.shopify_attributes }}>
+            <div class="dinveda-trust-cards__icon">
+              {% case block.settings.icon %}
+                {% when 'leaf' %}
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                {% when 'flask' %}
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 2v6M14 2v6M6 8h12M7 8v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                    <line x1="9" y1="12" x2="15" y2="12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                    <line x1="9" y1="16" x2="15" y2="16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                {% when 'lotus' %}
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2v10m0-10C8 2 5 5 5 9c0 5 4 8 7 8s7-3 7-8c0-4-3-7-7-7Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 12v10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 22h8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                {% when 'mortar' %}
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12c0 1.66-1.34 3-3 3H6c-1.66 0-3-1.34-3-3s1.34-3 3-3h12c1.66 0 3 1.34 3 3Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M9 6V3h6v3M12 9v12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="12" cy="3" r="1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                {% when 'recycle' %}
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 19h10M5 7l2 12h10l2-12M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M3 7h18M7 11l-2-4M17 11l2-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="12" cy="16" r="1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                {% when 'seedling' %}
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 2v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24M2 12h6m6 0h6M5.64 18.36l4.24-4.24m4.24-4.24l4.24-4.24M22 12h-6m-6 0H4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+              {% endcase %}
+            </div>
+            {% if block.settings.title != blank %}
+              <h3 class="dinveda-trust-cards__title">{{ block.settings.title | escape }}</h3>
+            {% endif %}
+            {% if block.settings.text != blank %}
+              <p class="dinveda-trust-cards__text">{{ block.settings.text | escape }}</p>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DinVeda Trust Cards",
+  "tag": "section",
+  "class": "dynamic-section",
+  "blocks": [
+    {
+      "type": "trust_card",
+      "name": "Trust Card",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "flask",
+              "label": "Flask"
+            },
+            {
+              "value": "lotus",
+              "label": "Lotus"
+            },
+            {
+              "value": "mortar",
+              "label": "Mortar"
+            },
+            {
+              "value": "recycle",
+              "label": "Recycle"
+            },
+            {
+              "value": "seedling",
+              "label": "Seedling"
+            }
+          ],
+          "default": "leaf"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "BIO-zertifiziert"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Zutaten aus kontrolliert biologischem Anbau – transparent & EU-konform."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DinVeda Trust Cards",
+      "blocks": [
+        {
+          "type": "trust_card",
+          "settings": {
+            "icon": "leaf",
+            "title": "BIO-zertifiziert",
+            "text": "Zutaten aus kontrolliert biologischem Anbau – transparent & EU-konform."
+          }
+        },
+        {
+          "type": "trust_card",
+          "settings": {
+            "icon": "flask",
+            "title": "Hergestellt in Deutschland",
+            "text": "Sorgfältig gemischt, geprüft und verpackt – mit Qualitätsfokus."
+          }
+        },
+        {
+          "type": "trust_card",
+          "settings": {
+            "icon": "mortar",
+            "title": "Kleine Chargen",
+            "text": "Handwerklich gemischt für Frische, Aroma und gleichbleibende Qualität."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

@@ -9,44 +9,51 @@
  */
 {
   "sections": {
-    "dinveda_hero_v2": {
-      "type": "dinveda-hero-v2",
+    "dinveda_hero": {
+      "type": "dinveda-hero",
       "settings": {
-        "headline": "Bio-ayurvedische Ritualmischungen",
-        "highlight_word": "Ritualmischungen",
-        "subheadline": "Für Morgenwärme, goldene Pausen und Abendruhe.",
-        "primary_cta_label": "Alle Mischungen entdecken",
-        "primary_cta_link": "/collections/all",
-        "secondary_cta_label": "Unser Ritual-Prinzip",
-        "secondary_cta_link": "",
-        "text_alignment": "left",
-        "background_mode": "design_bg",
-        "show_trust_row": true
-      },
+        "image": "",
+        "overlay_opacity": 70,
+        "min_height_desktop": 600,
+        "min_height_mobile": 520,
+        "heading": "Alte Weisheit für moderne Tage",
+        "subheading": "Entdecke Bio-Rituale aus Deutschland – im Rhythmus deines Alltags.",
+        "button_label": "Jetzt starten",
+        "button_link": "/collections/all"
+      }
+    },
+    "dinveda_trust_cards": {
+      "type": "dinveda-trust-cards",
       "blocks": {
-        "trust_eu_bio": {
-          "type": "trust_item",
+        "trust_card_1": {
+          "type": "trust_card",
           "settings": {
-            "text": "EU-BIO Certified"
+            "icon": "leaf",
+            "title": "BIO-zertifiziert",
+            "text": "Zutaten aus kontrolliert biologischem Anbau – transparent & EU-konform."
           }
         },
-        "trust_germany": {
-          "type": "trust_item",
+        "trust_card_2": {
+          "type": "trust_card",
           "settings": {
-            "text": "Made in Germany"
+            "icon": "flask",
+            "title": "Hergestellt in Deutschland",
+            "text": "Sorgfältig gemischt, geprüft und verpackt – mit Qualitätsfokus."
           }
         },
-        "trust_natural": {
-          "type": "trust_item",
+        "trust_card_3": {
+          "type": "trust_card",
           "settings": {
-            "text": "100% Natural"
+            "icon": "mortar",
+            "title": "Kleine Chargen",
+            "text": "Handwerklich gemischt für Frische, Aroma und gleichbleibende Qualität."
           }
         }
       },
       "block_order": [
-        "trust_eu_bio",
-        "trust_germany",
-        "trust_natural"
+        "trust_card_1",
+        "trust_card_2",
+        "trust_card_3"
       ]
     },
     "dinveda_ritual_picker": {
@@ -54,58 +61,59 @@
       "settings": {
         "title": "Dein Tag in Balance",
         "subtitle": "Ayurvedische Rituale für jeden Moment deines Tages",
-        "layout": "grid_4",
-        "background_mode": "design_bg",
-        "emphasize_center_card": true,
-        "section_spacing": "medium"
+        "background_mode": "design_bg"
       },
       "blocks": {
         "ritual_morgen": {
           "type": "ritual_card",
           "settings": {
-            "phase_label": "MORGEN · ACTIVATE",
+            "image": "",
+            "phase_label": "MORGEN | AKTIVIEREN",
             "blend_name": "Golden Boost",
-            "animal_name": "Fuchs",
             "quote_line": "Ich starte clever und klar in den Tag.",
             "descriptor": "Für Energie, Fokus & innere Wärme",
+            "attribution_line": "— sagt der Fuchs",
             "button_label": "Zu diesem Ritual",
-            "link": ""
+            "link": "/products/golden-boost"
           }
         },
         "ritual_tag": {
           "type": "ritual_card",
           "settings": {
-            "phase_label": "TAG · ZENTRIEREN",
+            "image": "",
+            "phase_label": "TAG | ZENTRIEREN",
             "blend_name": "Flow & Glow",
-            "animal_name": "Panda",
             "quote_line": "Ich genieße Balance und Ruhe.",
             "descriptor": "Für Leichtigkeit, Balance & innere Strahlkraft",
+            "attribution_line": "— sagt der Panda",
             "button_label": "Zu diesem Ritual",
-            "link": ""
+            "link": "/products/flow-glow"
           }
         },
         "ritual_nachmittag": {
           "type": "ritual_card",
           "settings": {
-            "phase_label": "NACHMITTAG · HARMONISIEREN",
+            "image": "",
+            "phase_label": "BALANCE | AUSGLEICHEN",
             "blend_name": "Ova Harmony",
-            "animal_name": "Schmetterling",
-            "quote_line": "Ich blühe in Leichtigkeit & Harmonie",
+            "quote_line": "Ich blühe in Leichtigkeit & Harmonie.",
             "descriptor": "Für Ausgleich, Harmonie & sanfte Energie",
+            "attribution_line": "— sagt der Schmetterling",
             "button_label": "Zu diesem Ritual",
-            "link": ""
+            "link": "/products/ova-harmony"
           }
         },
         "ritual_abend": {
           "type": "ritual_card",
           "settings": {
-            "phase_label": "ABEND · LOSLASSEN",
+            "image": "",
+            "phase_label": "ABEND | LOSLASSEN",
             "blend_name": "Moon Rest",
-            "animal_name": "Koala",
             "quote_line": "Ich finde Ruhe am Abend und lasse los.",
             "descriptor": "Für Entspannung, Ruhe & erholsamen Schlaf",
+            "attribution_line": "— sagt der Koala",
             "button_label": "Zu diesem Ritual",
-            "link": ""
+            "link": "/products/moon-rest"
           }
         }
       },
@@ -116,456 +124,23 @@
         "ritual_abend"
       ]
     },
-    "dinveda_hero": {
-      "type": "dv-hero-animal-carousel",
+    "dinveda_split_story": {
+      "type": "dinveda-split-story",
       "settings": {
-        "hero_title": "DinVeda – Bio-ayurvedische Ritualmischungen",
-        "hero_subheading": "<p>Bio-ayurvedische Pflanzenmischungen für deine täglichen Rituale – von Morgenwärme über goldene Pausen bis zu Abendruhe.</p>",
-        "button_label": "Alle Mischungen entdecken",
-        "button_link": "/collections/all"
-      },
-      "blocks": {
-        "slide-fox": {
-          "type": "animal_slide",
-          "settings": {
-            "image": "shopify://shop_images/gb_uc2.png",
-            "animal_label": "DEIN FUCHS – GOLDEN BOOST",
-            "tagline": "\"Ich starte clever in den Tag\" – sagt der Fuchs.",
-            "description": "<p>Clever kombiniert für deine tägliche Routine. Die perfekte Balance aus wärmenden Gewürzen und sanften Aromen für einen gelassenen Start.</p>"
-          }
-        },
-        "slide-Panda": {
-          "type": "animal_slide",
-          "settings": {
-            "image": "shopify://shop_images/fg_uc1.png",
-            "animal_label": "DEIN Panda – FLOW & GLOW",
-            "tagline": "\"Ich strahle von innen\" – sagt der Panda.",
-            "description": "<p>Leichte, luftige Mischungen für zwischendurch. Kleine Pausen mit zarten Aromen, die deinen Tag erhellen und neue Leichtigkeit schenken.</p>"
-          }
-        },
-        "slide-bee": {
-          "type": "animal_slide",
-          "settings": {
-            "image": "shopify://shop_images/oh_uc2_d2ee8cad-c7b2-425c-bb09-809211c037da.png",
-            "animal_label": "DEIN Schmetterling – OVA HARMONY",
-            "tagline": "\"Ich starte kraftvoll in den Tag\" – sagt die Schmetterling.",
-            "description": "<p>Ein sanfter Morgenritual für einen kraftvollen Start. Warme Gewürze und wohltuende Kräuter wecken die Sinne und schenken neue Energie.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "slide-fox",
-        "slide-Panda",
-        "slide-bee"
-      ]
-    },
-    "16260997139ae0f76a": {
-      "type": "featured-collection",
-      "settings": {
-        "title": "Unsere Blends",
-        "collection": "pflanzenmischungen",
-        "display_type": "carousel",
-        "items_per_row": 4,
-        "mobile_items_per_row": "2",
-        "items_per_page": 8,
-        "show_view_all": true,
-        "section_padding": "both"
+        "image": "",
+        "eyebrow": "Unsere Philosophie",
+        "title": "Geführt von der Weisheit der Natur",
+        "body": "<p>Wir glauben an den Rhythmus des Tages – an Momente der Aktivierung, der Zentrierung, des Ausgleichs und der Ruhe. Jede unserer Mischungen ist inspiriert von der ayurvedischen Tradition und den Tieren, die diese Qualitäten verkörpern.</p><p>Unsere Rituale sind keine medizinischen Produkte, sondern kleine tägliche Pausen für dein Wohlbefinden. Handwerklich gemischt in Deutschland, mit Zutaten aus kontrolliert biologischem Anbau.</p>",
+        "cta_label": "Unsere Geschichte",
+        "cta_link": "/pages/about",
+        "background_mode": "philosophy_beige"
       }
-    },
-    "dinveda_brand_pillars_2024": {
-      "type": "dinveda-brand-pillars",
-      "blocks": {
-        "pillar_bio_2024": {
-          "type": "pillar",
-          "settings": {
-            "title": "BIO & NATÜRLICH",
-            "description": "",
-            "card_bg": "#f5d5c4",
-            "text_color": "#C17129",
-            "title_size": 18,
-            "description_size": 14,
-            "link": ""
-          }
-        },
-        "pillar_ayurveda_2024": {
-          "type": "pillar",
-          "settings": {
-            "title": "AYURVEDISCH INSPIRIERT",
-            "description": "",
-            "card_bg": "#fae5b8",
-            "text_color": "#C17129",
-            "title_size": 18,
-            "description_size": 14,
-            "link": ""
-          }
-        },
-        "pillar_handmade_2024": {
-          "type": "pillar",
-          "settings": {
-            "title": "HANDWERKLICH IN DEUTSCHLAND HERGESTELLT",
-            "description": "",
-            "card_bg": "#eec4d4",
-            "text_color": "#C17129",
-            "title_size": 18,
-            "description_size": 14,
-            "link": ""
-          }
-        },
-        "pillar_no_additives_2024": {
-          "type": "pillar",
-          "settings": {
-            "title": "OHNE ZUSÄTZE",
-            "description": "",
-            "card_bg": "#b8ddd6",
-            "text_color": "#C17129",
-            "title_size": 18,
-            "description_size": 14,
-            "link": ""
-          }
-        },
-        "pillar_nature_2024": {
-          "type": "pillar",
-          "settings": {
-            "title": "IM EINKLANG MIT DER NATUR",
-            "description": "",
-            "card_bg": "#d5ede5",
-            "text_color": "#C17129",
-            "title_size": 18,
-            "description_size": 14,
-            "link": ""
-          }
-        },
-        "pillar_sustainable_2024": {
-          "type": "pillar",
-          "settings": {
-            "title": "NACHHALTIG & FAIR",
-            "description": "",
-            "card_bg": "#d4cfe5",
-            "text_color": "#C17129",
-            "title_size": 18,
-            "description_size": 14,
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "pillar_bio_2024",
-        "pillar_ayurveda_2024",
-        "pillar_handmade_2024",
-        "pillar_no_additives_2024",
-        "pillar_nature_2024",
-        "pillar_sustainable_2024"
-      ],
-      "settings": {
-        "heading": "Dinveda Mischungen",
-        "subheading": "<p>Jede Mischung erzählt eine Geschichte – inspiriert von der Natur und den Tieren, die Balance, Energie und Ruhe verkörpern.</p>",
-        "heading_size": 48,
-        "text_size": 18,
-        "section_padding": "both"
-      }
-    },
-    "16415694471e16e863": {
-      "type": "image-gallery",
-      "blocks": {
-        "164156944712f457fe-0": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/gb_uc2.png",
-            "image_width": "33",
-            "title": "Golden Boost",
-            "subheading_text": "",
-            "link_text": "Shop Now",
-            "link": "",
-            "text_color": "#f8f3ed",
-            "button_text_color": "#edf2f4",
-            "button_bg": "#2b2d42",
-            "overlay_color": "#000000"
-          }
-        },
-        "164156944712f457fe-1": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/oh_uc2_d2ee8cad-c7b2-425c-bb09-809211c037da.png",
-            "image_width": "33",
-            "title": "Ova Harmony",
-            "subheading_text": "",
-            "link_text": "Shop Now",
-            "link": "",
-            "text_color": "#f8f3ed",
-            "button_text_color": "#edf2f4",
-            "button_bg": "#2b2d42",
-            "overlay_color": "#000000"
-          }
-        },
-        "164156944712f457fe-2": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/mr_uc1.png",
-            "image_width": "33",
-            "title": "Moon Rest",
-            "subheading_text": "",
-            "link_text": "Shop Now",
-            "link": "",
-            "text_color": "#f8f3ed",
-            "button_text_color": "#e4e4e4",
-            "button_bg": "#2b2d42",
-            "overlay_color": "#2b2d42"
-          }
-        }
-      },
-      "block_order": [
-        "164156944712f457fe-0",
-        "164156944712f457fe-1",
-        "164156944712f457fe-2"
-      ],
-      "settings": {
-        "full_width": false,
-        "title": "",
-        "image_height": "fixed",
-        "desktop_height": 450,
-        "mobile_height": 350,
-        "heading_size": 29,
-        "subheading_size": 16,
-        "image_padding": "padding",
-        "section_padding": "top"
-      }
-    },
-    "16415696759e955046": {
-      "type": "featured-product",
-      "blocks": {
-        "76405b4e-c43e-4e95-90d8-1b2eaa1aa63b": {
-          "type": "title",
-          "settings": {}
-        },
-        "a849723b-1f73-4f81-a611-053d628c7c65": {
-          "type": "price",
-          "settings": {}
-        },
-        "a6aaa34d-59db-4c9b-ac85-1655074a9a12": {
-          "type": "variants",
-          "settings": {}
-        },
-        "ee564d0c-cbab-4be1-9cb8-7eae903a69a1": {
-          "type": "quantity",
-          "settings": {}
-        },
-        "0d9ad5c7-06cf-49b4-a44a-ee311fb65227": {
-          "type": "buttons",
-          "settings": {
-            "show_price_in_button": true,
-            "show_gift_card_recipient": false
-          }
-        },
-        "1f6566eb-93ad-436a-9f7d-3cc68e03f640": {
-          "type": "description",
-          "settings": {
-            "show_as_accordion": false,
-            "default_open_accordion": false
-          }
-        },
-        "e4af5c45-45c2-4130-ad88-e1d4fc99926e": {
-          "type": "payment_icons",
-          "settings": {
-            "title": "Secure online shopping",
-            "background_color": "rgba(0,0,0,0)"
-          }
-        },
-        "16415696758065d899-3": {
-          "type": "social_share",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "76405b4e-c43e-4e95-90d8-1b2eaa1aa63b",
-        "a849723b-1f73-4f81-a611-053d628c7c65",
-        "a6aaa34d-59db-4c9b-ac85-1655074a9a12",
-        "ee564d0c-cbab-4be1-9cb8-7eae903a69a1",
-        "0d9ad5c7-06cf-49b4-a44a-ee311fb65227",
-        "1f6566eb-93ad-436a-9f7d-3cc68e03f640",
-        "e4af5c45-45c2-4130-ad88-e1d4fc99926e",
-        "16415696758065d899-3"
-      ],
-      "disabled": true,
-      "settings": {
-        "featured_product": "",
-        "title": "Customer favorite",
-        "background_color": "#ffffff",
-        "thumbnail_position": "bottom",
-        "click_to_enlarge": true,
-        "enable_video_looping": false,
-        "show_box_shadow": false,
-        "section_padding": "both"
-      }
-    },
-    "164157008363148232": {
-      "type": "masonry-gallery",
-      "blocks": {
-        "164157008354a1bd3e-0": {
-          "type": "image",
-          "settings": {
-            "link": "",
-            "title": "",
-            "subheading": "",
-            "button_text": "Shop Apple",
-            "text_color": "#edf2f4",
-            "button_text_color": "#edf2f4",
-            "button_bg": "#2b2d42",
-            "overlay_color": "#2b2d42"
-          }
-        },
-        "164157008354a1bd3e-1": {
-          "type": "image",
-          "settings": {
-            "link": "",
-            "title": "",
-            "subheading": "",
-            "button_text": "Shop Berry",
-            "text_color": "#e4e4e4",
-            "button_text_color": "#e4e4e4",
-            "button_bg": "#2b2d42",
-            "overlay_color": "#2b2d42"
-          }
-        },
-        "164157008354a1bd3e-2": {
-          "type": "image",
-          "settings": {
-            "link": "",
-            "title": "",
-            "subheading": "",
-            "button_text": "Shop Chocolate",
-            "text_color": "#edf2f4",
-            "button_text_color": "#edf2f4",
-            "button_bg": "#2b2d42",
-            "overlay_color": "#2b2d42"
-          }
-        },
-        "164157008354a1bd3e-3": {
-          "type": "image",
-          "settings": {
-            "link": "",
-            "title": "",
-            "subheading": "",
-            "button_text": "Shop Apple",
-            "text_color": "#edf2f4",
-            "button_text_color": "#edf2f4",
-            "button_bg": "#2b2d42",
-            "overlay_color": "#2b2d42"
-          }
-        },
-        "164157008354a1bd3e-4": {
-          "type": "image",
-          "settings": {
-            "link": "",
-            "title": "",
-            "subheading": "",
-            "button_text": "Shop Berry",
-            "text_color": "#edf2f4",
-            "button_text_color": "#edf2f4",
-            "button_bg": "#2b2d42",
-            "overlay_color": "#2b2d42"
-          }
-        },
-        "164157008354a1bd3e-5": {
-          "type": "image",
-          "settings": {
-            "link": "",
-            "title": "",
-            "subheading": "",
-            "button_text": "Shop Blueberry",
-            "text_color": "#edf2f4",
-            "button_text_color": "#edf2f4",
-            "button_bg": "#2b2d42",
-            "overlay_color": "#2b2d42"
-          }
-        }
-      },
-      "block_order": [
-        "164157008354a1bd3e-0",
-        "164157008354a1bd3e-1",
-        "164157008354a1bd3e-2",
-        "164157008354a1bd3e-3",
-        "164157008354a1bd3e-4",
-        "164157008354a1bd3e-5"
-      ],
-      "disabled": true,
-      "settings": {
-        "full_width": false,
-        "title": "",
-        "item_base_height": 500,
-        "item_height_ratio": "2",
-        "image_padding": "padding",
-        "heading_size": 22,
-        "subheading_size": 16,
-        "section_padding": "both"
-      }
-    },
-    "176436146711bf27ef": {
-      "type": "_blocks",
-      "blocks": {},
-      "block_order": [],
-      "settings": {}
-    },
-    "1764361775e42990a8": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_98d9312_hA98Yn": {
-          "type": "ai_gen_block_98d9312",
-          "settings": {
-            "heading": "Wellness Rooted in Ancient Wisdom",
-            "subheading": "Organic Ayurvedic blends crafted for modern living",
-            "image": "shopify://shop_images/nh_usage2.jpg",
-            "primary_button_label": "Explore Blends",
-            "primary_button_link": "",
-            "primary_button_bg": "#c17129",
-            "primary_button_color": "#ffffff",
-            "primary_button_hover_bg": "#a85f1f",
-            "secondary_button_label": "About DINVEDA",
-            "secondary_button_link": "",
-            "secondary_button_bg": "rgba(0,0,0,0)",
-            "secondary_button_color": "#c17129",
-            "secondary_button_border": "#c17129",
-            "secondary_button_hover_bg": "#fff0dd",
-            "secondary_button_hover_border": "#a85f1f",
-            "background_color": "#fff0dd",
-            "heading_color": "#c17129",
-            "subheading_color": "#8b5a2b",
-            "heading_size": 48,
-            "subheading_size": 18,
-            "button_text_size": 16,
-            "max_width": 1400,
-            "padding_desktop": 80,
-            "padding_mobile": 40,
-            "mobile_layout": "image_top",
-            "button_border_radius": 4,
-            "image_border_radius": 12
-          },
-          "blocks": {},
-          "block_order": []
-        }
-      },
-      "block_order": [
-        "ai_gen_block_98d9312_hA98Yn"
-      ],
-      "settings": {}
-    },
-    "1764362704c7ee19a4": {
-      "type": "_blocks",
-      "blocks": {},
-      "block_order": [],
-      "settings": {}
     }
   },
   "order": [
-    "dinveda_hero_v2",
-    "dinveda_ritual_picker",
     "dinveda_hero",
-    "dinveda_brand_pillars_2024",
-    "16260997139ae0f76a",
-    "16415694471e16e863",
-    "16415696759e955046",
-    "164157008363148232",
-    "176436146711bf27ef",
-    "1764361775e42990a8",
-    "1764362704c7ee19a4"
+    "dinveda_trust_cards",
+    "dinveda_ritual_picker",
+    "dinveda_split_story"
   ]
 }
