@@ -1,166 +1,1159 @@
-/* DinVeda Premium Product Page Styling */
-/* Scoped to template-product-dinveda-premium only */
+/* 
+ * DinVeda Premium Product Page Styles
+ * Consolidated styling for product.dinveda-premium template
+ * 
+ * PHILOSOPHY: Calm luxury, generous spacing, ritual-first presentation
+ * Typography: Serif headlines, clean body text, editorial spacing
+ */
 
-.template-product-dinveda-premium {
-  /* Premium spacing and rhythm */
+/* ============================================
+   Hide Default Main Product Section
+   ============================================ */
+
+body.product-template-dinveda-premium .product-page[data-section-type="product"],
+body.product-template-dinveda-premium section[data-section-type="product"].product-page,
+body.product-template-dinveda-premium section.product-page.product-template,
+body.product-template-dinveda-premium section.product__section--main,
+body.product-template-dinveda-premium .product-top {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-/* Main Product Section - Improved Readability */
-.template-product-dinveda-premium .product-page {
-  padding-top: var(--design-section-spacing-medium, 70px);
-  padding-bottom: var(--design-section-spacing-medium, 70px);
+/* ============================================
+   DinVeda Product Hero Section
+   Two-column layout: gallery left, buy box right
+   ============================================ */
+
+.dinveda-product-hero {
+  padding: 80px 0;
+  background-color: var(--design-bg-color, #FFF0DD);
 }
 
-.template-product-dinveda-premium .product__section-right {
-  padding-top: var(--space-4, 20px);
+.dinveda-product-hero__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
 }
 
-/* Product Title - More Editorial */
-.template-product-dinveda-premium .product__section-right .h2 {
-  font-size: calc(var(--design-h2-size, var(--h2-size, 28px)) * 0.9);
+.dinveda-product-hero__breadcrumbs {
+  margin-bottom: 24px;
+  font-family: var(--main-family);
+  font-size: calc(var(--design-body-font-size) - 2px);
+  color: var(--design-text-color, #5a4533);
+  opacity: 0.6;
+}
+
+.dinveda-product-hero__breadcrumbs a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.dinveda-product-hero__breadcrumbs a:hover {
+  text-decoration: underline;
+}
+
+.dinveda-product-hero__breadcrumbs span {
+  margin: 0 8px;
+}
+
+.dinveda-product-hero__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+/* Gallery Styles */
+.dinveda-product-hero__gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dinveda-product-hero__main-image {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: #ffffff;
+  position: relative;
+}
+
+.dinveda-product-hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.dinveda-product-hero__thumbnails {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.dinveda-product-hero__thumbnail {
+  aspect-ratio: 1;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  overflow: hidden;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  transition: border-color 0.2s, opacity 0.2s;
+}
+
+.dinveda-product-hero__thumbnail:hover {
+  border-color: var(--design-accent-color, #b3814a);
+  opacity: 1;
+}
+
+.dinveda-product-hero__thumbnail--active {
+  border-color: var(--design-accent-color, #b3814a);
+}
+
+.dinveda-product-hero__thumbnail-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Buy Box Styles */
+.dinveda-product-hero__buy-box {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-top: 16px;
+}
+
+.dinveda-product-hero__title {
+  font-family: var(--heading-family);
+  font-size: var(--design-h1-size);
+  font-weight: var(--heading-weight);
+  color: var(--design-text-color, #5a4533);
+  margin: 0 0 24px 0;
   line-height: 1.2;
-  margin-bottom: var(--space-5, 25px);
+}
+
+.dinveda-product-hero__price-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(234, 221, 207, 0.6);
+  margin-bottom: 8px;
+}
+
+.dinveda-product-hero__price-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dinveda-product-hero__price-label {
+  font-family: var(--main-family);
+  font-size: calc(var(--design-body-font-size) - 4px);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--design-text-color, #5a4533);
+  opacity: 0.6;
+}
+
+.dinveda-product-hero__price {
+  font-family: var(--heading-family);
+  font-size: calc(var(--design-body-font-size) + 12px);
   font-weight: var(--heading-weight);
-  letter-spacing: -0.02em;
+  color: var(--design-text-color, #5a4533);
 }
 
-/* Product Price - Calmer Presentation */
-.template-product-dinveda-premium .product__section--main .product__price-container {
-  font-size: calc(var(--h3-size, 22px) * 0.95);
-  margin-bottom: var(--space-4, 20px);
-  line-height: 1.3;
+.dinveda-product-hero__compare-price {
+  font-size: calc(var(--design-body-font-size) + 4px);
+  text-decoration: line-through;
+  opacity: 0.5;
+  margin-left: 8px;
 }
 
-/* Product Buttons - Better Spacing */
-.template-product-dinveda-premium .product-block--buttons {
-  margin-top: var(--space-5, 25px);
-  margin-bottom: var(--space-4, 20px);
+.dinveda-product-hero__price-note {
+  font-family: var(--main-family);
+  font-size: calc(var(--design-body-font-size) - 4px);
+  color: var(--design-text-color, #5a4533);
+  opacity: 0.6;
 }
 
-.template-product-dinveda-premium .product-form__cart-buttons {
-  margin-top: var(--space-4, 20px);
+.dinveda-product-hero__nutrition-link {
+  font-family: var(--main-family);
+  font-size: calc(var(--design-body-font-size) - 4px);
+  color: var(--design-text-color, #5a4533);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  opacity: 0.6;
+  transition: opacity 0.2s;
 }
 
-/* Section Spacing - Softer Rhythm */
-.template-product-dinveda-premium .dinveda-ritual-snapshot,
-.template-product-dinveda-premium .dinveda-ritual-guide,
-.template-product-dinveda-premium .dinveda-trust-badges {
-  padding-top: var(--design-section-spacing-medium, 70px);
-  padding-bottom: var(--design-section-spacing-medium, 70px);
+.dinveda-product-hero__nutrition-link:hover {
+  opacity: 1;
 }
 
-/* Ritual Snapshot - Narrow Content, Left Aligned */
-.template-product-dinveda-premium .dinveda-ritual-snapshot__container {
-  max-width: 800px;
-  margin-left: 0;
-  margin-right: auto;
+/* Form Styles */
+.dinveda-product-hero__form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.template-product-dinveda-premium .dinveda-ritual-snapshot__heading {
-  font-size: calc(var(--design-h2-size, var(--h2-size, 28px)) * 0.85);
-  margin-bottom: var(--space-6, 30px);
-  font-weight: var(--heading-weight);
-  letter-spacing: -0.01em;
+.dinveda-product-hero__variants {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-/* Ritual Guide - Narrow Content, Left Aligned */
-.template-product-dinveda-premium .dinveda-ritual-guide__container {
-  max-width: 800px;
-  margin-left: 0;
-  margin-right: auto;
+.dinveda-product-hero__variant-option {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.template-product-dinveda-premium .dinveda-ritual-guide__content {
-  max-width: 550px;
-  margin-left: 0;
-  margin-right: auto;
+.dinveda-product-hero__variant-label {
+  font-family: var(--main-family);
+  font-size: calc(var(--design-body-font-size) - 2px);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--design-text-color, #5a4533);
+  opacity: 0.6;
+  font-weight: 600;
 }
 
-.template-product-dinveda-premium .dinveda-ritual-guide__title {
-  font-size: calc(var(--design-h2-size, var(--h2-size, 28px)) * 0.85);
-  margin-bottom: var(--space-5, 25px);
-  font-weight: var(--heading-weight);
-  letter-spacing: -0.01em;
+.dinveda-product-hero__variant-select select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid rgba(234, 221, 207, 0.6);
+  border-radius: 4px;
+  background-color: #ffffff;
+  font-family: var(--main-family);
+  font-size: var(--design-body-font-size);
+  color: var(--design-text-color, #5a4533);
+  cursor: pointer;
 }
 
-.template-product-dinveda-premium .dinveda-ritual-guide__text {
-  line-height: 1.75;
-  font-size: var(--design-body-font-size, var(--font-size, 16px));
+.dinveda-product-hero__quantity {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-/* Trust Badges - Clean and Consistent */
-.template-product-dinveda-premium .dinveda-trust-badges {
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  padding-top: var(--space-5, 25px);
-  padding-bottom: var(--space-5, 25px);
-  margin-top: 0;
-  margin-bottom: 0;
+.dinveda-product-hero__quantity-label {
+  font-family: var(--main-family);
+  font-size: calc(var(--design-body-font-size) - 2px);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--design-text-color, #5a4533);
+  opacity: 0.6;
+  font-weight: 600;
 }
 
-.template-product-dinveda-premium .dinveda-trust-badges__item {
-  padding: var(--space-3, 15px) 0;
+.dinveda-product-hero__quantity-input {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(234, 221, 207, 0.6);
+  border-radius: 4px;
+  width: 128px;
+  height: 48px;
 }
 
-.template-product-dinveda-premium .dinveda-trust-badges__label {
-  font-size: var(--font-size-sm, calc(var(--font-size, 16px) - 2px));
-  letter-spacing: 0.5px;
+.dinveda-product-hero__quantity-btn {
+  width: 40px;
+  height: 100%;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  color: var(--design-text-color, #5a4533);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.dinveda-product-hero__quantity-btn:hover {
+  background-color: rgba(234, 221, 207, 0.2);
+}
+
+.dinveda-product-hero__quantity-field {
+  flex: 1;
+  border: none;
+  text-align: center;
+  font-family: var(--main-family);
+  font-size: var(--design-body-font-size);
+  color: var(--design-text-color, #5a4533);
+  background: transparent;
+  -moz-appearance: textfield;
+}
+
+.dinveda-product-hero__quantity-field::-webkit-outer-spin-button,
+.dinveda-product-hero__quantity-field::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.dinveda-product-hero__add-to-cart {
+  width: 100%;
+  padding: 16px 24px;
+  background: transparent;
+  border: 1px solid var(--design-text-color, #5a4533);
+  color: var(--design-text-color, #5a4533);
+  font-family: var(--main-family);
+  font-size: calc(var(--design-body-font-size) - 2px);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+}
+
+.dinveda-product-hero__add-to-cart:hover:not(:disabled) {
+  background-color: var(--design-text-color, #5a4533);
+  color: #ffffff;
+}
+
+.dinveda-product-hero__add-to-cart:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.dinveda-product-hero__add-to-cart-arrow {
+  transition: transform 0.3s;
+}
+
+.dinveda-product-hero__add-to-cart:hover:not(:disabled) .dinveda-product-hero__add-to-cart-arrow {
+  transform: translateX(4px);
+}
+
+.dinveda-product-hero__dynamic-checkout {
+  margin-top: 12px;
+}
+
+.dinveda-product-hero__payment-options {
+  text-align: left;
+  margin-top: 12px;
+}
+
+.dinveda-product-hero__payment-options a {
+  font-family: var(--main-family);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--design-text-color, #5a4533);
+  opacity: 0.6;
+  text-decoration: underline;
+}
+
+.dinveda-product-hero__share {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(234, 221, 207, 0.6);
+}
+
+.dinveda-product-hero__share-label {
+  font-family: var(--main-family);
+  font-size: calc(var(--design-body-font-size) - 2px);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--design-text-color, #5a4533);
+  opacity: 0.6;
+  font-weight: 600;
+}
+
+.dinveda-product-hero__share-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.dinveda-product-hero__share-link {
+  font-family: var(--main-family);
+  font-size: var(--design-body-font-size);
+  color: var(--design-text-color, #5a4533);
+  opacity: 0.6;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.dinveda-product-hero__share-link:hover {
+  opacity: 1;
+}
+
+/* Trust Bullets */
+.dinveda-product-hero__trust-bullets {
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(234, 221, 207, 0.5);
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.dinveda-product-hero__trust-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dinveda-product-hero__trust-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--design-accent-color, #b3814a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dinveda-product-hero__trust-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.dinveda-product-hero__trust-text {
+  font-family: var(--main-family);
+  font-size: calc(var(--design-body-font-size) - 2px);
+  color: var(--design-text-color, #5a4533);
+  opacity: 0.8;
   line-height: 1.5;
 }
 
-/* Product Details Section - Softer Spacing */
-.template-product-dinveda-premium .section__product-details {
-  padding-top: var(--design-section-spacing-medium, 70px);
-  padding-bottom: var(--design-section-spacing-medium, 70px);
+/* ============================================
+   Ritual Snapshot Section
+   "Ritual auf einen Blick" - 3 icon blocks
+   ============================================ */
+
+.dinveda-ritual-snapshot {
+  background-color: #f3e9dc; /* Light beige background */
+  color: var(--design-text-color, #5a4533);
+  padding: 80px 0;
 }
 
-.template-product-dinveda-premium .product-template__details-table {
-  max-width: 800px;
-  margin-left: 0;
-  margin-right: auto;
+.dinveda-ritual-snapshot__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
 }
 
-.template-product-dinveda-premium .product-template__details-table .label {
-  font-size: calc(var(--design-h3-size, var(--h3-size, 22px)) * 0.9);
-  margin-bottom: var(--space-3, 15px);
+.dinveda-ritual-snapshot__heading {
+  font-family: var(--heading-family); /* Serif headline */
+  font-size: var(--design-h2-size);
   font-weight: var(--heading-weight);
+  font-style: var(--heading-style);
+  color: var(--design-text-color, #5a4533);
+  margin: 0 0 64px 0;
+  line-height: 1.2;
+  text-align: left;
 }
 
-/* Image Overlay Section - Premium Spacing */
-.template-product-dinveda-premium .image-with-text-overlay {
-  margin-top: var(--design-section-spacing-medium, 70px);
-  margin-bottom: var(--design-section-spacing-medium, 70px);
+.dinveda-ritual-snapshot__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  align-items: stretch;
 }
 
-/* Product Recommendations - Softer Spacing */
-.template-product-dinveda-premium .product-recommendations {
-  padding-top: var(--design-section-spacing-medium, 70px);
-  padding-bottom: var(--design-section-spacing-medium, 70px);
+.dinveda-ritual-snapshot__item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 12px;
+  padding: 0 32px;
+  position: relative;
 }
 
-/* Mobile Adjustments */
-@media (max-width: 740px) {
-  .template-product-dinveda-premium .dinveda-ritual-snapshot__container,
-  .template-product-dinveda-premium .dinveda-ritual-guide__container,
-  .template-product-dinveda-premium .product-template__details-table {
-    max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
+/* Thin dividers between items */
+.dinveda-ritual-snapshot__item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: rgba(234, 221, 207, 0.6);
+}
+
+.dinveda-ritual-snapshot__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--design-accent-color, #b3814a);
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+}
+
+.dinveda-ritual-snapshot__icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.dinveda-ritual-snapshot__label {
+  font-family: var(--main-family);
+  font-size: calc(var(--design-body-font-size) - 2px);
+  font-weight: 600;
+  color: var(--design-text-color, #5a4533);
+  margin: 0;
+  opacity: 0.8;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dinveda-ritual-snapshot__value {
+  font-family: var(--main-family);
+  font-size: var(--design-body-font-size);
+  color: var(--design-text-color, #5a4533);
+  line-height: 1.5;
+  font-weight: 400;
+  margin: 0;
+}
+
+/* ============================================
+   Trust Bullets Section
+   Row of trust items below buy box
+   ============================================ */
+
+.dinveda-trust-bullets {
+  padding: 24px 0 0 0;
+  background-color: var(--design-bg-color, #FFF0DD);
+  margin-top: 0;
+}
+
+/* Position trust bullets within the buy box area if needed */
+body.product-template-dinveda-premium .product__section-right + .dinveda-trust-bullets {
+  margin-top: -20px;
+}
+
+.dinveda-trust-bullets__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.dinveda-trust-bullets__row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: center;
+}
+
+.dinveda-trust-bullets__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dinveda-trust-bullets__icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: #8fa891; /* muted-green */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dinveda-trust-bullets__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.dinveda-trust-bullets__text {
+  font-family: var(--main-family);
+  font-size: calc(var(--design-body-font-size) - 2px);
+  color: var(--design-text-color, #5a4533);
+  opacity: 0.8;
+  font-weight: 500;
+}
+
+/* ============================================
+   Tier Quote Card Section
+   Centered premium quote card
+   ============================================ */
+
+.dinveda-tier-quote-card {
+  padding: 80px 0;
+  background-color: var(--design-bg-color, #FFF0DD);
+}
+
+.dinveda-tier-quote-card__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.dinveda-tier-quote-card__card {
+  max-width: 680px; /* Narrow editorial width */
+  width: 100%;
+  background-color: #fefaf6; /* card-bg */
+  border-left: 4px solid var(--design-accent-color, #b3814a);
+  border-radius: 12px;
+  padding: 32px 40px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  text-align: left; /* Left-aligned quote text */
+}
+
+.dinveda-tier-quote-card__icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 0 20px 0; /* Left-aligned icon */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--design-accent-color, #b3814a);
+}
+
+.dinveda-tier-quote-card__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.dinveda-tier-quote-card__quote {
+  font-family: var(--heading-family);
+  font-style: italic;
+  font-size: calc(var(--design-body-font-size) + 4px);
+  line-height: 1.6;
+  color: var(--design-accent-color, #b3814a);
+  margin: 0 0 16px 0;
+  font-weight: 400;
+}
+
+.dinveda-tier-quote-card__attribution {
+  font-family: var(--main-family);
+  font-size: calc(var(--design-body-font-size) - 2px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--design-text-color, #5a4533);
+  margin: 12px 0 0 0;
+  opacity: 0.6;
+  text-align: left;
+}
+
+/* ============================================
+   Ritual Story Section
+   Editorial story section with background
+   ============================================ */
+
+.dinveda-ritual-story {
+  padding: 80px 0;
+  background-color: #f3e9dc; /* Sand background */
+  position: relative;
+  overflow: hidden;
+}
+
+.dinveda-ritual-story__container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 40px;
+  position: relative;
+  z-index: 1;
+}
+
+.dinveda-ritual-story__content {
+  text-align: left;
+}
+
+.dinveda-ritual-story__eyebrow {
+  font-family: var(--main-family);
+  font-size: calc(var(--design-body-font-size) - 2px);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--design-accent-color, #b3814a);
+  margin: 0 0 16px 0;
+  opacity: 0.9;
+}
+
+.dinveda-ritual-story__title {
+  font-family: var(--heading-family);
+  font-size: var(--design-h2-size);
+  font-weight: var(--heading-weight);
+  font-style: var(--heading-style);
+  letter-spacing: var(--heading-spacing);
+  line-height: 1.2;
+  color: var(--design-text-color, #5a4533);
+  margin: 0 0 32px 0;
+}
+
+.dinveda-ritual-story__intro {
+  font-family: var(--main-family);
+  font-size: calc(var(--design-body-font-size) + 4px); /* lead/large text */
+  line-height: 1.8;
+  color: var(--design-text-color, #5a4533);
+  opacity: 0.8;
+  font-weight: 300;
+  text-wrap: balance;
+  max-width: 48rem;
+  margin: 0 0 24px 0;
+}
+
+.dinveda-ritual-story__intro p {
+  margin: 0 0 20px 0;
+}
+
+.dinveda-ritual-story__intro p:last-child {
+  margin-bottom: 0;
+}
+
+.dinveda-ritual-story__why-heading {
+  font-family: var(--heading-family);
+  font-size: var(--design-h3-size);
+  font-weight: var(--heading-weight);
+  color: var(--design-text-color, #5a4533);
+  margin: 32px 0 20px 0;
+  text-align: left;
+}
+
+.dinveda-ritual-story__why-body {
+  font-family: var(--main-family);
+  font-size: calc(var(--design-body-font-size) + 2px);
+  line-height: 1.8;
+  color: var(--design-text-color, #5a4533);
+  opacity: 0.8;
+  max-width: 48rem;
+  margin: 0 0 24px 0;
+}
+
+.dinveda-ritual-story__why-body p {
+  margin: 0 0 20px 0;
+}
+
+.dinveda-ritual-story__why-body p:last-child {
+  margin-bottom: 0;
+}
+
+.dinveda-ritual-story__bullet-heading {
+  font-family: var(--main-family);
+  font-size: calc(var(--design-body-font-size) + 2px);
+  font-weight: 700;
+  color: var(--design-text-color, #5a4533);
+  margin: 24px 0 16px 0;
+  text-align: left;
+}
+
+.dinveda-ritual-story__bullet-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px 0;
+  max-width: 48rem;
+}
+
+.dinveda-ritual-story__bullet-list li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 8px;
+  font-family: var(--main-family);
+  font-size: calc(var(--design-body-font-size) + 2px);
+  line-height: 1.8;
+  color: var(--design-text-color, #5a4533);
+  opacity: 0.8;
+  text-align: left;
+}
+
+.dinveda-ritual-story__bullet-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--design-accent-color, #b3814a);
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+.dinveda-ritual-story__bullet-list li:last-child {
+  margin-bottom: 0;
+}
+
+.dinveda-ritual-story__closing {
+  font-family: var(--main-family);
+  font-size: calc(var(--design-body-font-size) + 2px);
+  line-height: 1.8;
+  color: var(--design-text-color, #5a4533);
+  opacity: 0.8;
+  margin: 24px 0 0 0;
+  max-width: 48rem;
+  text-align: left;
+}
+
+/* ============================================
+   Ingredients & Preparation Section
+   Two modules with thin top border, icon before titles
+   ============================================ */
+
+.dinveda-ingredients-prep {
+  padding: 80px 0;
+  background-color: var(--design-bg-color, #FFF0DD);
+}
+
+.dinveda-ingredients-prep__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.dinveda-ingredients-prep__module {
+  border-top: 1px solid rgba(234, 221, 207, 0.6); /* Thin top border */
+  padding-top: 64px;
+  margin-bottom: 64px;
+}
+
+.dinveda-ingredients-prep__module:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
+.dinveda-ingredients-prep__module:last-child {
+  margin-bottom: 0;
+}
+
+.dinveda-ingredients-prep__module-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.dinveda-ingredients-prep__module-icon {
+  font-size: 24px;
+  color: var(--design-accent-color, #b3814a);
+  flex-shrink: 0;
+}
+
+.dinveda-ingredients-prep__module-title {
+  font-family: var(--heading-family);
+  font-size: var(--design-h2-size);
+  font-weight: var(--heading-weight);
+  color: var(--design-text-color, #5a4533);
+  margin: 0;
+}
+
+/* Module 1: Text Content */
+.dinveda-ingredients-prep__module--text .dinveda-ingredients-prep__module-content {
+  font-family: var(--main-family);
+  font-size: var(--design-body-font-size);
+  line-height: 1.8;
+  color: var(--design-text-color, #5a4533);
+  opacity: 0.8;
+  max-width: 800px;
+  margin-bottom: 24px;
+}
+
+.dinveda-ingredients-prep__module--text .dinveda-ingredients-prep__module-content p {
+  margin: 0 0 20px 0;
+}
+
+.dinveda-ingredients-prep__module--text .dinveda-ingredients-prep__module-content p:last-child {
+  margin-bottom: 0;
+}
+
+.dinveda-ingredients-prep__footnote {
+  font-family: var(--main-family);
+  font-size: calc(var(--design-body-font-size) - 4px); /* text-xs equivalent */
+  color: var(--design-text-color, #5a4533);
+  opacity: 0.6;
+  margin: 24px 0 0 0;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+}
+
+.dinveda-ingredients-prep__intro-line {
+  font-family: var(--main-family);
+  font-size: calc(var(--design-body-font-size) - 2px); /* text-sm */
+  line-height: 1.7;
+  color: var(--design-text-color, #5a4533);
+  opacity: 0.8;
+  margin: 0 0 24px 0;
+}
+
+/* Module 2: Cards Grid - Two-column on desktop, stacked on mobile */
+.dinveda-ingredients-prep__cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+.dinveda-ingredients-prep__card {
+  background-color: #fefaf6; /* card-bg */
+  border: 1px solid rgba(234, 221, 207, 0.5);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.dinveda-ingredients-prep__card-title {
+  font-family: var(--heading-family);
+  font-size: var(--design-h3-size);
+  font-weight: var(--heading-weight);
+  color: var(--design-text-color, #5a4533);
+  margin: 0 0 16px 0;
+}
+
+.dinveda-ingredients-prep__card-body {
+  font-family: var(--main-family);
+  font-size: var(--design-body-font-size);
+  line-height: 1.7;
+  color: var(--design-text-color, #5a4533);
+  opacity: 0.8;
+}
+
+.dinveda-ingredients-prep__card-body p {
+  margin: 0 0 12px 0;
+}
+
+.dinveda-ingredients-prep__card-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================
+   Story Modules Section
+   Thin top border, icon before titles
+   ============================================ */
+
+.dinveda-story-modules {
+  padding: 80px 0;
+  background-color: var(--design-bg-color, #FFF0DD);
+}
+
+.dinveda-story-modules__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.dinveda-story-modules__module {
+  border-top: 1px solid rgba(234, 221, 207, 0.6); /* Thin top border */
+  padding-top: 64px;
+  margin-bottom: 64px;
+}
+
+.dinveda-story-modules__module:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
+.dinveda-story-modules__module:last-child {
+  margin-bottom: 0;
+}
+
+.dinveda-story-modules__module-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.dinveda-story-modules__module-icon {
+  font-size: 24px;
+  color: var(--design-accent-color, #b3814a);
+  flex-shrink: 0;
+}
+
+.dinveda-story-modules__module-title {
+  font-family: var(--heading-family);
+  font-size: var(--design-h2-size);
+  font-weight: var(--heading-weight);
+  color: var(--design-text-color, #5a4533);
+  margin: 0;
+}
+
+/* Module 1: Text Content */
+.dinveda-story-modules__module--text .dinveda-story-modules__module-content {
+  font-family: var(--main-family);
+  font-size: var(--design-body-font-size);
+  line-height: 1.8;
+  color: var(--design-text-color, #5a4533);
+  opacity: 0.8;
+  max-width: 800px;
+}
+
+.dinveda-story-modules__module--text .dinveda-story-modules__module-content p {
+  margin: 0 0 20px 0;
+}
+
+.dinveda-story-modules__module--text .dinveda-story-modules__module-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* Module 2: Cards Grid - Two-column on desktop, stacked on mobile */
+.dinveda-story-modules__cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+.dinveda-story-modules__card {
+  background-color: #fefaf6; /* card-bg */
+  border: 1px solid rgba(234, 221, 207, 0.5);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.dinveda-story-modules__card-title {
+  font-family: var(--heading-family);
+  font-size: var(--design-h3-size);
+  font-weight: var(--heading-weight);
+  color: var(--design-text-color, #5a4533);
+  margin: 0 0 16px 0;
+}
+
+.dinveda-story-modules__card-body {
+  font-family: var(--main-family);
+  font-size: var(--design-body-font-size);
+  line-height: 1.7;
+  color: var(--design-text-color, #5a4533);
+  opacity: 0.8;
+}
+
+.dinveda-story-modules__card-body p {
+  margin: 0 0 12px 0;
+}
+
+.dinveda-story-modules__card-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================
+   Mobile Responsive Styles
+   ============================================ */
+
+@media (max-width: 767px) {
+  .dinveda-product-hero {
+    padding: 40px 0;
+  }
+
+  .dinveda-product-hero__container {
+    padding: 0 20px;
+  }
+
+  .dinveda-product-hero__grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .dinveda-product-hero__price-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .dinveda-product-hero__quantity-input {
+    width: 100%;
+  }
+
+  .dinveda-product-hero__thumbnails {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  body.product-template-dinveda-premium .product__section--main .grid__wrapper {
+    gap: 40px;
+  }
+
+  .dinveda-ritual-snapshot {
+    padding: 60px 0;
   }
   
-  .template-product-dinveda-premium .dinveda-ritual-guide__content {
-    max-width: 100%;
+  .dinveda-ritual-snapshot__heading {
+    margin-bottom: 48px;
   }
   
-  .template-product-dinveda-premium .product__section-right .h2 {
-    font-size: calc(var(--design-h2-size, var(--h2-size, 28px)) * 0.85);
+  .dinveda-ritual-snapshot__grid {
+    grid-template-columns: 1fr;
+    gap: 0;
   }
   
-  .template-product-dinveda-premium .dinveda-ritual-snapshot,
-  .template-product-dinveda-premium .dinveda-ritual-guide,
-  .template-product-dinveda-premium .dinveda-trust-badges,
-  .template-product-dinveda-premium .section__product-details {
-    padding-top: var(--design-section-spacing-small, 40px);
-    padding-bottom: var(--design-section-spacing-small, 40px);
+  .dinveda-ritual-snapshot__item {
+    padding: 24px 0;
+    border-bottom: 1px solid rgba(234, 221, 207, 0.6);
+  }
+  
+  .dinveda-ritual-snapshot__item:not(:last-child)::after {
+    display: none; /* Remove vertical dividers on mobile */
+  }
+  
+  .dinveda-ritual-snapshot__item:last-child {
+    border-bottom: none;
+  }
+
+  .dinveda-story-modules {
+    padding: 60px 0;
+  }
+
+  .dinveda-story-modules__module {
+    padding-top: 48px;
+    margin-bottom: 48px;
+  }
+
+  .dinveda-story-modules__cards-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .dinveda-story-modules__card {
+    padding: 24px;
+  }
+
+  .dinveda-trust-bullets {
+    padding: 20px 0 0 0;
+  }
+
+  .dinveda-trust-bullets__row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .dinveda-tier-quote-card {
+    padding: 60px 0;
+  }
+
+  .dinveda-tier-quote-card__card {
+    padding: 24px 28px;
+  }
+
+  .dinveda-ritual-story {
+    padding: 60px 0;
+  }
+
+  .dinveda-ingredients-prep {
+    padding: 60px 0;
+  }
+
+  .dinveda-ingredients-prep__module {
+    padding-top: 48px;
+    margin-bottom: 48px;
+  }
+
+  .dinveda-ingredients-prep__cards-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .dinveda-ingredients-prep__card {
+    padding: 24px;
   }
 }

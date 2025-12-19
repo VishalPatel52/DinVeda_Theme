@@ -53,8 +53,8 @@
 
   {%- comment -%} Load DinVeda premium product CSS only for product.dinveda-premium template {%- endcomment -%}
   {%- if template.name == 'product' and template.suffix == 'dinveda-premium' -%}
-    <link rel="preload" href="{{ 'dinveda-product.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="{{ 'dinveda-product.css' | asset_url }}"></noscript>
+    <link rel="preload" href="{{ 'dinveda-product-premium.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ 'dinveda-product-premium.css' | asset_url }}"></noscript>
   {%- endif -%}
 
   {%- comment -%} Load DinVeda homepage CSS only for homepage template {%- endcomment -%}
@@ -78,7 +78,7 @@
 </head>
 
 <body id="{{ page_title | handle }}"
-      class="template-{{ template.name | handle }} js-slideout-toggle-wrapper js-modal-toggle-wrapper {{ settings.scroll_animation }} {{ settings.text_animation }} section-fade-in buttons--{{ settings.button_animation }}">
+      class="template-{{ template.name | handle }}{% if template.suffix %} product-template-{{ template.suffix }}{% endif %} js-slideout-toggle-wrapper js-modal-toggle-wrapper {{ settings.scroll_animation }} {{ settings.text_animation }} section-fade-in buttons--{{ settings.button_animation }}">
   {% render 'snip-skip-link' %}
 
   {% if settings.enable_age_verify %}

@@ -67,10 +67,15 @@
           <div class="dinveda-ritual-details__ingredients-list">
             {% for block in section.blocks %}
               {% if block.type == 'ingredient' %}
-                <div class="dinveda-ritual-details__ingredient-item" {{ block.shopify_attributes }}>
-                  <span class="dinveda-ritual-details__ingredient-name">{{ block.settings.name | escape }}</span>
-                  {% if block.settings.description != blank %}
-                    <span class="dinveda-ritual-details__ingredient-desc">{{ block.settings.description | escape }}</span>
+                <div class="dinveda-ritual-details__ingredient-item dinveda-ritual-details__ingredient-item--enhanced" {{ block.shopify_attributes }}>
+                  <div class="dinveda-ritual-details__ingredient-header">
+                    <span class="dinveda-ritual-details__ingredient-name">{{ block.settings.name | escape }}</span>
+                    {% if block.settings.description != blank %}
+                      <span class="dinveda-ritual-details__ingredient-desc">{{ block.settings.description | escape }}</span>
+                    {% endif %}
+                  </div>
+                  {% if block.settings.traditional_background != blank %}
+                    <p class="dinveda-ritual-details__ingredient-traditional">{{ block.settings.traditional_background | escape }}</p>
                   {% endif %}
                 </div>
               {% endif %}
@@ -89,7 +94,12 @@
           <h3 class="dinveda-ritual-details__card-title">{{ section.settings.ritual_title | default: ritual_title_default }}</h3>
         </div>
         <div class="dinveda-ritual-details__steps">
-          {%- comment -%} Support ritual_steps metafield (list) or individual step metafields {%- endcomment -%}
+          {%- comment -%} 
+            Ritual Steps - Ceremonial Tone
+            Content should use ceremonial language, not kitchen instructions.
+            Examples: "Erwärmen" (not "Erhitzen"), "Vermengen" (not "Einrühren"), "Bewusst genießen" (not "Innehalten")
+            Supports ritual_steps metafield (multi-line list) or individual step metafields
+          {%- endcomment -%}
           {% if ritual_steps != blank %}
             {% assign steps_lines = ritual_steps | newline_to_br | split: '<br />' %}
             {% for line in steps_lines %}
@@ -209,6 +219,12 @@
           "id": "description",
           "label": "Description/Origin",
           "info": "Optional: Description or origin (e.g., 'Indien, Bio-Qualität')"
+        },
+        {
+          "type": "textarea",
+          "id": "traditional_background",
+          "label": "Traditional Background",
+          "info": "Optional: Traditional Ayurvedic context (e.g., 'eine klassische ayurvedische Wurzel, traditionell in ausgleichenden Rezepturen genutzt')"
         }
       ]
     }

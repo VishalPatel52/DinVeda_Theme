@@ -1,136 +1,116 @@
 {% comment %}
   DinVeda Ritual Snapshot Section
-  Displays 3 configurable items with labels and metafield values
+  Displays 3 icon blocks: icon + label + value
+  Layout: Centered headline, 3 blocks in row (desktop), stacked (mobile)
+  Premium styling: thin dividers, calm spacing, serif headline
+  Uses inline SVG icons (no Material Symbols)
 {% endcomment %}
 
-{%- if section.blocks.size > 0 -%}
-  <link rel="preload" href="{{ 'section-dinveda-ritual-snapshot.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="{{ 'section-dinveda-ritual-snapshot.css' | asset_url }}"></noscript>
+<section
+  id="dinveda-ritual-snapshot-{{ section.id }}"
+  class="dinveda-ritual-snapshot"
+  data-section-id="{{ section.id }}"
+  data-section-type="dinveda-ritual-snapshot"
+>
+  <div class="dinveda-ritual-snapshot__container">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="dinveda-ritual-snapshot__heading">
+        {{ section.settings.heading | escape }}
+      </h2>
+    {%- endif -%}
+    
+    <div class="dinveda-ritual-snapshot__grid">
+      {%- comment -%} Block 1: Tageszeit {%- endcomment -%}
+      {%- liquid
+        assign timing_value = product.metafields.dinveda.ritual_timing | default: section.settings.timing_fallback
+      -%}
+      {% if timing_value != blank %}
+        <div class="dinveda-ritual-snapshot__item">
+          <div class="dinveda-ritual-snapshot__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2v10m0-10C8 2 5 5 5 9c0 5 4 8 7 8s7-3 7-8c0-4-3-7-7-7Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 12v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M8 22h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="dinveda-ritual-snapshot__label">Tageszeit</div>
+          <div class="dinveda-ritual-snapshot__value">{{ timing_value | escape }}</div>
+        </div>
+      {% endif %}
 
-  <section
-    id="dinveda-ritual-snapshot-{{ section.id }}"
-    class="dinveda-ritual-snapshot section-{{ section.id }}"
-    data-section-id="{{ section.id }}"
-    data-section-type="dinveda-ritual-snapshot"
-  >
-    <div class="dinveda-ritual-snapshot__container">
-      {%- if section.settings.heading != blank -%}
-        <h2 class="dinveda-ritual-snapshot__heading">
-          {{ section.settings.heading }}
-        </h2>
-      {%- endif -%}
-      <div class="dinveda-ritual-snapshot__grid">
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'ritual_item' -%}
-            {%- liquid
-              assign metafield_key = block.settings.metafield_key
-              assign metafield_value = ''
-              
-              case metafield_key
-                when 'ritual_timing'
-                  assign metafield_value = product.metafields.dinveda.ritual_timing | default: ''
-                when 'ritual_usage'
-                  assign metafield_value = product.metafields.dinveda.ritual_usage | default: ''
-                when 'ritual_taste'
-                  assign metafield_value = product.metafields.dinveda.ritual_taste | default: ''
-              endcase
-            -%}
-            
-            {%- if block.settings.label != blank or metafield_value != blank -%}
-              <div class="dinveda-ritual-snapshot__item" {{ block.shopify_attributes }}>
-                {%- if block.settings.label != blank -%}
-                  <div class="dinveda-ritual-snapshot__label">
-                    {{ block.settings.label }}
-                  </div>
-                {%- endif -%}
-                {%- if metafield_value != blank -%}
-                  <div class="dinveda-ritual-snapshot__value">
-                    {{ metafield_value }}
-                  </div>
-                {%- endif -%}
-              </div>
-            {%- endif -%}
-          {%- endif -%}
-        {%- endfor -%}
-      </div>
+      {%- comment -%} Block 2: Anwendung {%- endcomment -%}
+      {%- liquid
+        assign usage_value = product.metafields.dinveda.ritual_usage | default: section.settings.usage_fallback
+      -%}
+      {% if usage_value != blank %}
+        <div class="dinveda-ritual-snapshot__item">
+          <div class="dinveda-ritual-snapshot__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 8h1a4 4 0 0 1 0 8h-1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 8h16v5a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6 1v6m6-6v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="dinveda-ritual-snapshot__label">Anwendung</div>
+          <div class="dinveda-ritual-snapshot__value">{{ usage_value | escape }}</div>
+        </div>
+      {% endif %}
+
+      {%- comment -%} Block 3: Geschmack {%- endcomment -%}
+      {%- liquid
+        assign taste_value = product.metafields.dinveda.taste_character | default: section.settings.taste_fallback
+      -%}
+      {% if taste_value != blank %}
+        <div class="dinveda-ritual-snapshot__item">
+          <div class="dinveda-ritual-snapshot__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M8 12h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 8v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="dinveda-ritual-snapshot__label">Geschmack</div>
+          <div class="dinveda-ritual-snapshot__value">{{ taste_value | escape }}</div>
+        </div>
+      {% endif %}
     </div>
-  </section>
-{%- endif -%}
+  </div>
+</section>
 
 {% schema %}
 {
-  "name": "DinVeda – Ritual Snapshot",
+  "name": "DinVeda Ritual Snapshot",
+  "tag": "section",
+  "class": "dynamic-section",
   "settings": [
     {
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Ritual auf einen Blick",
-      "info": "Section heading displayed above the items"
-    }
-  ],
-  "blocks": [
+      "default": "Ritual auf einen Blick"
+    },
     {
-      "type": "ritual_item",
-      "name": "Ritual Item",
-      "limit": 3,
-      "settings": [
-        {
-          "type": "text",
-          "id": "label",
-          "label": "Label",
-          "info": "The label text displayed above the value"
-        },
-        {
-          "type": "select",
-          "id": "metafield_key",
-          "label": "Metafield",
-          "options": [
-            {
-              "value": "ritual_timing",
-              "label": "Ritual Timing"
-            },
-            {
-              "value": "ritual_usage",
-              "label": "Ritual Usage"
-            },
-            {
-              "value": "ritual_taste",
-              "label": "Ritual Taste"
-            }
-          ],
-          "default": "ritual_timing",
-          "info": "Select which product metafield to display"
-        }
-      ]
+      "type": "text",
+      "id": "timing_fallback",
+      "label": "Tageszeit Fallback",
+      "info": "Displayed if product.metafields.dinveda.ritual_timing is empty. Leave blank to hide item if metafield is empty."
+    },
+    {
+      "type": "text",
+      "id": "usage_fallback",
+      "label": "Anwendung Fallback",
+      "info": "Displayed if product.metafields.dinveda.ritual_usage is empty. Leave blank to hide item if metafield is empty."
+    },
+    {
+      "type": "text",
+      "id": "taste_fallback",
+      "label": "Geschmack Fallback",
+      "info": "Displayed if product.metafields.dinveda.taste_character is empty. Leave blank to hide item if metafield is empty."
     }
   ],
   "presets": [
     {
-      "name": "DinVeda – Ritual Snapshot",
-      "blocks": [
-        {
-          "type": "ritual_item",
-          "settings": {
-            "label": "Tageszeit",
-            "metafield_key": "ritual_timing"
-          }
-        },
-        {
-          "type": "ritual_item",
-          "settings": {
-            "label": "Anwendung",
-            "metafield_key": "ritual_usage"
-          }
-        },
-        {
-          "type": "ritual_item",
-          "settings": {
-            "label": "Geschmack",
-            "metafield_key": "ritual_taste"
-          }
-        }
-      ]
+      "name": "DinVeda Ritual Snapshot"
     }
   ]
 }

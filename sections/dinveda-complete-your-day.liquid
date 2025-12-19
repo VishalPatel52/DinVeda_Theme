@@ -12,10 +12,12 @@
     
     {% if section.settings.heading != blank %}
       <div class="dinveda-complete-your-day__header">
-        <h2 class="dinveda-complete-your-day__title">{{ section.settings.heading | escape }}</h2>
-        {% if section.settings.subheading != blank %}
-          <p class="dinveda-complete-your-day__subtitle">{{ section.settings.subheading | escape }}</p>
-        {% endif %}
+        <div class="dinveda-complete-your-day__header-left">
+          <h2 class="dinveda-complete-your-day__title">{{ section.settings.heading | escape }}</h2>
+          {% if section.settings.subheading != blank %}
+            <p class="dinveda-complete-your-day__subtitle">{{ section.settings.subheading | escape }}</p>
+          {% endif %}
+        </div>
         {% if section.settings.view_all_link != blank %}
           <a href="{{ section.settings.view_all_link }}" class="dinveda-complete-your-day__view-all">
             {{ section.settings.view_all_label | default: 'Alle Rituale ansehen' }}

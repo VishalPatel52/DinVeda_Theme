@@ -1,224 +1,378 @@
 {% comment %}
-  DinVeda Product Hero - Premium product page hero section
-  Two-column layout: left media, right content with quote card
+  DinVeda Product Hero - Custom hero section replacing main-product
+  Two-column layout: left gallery, right buy box with trust bullets
+  Proper Shopify product form with variants support
 {% endcomment %}
 
-<link rel="preload" href="{{ 'dinveda-product.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="{{ 'dinveda-product.css' | asset_url }}"></noscript>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const thumbs = document.querySelectorAll('.dinveda-product-hero__gallery-thumb');
-    const mainImage = document.querySelector('.dinveda-product-hero__image');
-    
-    if (thumbs.length > 0 && mainImage) {
-      thumbs.forEach(function(thumb) {
-        thumb.addEventListener('click', function() {
-          const thumbImg = this.querySelector('.dinveda-product-hero__gallery-thumb-img');
-          const mediaId = this.getAttribute('data-media-id');
-          
-          if (thumbImg && mediaId) {
-            // Get the full-size image URL
-            const thumbSrc = thumbImg.src;
-            const newSrc = thumbSrc.replace(/width=\d+/, 'width=800').replace(/_\d+x\d+/, '');
-            mainImage.src = newSrc;
-            mainImage.setAttribute('data-media-id', mediaId);
-            
-            // Update active state
-            thumbs.forEach(function(t) {
-              t.classList.remove('dinveda-product-hero__gallery-thumb--active');
-            });
-            this.classList.add('dinveda-product-hero__gallery-thumb--active');
-          }
-        });
-      });
-    }
-  });
-</script>
-
 {%- liquid
-  assign featured_image = product.featured_image | default: product.images.first
-  # Support both old and new metafield names
-  assign phase_label = product.metafields.dinveda.phase_label | default: product.metafields.dinveda.ritual_timing_label | default: section.settings.phase_label_fallback
-  assign quote = product.metafields.dinveda.quote | default: product.metafields.dinveda.tier_quote | default: product.metafields.dinveda.animal_quote | default: section.settings.quote_fallback
-  assign quote_author = product.metafields.dinveda.quote_author | default: product.metafields.dinveda.tier_name | default: product.metafields.dinveda.animal_name | default: section.settings.quote_author_fallback
-  assign blend_story_short = product.metafields.dinveda.blend_story_short | default: product.description | truncate: 200
-  assign current_variant = product.selected_or_first_available_variant
-  assign weight_unit = current_variant.weight_in_unit | default: '100g'
+  if product
+    assign current_variant = product.selected_or_first_available_variant
+  else
+    assign current_variant = null
+  endif
+  
+  assign product_form_id = 'product-form-' | append: section.id
+  
+  if product and product.template_suffix == 'pre-order'
+    assign call_to_action = 'products.product.pre_order' | t
+  elsif product
+    assign call_to_action = 'products.product.add_to_cart' | t
+  else
+    assign call_to_action = 'Add to cart'
+  endif
+
+  if current_variant and current_variant.available == false
+    assign call_to_action = 'products.product.sold_out' | t
+  endif
+
+  assign button_text = call_to_action
 -%}
+
+{%- comment -%} Product JSON for Product object initialization {%- endcomment -%}
+{% if product %}
+  {% render 'product-json', product: product %}
+{% endif %}
+
+{%- comment -%} Product form config {%- endcomment -%}
+{%- liquid
+  assign product_variants_setting = settings.product_variants | default: 'dropdowns'
+-%}
+{% capture product_form_config %}
+{
+  "money_format": {{ shop.money_format | json }},
+  "enable_history": true,
+  "sold_out": {{ "products.product.sold_out" | t | json }},
+  "button": {{ button_text | json }},
+  "unavailable": {{ 'products.product.unavailable' | t | json }},
+  "quickview": false,
+  "featured_product": false,
+  "swatches": {{ product_variants_setting | json }}
+}
+{% endcapture %}
 
 <section
   id="dinveda-product-hero-{{ section.id }}"
   class="dinveda-product-hero"
   data-section-id="{{ section.id }}"
   data-section-type="dinveda-product-hero"
+  {% if product %}data-product-id="{{ product.id }}"{% endif %}
+  data-asset-url="{{ 'section-product.js' | asset_url }}"
 >
   <div class="dinveda-product-hero__container">
     
-    {%- comment -%} Breadcrumb (optional) {%- endcomment -%}
-    {% if section.settings.show_breadcrumb %}
-      <nav class="dinveda-product-hero__breadcrumb" aria-label="Breadcrumb">
-        <a href="{{ routes.root_url }}">Shop</a>
-        <span class="dinveda-product-hero__breadcrumb-separator">|</span>
-        {% if product.collections.size > 0 %}
-          <a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a>
-          <span class="dinveda-product-hero__breadcrumb-separator">|</span>
-        {% endif %}
-        <span class="dinveda-product-hero__breadcrumb-current">{{ product.title }}</span>
+    {%- comment -%} Breadcrumbs (optional) {%- endcomment -%}
+    {% if section.settings.show_breadcrumbs %}
+      <nav class="dinveda-product-hero__breadcrumbs" aria-label="Breadcrumb">
+        <a href="{{ routes.root_url }}">Home</a>
+        <span>/</span>
+        <a href="{{ routes.collections_url }}">Products</a>
+        <span>/</span>
+        {% if product %}<span>{{ product.title }}</span>{% else %}<span>Product</span>{% endif %}
       </nav>
     {% endif %}
-    
+
     <div class="dinveda-product-hero__grid">
       
-      {%- comment -%} Left: Product Media {%- endcomment -%}
-      <div class="dinveda-product-hero__media-column">
-        {% if featured_image != blank %}
-          <div class="dinveda-product-hero__image-wrapper">
-            {% assign main_media = product.featured_media | default: product.media.first %}
-            {{ main_media | image_url: width: 800 | image_tag: alt: main_media.alt | default: product.title, loading: 'eager', class: 'dinveda-product-hero__image', data-media-id: main_media.id }}
-            
-            {%- comment -%} Badges {%- endcomment -%}
-            {% if section.settings.badge_1_label != blank or section.settings.badge_2_label != blank %}
-              <div class="dinveda-product-hero__badges">
-                {% if section.settings.badge_1_label != blank %}
-                  <span class="dinveda-product-hero__badge">{{ section.settings.badge_1_label | escape }}</span>
-                {% endif %}
-                {% if section.settings.badge_2_label != blank %}
-                  <span class="dinveda-product-hero__badge">{{ section.settings.badge_2_label | escape }}</span>
-                {% endif %}
-              </div>
+      {%- comment -%} Left Column: Product Gallery {%- endcomment -%}
+      <div class="dinveda-product-hero__gallery">
+        {% if product and product.media.size > 0 %}
+          {%- assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
+          
+          {%- comment -%} Main Image {%- endcomment -%}
+          <div class="dinveda-product-hero__main-image">
+            {% if featured_media %}
+              <img
+                src="{{ featured_media | image_url: width: 800 }}"
+                alt="{{ featured_media.alt | escape }}"
+                class="dinveda-product-hero__image"
+                data-media-id="{{ featured_media.id }}"
+                loading="eager"
+                width="{{ featured_media.width }}"
+                height="{{ featured_media.height }}"
+              >
             {% endif %}
           </div>
-          
-          {%- comment -%} Image Gallery Thumbnails {%- endcomment -%}
+
+          {%- comment -%} Thumbnails {%- endcomment -%}
           {% if product.media.size > 1 %}
-            <div class="dinveda-product-hero__gallery">
-              <div class="dinveda-product-hero__gallery-thumbnails">
-                {% for media in product.media limit: 6 %}
-                  {% if media.media_type == 'image' %}
-                    <button 
-                      type="button"
-                      class="dinveda-product-hero__gallery-thumb {% if forloop.first %}dinveda-product-hero__gallery-thumb--active{% endif %}"
-                      data-media-id="{{ media.id }}"
-                      aria-label="View image {{ forloop.index }}"
-                    >
-                      {{ media | image_url: width: 100 | image_tag: alt: media.alt | default: product.title, loading: 'lazy', class: 'dinveda-product-hero__gallery-thumb-img' }}
-                    </button>
-                  {% endif %}
-                {% endfor %}
-              </div>
+            <div class="dinveda-product-hero__thumbnails">
+              {% for media in product.media limit: 4 %}
+                <button
+                  type="button"
+                  class="dinveda-product-hero__thumbnail {% if forloop.first %}dinveda-product-hero__thumbnail--active{% endif %}"
+                  data-media-id="{{ media.id }}"
+                  aria-label="View image {{ forloop.index }}"
+                >
+                  <img
+                    src="{{ media | image_url: width: 150 }}"
+                    alt="{{ media.alt | escape }}"
+                    class="dinveda-product-hero__thumbnail-img"
+                    loading="lazy"
+                    width="150"
+                    height="150"
+                  >
+                </button>
+              {% endfor %}
             </div>
           {% endif %}
         {% else %}
-          <div class="dinveda-product-hero__image-wrapper dinveda-product-hero__placeholder">
+          <div class="dinveda-product-hero__main-image">
             {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
           </div>
         {% endif %}
       </div>
 
-      {%- comment -%} Right: Product Content {%- endcomment -%}
-      <div class="dinveda-product-hero__content-column">
-        <div class="dinveda-product-hero__content">
-          
-          {%- comment -%} Phase Label {%- endcomment -%}
-          {% if phase_label != blank %}
-            <p class="dinveda-product-hero__timing-label">{{ phase_label | escape }}</p>
-          {% endif %}
+      {%- comment -%} Right Column: Buy Box {%- endcomment -%}
+      <div class="dinveda-product-hero__buy-box">
+        
+        {%- comment -%} Product Title {%- endcomment -%}
+        {% if product %}
+          <h1 class="dinveda-product-hero__title">{{ product.title }}</h1>
+        {% else %}
+          <h1 class="dinveda-product-hero__title">Product Title</h1>
+        {% endif %}
 
-          {%- comment -%} Product Title {%- endcomment -%}
-          <h1 class="dinveda-product-hero__title">{{ product.title | escape }}</h1>
-
-          {%- comment -%} Quote Card {%- endcomment -%}
-          {% if quote != blank or quote_author != blank %}
-            <div class="dinveda-product-hero__quote-card">
-              {% if quote != blank %}
-                <p class="dinveda-product-hero__quote-text">{{ quote }}</p>
-              {% endif %}
-              {% if quote_author != blank %}
-                <p class="dinveda-product-hero__quote-attribution">— sagt der {{ quote_author | escape }}</p>
-              {% endif %}
+        {%- comment -%} Price {%- endcomment -%}
+        {% if product and current_variant %}
+          <div class="dinveda-product-hero__price-section">
+            <div class="dinveda-product-hero__price-wrapper">
+              <span class="dinveda-product-hero__price-label">Preis</span>
+              <div class="dinveda-product-hero__price" data-product-price>
+                <span data-regular-price>{{ current_variant.price | money }}</span>
+                {% if current_variant.compare_at_price > current_variant.price %}
+                  <span class="dinveda-product-hero__compare-price" data-compare-price>
+                    {{ current_variant.compare_at_price | money }}
+                  </span>
+                {% endif %}
+              </div>
+              <span class="dinveda-product-hero__price-note">inkl. MwSt. zzgl. Versand</span>
             </div>
-          {% endif %}
-
-          {%- comment -%} Short Intro {%- endcomment -%}
-          {% if blend_story_short != blank %}
-            <div class="dinveda-product-hero__intro">
-              {% if blend_story_short contains '<p>' %}
-                {{ blend_story_short }}
-              {% else %}
-                <p>{{ blend_story_short }}</p>
-              {% endif %}
-            </div>
-          {% endif %}
-
-          {%- comment -%} Price {%- endcomment -%}
-          <div class="dinveda-product-hero__price">
-            <span class="dinveda-product-hero__price-amount">{{ current_variant.price | money }}</span>
-            {%- liquid
-              assign price_suffix = section.settings.price_suffix
-              if price_suffix == blank
-                assign price_suffix = 'inkl. MwSt. / ' | append: weight_unit | append: ' Dose'
-              elsif price_suffix contains '{{ product.selected_or_first_available_variant.weight_in_unit }}'
-                assign price_suffix = price_suffix | replace: '{{ product.selected_or_first_available_variant.weight_in_unit }}', weight_unit
-              endif
-            -%}
-            <span class="dinveda-product-hero__price-suffix">{{ price_suffix | escape }}</span>
+            {%- comment -%} Nutrition Facts Link {%- endcomment -%}
+            {% if product.metafields.dinveda.nutrition_facts != blank or section.settings.show_nutrition_facts %}
+              <a href="#nutrition-facts" class="dinveda-product-hero__nutrition-link">
+                Nutrition Facts
+              </a>
+            {% endif %}
           </div>
 
-          {%- comment -%} Add to Cart Form {%- endcomment -%}
-          {% form 'product', product, id: 'dinveda-product-hero-form', class: 'dinveda-product-hero__form' %}
-            <input type="hidden" name="id" value="{{ current_variant.id }}">
-            <button
-              type="submit"
-              name="add"
-              class="dinveda-product-hero__atc-button button btn-solid"
-              {% unless current_variant.available %}disabled{% endunless %}
-            >
-              {% if current_variant.available %}
-                {{ section.settings.atc_button_label | default: 'In den Warenkorb' }}
-              {% else %}
-                {{ 'products.product.sold_out' | t }}
-              {% endif %}
-            </button>
-          {% endform %}
+          {%- comment -%} Product Form {%- endcomment -%}
+          {% form 'product', product,
+            id: product_form_id,
+            class: "dinveda-product-hero__form js-prod-form-submit"
+          %}
+            
+            <input type="hidden" name="id" id="formVariantId" value="{{ current_variant.id }}">
 
-          {% if section.settings.shipping_note != blank %}
-            <p class="dinveda-product-hero__shipping-note">{{ section.settings.shipping_note | escape }}</p>
-          {% endif %}
-
-          {%- comment -%} Trust Row {%- endcomment -%}
-          {% if section.blocks.size > 0 %}
-            <div class="dinveda-product-hero__trust-row">
-              {% for block in section.blocks %}
-                {% if block.type == 'trust_item' %}
-                  <div class="dinveda-product-hero__trust-item" {{ block.shopify_attributes }}>
-                    {% if block.settings.icon_svg != blank %}
-                      <div class="dinveda-product-hero__trust-icon">
-                        {{ block.settings.icon_svg }}
-                      </div>
-                    {% endif %}
-                    {% if block.settings.text != blank %}
-                      <span class="dinveda-product-hero__trust-text">{{ block.settings.text | escape }}</span>
-                    {% endif %}
+            {%- comment -%} Variants {%- endcomment -%}
+            {% unless product.has_only_default_variant %}
+            <div class="dinveda-product-hero__variants" data-section="{{ section.id }}">
+              {% for option in product.options_with_values %}
+                <div class="dinveda-product-hero__variant-option">
+                  <label class="dinveda-product-hero__variant-label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
+                    {{ option.name }}
+                  </label>
+                  <div class="dinveda-product-hero__variant-select">
+                    <select
+                      id="Option-{{ section.id }}-{{ forloop.index0 }}"
+                      class="js-variant-selector"
+                      name="options[{{ option.name | escape }}]"
+                    >
+                      {% for value in option.values %}
+                        <option
+                          value="{{ value | escape }}"
+                          {% if option.selected_value == value %}selected="selected"{% endif %}
+                        >
+                          {{ value }}
+                        </option>
+                      {% endfor %}
+                    </select>
                   </div>
-                {% endif %}
+                </div>
               {% endfor %}
             </div>
+          {% endunless %}
+
+            {%- comment -%} Quantity {%- endcomment -%}
+            <div class="dinveda-product-hero__quantity">
+            <label class="dinveda-product-hero__quantity-label" for="Quantity-{{ section.id }}">Menge</label>
+            <div class="dinveda-product-hero__quantity-input">
+              <button
+                type="button"
+                class="dinveda-product-hero__quantity-btn"
+                data-quantity-decrease
+                aria-label="Decrease quantity"
+              >−</button>
+              <input
+                type="number"
+                id="Quantity-{{ section.id }}"
+                name="quantity"
+                value="1"
+                min="1"
+                class="dinveda-product-hero__quantity-field"
+              >
+              <button
+                type="button"
+                class="dinveda-product-hero__quantity-btn"
+                data-quantity-increase
+                aria-label="Increase quantity"
+              >+</button>
+            </div>
+          </div>
+
+            {%- comment -%} Add to Cart Button {%- endcomment -%}
+            <button
+            type="submit"
+            name="add"
+            class="dinveda-product-hero__add-to-cart"
+            {% unless current_variant.available %}disabled{% endunless %}
+            data-add-to-cart-text
+          >
+            {{ button_text }}
+            {% if current_variant.available %}
+              <span class="dinveda-product-hero__add-to-cart-arrow">→</span>
+            {% endif %}
+          </button>
+
+            {%- comment -%} Dynamic Checkout Button {%- endcomment -%}
+            {% if section.settings.show_dynamic_checkout %}
+            <div class="dinveda-product-hero__dynamic-checkout">
+              {{ form | payment_button }}
+            </div>
+            {% if section.settings.show_payment_options_link %}
+              <div class="dinveda-product-hero__payment-options">
+                <a href="#payment-options">Weitere Bezahlmöglichkeiten</a>
+              </div>
+            {% endif %}
           {% endif %}
 
-        </div>
-      </div>
 
+          {% endform %}
+        {% endif %}
+
+        {%- comment -%} Trust Bullets {%- endcomment -%}
+        <div class="dinveda-product-hero__trust-bullets">
+          <div class="dinveda-product-hero__trust-item">
+            <span class="dinveda-product-hero__trust-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="dinveda-product-hero__trust-text">{{ section.settings.trust_text_1 | default: "100% Bio & vegan – naturrein & laborgeprüft" | escape }}</span>
+          </div>
+          <div class="dinveda-product-hero__trust-item">
+            <span class="dinveda-product-hero__trust-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="dinveda-product-hero__trust-text">{{ section.settings.trust_text_2 | default: "Mit Shatavari, Amla, Fenchel & Rosenblüten" | escape }}</span>
+          </div>
+          <div class="dinveda-product-hero__trust-item">
+            <span class="dinveda-product-hero__trust-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="dinveda-product-hero__trust-text">{{ section.settings.trust_text_3 | default: "Kostenloser Versand ab 50€" | escape }}</span>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 </section>
 
-{% style %}
-  #dinveda-product-hero-{{ section.id }} {
-    background-color: var(--design-bg-color, #FFF0DD);
-  }
-{% endstyle %}
+{%- comment -%} Load product form JS {%- endcomment -%}
+<script src="{{ 'product.js' | asset_url }}" defer></script>
 
+<script>
+  (function() {
+    'use strict';
+    
+    function initHeroSection() {
+      const section = document.querySelector('#dinveda-product-hero-{{ section.id }}');
+      if (!section) return;
+
+      // Gallery thumbnail switching
+      const thumbs = section.querySelectorAll('.dinveda-product-hero__thumbnail');
+      const mainImage = section.querySelector('.dinveda-product-hero__image');
+      
+      if (thumbs.length > 0 && mainImage) {
+        thumbs.forEach(function(thumb) {
+          thumb.addEventListener('click', function() {
+            const mediaId = this.getAttribute('data-media-id');
+            const thumbImg = this.querySelector('.dinveda-product-hero__thumbnail-img');
+            
+            if (thumbImg && mediaId) {
+              const newSrc = thumbImg.src.replace(/width=\d+/, 'width=800').replace(/_\d+x\d+/, '');
+              mainImage.src = newSrc;
+              mainImage.setAttribute('data-media-id', mediaId);
+              
+              thumbs.forEach(function(t) {
+                t.classList.remove('dinveda-product-hero__thumbnail--active');
+              });
+              this.classList.add('dinveda-product-hero__thumbnail--active');
+            }
+          });
+        });
+      }
+
+      // Quantity controls
+      const qtyField = section.querySelector('.dinveda-product-hero__quantity-field');
+      const qtyDecrease = section.querySelector('[data-quantity-decrease]');
+      const qtyIncrease = section.querySelector('[data-quantity-increase]');
+      
+      if (qtyField && qtyDecrease && qtyIncrease) {
+        qtyDecrease.addEventListener('click', function() {
+          const current = parseInt(qtyField.value) || 1;
+          if (current > 1) {
+            qtyField.value = current - 1;
+          }
+        });
+        
+        qtyIncrease.addEventListener('click', function() {
+          const current = parseInt(qtyField.value) || 1;
+          qtyField.value = current + 1;
+        });
+      }
+
+      // Set product form config
+      const form = section.querySelector('.js-prod-form-submit');
+      if (form) {
+        const productFormConfig = {{ product_form_config }};
+        form.setAttribute('data-product-form', productFormConfig);
+      }
+
+      // Initialize Product object from JSON (Slice theme pattern)
+      const productJson = section.querySelector('.product-json');
+      if (productJson) {
+        try {
+          var Product = JSON.parse(productJson.innerHTML || '{}');
+          var Events = typeof EventEmitter3 !== 'undefined' ? new EventEmitter3() : { trigger: function() {}, on: function() {} };
+          if (Events.emit) {
+            Events.trigger = Events.emit;
+          }
+          
+          // Initialize product form
+          if (typeof ProductForm !== 'undefined' && form) {
+            new ProductForm(section, '{{ section.id }}', Events, Product);
+          }
+        } catch (e) {
+          console.error('Error initializing product form:', e);
+        }
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initHeroSection);
+    } else {
+      initHeroSection();
+    }
+  })();
+</script>
+
+{%- comment -%} Schema must be at the top level, outside all HTML tags {%- endcomment -%}
 {% schema %}
 {
   "name": "DinVeda Product Hero",
@@ -226,108 +380,62 @@
   "class": "dynamic-section",
   "settings": [
     {
-      "type": "header",
-      "content": "Content"
+      "type": "checkbox",
+      "id": "show_breadcrumbs",
+      "label": "Show breadcrumbs",
+      "default": false
     },
     {
       "type": "checkbox",
-      "id": "show_breadcrumb",
-      "label": "Show breadcrumb",
+      "id": "show_nutrition_facts",
+      "label": "Show Nutrition Facts link",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dynamic_checkout",
+      "label": "Show dynamic checkout button",
       "default": true
     },
     {
-      "type": "text",
-      "id": "phase_label_fallback",
-      "label": "Phase label (fallback)",
-      "default": "MORGEN | AKTIVIEREN",
-      "info": "Used if product metafield dinveda.phase_label is not set"
+      "type": "checkbox",
+      "id": "show_payment_options_link",
+      "label": "Show payment options link",
+      "default": true
     },
     {
-      "type": "textarea",
-      "id": "quote_fallback",
-      "label": "Quote text (fallback)",
-      "info": "Used if product metafield dinveda.quote is not set"
+      "type": "checkbox",
+      "id": "show_social_share",
+      "label": "Show social share",
+      "default": true
     },
     {
-      "type": "text",
-      "id": "quote_author_fallback",
-      "label": "Quote author (fallback)",
-      "info": "Used if product metafield dinveda.quote_author is not set"
+      "type": "header",
+      "content": "Trust Bullets"
     },
     {
       "type": "text",
-      "id": "badge_1_label",
-      "label": "Badge 1 label",
-      "default": "BIO"
+      "id": "trust_text_1",
+      "label": "Trust Text 1",
+      "default": "100% Bio & vegan – naturrein & laborgeprüft"
     },
     {
       "type": "text",
-      "id": "badge_2_label",
-      "label": "Badge 2 label",
-      "default": "VEGAN"
+      "id": "trust_text_2",
+      "label": "Trust Text 2",
+      "default": "Mit Shatavari, Amla, Fenchel & Rosenblüten"
     },
     {
       "type": "text",
-      "id": "price_suffix",
-      "label": "Price suffix",
-      "default": "inkl. MwSt. / {{ product.selected_or_first_available_variant.weight_in_unit }} Dose",
-      "info": "Use {{ product.selected_or_first_available_variant.weight_in_unit }} as placeholder for weight"
-    },
-    {
-      "type": "text",
-      "id": "atc_button_label",
-      "label": "Add to cart button label",
-      "default": "In den Warenkorb"
-    },
-    {
-      "type": "text",
-      "id": "shipping_note",
-      "label": "Shipping note",
-      "default": "Kostenloser Versand ab 50€ innerhalb DE"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "trust_item",
-      "name": "Trust Item",
-      "limit": 2,
-      "settings": [
-        {
-          "type": "html",
-          "id": "icon_svg",
-          "label": "Icon (SVG)",
-          "info": "Paste inline SVG code"
-        },
-        {
-          "type": "text",
-          "id": "text",
-          "label": "Text",
-          "default": "100% Bio-zertifiziert"
-        }
-      ]
+      "id": "trust_text_3",
+      "label": "Trust Text 3",
+      "default": "Kostenloser Versand ab 50€"
     }
   ],
   "presets": [
     {
-      "name": "DinVeda Product Hero",
-      "blocks": [
-        {
-          "type": "trust_item",
-          "settings": {
-            "icon_svg": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
-            "text": "100% Bio-zertifiziert"
-          }
-        },
-        {
-          "type": "trust_item",
-          "settings": {
-            "icon_svg": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><polyline points=\"9 22 9 12 15 12 15 22\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
-            "text": "Made in Germany"
-          }
-        }
-      ]
+      "name": "DinVeda Product Hero"
     }
   ]
 }
 {% endschema %}
-

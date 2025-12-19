@@ -1,21 +1,64 @@
 {% comment %}
-  DinVeda Ritual Story - Story section with background and metafield content
+  DinVeda Ritual Story - Story section matching code.html structure
+  Flow: Intro paragraphs → "Warum..." heading → Why text → Bullet list → Closing
 {% endcomment %}
 
 {%- liquid
-  # Support both old and new metafield names
-  assign story_title = product.metafields.dinveda.story_title | default: product.metafields.dinveda.ritual_story_title | default: section.settings.story_title_fallback
-  assign story_body = product.metafields.dinveda.story_body | default: product.metafields.dinveda.ritual_story_body
-  assign background_image = section.settings.background_image
+  # Intro paragraphs (from blend_story metafield)
+  assign story_intro = product.metafields.dinveda.blend_story | default: product.description
+  
+  # "Warum" heading (auto-generate if not set)
+  assign story_title = product.metafields.dinveda.story_title | default: product.metafields.dinveda.ritual_story_title
+  if story_title == blank
+    assign story_title = 'Warum ' | append: product.title | append: '?'
+  endif
+  
+  # "Warum" section text
+  assign why_text = product.metafields.dinveda.why_text
+  
+  # Bullet list heading and items
+  assign bullet_list = product.metafields.dinveda.bullet_list
+  
+  # Closing sentence
+  assign closing_text = product.metafields.dinveda.closing_text
+  
+  # Check if we have content to show
+  assign has_content = false
+  if story_intro != blank or why_text != blank or bullet_list != blank or closing_text != blank
+    assign has_content = true
+  endif
 -%}
 
-{% if story_title != blank or story_body != blank %}
+{% if has_content or section.settings.show_when_empty %}
   <section
     id="dinveda-ritual-story-{{ section.id }}"
     class="dinveda-ritual-story"
     data-section-id="{{ section.id }}"
     data-section-type="dinveda-ritual-story"
   >
+    {%- liquid
+      assign background_image = section.settings.background_image
+    -%}
+    {% if background_image != blank %}
+      {% style %}
+        #dinveda-ritual-story-{{ section.id }}::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-image: url('{{ background_image | image_url: width: 1200 }}');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          opacity: 0.05;
+          pointer-events: none;
+          z-index: 0;
+        }
+      {% endstyle %}
+    {% endif %}
+    
     <div class="dinveda-ritual-story__container">
       <div class="dinveda-ritual-story__content">
         
@@ -23,31 +66,59 @@
           <p class="dinveda-ritual-story__eyebrow">{{ section.settings.eyebrow | escape }}</p>
         {% endif %}
 
-        {% if story_title != blank %}
-          <h2 class="dinveda-ritual-story__title">{{ story_title | escape }}</h2>
+        {%- comment -%} Intro paragraphs (lead text) {%- endcomment -%}
+        {% if story_intro != blank %}
+          <div class="dinveda-ritual-story__intro">
+            {{ story_intro }}
+          </div>
+        {% elsif section.settings.intro_fallback != blank %}
+          <div class="dinveda-ritual-story__intro">
+            {{ section.settings.intro_fallback }}
+          </div>
         {% endif %}
 
-        {% if story_body != blank %}
-          <div class="dinveda-ritual-story__body">
-            {{ story_body }}
+        {%- comment -%} "Warum..." heading and paragraph {%- endcomment -%}
+        {% if story_title != blank %}
+          <h3 class="dinveda-ritual-story__why-heading">{{ story_title | escape }}</h3>
+        {% endif %}
+        
+        {% if why_text != blank %}
+          <div class="dinveda-ritual-story__why-body">
+            {{ why_text }}
           </div>
+        {% elsif section.settings.why_fallback != blank %}
+          <div class="dinveda-ritual-story__why-body">
+            {{ section.settings.why_fallback }}
+          </div>
+        {% endif %}
+
+        {%- comment -%} Bullet list section {%- endcomment -%}
+        {% if bullet_list != blank or section.settings.bullet_list_fallback != blank %}
+          {% assign bullets_to_show = bullet_list | default: section.settings.bullet_list_fallback %}
+          {% if bullets_to_show != blank %}
+            <p class="dinveda-ritual-story__bullet-heading">{{ section.settings.bullet_heading | default: "Zarte, florale Noten – perfekt für:" | escape }}</p>
+            <ul class="dinveda-ritual-story__bullet-list">
+              {% assign bullet_lines = bullets_to_show | newline_to_br | split: '<br />' %}
+              {% for line in bullet_lines %}
+                {% assign trimmed_line = line | strip %}
+                {% if trimmed_line != blank %}
+                  <li>{{ trimmed_line | escape }}</li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endif %}
+
+        {%- comment -%} Closing sentence {%- endcomment -%}
+        {% if closing_text != blank %}
+          <p class="dinveda-ritual-story__closing">{{ closing_text | escape }}</p>
+        {% elsif section.settings.closing_fallback != blank %}
+          <p class="dinveda-ritual-story__closing">{{ section.settings.closing_fallback | escape }}</p>
         {% endif %}
 
       </div>
     </div>
   </section>
-
-  {% style %}
-    #dinveda-ritual-story-{{ section.id }} {
-      background-color: var(--design-secondary-bg, #FFF6EA);
-      {% if background_image != blank %}
-        background-image: url('{{ background_image | image_url: width: 1200 }}');
-        background-size: cover;
-        background-position: center;
-        background-blend-mode: overlay;
-      {% endif %}
-    }
-  {% endstyle %}
 {% endif %}
 
 {% schema %}
@@ -64,14 +135,44 @@
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow label",
-      "default": "DIE RITUAL-GESCHICHTE"
+      "default": "DIE RITUAL STORY"
+    },
+    {
+      "type": "richtext",
+      "id": "intro_fallback",
+      "label": "Intro Paragraphs (fallback)",
+      "info": "Used if product.metafields.dinveda.blend_story is empty"
+    },
+    {
+      "type": "richtext",
+      "id": "why_fallback",
+      "label": "Warum Text (fallback)",
+      "info": "Used if product.metafields.dinveda.why_text is empty"
     },
     {
       "type": "text",
-      "id": "story_title_fallback",
-      "label": "Story title (fallback)",
-      "default": "Warum der Fuchs?",
-      "info": "Used if product metafield dinveda.story_title is not set"
+      "id": "bullet_heading",
+      "label": "Bullet List Heading",
+      "default": "Zarte, florale Noten – perfekt für:"
+    },
+    {
+      "type": "textarea",
+      "id": "bullet_list_fallback",
+      "label": "Bullet List (fallback)",
+      "default": "Tee- & Selfcare-Rituale\nWarme Abendgetränke\nSanfte Smoothies & Joghurt\nLeichte, harmonische Desserts",
+      "info": "Each line is a new bullet. Used if product.metafields.dinveda.bullet_list is empty"
+    },
+    {
+      "type": "text",
+      "id": "closing_fallback",
+      "label": "Closing Sentence (fallback)",
+      "info": "Used if product.metafields.dinveda.closing_text is empty"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_when_empty",
+      "label": "Show section even if all metafields are empty",
+      "default": false
     },
     {
       "type": "header",
@@ -91,4 +192,3 @@
   ]
 }
 {% endschema %}
-
