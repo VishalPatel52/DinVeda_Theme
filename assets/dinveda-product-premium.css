@@ -396,14 +396,7 @@ body.product-template-dinveda-premium .product-top {
   cursor: pointer;
 }
 
-/* Quantity and Cart Button Row - Side by Side */
-.dinveda-product-hero__quantity-cart-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  margin-bottom: 8px;
-}
-
+/* Quantity - Note: quantity-cart-row wrapper was removed from template */
 .dinveda-product-hero__quantity {
   display: flex;
   flex-direction: column;
@@ -1547,12 +1540,6 @@ body.product-template-dinveda-premium section[data-section-type="product-recomme
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
-  }
-
-  .dinveda-product-hero__quantity-cart-row {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 16px;
   }
 
   .dinveda-product-hero__quantity-input {
