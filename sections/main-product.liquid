@@ -652,20 +652,44 @@
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="dinveda-trust-icon">
                         <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg>
-                      <span class="dinveda-trust-text">{{ block.settings.text_1 | default: '100% Bio & vegan – naturrein & laborgeprüft' }}</span>
+                      {%- liquid
+                        assign text_1_clean = block.settings.text_1 | default: '100% Bio & vegan – naturrein & laborgeprüft' | strip_html
+                        assign text_1_clean = text_1_clean | replace: '&amp;', '&' | replace: '&nbsp;', ' '
+                        assign text_1_clean = text_1_clean | replace: 'data-start=', '' | replace: 'data-end=', ''
+                        assign text_1_clean = text_1_clean | replace: '"567"', '' | replace: '"615"', ''
+                        assign text_1_clean = text_1_clean | replace: '567', '' | replace: '615', ''
+                        assign text_1_clean = text_1_clean | strip
+                      -%}
+                      <span class="dinveda-trust-text">{{ text_1_clean | escape }}</span>
                     </div>
                     <div class="dinveda-trust-bullets-item">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="dinveda-trust-icon">
                         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg>
-                      <span class="dinveda-trust-text">{{ block.settings.text_2 | default: 'Mit Shatavari, Amla, Fenchel & Rosenblüten' }}</span>
+                      {%- liquid
+                        assign text_2_clean = block.settings.text_2 | default: 'Mit Shatavari, Amla, Fenchel & Rosenblüten' | strip_html
+                        assign text_2_clean = text_2_clean | replace: '&amp;', '&' | replace: '&nbsp;', ' '
+                        assign text_2_clean = text_2_clean | replace: 'data-start=', '' | replace: 'data-end=', ''
+                        assign text_2_clean = text_2_clean | replace: '"567"', '' | replace: '"615"', ''
+                        assign text_2_clean = text_2_clean | replace: '567', '' | replace: '615', ''
+                        assign text_2_clean = text_2_clean | strip
+                      -%}
+                      <span class="dinveda-trust-text">{{ text_2_clean | escape }}</span>
                     </div>
                     <div class="dinveda-trust-bullets-item">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="dinveda-trust-icon">
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
                         <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg>
-                      <span class="dinveda-trust-text">{{ block.settings.text_3 | default: 'Kostenloser Versand ab 50€' }}</span>
+                      {%- liquid
+                        assign text_3_clean = block.settings.text_3 | default: 'Kostenloser Versand ab 50€' | strip_html
+                        assign text_3_clean = text_3_clean | replace: '&amp;', '&' | replace: '&nbsp;', ' '
+                        assign text_3_clean = text_3_clean | replace: 'data-start=', '' | replace: 'data-end=', ''
+                        assign text_3_clean = text_3_clean | replace: '"567"', '' | replace: '"615"', ''
+                        assign text_3_clean = text_3_clean | replace: '567', '' | replace: '615', ''
+                        assign text_3_clean = text_3_clean | strip
+                      -%}
+                      <span class="dinveda-trust-text">{{ text_3_clean | escape }}</span>
                     </div>
                   </div>
                 </div>

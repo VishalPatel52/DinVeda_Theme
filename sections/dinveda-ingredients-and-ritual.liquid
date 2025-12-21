@@ -1,0 +1,344 @@
+{% comment %}
+  DinVeda Ingredients & Ritual Section
+  Three-part single-column layout:
+  - Part A: "Zutaten & Traditioneller Hintergrund" (ingredients with descriptions)
+  - Part B: "Ehrliche Zutaten" (table format with proportions)
+  - Part C: "Anwendung & Zubereitung" (recipe cards)
+{% endcomment %}
+
+{%- liquid
+  # Part A: Ingredients & Traditional Background
+  assign ingredients_metafield = product.metafields.dinveda.ingredients_list
+  
+  # Part B: Ehrliche Zutaten table blocks
+  assign has_table_blocks = false
+  if section.blocks.size > 0
+    for block in section.blocks
+      if block.type == 'ingredient_table_row'
+        assign has_table_blocks = true
+        break
+      endif
+    endfor
+  endif
+  
+  # Part C: Recipe cards
+  assign has_recipe_blocks = false
+  if section.blocks.size > 0
+    for block in section.blocks
+      if block.type == 'recipe_card'
+        assign has_recipe_blocks = true
+        break
+      endif
+    endfor
+  endif
+  
+  # Animal and product names for Part C subline
+  assign tier_name = product.metafields.dinveda.tier_name | default: product.metafields.dinveda.animal_name
+  assign product_name = product.title
+  
+  # Check if section should be shown
+  assign has_content = false
+  if ingredients_metafield != blank or has_table_blocks or has_recipe_blocks
+    assign has_content = true
+  endif
+-%}
+
+{% if has_content or section.settings.hide_if_empty == false %}
+  <section
+    id="dinveda-ingredients-and-ritual-{{ section.id }}"
+    class="dinveda-ingredients-and-ritual"
+    data-section-id="{{ section.id }}"
+    data-section-type="dinveda-ingredients-and-ritual"
+  >
+    <div class="dinveda-ingredients-and-ritual__container">
+      
+      {%- comment -%} Part A: Zutaten & Traditioneller Hintergrund {%- endcomment -%}
+      {% if ingredients_metafield != blank or section.settings.show_traditional_when_empty %}
+        <div class="dinveda-ingredients-and-ritual__traditional-section">
+          <div class="dinveda-ingredients-and-ritual__section-header">
+            <span class="material-symbols-outlined dinveda-ingredients-and-ritual__icon">grain</span>
+            <h2 class="dinveda-ingredients-and-ritual__section-title">
+              {{ section.settings.traditional_heading | default: 'Zutaten & Traditioneller Hintergrund' | escape }}
+            </h2>
+          </div>
+          
+          {%- comment -%} Ingredients List from metafield {%- endcomment -%}
+          {% if ingredients_metafield != blank %}
+            <div class="dinveda-ingredients-and-ritual__ingredients-list">
+              {% assign ingredient_lines = ingredients_metafield | newline_to_br | split: '<br />' %}
+              {% for line in ingredient_lines %}
+                {% assign trimmed_line = line | strip %}
+                {% if trimmed_line != blank %}
+                  {% assign parts = trimmed_line | split: ' – ' %}
+                  {% if parts.size == 2 %}
+                    <div class="dinveda-ingredients-and-ritual__ingredient-item">
+                      <strong class="dinveda-ingredients-and-ritual__ingredient-name">{{ parts[0] | strip | escape }}</strong>
+                      <span class="dinveda-ingredients-and-ritual__ingredient-separator"> – </span>
+                      <span class="dinveda-ingredients-and-ritual__ingredient-description">{{ parts[1] | strip | escape }}</span>
+                    </div>
+                  {% else %}
+                    <div class="dinveda-ingredients-and-ritual__ingredient-item">
+                      <strong class="dinveda-ingredients-and-ritual__ingredient-name">{{ trimmed_line | escape }}</strong>
+                    </div>
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
+          
+          {%- comment -%} Traditional Background Footnote {%- endcomment -%}
+          {% if section.settings.traditional_footnote != blank %}
+            <p class="dinveda-ingredients-and-ritual__footnote">
+              {{ section.settings.traditional_footnote | escape }}
+            </p>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {%- comment -%} Part B: Ehrliche Zutaten (Table Format) {%- endcomment -%}
+      {% if has_table_blocks or section.settings.show_table_when_empty %}
+        <div class="dinveda-ingredients-and-ritual__table-section">
+          <div class="dinveda-ingredients-and-ritual__section-header">
+            <span class="material-symbols-outlined dinveda-ingredients-and-ritual__icon">grain</span>
+            <h2 class="dinveda-ingredients-and-ritual__section-title">
+              {{ section.settings.table_heading | default: 'Ehrliche Zutaten' | escape }}
+            </h2>
+          </div>
+          
+          {%- comment -%} Ingredient Table {%- endcomment -%}
+          {% if has_table_blocks %}
+            <div class="dinveda-ingredients-and-ritual__table">
+              {% for block in section.blocks %}
+                {% if block.type == 'ingredient_table_row' %}
+                  <div class="dinveda-ingredients-and-ritual__table-row" {{ block.shopify_attributes }}>
+                    <div class="dinveda-ingredients-and-ritual__table-left">
+                      <span class="dinveda-ingredients-and-ritual__table-name">{{ block.settings.name | escape }}</span>
+                      {% if block.settings.percentage != blank %}
+                        <span class="dinveda-ingredients-and-ritual__table-percentage"> ({{ block.settings.percentage | escape }})</span>
+                      {% endif %}
+                    </div>
+                    {% if block.settings.additional_info != blank %}
+                      <div class="dinveda-ingredients-and-ritual__table-right">
+                        <span class="dinveda-ingredients-and-ritual__table-info">{{ block.settings.additional_info | escape }}</span>
+                      </div>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
+          
+          {%- comment -%} Table Footnote {%- endcomment -%}
+          {% if section.settings.table_footnote != blank %}
+            <p class="dinveda-ingredients-and-ritual__footnote">
+              {{ section.settings.table_footnote | escape }}
+            </p>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {%- comment -%} Part C: Anwendung & Zubereitung {%- endcomment -%}
+      {% if has_recipe_blocks or section.settings.show_recipe_when_empty %}
+        <div class="dinveda-ingredients-and-ritual__recipe-section">
+          <div class="dinveda-ingredients-and-ritual__section-header">
+            <span class="material-symbols-outlined dinveda-ingredients-and-ritual__icon">restaurant</span>
+            <h2 class="dinveda-ingredients-and-ritual__section-title">
+              {{ section.settings.recipe_heading | default: 'Anwendung & Zubereitung' | escape }}
+            </h2>
+          </div>
+          
+          {%- comment -%} Dynamic Subline {%- endcomment -%}
+          {% if section.settings.recipe_subline_enabled and tier_name != blank and product_name != blank %}
+            <p class="dinveda-ingredients-and-ritual__subline">
+              So verwendet der {{ tier_name | escape }} {{ product_name | escape }} in seinem Alltag:
+            </p>
+          {% endif %}
+          
+          {%- comment -%} Recipe Cards Grid {%- endcomment -%}
+          {% if has_recipe_blocks %}
+            <div class="dinveda-ingredients-and-ritual__cards-grid">
+              {% for block in section.blocks %}
+                {% if block.type == 'recipe_card' %}
+                  <div class="dinveda-ingredients-and-ritual__recipe-card" {{ block.shopify_attributes }}>
+                    {% if block.settings.title != blank %}
+                      <h3 class="dinveda-ingredients-and-ritual__recipe-card-title">{{ block.settings.title | escape }}</h3>
+                    {% endif %}
+                    {% if block.settings.body != blank %}
+                      <div class="dinveda-ingredients-and-ritual__recipe-card-body">
+                        {{ block.settings.body }}
+                      </div>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Ingredients & Ritual",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Part A: Zutaten & Traditioneller Hintergrund"
+    },
+    {
+      "type": "text",
+      "id": "traditional_heading",
+      "label": "Traditional Heading",
+      "default": "Zutaten & Traditioneller Hintergrund"
+    },
+    {
+      "type": "text",
+      "id": "traditional_footnote",
+      "label": "Traditional Footnote",
+      "default": "ALLE ZUTATEN SIND 100 % BIO – AUS KONTROLLIERT BIOLOGISCHEM ANBAU."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_traditional_when_empty",
+      "label": "Show Part A even if metafield is empty",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Part B: Ehrliche Zutaten"
+    },
+    {
+      "type": "text",
+      "id": "table_heading",
+      "label": "Table Heading",
+      "default": "Ehrliche Zutaten"
+    },
+    {
+      "type": "text",
+      "id": "table_footnote",
+      "label": "Table Footnote",
+      "default": "*AUS KONTROLLIERT BIOLOGISCHEM ANBAU (DE-ÖKO-001)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_table_when_empty",
+      "label": "Show Part B even if no blocks are added",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Part C: Anwendung & Zubereitung"
+    },
+    {
+      "type": "text",
+      "id": "recipe_heading",
+      "label": "Recipe Heading",
+      "default": "Anwendung & Zubereitung"
+    },
+    {
+      "type": "checkbox",
+      "id": "recipe_subline_enabled",
+      "label": "Show subline (So verwendet der [Animal] [Product]...)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_recipe_when_empty",
+      "label": "Show Part C even if no blocks are added",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Display"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_if_empty",
+      "label": "Hide entire section if all parts are empty",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient_table_row",
+      "name": "Ingredient Table Row",
+      "limit": 10,
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Ingredient Name",
+          "default": "Kurkuma"
+        },
+        {
+          "type": "text",
+          "id": "percentage",
+          "label": "Percentage",
+          "default": "55%",
+          "info": "Will be displayed in parentheses after name"
+        },
+        {
+          "type": "text",
+          "id": "additional_info",
+          "label": "Additional Info",
+          "default": "Indien, Bio-Qualität",
+          "info": "Right-aligned information"
+        }
+      ]
+    },
+    {
+      "type": "recipe_card",
+      "name": "Recipe Card",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Recipe Title",
+          "default": "Sanfter Tee- oder Drink-Moment"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Recipe Instructions",
+          "default": "<p>1 TL (~3 g) in 200 ml warme Pflanzenmilch, Kräutertee oder Wasser einrühren – nach Wunsch leicht süßen.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ingredients & Ritual"
+    }
+  ]
+}
+{% endschema %}

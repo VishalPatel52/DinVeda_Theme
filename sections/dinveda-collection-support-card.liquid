@@ -1,0 +1,299 @@
+{% comment %} DinVeda Premium Collection Support Card Section {% endcomment %}
+{%- liquid
+  unless section.settings.enable
+    break
+  endunless
+
+  assign section_padding = ''
+  if section.settings.section_padding == 'top'
+    assign section_padding = 'pb0'
+  elsif section.settings.section_padding == 'bottom'
+    assign section_padding = 'mt0'
+  elsif section.settings.section_padding == 'none'
+    assign section_padding = 'mt0 pb0'
+  endif
+
+  assign card_style = section.settings.style
+  if card_style == blank
+    assign card_style = 'two-tone'
+  endif
+
+  assign bg_left = section.settings.background_color_left
+  if bg_left == blank
+    assign bg_left = 'var(--design-accent-color)'
+  endif
+
+  assign bg_right = section.settings.background_color_right
+  if bg_right == blank
+    assign bg_right = 'var(--design-bg-color)'
+  endif
+
+  if section.index == 1
+    assign fetchpriority = 'high'
+    assign loading = 'eager'
+  endif
+-%}
+
+{% style %}
+  .dinveda-support-card-{{ section.id }} {
+    {% if card_style == 'two-tone' %}
+      background: linear-gradient(to right, {{ bg_left }} 0%, {{ bg_left }} 66%, {{ bg_right }} 66%, {{ bg_right }} 100%);
+    {% else %}
+      background-color: {{ bg_right }};
+    {% endif %}
+    border-radius: var(--design-button-radius, 0);
+    overflow: hidden;
+  }
+
+  .dinveda-support-card-{{ section.id }} .dinveda-support-card__left {
+    background-color: {{ bg_left }};
+  }
+
+  .dinveda-support-card-{{ section.id }} .dinveda-support-card__right {
+    background-color: {{ bg_right }};
+    color: var(--design-text-color);
+  }
+
+  .dinveda-support-card-{{ section.id }} .dinveda-support-card__title {
+    font-family: var(--heading-family);
+    font-size: var(--design-h2-size);
+    color: var(--design-text-color);
+  }
+
+  .dinveda-support-card-{{ section.id }} .dinveda-support-card__text {
+    font-family: var(--main-family);
+    font-size: var(--design-body-font-size);
+    color: var(--design-text-color);
+  }
+
+  .dinveda-support-card-{{ section.id }} .dinveda-support-card__cta {
+    font-family: var(--main-family);
+    font-size: var(--design-body-font-size);
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  @media (max-width: 767px) {
+    .dinveda-support-card-{{ section.id }} {
+      {% if card_style == 'two-tone' %}
+        background: linear-gradient(to bottom, {{ bg_left }} 0%, {{ bg_left }} 50%, {{ bg_right }} 50%, {{ bg_right }} 100%);
+      {% endif %}
+    }
+  }
+{% endstyle %}
+
+<section
+  class="dinveda-support-card dinveda-support-card-{{ section.id }} global__section {{ section_padding }} grid__wrapper relative cg0 rg0"
+  data-section-id="{{ section.id }}"
+  data-section-type="support-card"
+>
+  <div class="dinveda-support-card__wrapper span-12 auto">
+    {% if card_style == 'two-tone' %}
+      <div class="dinveda-support-card__left span-8 auto">
+        {% if section.settings.icon_type == 'image' and section.settings.icon_image != blank %}
+          <div class="dinveda-support-card__icon">
+            {% render 'helper-image',
+              type: section.settings.icon_image,
+              sm_render: '100vw',
+              md_render: '200px',
+              lg_render: '200px',
+              loading: loading,
+              fetchpriority: fetchpriority,
+              width: 200
+            %}
+          </div>
+        {% elsif section.settings.icon_type == 'svg' %}
+          <div class="dinveda-support-card__icon dinveda-support-card__icon--svg">
+            {% render 'snip-icons',
+              type: 'theme',
+              icon: 'lock',
+              size: '48px',
+              fill: 'var(--design-text-color)',
+              hover: 'var(--design-text-color)'
+            %}
+          </div>
+        {% endif %}
+      </div>
+      <div class="dinveda-support-card__right span-4 auto">
+        {% if section.settings.title != blank %}
+          <h2 class="dinveda-support-card__title">{{ section.settings.title }}</h2>
+        {% endif %}
+        {% if section.settings.body_text != blank %}
+          <div class="dinveda-support-card__text rte">
+            {{ section.settings.body_text }}
+          </div>
+        {% endif %}
+        {% if section.settings.cta_link != blank and section.settings.cta_label != blank %}
+          <a href="{{ section.settings.cta_link }}" class="dinveda-support-card__cta">
+            {{ section.settings.cta_label }}
+          </a>
+        {% endif %}
+      </div>
+    {% else %}
+      <div class="dinveda-support-card__single span-12 auto">
+        <div class="dinveda-support-card__content">
+          {% if section.settings.icon_type == 'image' and section.settings.icon_image != blank %}
+            <div class="dinveda-support-card__icon">
+              {% render 'helper-image',
+                type: section.settings.icon_image,
+                sm_render: '100vw',
+                md_render: '200px',
+                lg_render: '200px',
+                loading: loading,
+                fetchpriority: fetchpriority,
+                width: 200
+              %}
+            </div>
+          {% elsif section.settings.icon_type == 'svg' %}
+            <div class="dinveda-support-card__icon dinveda-support-card__icon--svg">
+              {% render 'snip-icons',
+                type: 'theme',
+                icon: 'lock',
+                size: '48px',
+                fill: 'var(--design-text-color)',
+                hover: 'var(--design-text-color)'
+              %}
+            </div>
+          {% endif %}
+          {% if section.settings.title != blank %}
+            <h2 class="dinveda-support-card__title">{{ section.settings.title }}</h2>
+          {% endif %}
+          {% if section.settings.body_text != blank %}
+            <div class="dinveda-support-card__text rte">
+              {{ section.settings.body_text }}
+            </div>
+          {% endif %}
+          {% if section.settings.cta_link != blank and section.settings.cta_label != blank %}
+            <a href="{{ section.settings.cta_link }}" class="dinveda-support-card__cta">
+              {{ section.settings.cta_label }}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DinVeda Support Card",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable",
+      "label": "Enable support card",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "icon_type",
+      "label": "Icon type",
+      "default": "none",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "svg",
+          "label": "SVG icon"
+        }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_image",
+      "label": "Icon image",
+      "info": "Only used if icon type is set to Image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Have questions?"
+    },
+    {
+      "type": "richtext",
+      "id": "body_text",
+      "label": "Body text",
+      "default": "<p>We are always here to help. Contact us and we will get back to you as soon as possible!</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA button label",
+      "default": "CONTACT SUPPORT →"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA button link"
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Card style",
+      "default": "two-tone",
+      "options": [
+        {
+          "value": "two-tone",
+          "label": "Two-tone"
+        },
+        {
+          "value": "single",
+          "label": "Single card"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "background_color_left",
+      "label": "Left background color",
+      "info": "Leave blank to use design system accent color"
+    },
+    {
+      "type": "color",
+      "id": "background_color_right",
+      "label": "Right background color",
+      "info": "Leave blank to use design system background color"
+    },
+    {
+      "type": "select",
+      "id": "section_padding",
+      "label": "Section spacing",
+      "default": "both",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        },
+        {
+          "value": "both",
+          "label": "Both"
+        },
+        {
+          "value": "none",
+          "label": "None"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DinVeda Support Card"
+    }
+  ]
+}
+{% endschema %}
+

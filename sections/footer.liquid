@@ -192,7 +192,7 @@
         </div>
       {% endif %}
       <div class="copyright">
-        <small>{% if section.settings.show_copyright %}<a href="{{ routes.root_url }}">&copy; {{ 'now' | date: "%Y" }} {{ shop.name }}</a> •{% endif %} {{ powered_by_link }}</small>
+        <small>{% if section.settings.show_copyright %}<a href="{{ routes.root_url }}">&copy; {{ 'now' | date: "%Y" }} {{ shop.name }}</a>{% endif %}</small>
       </div>
     </div>
   </section>

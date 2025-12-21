@@ -26,6 +26,25 @@
   endif
 
   assign button_text = call_to_action
+  
+  # Metafield mappings with fallbacks
+  assign phase_label = product.metafields.dinveda.ritual_timing | default: product.metafields.dinveda.tageszeit | default: section.settings.category_text
+  assign tier_quote = product.metafields.dinveda.tier_quote | default: product.metafields.dinveda.animal_quote
+  assign tier_name = product.metafields.dinveda.tier_name | default: product.metafields.dinveda.animal_name
+  assign quote_text = tier_quote | default: section.settings.quote_text
+  assign quote_attribution = tier_name | default: section.settings.quote_attribution
+  
+  # Intro paragraph: first paragraph of product.description or ritual_usage metafield
+  assign intro_text = product.metafields.dinveda.ritual_usage
+  if intro_text == blank and product.description != blank
+    assign desc_paragraphs = product.description | split: '<p>'
+    if desc_paragraphs.size > 1
+      assign first_para = desc_paragraphs[1] | split: '</p>' | first
+      assign intro_text = first_para | strip
+    else
+      assign intro_text = product.description | strip_html | truncate: 200
+    endif
+  endif
 -%}
 
 {%- comment -%} Product JSON for Product object initialization {%- endcomment -%}
@@ -49,6 +68,13 @@
   "swatches": {{ product_variants_setting | json }}
 }
 {% endcapture %}
+
+{% style %}
+  #dinveda-product-hero-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{% endstyle %}
 
 <section
   id="dinveda-product-hero-{{ section.id }}"
@@ -90,6 +116,15 @@
                 width="{{ featured_media.width }}"
                 height="{{ featured_media.height }}"
               >
+              {%- comment -%} Image Labels {%- endcomment -%}
+              <div class="dinveda-product-hero__image-labels">
+                {% if section.settings.show_organic_label %}
+                  <span class="dinveda-product-hero__image-label dinveda-product-hero__image-label--organic">ORGANIC</span>
+                {% endif %}
+                {% if section.settings.show_vegan_label %}
+                  <span class="dinveda-product-hero__image-label dinveda-product-hero__image-label--vegan">VEGAN</span>
+                {% endif %}
+              </div>
             {% endif %}
           </div>
 
@@ -125,11 +160,33 @@
       {%- comment -%} Right Column: Buy Box {%- endcomment -%}
       <div class="dinveda-product-hero__buy-box">
         
+        {%- comment -%} Phase Label (from metafields) {%- endcomment -%}
+        {% if phase_label != blank %}
+          <p class="dinveda-product-hero__timing-label">{{ phase_label | escape }}</p>
+        {% endif %}
+
         {%- comment -%} Product Title {%- endcomment -%}
         {% if product %}
           <h1 class="dinveda-product-hero__title">{{ product.title }}</h1>
         {% else %}
           <h1 class="dinveda-product-hero__title">Product Title</h1>
+        {% endif %}
+
+        {%- comment -%} Quote Card (from metafields, toggleable) {%- endcomment -%}
+        {% if section.settings.show_quote_card and quote_text != blank %}
+          <div class="dinveda-product-hero__quote-card">
+            <blockquote class="dinveda-product-hero__quote-text">{{ quote_text | escape }}</blockquote>
+            {% if quote_attribution != blank %}
+              <p class="dinveda-product-hero__quote-attribution">— sagt der {{ quote_attribution | escape }}</p>
+            {% endif %}
+          </div>
+        {% endif %}
+
+        {%- comment -%} Intro Paragraph (from metafields, toggleable) {%- endcomment -%}
+        {% if section.settings.show_intro and intro_text != blank %}
+          <div class="dinveda-product-hero__intro">
+            <p>{{ intro_text | escape }}</p>
+          </div>
         {% endif %}
 
         {%- comment -%} Price {%- endcomment -%}
@@ -145,14 +202,8 @@
                   </span>
                 {% endif %}
               </div>
-              <span class="dinveda-product-hero__price-note">inkl. MwSt. zzgl. Versand</span>
+              <span class="dinveda-product-hero__price-note">{{ section.settings.price_note | default: "inkl. MwSt. / 100g Dose" | escape }}</span>
             </div>
-            {%- comment -%} Nutrition Facts Link {%- endcomment -%}
-            {% if product.metafields.dinveda.nutrition_facts != blank or section.settings.show_nutrition_facts %}
-              <a href="#nutrition-facts" class="dinveda-product-hero__nutrition-link">
-                Nutrition Facts
-              </a>
-            {% endif %}
           </div>
 
           {%- comment -%} Product Form {%- endcomment -%}
@@ -192,91 +243,105 @@
             </div>
           {% endunless %}
 
-            {%- comment -%} Quantity {%- endcomment -%}
-            <div class="dinveda-product-hero__quantity">
-            <label class="dinveda-product-hero__quantity-label" for="Quantity-{{ section.id }}">Menge</label>
-            <div class="dinveda-product-hero__quantity-input">
-              <button
-                type="button"
-                class="dinveda-product-hero__quantity-btn"
-                data-quantity-decrease
-                aria-label="Decrease quantity"
-              >−</button>
-              <input
-                type="number"
-                id="Quantity-{{ section.id }}"
-                name="quantity"
-                value="1"
-                min="1"
-                class="dinveda-product-hero__quantity-field"
-              >
-              <button
-                type="button"
-                class="dinveda-product-hero__quantity-btn"
-                data-quantity-increase
-                aria-label="Increase quantity"
-              >+</button>
-            </div>
-          </div>
-
             {%- comment -%} Add to Cart Button {%- endcomment -%}
             <button
-            type="submit"
-            name="add"
-            class="dinveda-product-hero__add-to-cart"
-            {% unless current_variant.available %}disabled{% endunless %}
-            data-add-to-cart-text
-          >
-            {{ button_text }}
-            {% if current_variant.available %}
-              <span class="dinveda-product-hero__add-to-cart-arrow">→</span>
-            {% endif %}
-          </button>
+              type="submit"
+              name="add"
+              class="dinveda-product-hero__add-to-cart"
+              {% unless current_variant.available %}disabled{% endunless %}
+              data-add-to-cart-text
+            >
+              {{ section.settings.add_to_cart_label | default: "IN DEN WARENKORB" | escape }}
+            </button>
 
-            {%- comment -%} Dynamic Checkout Button {%- endcomment -%}
-            {% if section.settings.show_dynamic_checkout %}
-            <div class="dinveda-product-hero__dynamic-checkout">
-              {{ form | payment_button }}
-            </div>
+            {%- comment -%} Buy Now Button (if enabled) {%- endcomment -%}
+            {% if section.settings.enable_buy_now and current_variant.available %}
+              <button
+                type="button"
+                class="dinveda-product-hero__buy-now {% if section.settings.buy_now_primary %}dinveda-product-hero__buy-now--primary{% endif %}"
+                data-buy-now
+                data-variant-id="{{ current_variant.id }}"
+              >
+                {{ section.settings.buy_now_label | default: "Jetzt kaufen" | escape }}
+              </button>
+            {% endif %}
+
+            {%- comment -%} Payment Options Link {%- endcomment -%}
             {% if section.settings.show_payment_options_link %}
-              <div class="dinveda-product-hero__payment-options">
-                <a href="#payment-options">Weitere Bezahlmöglichkeiten</a>
+              <a href="#payment-options" class="dinveda-product-hero__payment-link">
+                {{ section.settings.payment_options_link_text | default: "WEITERE BEZAHLMÖGLICHKEITEN" | escape }}
+              </a>
+            {% endif %}
+
+            {%- comment -%} Shipping Info {%- endcomment -%}
+            {% if section.settings.shipping_text != blank %}
+              <div class="dinveda-product-hero__shipping">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="dinveda-product-hero__shipping-icon">
+                  <path d="M1 3h15v13H1zM16 8h4l3 3v5h-7V8z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M1 13h3v8H1zM20 13h3v8h-3z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="dinveda-product-hero__shipping-text">{{ section.settings.shipping_text | escape }}</span>
               </div>
             {% endif %}
-          {% endif %}
 
+            {%- comment -%} Trust Badges (as blocks, toggleable) {%- endcomment -%}
+            {% if section.settings.show_badges and section.blocks.size > 0 %}
+              <div class="dinveda-product-hero__trust-bullets">
+                {% for block in section.blocks %}
+                  {% if block.type == 'trust_badge' %}
+                    <div class="dinveda-product-hero__trust-item" {{ block.shopify_attributes }}>
+                      {% if block.settings.icon != blank %}
+                        <div class="dinveda-product-hero__trust-icon">
+                          {{ block.settings.icon | image_url: width: 20 | image_tag: alt: block.settings.text, loading: 'lazy' }}
+                        </div>
+                      {% elsif block.settings.icon_svg != blank %}
+                        <div class="dinveda-product-hero__trust-icon">
+                          {{ block.settings.icon_svg }}
+                        </div>
+                      {% endif %}
+                      {% if block.settings.text != blank %}
+                        {%- liquid
+                          assign clean_text = block.settings.text | strip_html
+                          assign clean_text = clean_text | replace: '&amp;', '&' | replace: '&nbsp;', ' '
+                          assign clean_text = clean_text | replace: 'data-start=', '' | replace: 'data-end=', ''
+                          assign clean_text = clean_text | replace: '"567"', '' | replace: '"615"', ''
+                          assign clean_text = clean_text | replace: '567', '' | replace: '615', ''
+                          assign clean_text = clean_text | strip
+                        -%}
+                        <span class="dinveda-product-hero__trust-text">{{ clean_text | escape }}</span>
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
 
           {% endform %}
         {% endif %}
 
-        {%- comment -%} Trust Bullets {%- endcomment -%}
-        <div class="dinveda-product-hero__trust-bullets">
-          <div class="dinveda-product-hero__trust-item">
-            <span class="dinveda-product-hero__trust-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
-            <span class="dinveda-product-hero__trust-text">{{ section.settings.trust_text_1 | default: "100% Bio & vegan – naturrein & laborgeprüft" | escape }}</span>
+        {%- comment -%} Social Share (if enabled) {%- endcomment -%}
+        {% if section.settings.show_social_share %}
+          <div class="dinveda-product-hero__social-share">
+            <span class="dinveda-product-hero__social-label">TEILEN</span>
+            <div class="dinveda-product-hero__social-icons">
+              <a href="https://www.facebook.com/sharer/sharer.php?u={{ shop.url | append: product.url | url_param_escape }}" target="_blank" rel="noopener" class="dinveda-product-hero__social-icon" aria-label="Share on Facebook">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                </svg>
+              </a>
+              <a href="https://twitter.com/intent/tweet?url={{ shop.url | append: product.url | url_param_escape }}&text={{ product.title | url_param_escape }}" target="_blank" rel="noopener" class="dinveda-product-hero__social-icon" aria-label="Share on Twitter">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+                </svg>
+              </a>
+              <a href="https://pinterest.com/pin/create/button/?url={{ shop.url | append: product.url | url_param_escape }}&media={{ product.featured_image | image_url: width: 1200 | url_param_escape }}&description={{ product.title | url_param_escape }}" target="_blank" rel="noopener" class="dinveda-product-hero__social-icon" aria-label="Share on Pinterest">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.48 2 2 6.48 2 12c0 4.84 3.44 8.87 8 9.8-.11-.98-.2-2.48.04-3.54.22-.94 1.43-6.35 1.43-6.35s-.36-.72-.36-1.78c0-1.66.96-2.9 2.16-2.9 1.02 0 1.51.77 1.51 1.69 0 1.02-.65 2.55-.99 3.97-.28 1.2.6 2.18 1.78 2.18 2.14 0 3.78-2.26 3.78-5.52 0-2.88-2.07-4.9-5.03-4.9-3.43 0-5.44 2.57-5.44 5.23 0 1.02.39 2.12.88 2.72a.36.36 0 0 1 .08.4l-.33 1.33c-.05.2-.16.24-.37.15-1.38-.64-2.24-2.65-2.24-4.26 0-3.48 2.53-6.68 7.3-6.68 3.83 0 6.8 2.73 6.8 6.38 0 3.8-2.4 6.86-5.86 6.86-1.15 0-2.23-.6-2.6-1.3l-.71 2.7c-.26 1-.96 2.25-1.43 3.01 1.08.33 2.22.51 3.4.51 5.52 0 10-4.48 10-10S17.52 2 12 2z"/>
+                </svg>
+              </a>
+            </div>
           </div>
-          <div class="dinveda-product-hero__trust-item">
-            <span class="dinveda-product-hero__trust-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                <polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
-            <span class="dinveda-product-hero__trust-text">{{ section.settings.trust_text_2 | default: "Mit Shatavari, Amla, Fenchel & Rosenblüten" | escape }}</span>
-          </div>
-          <div class="dinveda-product-hero__trust-item">
-            <span class="dinveda-product-hero__trust-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
-            <span class="dinveda-product-hero__trust-text">{{ section.settings.trust_text_3 | default: "Kostenloser Versand ab 50€" | escape }}</span>
-          </div>
-        </div>
+        {% endif %}
 
       </div>
     </div>
@@ -344,6 +409,58 @@
         form.setAttribute('data-product-form', productFormConfig);
       }
 
+      // Buy Now button functionality
+      const buyNowBtn = section.querySelector('[data-buy-now]');
+      const variantSelect = section.querySelector('#formVariantId');
+      
+      function updateBuyNowVariant() {
+        if (buyNowBtn && variantSelect) {
+          const currentVariantId = variantSelect.value;
+          buyNowBtn.setAttribute('data-variant-id', currentVariantId);
+        }
+      }
+      
+      if (buyNowBtn) {
+        // Update variant ID when variant changes
+        const variantSelectors = section.querySelectorAll('.js-variant-selector');
+        variantSelectors.forEach(function(selector) {
+          selector.addEventListener('change', updateBuyNowVariant);
+        });
+        
+        // Initial variant ID update
+        updateBuyNowVariant();
+        
+        buyNowBtn.addEventListener('click', function() {
+          const variantId = this.getAttribute('data-variant-id') || (variantSelect ? variantSelect.value : null);
+          const quantity = 1;
+          
+          if (!variantId) {
+            console.error('Variant ID not found');
+            return;
+          }
+
+          // Add to cart via AJAX
+          fetch('/cart/add.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              id: variantId,
+              quantity: quantity
+            })
+          })
+          .then(response => response.json())
+          .then(data => {
+            // Redirect to checkout
+            window.location.href = '/checkout';
+          })
+          .catch(error => {
+            console.error('Error adding to cart:', error);
+          });
+        });
+      }
+
       // Initialize Product object from JSON (Slice theme pattern)
       const productJson = section.querySelector('.product-json');
       if (productJson) {
@@ -382,59 +499,218 @@
     {
       "type": "checkbox",
       "id": "show_breadcrumbs",
-      "label": "Show breadcrumbs",
+      "label": "Breadcrumbs anzeigen",
       "default": false
     },
     {
       "type": "checkbox",
-      "id": "show_nutrition_facts",
-      "label": "Show Nutrition Facts link",
+      "id": "show_thumbnails",
+      "label": "Thumbnails anzeigen",
       "default": false
     },
     {
+      "type": "text",
+      "id": "category_text",
+      "label": "Phase Label (Fallback)",
+      "default": "MORGEN | AKTIVIEREN",
+      "info": "Used if product.metafields.dinveda.ritual_timing or tageszeit is empty"
+    },
+    {
+      "type": "header",
+      "content": "Quote Card"
+    },
+    {
       "type": "checkbox",
-      "id": "show_dynamic_checkout",
-      "label": "Show dynamic checkout button",
+      "id": "show_quote_card",
+      "label": "Show quote card",
       "default": true
+    },
+    {
+      "type": "text",
+      "id": "quote_text",
+      "label": "Quote Text (Fallback)",
+      "default": "Ich starte clever und klar in den Tag. Für Energie, Fokus & innere Wärme.",
+      "info": "Used if product.metafields.dinveda.tier_quote or animal_quote is empty"
+    },
+    {
+      "type": "text",
+      "id": "quote_attribution",
+      "label": "Quote Attribution (Fallback)",
+      "default": "Fuchs",
+      "info": "Used if product.metafields.dinveda.tier_name or animal_name is empty"
+    },
+    {
+      "type": "header",
+      "content": "Intro"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_intro",
+      "label": "Show intro paragraph",
+      "default": true,
+      "info": "Uses product.metafields.dinveda.ritual_usage or first paragraph of product.description"
+    },
+    {
+      "type": "header",
+      "content": "Preis"
+    },
+    {
+      "type": "text",
+      "id": "price_note",
+      "label": "Preis Hinweis",
+      "default": "inkl. MwSt. / 100g Dose"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "add_to_cart_label",
+      "label": "In den Warenkorb Text",
+      "default": "IN DEN WARENKORB"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_buy_now",
+      "label": "Jetzt kaufen Button aktivieren",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "buy_now_label",
+      "label": "Jetzt kaufen Text",
+      "default": "Jetzt kaufen"
+    },
+    {
+      "type": "checkbox",
+      "id": "buy_now_primary",
+      "label": "Jetzt kaufen als Hauptbutton",
+      "default": false
     },
     {
       "type": "checkbox",
       "id": "show_payment_options_link",
-      "label": "Show payment options link",
-      "default": true
+      "label": "Weitere Bezahlmöglichkeiten Link anzeigen",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "payment_options_link_text",
+      "label": "Bezahlmöglichkeiten Link Text",
+      "default": "WEITERE BEZAHLMÖGLICHKEITEN"
+    },
+    {
+      "type": "header",
+      "content": "Trust Badges"
     },
     {
       "type": "checkbox",
-      "id": "show_social_share",
-      "label": "Show social share",
+      "id": "show_badges",
+      "label": "Show trust badges",
       "default": true
     },
     {
       "type": "header",
-      "content": "Trust Bullets"
+      "content": "Spacing"
     },
     {
-      "type": "text",
-      "id": "trust_text_1",
-      "label": "Trust Text 1",
-      "default": "100% Bio & vegan – naturrein & laborgeprüft"
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 80
     },
     {
-      "type": "text",
-      "id": "trust_text_2",
-      "label": "Trust Text 2",
-      "default": "Mit Shatavari, Amla, Fenchel & Rosenblüten"
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 80
     },
     {
-      "type": "text",
-      "id": "trust_text_3",
-      "label": "Trust Text 3",
-      "default": "Kostenloser Versand ab 50€"
+      "type": "header",
+      "content": "Bild Labels"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_organic_label",
+      "label": "ORGANIC Label anzeigen",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vegan_label",
+      "label": "VEGAN Label anzeigen",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Social Sharing"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_share",
+      "label": "Social Sharing anzeigen",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_badge",
+      "name": "Trust Badge",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon (Image)",
+          "info": "Optional: Upload an icon image"
+        },
+        {
+          "type": "html",
+          "id": "icon_svg",
+          "label": "Icon (SVG)",
+          "info": "Optional: Paste SVG code for icon"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Badge Text",
+          "default": "100% Bio-Zertifiziert"
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "DinVeda Product Hero"
+      "name": "DinVeda Product Hero",
+      "blocks": [
+        {
+          "type": "trust_badge",
+          "settings": {
+            "text": "100% Bio-Zertifiziert"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "text": "Made in Germany"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "text": "Kostenloser Versand ab 50€"
+          }
+        }
+      ]
     }
   ]
 }

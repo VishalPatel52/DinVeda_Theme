@@ -1,0 +1,103 @@
+{% comment %}
+  DinVeda Tier Quote Card Section
+  Centered premium quote card with animal attribution
+  Format: Quote -> "— sagt der {{ tier_name }}"
+{% endcomment %}
+
+{%- liquid
+  assign tier_quote = product.metafields.dinveda.tier_quote
+  assign tier_name = product.metafields.dinveda.tier_name
+-%}
+
+{%- liquid
+  assign has_quote = false
+  if tier_quote != blank
+    assign has_quote = true
+  elsif section.settings.quote_fallback != blank
+    assign fallback_trimmed = section.settings.quote_fallback | strip
+    if fallback_trimmed != blank and fallback_trimmed != "Optional fallback quote text"
+      assign has_quote = true
+    endif
+  endif
+-%}
+{% if has_quote %}
+  <section
+    id="dinveda-tier-quote-card-{{ section.id }}"
+    class="dinveda-tier-quote-card"
+    data-section-id="{{ section.id }}"
+    data-section-type="dinveda-tier-quote-card"
+  >
+    <div class="dinveda-tier-quote-card__container">
+      <div class="dinveda-tier-quote-card__card">
+        {% if section.settings.show_icon and section.settings.animal_icon != blank %}
+          <div class="dinveda-tier-quote-card__icon">
+            {{ section.settings.animal_icon }}
+          </div>
+        {% endif %}
+        {%- liquid
+          assign quote_to_show = tier_quote
+          if quote_to_show == blank and section.settings.quote_fallback != blank
+            assign fallback_trimmed = section.settings.quote_fallback | strip
+            if fallback_trimmed != blank and fallback_trimmed != "Optional fallback quote text"
+              assign quote_to_show = section.settings.quote_fallback
+            endif
+          endif
+        -%}
+        {% if quote_to_show != blank %}
+          <blockquote class="dinveda-tier-quote-card__quote">
+            {{ quote_to_show | escape }}
+          </blockquote>
+        {% endif %}
+        {% if tier_name != blank %}
+          <p class="dinveda-tier-quote-card__attribution">
+            — sagt der {{ tier_name | escape }}
+          </p>
+        {% elsif section.settings.tier_name_fallback != blank %}
+          <p class="dinveda-tier-quote-card__attribution">
+            — sagt der {{ section.settings.tier_name_fallback | escape }}
+          </p>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "DinVeda Tier Quote",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_icon",
+      "label": "Show animal icon",
+      "default": true
+    },
+    {
+      "type": "html",
+      "id": "animal_icon",
+      "label": "Animal Icon SVG",
+      "info": "Optional: SVG icon for the animal"
+    },
+    {
+      "type": "textarea",
+      "id": "quote_fallback",
+      "label": "Quote (fallback)",
+      "default": "Optional fallback quote text",
+      "info": "Displayed if product.metafields.dinveda.tier_quote is empty. Leave blank to hide section if metafield is empty."
+    },
+    {
+      "type": "text",
+      "id": "tier_name_fallback",
+      "label": "Tier Name (fallback)",
+      "info": "Displayed if product.metafields.dinveda.tier_name is empty. Will be prefixed with '— sagt der '. Leave blank if not needed."
+    }
+  ],
+  "presets": [
+    {
+      "name": "DinVeda Tier Quote"
+    }
+  ]
+}
+{% endschema %}

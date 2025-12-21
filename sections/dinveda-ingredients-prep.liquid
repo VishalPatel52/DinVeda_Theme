@@ -1,0 +1,294 @@
+{% comment %}
+  DinVeda Ingredients & Preparation Section
+  Two fixed modules:
+  1. Text module: "Zutaten & Traditioneller Hintergrund"
+  2. Cards module: "Anwendung & Zubereitung" with two cards
+{% endcomment %}
+
+{%- liquid
+  # Module 1: Ingredients Background - Section settings as primary, metafields as fallback
+  assign ingredients_background = product.metafields.dinveda.ingredients_background
+  assign has_ingredient_blocks = false
+  if section.blocks.size > 0
+    for block in section.blocks
+      if block.type == 'ingredient'
+        assign has_ingredient_blocks = true
+        break
+      endif
+    endfor
+  endif
+  
+  # Module 2: Preparation Cards - Section settings as primary, metafields as fallback
+  assign prep_card_1_title = section.settings.card_1_title_fallback | default: product.metafields.dinveda.prep_card_1_title
+  assign prep_card_1_body = section.settings.card_1_body_fallback | default: product.metafields.dinveda.prep_card_1_body
+  assign prep_card_2_title = section.settings.card_2_title_fallback | default: product.metafields.dinveda.prep_card_2_title
+  assign prep_card_2_body = section.settings.card_2_body_fallback | default: product.metafields.dinveda.prep_card_2_body
+-%}
+
+<section
+  id="dinveda-ingredients-prep-{{ section.id }}"
+  class="dinveda-ingredients-prep"
+  data-section-id="{{ section.id }}"
+  data-section-type="dinveda-ingredients-prep"
+>
+  <div class="dinveda-ingredients-prep__container">
+    
+    {%- comment -%} Module 1: Zutaten & Traditioneller Hintergrund {%- endcomment -%}
+    {% if ingredients_background != blank or section.settings.show_module_1_when_empty %}
+      <div class="dinveda-ingredients-prep__module dinveda-ingredients-prep__module--text">
+        <div class="dinveda-ingredients-prep__module-header">
+          <span class="material-symbols-outlined dinveda-ingredients-prep__module-icon">grain</span>
+          <h2 class="dinveda-ingredients-prep__module-title">
+            {{ section.settings.module_1_title | default: 'Zutaten & Traditioneller Hintergrund' | escape }}
+          </h2>
+        </div>
+        {%- comment -%} Show ingredient blocks if available, otherwise show richtext {%- endcomment -%}
+        {% if has_ingredient_blocks %}
+          <div class="dinveda-ingredients-prep__ingredients-list">
+            {% for block in section.blocks %}
+              {% if block.type == 'ingredient' %}
+                <div class="dinveda-ingredients-prep__ingredient-item" {{ block.shopify_attributes }}>
+                  <strong class="dinveda-ingredients-prep__ingredient-name">{{ block.settings.name | escape }}</strong>
+                  <span class="dinveda-ingredients-prep__ingredient-separator"> – </span>
+                  <span class="dinveda-ingredients-prep__ingredient-description">{{ block.settings.description | escape }}</span>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% elsif ingredients_background != blank %}
+          <div class="dinveda-ingredients-prep__module-content">
+            {{ ingredients_background }}
+          </div>
+        {% elsif section.settings.ingredients_list != blank %}
+          {%- comment -%} Parse structured textarea format: "Name – Description" {%- endcomment -%}
+          <div class="dinveda-ingredients-prep__ingredients-list">
+            {% assign ingredient_lines = section.settings.ingredients_list | newline_to_br | split: '<br />' %}
+            {% for line in ingredient_lines %}
+              {% assign trimmed_line = line | strip %}
+              {% if trimmed_line != blank %}
+                {% assign parts = trimmed_line | split: ' – ' %}
+                {% if parts.size == 2 %}
+                  <div class="dinveda-ingredients-prep__ingredient-item">
+                    <strong class="dinveda-ingredients-prep__ingredient-name">{{ parts[0] | strip | escape }}</strong>
+                    <span class="dinveda-ingredients-prep__ingredient-separator"> – </span>
+                    <span class="dinveda-ingredients-prep__ingredient-description">{{ parts[1] | strip | escape }}</span>
+                  </div>
+                {% else %}
+                  {% assign parts = trimmed_line | split: ' - ' %}
+                  {% if parts.size == 2 %}
+                    <div class="dinveda-ingredients-prep__ingredient-item">
+                      <strong class="dinveda-ingredients-prep__ingredient-name">{{ parts[0] | strip | escape }}</strong>
+                      <span class="dinveda-ingredients-prep__ingredient-separator"> – </span>
+                      <span class="dinveda-ingredients-prep__ingredient-description">{{ parts[1] | strip | escape }}</span>
+                    </div>
+                  {% endif %}
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+        <p class="dinveda-ingredients-prep__footnote">
+          {{ section.settings.footnote | default: "ALLE ZUTATEN SIND 100 % BIO – AUS KONTROLLIERT BIOLOGISCHEM ANBAU." | escape }}
+        </p>
+      </div>
+    {% endif %}
+
+    {%- comment -%} Module 2: Anwendung & Zubereitung {%- endcomment -%}
+    {% if prep_card_1_title != blank or prep_card_1_body != blank or prep_card_2_title != blank or prep_card_2_body != blank or section.settings.show_module_2_when_empty %}
+      <div class="dinveda-ingredients-prep__module dinveda-ingredients-prep__module--cards">
+        <div class="dinveda-ingredients-prep__module-header">
+          <span class="material-symbols-outlined dinveda-ingredients-prep__module-icon">restaurant</span>
+          <h2 class="dinveda-ingredients-prep__module-title">
+            {{ section.settings.module_2_title | default: 'Anwendung & Zubereitung' | escape }}
+          </h2>
+        </div>
+        {% if section.settings.prep_intro != blank %}
+          <p class="dinveda-ingredients-prep__intro-line">{{ section.settings.prep_intro | escape }}</p>
+        {% endif %}
+        <div class="dinveda-ingredients-prep__cards-grid">
+          {%- comment -%} Card 1 - Section settings as primary {%- endcomment -%}
+          {% if prep_card_1_title != blank or prep_card_1_body != blank %}
+            <div class="dinveda-ingredients-prep__card">
+              {% if prep_card_1_title != blank %}
+                <h3 class="dinveda-ingredients-prep__card-title">{{ prep_card_1_title | escape }}</h3>
+              {% endif %}
+              {% if prep_card_1_body != blank %}
+                <div class="dinveda-ingredients-prep__card-body">
+                  {{ prep_card_1_body }}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+
+          {%- comment -%} Card 2 - Section settings as primary {%- endcomment -%}
+          {% if prep_card_2_title != blank or prep_card_2_body != blank %}
+            <div class="dinveda-ingredients-prep__card">
+              {% if prep_card_2_title != blank %}
+                <h3 class="dinveda-ingredients-prep__card-title">{{ prep_card_2_title | escape }}</h3>
+              {% endif %}
+              {% if prep_card_2_body != blank %}
+                <div class="dinveda-ingredients-prep__card-body">
+                  {{ prep_card_2_body }}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DinVeda Ingredients Prep",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Modul 1: Zutaten"
+    },
+    {
+      "type": "text",
+      "id": "module_1_title",
+      "label": "Modul 1 Überschrift",
+      "default": "Zutaten & Traditioneller Hintergrund"
+    },
+    {
+      "type": "textarea",
+      "id": "ingredients_list",
+      "label": "Zutaten Liste (strukturiert)",
+      "info": "Eine Zeile pro Zutat im Format: 'Name – Beschreibung'. Falls leer, werden Zutaten-Blöcke oder Metafeld verwendet."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_module_1_when_empty",
+      "label": "Modul 1 auch bei leerem Inhalt anzeigen",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "footnote",
+      "label": "Zutaten Fußnote",
+      "default": "ALLE ZUTATEN SIND 100 % BIO – AUS KONTROLLIERT BIOLOGISCHEM ANBAU."
+    },
+    {
+      "type": "header",
+      "content": "Modul 2: Zubereitung"
+    },
+    {
+      "type": "text",
+      "id": "module_2_title",
+      "label": "Modul 2 Überschrift",
+      "default": "Anwendung & Zubereitung"
+    },
+    {
+      "type": "text",
+      "id": "prep_intro",
+      "label": "Zubereitung Einleitungstext",
+      "default": "So verwendet der Schmetterling Ova Harmony in seinem Alltag:",
+      "info": "Optionaler Einleitungstext unter der Überschrift"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_module_2_when_empty",
+      "label": "Modul 2 auch bei leerem Inhalt anzeigen",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Karte 1"
+    },
+    {
+      "type": "text",
+      "id": "card_1_title_fallback",
+      "label": "Karte 1 Titel",
+      "default": "Sanfter Tee- oder Drink-Moment",
+      "info": "Falls leer, wird das Produkt-Metafeld verwendet"
+    },
+    {
+      "type": "textarea",
+      "id": "card_1_body_fallback",
+      "label": "Karte 1 Inhalt",
+      "default": "1 TL (~3 g) in 200 ml warme Pflanzenmilch, Kräutertee oder Wasser einrühren – nach Wunsch leicht süßen.",
+      "info": "Falls leer, wird das Produkt-Metafeld verwendet"
+    },
+    {
+      "type": "header",
+      "content": "Karte 2"
+    },
+    {
+      "type": "text",
+      "id": "card_2_title_fallback",
+      "label": "Karte 2 Titel",
+      "default": "Abendritual",
+      "info": "Falls leer, wird das Produkt-Metafeld verwendet"
+    },
+    {
+      "type": "textarea",
+      "id": "card_2_body_fallback",
+      "label": "Karte 2 Inhalt",
+      "default": "1 TL in warmem Wasser mit etwas Zitrone & Honig – als zarter, harmonischer Ausklang des Tages.",
+      "info": "Falls leer, wird das Produkt-Metafeld verwendet"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Zutat",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Zutat Name",
+          "default": "Shatavari"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Zutat Beschreibung",
+          "default": "eine klassische ayurvedische Wurzel, traditionell in ausgleichenden Rezepturen genutzt."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DinVeda Ingredients Prep",
+      "blocks": [
+        {
+          "type": "ingredient",
+          "settings": {
+            "name": "Shatavari",
+            "description": "eine klassische ayurvedische Wurzel, traditionell in ausgleichenden Rezepturen genutzt."
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "name": "Amla (Amalaki)",
+            "description": "eine der ältesten ayurvedischen Früchte, mild-fruchtig und inspirierend."
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "name": "Fenchel",
+            "description": "warm, aromatisch, seit Jahrhunderten in Pflanzenmischungen geschätzt."
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "name": "Rosenblüten",
+            "description": "blumig, fein und wohltuend für sanfte Genussmomente."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

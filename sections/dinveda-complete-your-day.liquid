@@ -29,16 +29,28 @@
     {% if section.blocks.size > 0 %}
       <div class="dinveda-complete-your-day__grid">
         {% for block in section.blocks %}
-          {% if block.type == 'ritual_card' %}
+          {% if block.type == 'product_card' %}
             {%- liquid
+              assign card_product = block.settings.product
               assign card_image = block.settings.image
               assign card_link = block.settings.link
-              assign card_product = block.settings.product
+              assign card_title = block.settings.title
+              assign card_label = block.settings.label
+              assign card_benefit = block.settings.benefit
               
               if card_product != blank
                 assign card_link = card_product.url
                 unless card_image != blank
                   assign card_image = card_product.featured_image
+                endunless
+                unless card_title != blank
+                  assign card_title = card_product.title
+                endunless
+                unless card_label != blank
+                  assign card_label = card_product.metafields.dinveda.ritual_timing | default: card_product.metafields.dinveda.tageszeit
+                endunless
+                unless card_benefit != blank
+                  assign card_benefit = card_product.metafields.dinveda.ritual_tagline | default: card_product.description | strip_html | truncate: 80
                 endunless
               endif
             -%}
@@ -53,7 +65,7 @@
                 {%- comment -%} Image {%- endcomment -%}
                 {% if card_image != blank %}
                   <div class="dinveda-complete-your-day__image-wrapper">
-                    {{ card_image | image_url: width: 400 | image_tag: alt: card_image.alt | default: block.settings.title, loading: 'lazy', class: 'dinveda-complete-your-day__image' }}
+                    {{ card_image | image_url: width: 400 | image_tag: alt: card_image.alt | default: card_title, loading: 'lazy', class: 'dinveda-complete-your-day__image' }}
                   </div>
                 {% else %}
                   <div class="dinveda-complete-your-day__image-wrapper dinveda-complete-your-day__placeholder">
@@ -63,21 +75,21 @@
 
                 {%- comment -%} Content {%- endcomment -%}
                 <div class="dinveda-complete-your-day__content">
-                  {% if block.settings.label != blank %}
-                    <p class="dinveda-complete-your-day__label">{{ block.settings.label | escape }}</p>
+                  {% if card_label != blank %}
+                    <p class="dinveda-complete-your-day__label">{{ card_label | escape }}</p>
                   {% endif %}
                   
-                  {% if block.settings.title != blank %}
-                    <h3 class="dinveda-complete-your-day__card-title">{{ block.settings.title | escape }}</h3>
+                  {% if card_title != blank %}
+                    <h3 class="dinveda-complete-your-day__card-title">{{ card_title | escape }}</h3>
                   {% endif %}
                   
-                  {% if block.settings.benefit != blank %}
-                    <p class="dinveda-complete-your-day__benefit">{{ block.settings.benefit | escape }}</p>
+                  {% if card_benefit != blank %}
+                    <p class="dinveda-complete-your-day__benefit">{{ card_benefit | escape }}</p>
                   {% endif %}
                   
                   <div class="dinveda-complete-your-day__button-wrapper">
                     <span class="dinveda-complete-your-day__button">
-                      {{ block.settings.button_label | default: 'ANSEHEN' }}
+                      {{ block.settings.button_label | default: section.settings.button_label | default: 'ANSEHEN' }}
                     </span>
                   </div>
                 </div>
@@ -190,9 +202,10 @@
     },
     {
       "type": "text",
-      "id": "button_label_fallback",
-      "label": "Button label (fallback for recommendations)",
-      "default": "ANSEHEN"
+      "id": "button_label",
+      "label": "Button Label (default)",
+      "default": "ANSEHEN",
+      "info": "Default button label used if block doesn't specify one"
     },
     {
       "type": "collection",
@@ -203,83 +216,59 @@
   ],
   "blocks": [
     {
-      "type": "ritual_card",
-      "name": "Ritual Card",
+      "type": "product_card",
+      "name": "Product Card",
       "limit": 3,
       "settings": [
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Image"
-        },
         {
           "type": "product",
           "id": "product",
           "label": "Product",
-          "info": "Optional: Link to a product (image will use product featured image if not set)"
+          "info": "Select a product to display. Product title, image, and metafields will be used automatically."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom Image",
+          "info": "Optional: Override product featured image"
         },
         {
           "type": "url",
           "id": "link",
-          "label": "Link",
-          "info": "Used if product is not set"
+          "label": "Custom Link",
+          "info": "Optional: Override product URL"
         },
         {
           "type": "text",
           "id": "label",
-          "label": "Label",
-          "default": "TAG | ZENTRIEREN"
+          "label": "Label (Phase)",
+          "info": "Optional: Override phase label. If empty, uses product.metafields.dinveda.ritual_timing"
         },
         {
           "type": "text",
           "id": "title",
           "label": "Title",
-          "default": "Flow & Glow"
+          "info": "Optional: Override product title"
         },
         {
           "type": "text",
           "id": "benefit",
-          "label": "Benefit",
-          "default": "Für Leichtigkeit & Balance"
+          "label": "Benefit Text",
+          "info": "Optional: Override benefit text. If empty, uses product.metafields.dinveda.ritual_tagline or description"
         },
         {
           "type": "text",
           "id": "button_label",
-          "label": "Button label",
-          "default": "ANSEHEN"
+          "label": "Button Label",
+          "default": "ANSEHEN",
+          "info": "Override button text. Falls back to section setting if empty."
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "DinVeda Complete Your Day",
-      "blocks": [
-        {
-          "type": "ritual_card",
-          "settings": {
-            "label": "TAG | ZENTRIEREN",
-            "title": "Flow & Glow",
-            "benefit": "Für Leichtigkeit & Balance"
-          }
-        },
-        {
-          "type": "ritual_card",
-          "settings": {
-            "label": "BALANCE | AUSGLEICHEN",
-            "title": "Ova Harmony",
-            "benefit": "Für Harmonie & sanfte Energie"
-          }
-        },
-        {
-          "type": "ritual_card",
-          "settings": {
-            "label": "ABEND | LOSLASSEN",
-            "title": "Moon Rest",
-            "benefit": "Für Entspannung & Schlaf"
-          }
-        }
-      ]
+      "name": "DinVeda Complete Your Day"
     }
   ]
 }

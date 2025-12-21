@@ -1,0 +1,365 @@
+{% comment %} DinVeda Premium Collection Grid Section {% endcomment %}
+{% comment %} Collection Page Assets {% endcomment %}
+<link
+  rel="preload"
+  href="{{ 'section-main-collection.css' | asset_url }}"
+  as="style"
+  onload="this.onload=null;this.rel='stylesheet'"
+>
+<noscript><link rel="stylesheet" href="{{ 'section-main-collection.css' | asset_url }}"></noscript>
+<link
+  rel="preload"
+  href="{{ 'component-product-grid.css' | asset_url }}"
+  as="style"
+  onload="this.onload=null;this.rel='stylesheet'"
+>
+<noscript><link rel="stylesheet" href="{{ 'component-product-grid.css' | asset_url }}"></noscript>
+
+{% comment %} Collection Page Logic {% endcomment %}
+{%- liquid
+  case section.settings.items_per_row
+    when 4
+      assign items_per_row = 'span-3 auto'
+    when 3
+      assign items_per_row = 'span-4 auto'
+    when 2
+      assign items_per_row = 'span-6 auto'
+    when 1
+      assign items_per_row = 'span-12'
+  endcase
+
+  case section.settings.mobile_items_per_row
+    when '1'
+      assign mobile_per_row = 'sm-span-12'
+    when '2'
+      assign mobile_per_row = 'sm-span-6'
+  endcase
+
+  assign page_limit = section.settings.items_per_page
+
+  assign current_filter = ''
+  if request.url contains '?filter='
+    assign url_parts = request.url | split: '?filter='
+    if url_parts.size > 1
+      assign current_filter = url_parts[1] | split: '&' | first | split: '#' | first
+    endif
+  endif
+
+  assign empty_collection = true
+  if collection.products.size > 0
+    assign empty_collection = false
+  endif
+
+  case section.settings.card_padding
+    when 'small'
+      assign card_padding_class = 'premium-card-padding-small'
+    when 'large'
+      assign card_padding_class = 'premium-card-padding-large'
+    else
+      assign card_padding_class = 'premium-card-padding-medium'
+  endcase
+
+  assign card_min_height = section.settings.card_min_height
+  if card_min_height == blank
+    assign card_min_height = 500
+  endif
+-%}
+
+{% comment %} Collection Page Template {% endcomment %}
+<section
+  id="collection-page"
+  class="dinveda-collection-grid dinveda-collection-grid-{{ section.id }} collection__page--wrapper collection-template collection-{{ section.id }} mt9 pb9 no-section-animation"
+  data-section-id="{{ section.id }}"
+  data-section-type="collection"
+  data-asset-url="{{ 'section-main-collection.js' | asset_url }}"
+  data-collection-handle="{{ collection.handle }}"
+  data-empty="{{ empty_collection }}"
+>
+  {% paginate collection.products by page_limit %}
+    <div id="CollectionProductGrid" class="grid__wrapper rg0">
+      {%- if collection.products.size >= 1 -%}
+        <div class="collection span-12 dinveda-premium-grid" id="main-collection-product-grid" data-id="{{ section.id }}">
+          <div class="product-loop grid__wrapper edge cg6 sm-cg3 rg9">
+            {% if collection != blank %}
+              {% assign filtered_count = 0 %}
+              {% for product in collection.products limit: page_limit %}
+                {%- liquid
+                  assign show_product = true
+                  if current_filter != blank and current_filter != ''
+                    unless product.tags contains current_filter
+                      assign show_product = false
+                    endunless
+                  endif
+                -%}
+                {% if show_product %}
+                  {% assign filtered_count = filtered_count | plus: 1 %}
+                {%- liquid
+                  assign short_descriptor = ''
+                  if section.settings.show_short_descriptor
+                    assign ritual_usage = product.metafields.dinveda.ritual_usage
+                    if ritual_usage != blank
+                      assign desc_stripped = ritual_usage | strip_html
+                      assign desc_first_line = desc_stripped | split: '.' | first | split: '!' | first | split: '?' | first
+                      if desc_first_line.size > 80
+                        assign short_descriptor = desc_first_line | truncate: 80, '...'
+                      else
+                        assign short_descriptor = desc_first_line
+                      endif
+                    elsif product.description != blank
+                      assign desc_stripped = product.description | strip_html
+                      assign desc_first_line = desc_stripped | split: '.' | first | split: '!' | first | split: '?' | first
+                      if desc_first_line.size > 80
+                        assign short_descriptor = desc_first_line | truncate: 80, '...'
+                      else
+                        assign short_descriptor = desc_first_line
+                      endif
+                    endif
+                  endif
+
+                  assign ritual_timing = ''
+                  if section.settings.show_ritual_timing
+                    assign ritual_timing = product.metafields.dinveda.ritual_timing
+                    if ritual_timing == blank and section.settings.ritual_timing_fallback_tag
+                      if product.tags contains 'Morgen'
+                        assign ritual_timing = 'MORGEN'
+                      elsif product.tags contains 'Tag'
+                        assign ritual_timing = 'TAG'
+                      elsif product.tags contains 'Abend'
+                        assign ritual_timing = 'ABEND'
+                      elsif product.tags contains 'Balance'
+                        assign ritual_timing = 'BALANCE'
+                      endif
+                    endif
+                    if ritual_timing != blank
+                      assign ritual_timing = ritual_timing | upcase
+                    endif
+                  endif
+
+                  assign card_classes = 'dinveda-premium-product-card ' | append: card_padding_class
+                  unless section.settings.show_vendor
+                    assign card_classes = card_classes | append: ' hide-vendor'
+                  endunless
+                  unless section.settings.show_price
+                    assign card_classes = card_classes | append: ' hide-price'
+                  endunless
+                -%}
+                <div class="{{ card_classes }}" data-product-id="{{ product.id }}" style="min-height: {{ card_min_height }}px;">
+                  <div class="dinveda-premium-card-inner">
+                    {% render 'product-loop',
+                      collection: collection,
+                      product: product,
+                      index: forloop.index,
+                      grid_items: section.settings.items_per_row,
+                      product_info_align: 'a-center',
+                      items_per_row: items_per_row,
+                      mobile_per_row: mobile_per_row
+                    %}
+                    
+                    {% if ritual_timing != blank or section.settings.show_price %}
+                      <div class="dinveda-product-meta-row">
+                        {% if ritual_timing != blank %}
+                          <span class="dinveda-ritual-timing-label">{{ ritual_timing }}</span>
+                        {% else %}
+                          <span class="dinveda-ritual-timing-label"></span>
+                        {% endif %}
+                        {% if section.settings.show_price %}
+                          <span class="dinveda-product-price">{{ product.price | money }}</span>
+                        {% endif %}
+                      </div>
+                    {% endif %}
+
+                    {% if short_descriptor != blank %}
+                      <p class="dinveda-premium-product-descriptor">{{ short_descriptor }}</p>
+                    {% endif %}
+
+                    {% if section.settings.show_cta_button %}
+                      <a href="{{ product.url }}" class="dinveda-cta-button">{{ section.settings.cta_button_label | default: 'ZUM RITUAL' }}</a>
+                    {% endif %}
+                  </div>
+                </div>
+                {% endif %}
+              {% endfor %}
+            {% else %}
+              {% for i in (1..3) %}
+                {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                {% assign placeholder = 'product-' | append: current %}
+                <article class="product-listing relative {{ settings.image_ratio }} a-center">
+                  <div class="product-image">
+                    <div class="reveal relative demo-1 color-2">
+                      {{ placeholder | placeholder_svg_tag: 'placeholder-svg' }}
+                    </div>
+                  </div>
+                  <div class="product-info mt4 pb1 px1 sm-px0 a-center">
+                    <small class="product-vendor block mb1">Product Vendor</small>
+                    <p class="product-title">Product Title</p>
+                    <p class="product-subtitle mb0">Product subtitle</p>
+                  </div>
+                </article>
+              {% endfor %}
+            {% endif %}
+          </div>
+        </div>
+      {%- else -%}
+        <div
+          class="collection collection--empty span-12 relative"
+          id="main-collection-product-grid"
+          data-id="{{ section.id }}"
+        >
+          <div class="js-coll-empty-filter py10 a-center" style="display: none;">
+            <h2>{{ 'collections.filter.no_results' | t }}</h2>
+            <p>{{ 'collections.filter.use_fewer_filters' | t }}</p>
+            <a class="button btn-outline" href="{{ collection.url }}">{{ 'collections.filter.clear_all' | t }}</a>
+          </div>
+          <div class="js-coll-empty py10 a-center no-js-show">
+            <h2>{{ 'collections.general.empty' | t }}</h2>
+            <p>{{ 'collections.general.no_matches' | t }}</p>
+            <a class="button btn-outline" href="{{ routes.collections_url }}">
+              {{- 'collections.general.all_collections' | t -}}
+            </a>
+          </div>
+        </div>
+      {%- endif -%}
+
+      {% unless collection.products_count <= page_limit %}
+        {% render 'snip-pagination', paginate: paginate %}
+      {% endunless %}
+   </div>
+  {% endpaginate %}
+</section>
+
+{% schema %}
+{
+  "name": "DinVeda Collection Grid",
+  "settings": [
+    {
+      "type": "range",
+      "id": "items_per_page",
+      "min": 2,
+      "max": 48,
+      "step": 1,
+      "label": "Products per page",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "items_per_row",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "label": "Products per row",
+      "default": 4
+    },
+    {
+      "type": "radio",
+      "id": "mobile_items_per_row",
+      "label": "Products per row mobile",
+      "default": "2",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_short_descriptor",
+      "label": "Show short descriptor",
+      "default": true,
+      "info": "Shows product.metafields.dinveda.ritual_usage (first line) below product title"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_ritual_timing",
+      "label": "Show ritual timing label",
+      "default": true,
+      "info": "Shows ritual timing label (from metafield or tag) above product title"
+    },
+    {
+      "type": "checkbox",
+      "id": "ritual_timing_fallback_tag",
+      "label": "Use tag fallback for ritual timing",
+      "default": true,
+      "info": "If metafield is empty, check product tags (Morgen/Tag/Abend/Balance)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta_button",
+      "label": "Show CTA button",
+      "default": true,
+      "info": "Show 'Zum Ritual' button on product cards"
+    },
+    {
+      "type": "text",
+      "id": "cta_button_label",
+      "label": "CTA button label",
+      "default": "ZUM RITUAL"
+    },
+    {
+      "type": "range",
+      "id": "card_min_height",
+      "min": 400,
+      "max": 600,
+      "step": 20,
+      "unit": "px",
+      "label": "Card minimum height",
+      "default": 500,
+      "info": "Minimum height for product cards to ensure equal heights"
+    },
+    {
+      "type": "select",
+      "id": "card_padding",
+      "label": "Card padding",
+      "default": "medium",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Card border radius",
+      "default": 0,
+      "info": "Uses design system button radius if set to 0"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show price",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_add",
+      "label": "Show quick add",
+      "default": false
+    }
+  ]
+}
+{% endschema %}
+

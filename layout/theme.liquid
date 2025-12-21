@@ -63,6 +63,12 @@
     <noscript><link rel="stylesheet" href="{{ 'dinveda-home.css' | asset_url }}"></noscript>
   {%- endif -%}
 
+  {%- comment -%} Load DinVeda premium collection CSS only for collection.dinveda_premium template {%- endcomment -%}
+  {%- if template.name == 'collection' and (template.suffix == 'dinveda_premium' or template.suffix == 'dinveda-premium') -%}
+    <link rel="preload" href="{{ 'dinveda-collection-premium.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ 'dinveda-collection-premium.css' | asset_url }}"></noscript>
+  {%- endif -%}
+
   {%- unless settings.main_font.system? -%}
     <link rel="preload" as="font" href="{{ settings.main_font | font_url }}" type="font/woff2" crossorigin>
   {%- endunless -%}

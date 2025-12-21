@@ -1,7 +1,7 @@
 .section-footer {
-  background-color: var(--footer-bg);
-  color: var(--footer-text);
-  border-color: var(--footer-text);
+  background-color: var(--design-bg-color, #FFF0DD);
+  color: var(--design-text-color, #C17129);
+  border-color: var(--design-text-color, #C17129);
 }
 
 .section-footer a, .section-footer a:visited, .section-footer p,
@@ -12,7 +12,74 @@
 .section-footer h4,
 .section-footer h5,
 .section-footer h6 {
-  color: var(--footer-text);
+  color: var(--design-text-color, #C17129);
+}
+
+/* Hide unwanted footer elements globally */
+.section-footer .top-footer,
+.section-footer .footer-logo,
+.section-footer .footer__follow-on-shop,
+.section-footer .payment-methods,
+.section-footer .bottom-footer__localization,
+.section-footer .snip-footer-social-icons,
+.section-footer [class*="social"] {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Hide powered_by_link (theme credit) */
+.section-footer .copyright small .powered-by-link,
+.section-footer .copyright small:has(.powered-by-link) {
+  display: none !important;
+}
+
+/* Remove "•" separator if powered_by_link is hidden */
+.section-footer .copyright small a:after {
+  content: '';
+}
+
+/* Center footer content to match homepage */
+.section-footer .bottom-footer {
+  text-align: center !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-footer .left-footer {
+  text-align: center !important;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.section-footer .left-footer ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.section-footer .left-footer li {
+  margin: 0;
+}
+
+.section-footer .right-footer {
+  text-align: center !important;
+  width: 100%;
+}
+
+.section-footer .copyright {
+  text-align: center;
+  margin-top: 16px;
 }
 
 .section-footer .disclosure-list {

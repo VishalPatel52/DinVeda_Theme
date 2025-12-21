@@ -4,58 +4,56 @@
       "type": "dinveda-product-hero",
       "settings": {
         "show_breadcrumbs": false,
-        "show_nutrition_facts": true,
-        "show_dynamic_checkout": true,
-        "show_payment_options_link": true,
-        "show_social_share": true,
-        "trust_text_1": "100% Bio & vegan – naturrein & laborgeprüft",
-        "trust_text_2": "Mit Shatavari, Amla, Fenchel & Rosenblüten",
-        "trust_text_3": "Kostenloser Versand ab 50€"
-      }
-    },
-    "dinveda_ritual_snapshot": {
-      "type": "dinveda-ritual-snapshot",
-      "settings": {
-        "heading": "Ritual auf einen Blick"
-      }
-    },
-    "dinveda_tier_quote_card": {
-      "type": "dinveda-tier-quote-card",
-      "settings": {
-        "show_icon": true
+        "show_thumbnails": false,
+        "category_text": "MORGEN | AKTIVIEREN",
+        "quote_text": "Ich starte clever und klar in den Tag. Für Energie, Fokus & innere Wärme.",
+        "quote_attribution": "Fuchs",
+        "price_note": "inkl. MwSt. / 100g Dose",
+        "show_nutrition_facts": false,
+        "add_to_cart_label": "Zum Einkaufswagen hinzufügen",
+        "enable_buy_now": true,
+        "buy_now_label": "Jetzt kaufen",
+        "buy_now_primary": false,
+        "show_payment_options_link": false,
+        "payment_options_link_text": "WEITERE BEZAHLMÖGLICHKEITEN",
+        "shipping_text": "Kostenloser Versand ab 50€ innerhalb DE",
+        "certification_bio": "100% Bio-Zertifiziert",
+        "certification_made_in": "Made in Germany",
+        "show_organic_label": true,
+        "show_vegan_label": true,
+        "show_social_share": true
       }
     },
     "dinveda_ritual_story": {
       "type": "dinveda-ritual-story",
       "settings": {
-        "eyebrow": "DIE RITUAL STORY"
+        "eyebrow": "DIE RITUAL-STORY"
       }
     },
-    "dinveda_ingredients_prep": {
-      "type": "dinveda-ingredients-prep",
+    "dinveda_ingredients_and_ritual": {
+      "type": "dinveda-ingredients-and-ritual",
       "settings": {
-        "module_1_title": "Zutaten & Traditioneller Hintergrund",
-        "module_2_title": "Anwendung & Zubereitung",
-        "prep_intro": "So verwendet der Schmetterling Ova Harmony in seinem Alltag:",
-        "footnote": "ALLE ZUTATEN SIND 100 % BIO – AUS KONTROLLIERT BIOLOGISCHEM ANBAU."
+        "ingredients_heading": "Ehrliche Zutaten",
+        "ritual_heading": "",
+        "ingredients_footnote": "*aus kontrolliert biologischem Anbau",
+        "hide_if_empty": false
       }
     },
-    "product_recommendations": {
-      "type": "product-recommendations",
+    "dinveda_complete_your_day": {
+      "type": "dinveda-complete-your-day",
       "settings": {
-        "product_recommendations_heading": "Ähnliche Produkte",
-        "items_per_row": 2,
-        "items_shown": 2,
-        "section_padding": "both"
-      }
+        "heading": "Vervollständige deinen Tag",
+        "subheading": "WEITERE RITUALE FÜR BALANCE & RUHE",
+        "view_all_label": "ALLE RITUALE ANSEHEN",
+        "view_all_link": "/collections/all",
+        "button_label_fallback": "ANSEHEN"
+      },
     }
   },
   "order": [
     "dinveda_product_hero",
-    "dinveda_ritual_snapshot",
-    "dinveda_tier_quote_card",
     "dinveda_ritual_story",
-    "dinveda_ingredients_prep",
-    "product_recommendations"
+    "dinveda_ingredients_and_ritual",
+    "dinveda_complete_your_day"
   ]
 }

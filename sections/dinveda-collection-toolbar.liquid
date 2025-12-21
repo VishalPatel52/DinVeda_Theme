@@ -1,0 +1,440 @@
+{% comment %} DinVeda Collection Toolbar Section {% endcomment %}
+{%- liquid
+  assign has_sortby = false
+  for block in section.blocks
+    if block.type == 'sort_by'
+      assign has_sortby = true
+      assign sort_by_id = block.id
+    endif
+  endfor
+
+  assign has_filter = false
+  for block in section.blocks
+    if block.type == 'filter'
+      assign has_filter = true
+      assign filter_id = block.id
+    endif
+  endfor
+
+  assign filter_count = 0
+  for filter in collection.filters
+    if filter.type == 'price_range'
+      if filter.min_value.value != null or filter.max_value.value != null
+        assign filter_count = 1
+      endif
+    endif
+    assign filter_count = filter_count | plus: filter.active_values.size
+  endfor
+
+  assign filter_appearance = section.settings.filter_appearance
+  if filter_appearance == blank
+    assign filter_appearance = 'both'
+  endif
+
+  assign show_filter_desktop = false
+  assign show_filter_mobile = false
+  if filter_appearance == 'dropdowns' or filter_appearance == 'both'
+    assign show_filter_desktop = true
+  endif
+  if filter_appearance == 'slideout' or filter_appearance == 'both'
+    assign show_filter_mobile = true
+  endif
+
+  assign current_filter = ''
+  if request.url contains '?filter='
+    assign url_parts = request.url | split: '?filter='
+    if url_parts.size > 1
+      assign current_filter = url_parts[1] | split: '&' | first | split: '#' | first
+    endif
+  endif
+
+  assign filtered_count = collection.products.size
+  if current_filter != blank and current_filter != ''
+    assign filtered_count = 0
+    for product in collection.products
+      if product.tags contains current_filter
+        assign filtered_count = filtered_count | plus: 1
+      endif
+    endfor
+  endif
+  assign total_count = collection.products_count
+
+  assign count_format = section.settings.count_label_format
+  if count_format == blank
+    assign count_format = 'ZEIGE {count} VON {total} RITUALEN'
+  endif
+  assign count_display = count_format | replace: '{count}', filtered_count | replace: '{total}', total_count
+-%}
+
+<section
+  class="dinveda-collection-toolbar dinveda-collection-toolbar-{{ section.id }} no-section-animation"
+  data-section-id="{{ section.id }}"
+  data-section-type="collection-toolbar"
+  data-filter-appearance="{{ filter_appearance }}"
+>
+  <div class="grid__wrapper">
+    <div class="dinveda-collection-toolbar__inner span-12 auto">
+      <div class="dinveda-collection-toolbar__left">
+        {% if section.settings.show_filter_label %}
+          {% if has_filter or has_sortby %}
+            <span class="dinveda-collection-toolbar__filter-label">{{ section.settings.filter_label_text }}</span>
+          {% endif %}
+        {% endif %}
+
+        {% if has_filter and show_filter_desktop %}
+          <div class="dinveda-collection-toolbar__filters-desktop sm-hide md-hide{% if filter_appearance == 'slideout' %} lg-hide{% endif %}">
+            <form
+              id="CollectionFiltersForm"
+              class="grid__wrapper wrapper-nest edge desktop-filters no-js-hidden"
+              data-filters
+            >
+              {% render 'filters',
+                type: collection,
+                has_filter: has_filter,
+                has_sortby: false,
+                has_tag_group: false,
+                filter_count: filter_count,
+                filter_appearance: filter_appearance
+              %}
+            </form>
+          </div>
+        {% endif %}
+
+        {% if has_filter and show_filter_mobile %}
+          <div class="dinveda-collection-toolbar__filters-mobile auto span-12{% if filter_appearance == 'dropdowns' %} lg-hide{% endif %}">
+            <div class="slideout__trigger--open">
+              <button
+                class="slideout__trigger-filters button js-slideout-open a-center"
+                data-wau-slideout-target="collection-filters"
+                data-slideout-direction="right"
+                aria-label="Open filters"
+                tabindex="0"
+                type="button"
+                name="button"
+                popovertarget="slideout-collection-filters"
+                popovertargetaction="show"
+              >
+                {% render 'snip-icons',
+                  type: 'theme',
+                  wrapper: '.slideout__trigger-filters',
+                  icon: 'menu-bars',
+                  classes: 'mr1 vib-center',
+                  size: '14px',
+                  fill: 'var(--design-text-color)',
+                  hover: 'var(--design-text-color)'
+                %}
+                <span class="vib-center">{{ 'collections.filter.filter' | t }}</span>
+              </button>
+            </div>
+          </div>
+          <aside
+            popover="auto"
+            class="slideout slideout__drawer-right"
+            data-wau-slideout="collection-filters"
+            id="slideout-collection-filters"
+          >
+            <div class="collection__page--sm-filter-content relative">
+              {% render 'header-mobile',
+                type: 'filters',
+                slideout_direction: 'right',
+                fill_color: 'var(--design-text-color)',
+                hover_color: 'var(--text-color-light)',
+                popover_target: 'slideout-collection-filters'
+              %}
+              <h2 class="px4 a-center h3">{{ 'collections.filter.filter' | t }}</h2>
+              <form id="CollectionMobileFiltersForm">
+                <ul
+                  id="c-accordion--collection-mobile-filters"
+                  data-accordion-allow-multiple
+                  data-mobile-filters
+                >
+                  {% render 'mobile-filters',
+                    type: collection,
+                    has_filter: has_filter,
+                    filter_id: filter_id,
+                    has_sortby: has_sortby,
+                    sort_by_id: sort_by_id,
+                    has_tag_group: false,
+                    tag_group_id: ''
+                  %}
+                </ul>
+              </form>
+            </div>
+          </aside>
+        {% endif %}
+      </div>
+
+      <div class="dinveda-collection-toolbar__right">
+        {% if section.settings.show_sort_dropdown and has_sortby and show_filter_desktop %}
+          <div class="dinveda-collection-toolbar__sort sm-hide md-hide{% if filter_appearance == 'slideout' %} lg-hide{% endif %}" data-collection-sort-by>
+            <div class="collection__filtering js-hz-filter">
+              <label class="visuallyhidden" for="SB-Sortby-{{ section.id }}">{{ 'collections.sorting.title' | t }}</label>
+              <input class="chosen-value js-hz-filter-input" title="{{ 'collections.sorting.sort_title' | t | escape }}" type="text" value="" data-filter-type="sort-by" data-placeholder="{{ 'collections.sorting.title' | t }}" data-generic-placeholder="{{ 'collections.filter.type_to_filter' | t }}" placeholder="{{ 'collections.sorting.title' | t }}" id="SB-Sortby-{{ section.id }}">
+              <ul class="value-list js-hz-filter-list">
+                {% for option in collection.sort_options %}
+                  {%- liquid
+                    if option.value == collection.sort_by
+                      assign status = 'current'
+                    else
+                      assign status = 'available'
+                    endif
+                  -%}
+                  <li class="js-filter-item {{ status }}" data-placeholder="{{ option.name }}" data-option-value="{{ option.value }}" tabindex="0">
+                    <input type="checkbox"
+                      name="sort_by"
+                      value="{{ option.value | escape }}"
+                      id="SB-Sortby-{{ section.id }}-{{ option.name | escape }}-{{ forloop.index }}">
+                    <label class="js-hz-filter-label" for="SB-Sortby-{{ section.id }}-{{ option.name | escape }}-{{ forloop.index }}">{{ option.name }}</label>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        {% endif %}
+
+        {% if section.settings.show_product_count %}
+          <span class="dinveda-collection-toolbar__product-count">
+            {{ count_display }}
+          </span>
+        {% endif %}
+
+        {% if section.settings.category_filter_enable %}
+          <div class="dinveda-collection-toolbar__category-filter">
+            {% if section.settings.filter_prefix_label != blank %}
+              <span class="dinveda-collection-toolbar__filter-prefix">{{ section.settings.filter_prefix_label }}</span>
+            {% endif %}
+            <div class="dinveda-collection-toolbar__category-links">
+              <a href="{{ collection.url }}" class="dinveda-category-link{% if current_filter == blank or current_filter == '' %} active{% endif %}">
+                {{ section.settings.category_all_label }}
+              </a>
+              <a href="{{ collection.url }}?filter=Morgen" class="dinveda-category-link{% if current_filter == 'Morgen' %} active{% endif %}">
+                {{ section.settings.category_morgen_label }}
+              </a>
+              <a href="{{ collection.url }}?filter=Tag" class="dinveda-category-link{% if current_filter == 'Tag' %} active{% endif %}">
+                {{ section.settings.category_tag_label }}
+              </a>
+              <a href="{{ collection.url }}?filter=Abend" class="dinveda-category-link{% if current_filter == 'Abend' %} active{% endif %}">
+                {{ section.settings.category_abend_label }}
+              </a>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .dinveda-collection-toolbar-{{ section.id }} {
+    padding: var(--design-section-spacing-small) 0;
+  }
+
+  .dinveda-collection-toolbar-{{ section.id }} .dinveda-collection-toolbar__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .dinveda-collection-toolbar-{{ section.id }} .dinveda-collection-toolbar__left,
+  .dinveda-collection-toolbar-{{ section.id }} .dinveda-collection-toolbar__right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .dinveda-collection-toolbar-{{ section.id }} .dinveda-collection-toolbar__filter-label {
+    font-family: var(--main-family);
+    font-size: var(--design-body-font-size);
+    color: var(--design-text-color);
+    font-weight: 500;
+  }
+
+  .dinveda-collection-toolbar-{{ section.id }} .dinveda-collection-toolbar__product-count {
+    font-family: var(--main-family);
+    font-size: var(--design-body-font-size);
+    color: var(--design-text-color);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .dinveda-collection-toolbar-{{ section.id }} .dinveda-collection-toolbar__category-filter {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .dinveda-collection-toolbar-{{ section.id }} .dinveda-collection-toolbar__filter-prefix {
+    font-family: var(--main-family);
+    font-size: var(--design-body-font-size);
+    color: var(--design-text-color);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .dinveda-collection-toolbar-{{ section.id }} .dinveda-collection-toolbar__category-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .dinveda-collection-toolbar-{{ section.id }} .dinveda-category-link {
+    font-family: var(--main-family);
+    font-size: var(--design-body-font-size);
+    color: var(--design-text-color);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .dinveda-collection-toolbar-{{ section.id }} .dinveda-category-link:hover {
+    opacity: 0.7;
+  }
+
+  .dinveda-collection-toolbar-{{ section.id }} .dinveda-category-link.active {
+    text-decoration: underline;
+    font-weight: 500;
+  }
+
+  @media (max-width: 767px) {
+    .dinveda-collection-toolbar-{{ section.id }} .dinveda-collection-toolbar__inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .dinveda-collection-toolbar-{{ section.id }} .dinveda-collection-toolbar__right {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "DinVeda Toolbar",
+  "tag": "section",
+  "class": "dynamic-section",
+  "max_blocks": 2,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_filter_label",
+      "label": "Show filter label",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "filter_label_text",
+      "label": "Filter label text",
+      "default": "Filtern nach"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_count",
+      "label": "Show product count",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sort_dropdown",
+      "label": "Show sort dropdown",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "filter_appearance",
+      "label": "Filter appearance",
+      "default": "both",
+      "info": "Choose how filters appear on desktop and mobile",
+      "options": [
+        {
+          "value": "dropdowns",
+          "label": "Dropdowns (desktop only)"
+        },
+        {
+          "value": "slideout",
+          "label": "Slideout (mobile only)"
+        },
+        {
+          "value": "both",
+          "label": "Both (dropdowns on desktop, slideout on mobile)"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "count_label_format",
+      "label": "Product count format",
+      "default": "ZEIGE {count} VON {total} RITUALEN",
+      "info": "Use {count} for filtered count, {total} for total count"
+    },
+    {
+      "type": "checkbox",
+      "id": "category_filter_enable",
+      "label": "Enable category filter",
+      "default": true,
+      "info": "Show category filter links (Alle/Morgen/Tag/Abend)"
+    },
+    {
+      "type": "text",
+      "id": "filter_prefix_label",
+      "label": "Filter prefix label",
+      "default": "FILTERN NACH:"
+    },
+    {
+      "type": "text",
+      "id": "category_all_label",
+      "label": "All category label",
+      "default": "Alle"
+    },
+    {
+      "type": "text",
+      "id": "category_morgen_label",
+      "label": "Morning category label",
+      "default": "Morgen"
+    },
+    {
+      "type": "text",
+      "id": "category_tag_label",
+      "label": "Day category label",
+      "default": "Tag"
+    },
+    {
+      "type": "text",
+      "id": "category_abend_label",
+      "label": "Evening category label",
+      "default": "Abend"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "filter",
+      "name": "Filters",
+      "limit": 1,
+      "settings": []
+    },
+    {
+      "type": "sort_by",
+      "name": "Sort by",
+      "limit": 1,
+      "settings": []
+    }
+  ],
+  "presets": [
+    {
+      "name": "DinVeda Toolbar",
+      "blocks": [
+        {
+          "type": "filter"
+        },
+        {
+          "type": "sort_by"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

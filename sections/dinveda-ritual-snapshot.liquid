@@ -14,9 +14,13 @@
 >
   <div class="dinveda-ritual-snapshot__container">
     {%- if section.settings.heading != blank -%}
-      <h2 class="dinveda-ritual-snapshot__heading">
-        {{ section.settings.heading | escape }}
-      </h2>
+      <div class="dinveda-ritual-snapshot__heading-wrapper">
+        <span class="dinveda-ritual-snapshot__heading-line"></span>
+        <h2 class="dinveda-ritual-snapshot__heading">
+          {{ section.settings.heading | escape }}
+        </h2>
+        <span class="dinveda-ritual-snapshot__heading-line"></span>
+      </div>
     {%- endif -%}
     
     <div class="dinveda-ritual-snapshot__grid">
@@ -28,9 +32,9 @@
         <div class="dinveda-ritual-snapshot__item">
           <div class="dinveda-ritual-snapshot__icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2v10m0-10C8 2 5 5 5 9c0 5 4 8 7 8s7-3 7-8c0-4-3-7-7-7Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M12 12v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M8 22h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="2" y1="18" x2="22" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M12 6c0-2.5 2-4.5 4.5-4.5S21 3.5 21 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+              <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5" fill="none"/>
             </svg>
           </div>
           <div class="dinveda-ritual-snapshot__label">Tageszeit</div>
@@ -46,9 +50,9 @@
         <div class="dinveda-ritual-snapshot__item">
           <div class="dinveda-ritual-snapshot__icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M18 8h1a4 4 0 0 1 0 8h-1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M2 8h16v5a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M6 1v6m6-6v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M5 8h12v8a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M17 8h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="5" y1="12" x2="5" y2="12" stroke="currentColor" stroke-width="1.5"/>
             </svg>
           </div>
           <div class="dinveda-ritual-snapshot__label">Anwendung</div>
@@ -64,9 +68,15 @@
         <div class="dinveda-ritual-snapshot__item">
           <div class="dinveda-ritual-snapshot__icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M8 12h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M12 8v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="12" r="3" fill="currentColor"/>
+              <path d="M12 2L13 8L12 12L11 8Z" fill="currentColor"/>
+              <path d="M12 22L11 16L12 12L13 16Z" fill="currentColor"/>
+              <path d="M2 12L8 11L12 12L8 13Z" fill="currentColor"/>
+              <path d="M22 12L16 13L12 12L16 11Z" fill="currentColor"/>
+              <path d="M6.34 6.34L9.66 9.66L8.12 12L4.8 8.68Z" fill="currentColor"/>
+              <path d="M17.66 17.66L14.34 14.34L15.88 12L19.2 15.32Z" fill="currentColor"/>
+              <path d="M17.66 6.34L14.34 9.66L15.88 12L19.2 8.68Z" fill="currentColor"/>
+              <path d="M6.34 17.66L9.66 14.34L8.12 12L4.8 15.32Z" fill="currentColor"/>
             </svg>
           </div>
           <div class="dinveda-ritual-snapshot__label">Geschmack</div>

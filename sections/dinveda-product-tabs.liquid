@@ -1,0 +1,388 @@
+{% comment %}
+  DinVeda Product Tabs Section
+  Three fixed tabs: Produktinformation, Zutaten, Versand
+  Content from product metafields with fallbacks
+{% endcomment %}
+
+{%- liquid
+  # Produktinformation tab content
+  assign tier_quote = product.metafields.dinveda.tier_quote
+  assign tier_name = product.metafields.dinveda.tier_name
+  assign blend_story = product.metafields.dinveda.blend_story | default: product.description
+  assign why_story = product.metafields.dinveda.why_story
+  assign benefit_bullets = product.metafields.dinveda.benefit_bullets
+  
+  # Ingredients & Preparation (inside Produktinformation tab)
+  assign ingredients_background = product.metafields.dinveda.ingredients_background
+  assign prep_card_1_title = product.metafields.dinveda.prep_card_1_title
+  assign prep_card_1_body = product.metafields.dinveda.prep_card_1_body
+  assign prep_card_2_title = product.metafields.dinveda.prep_card_2_title
+  assign prep_card_2_body = product.metafields.dinveda.prep_card_2_body
+  
+  # Versand tab content
+  assign shipping_note_metafield = product.metafields.dinveda.shipping_note
+-%}
+
+<section
+  id="dinveda-product-tabs-{{ section.id }}"
+  class="dinveda-product-tabs"
+  data-section-id="{{ section.id }}"
+  data-section-type="dinveda-product-tabs"
+>
+  <div class="dinveda-product-tabs__container">
+    <div class="dinveda-product-tabs__nav" role="tablist">
+      <button
+        type="button"
+        class="dinveda-product-tabs__nav-button dinveda-product-tabs__nav-button--active"
+        role="tab"
+        aria-selected="true"
+        aria-controls="tab-produktinformation"
+        id="tab-button-produktinformation"
+        data-tab-id="tab-produktinformation"
+      >
+        Produktinformation
+      </button>
+      <button
+        type="button"
+        class="dinveda-product-tabs__nav-button"
+        role="tab"
+        aria-selected="false"
+        aria-controls="tab-zutaten"
+        id="tab-button-zutaten"
+        data-tab-id="tab-zutaten"
+      >
+        Zutaten
+      </button>
+      <button
+        type="button"
+        class="dinveda-product-tabs__nav-button"
+        role="tab"
+        aria-selected="false"
+        aria-controls="tab-versand"
+        id="tab-button-versand"
+        data-tab-id="tab-versand"
+      >
+        Versand
+      </button>
+    </div>
+
+    <div class="dinveda-product-tabs__content">
+      {%- comment -%} Tab 1: Produktinformation {%- endcomment -%}
+      <div
+        class="dinveda-product-tabs__tab-panel dinveda-product-tabs__tab-panel--active"
+        id="tab-produktinformation"
+        role="tabpanel"
+        aria-labelledby="tab-button-produktinformation"
+      >
+        <div class="dinveda-product-tabs__tab-content">
+          {%- comment -%} Tier Quote Card {%- endcomment -%}
+          {% if tier_quote != blank or section.settings.quote_fallback != blank %}
+            <div class="dinveda-product-tabs__quote-card">
+              {% if section.settings.show_quote_icon and section.settings.quote_icon_svg != blank %}
+                <div class="dinveda-product-tabs__quote-icon">
+                  {{ section.settings.quote_icon_svg }}
+                </div>
+              {% endif %}
+              <div class="dinveda-product-tabs__quote-content">
+                {% if tier_quote != blank %}
+                  <blockquote class="dinveda-product-tabs__quote-text">
+                    {{ tier_quote | escape }}
+                  </blockquote>
+                {% elsif section.settings.quote_fallback != blank %}
+                  <blockquote class="dinveda-product-tabs__quote-text">
+                    {{ section.settings.quote_fallback | escape }}
+                  </blockquote>
+                {% endif %}
+                {% if tier_name != blank %}
+                  <p class="dinveda-product-tabs__quote-attribution">
+                    — sagt der {{ tier_name | escape }}
+                  </p>
+                {% elsif section.settings.attribution_fallback != blank %}
+                  <p class="dinveda-product-tabs__quote-attribution">
+                    {{ section.settings.attribution_fallback | escape }}
+                  </p>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+
+          {%- comment -%} Blend Story (Rich Text) {%- endcomment -%}
+          {% if blend_story != blank %}
+            <div class="dinveda-product-tabs__blend-story">
+              {{ blend_story }}
+            </div>
+          {% endif %}
+
+          {%- comment -%} Why Story Section {%- endcomment -%}
+          {% if why_story != blank %}
+            <div class="dinveda-product-tabs__why-story">
+              <h3 class="dinveda-product-tabs__why-heading">
+                Warum {{ product.title }}?
+              </h3>
+              <div class="dinveda-product-tabs__why-body">
+                {{ why_story }}
+              </div>
+            </div>
+          {% endif %}
+
+          {%- comment -%} Benefit Bullets (Optional) {%- endcomment -%}
+          {% if benefit_bullets != blank %}
+            {% assign bullets_lines = benefit_bullets | newline_to_br | split: '<br />' %}
+            <ul class="dinveda-product-tabs__benefit-list">
+              {% for line in bullets_lines %}
+                {% assign trimmed_line = line | strip %}
+                {% if trimmed_line != blank %}
+                  <li>{{ trimmed_line | escape }}</li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          {% endif %}
+
+          {%- comment -%} Ingredients & Traditional Background Module {%- endcomment -%}
+          <div class="dinveda-product-tabs__ingredients-module">
+            <div class="dinveda-product-tabs__module-header">
+              <span class="material-symbols-outlined dinveda-product-tabs__module-icon">grain</span>
+              <h3 class="dinveda-product-tabs__module-title">
+                {{ section.settings.ingredients_title | default: 'Zutaten & Traditioneller Hintergrund' | escape }}
+              </h3>
+            </div>
+            {% if ingredients_background != blank %}
+              <div class="dinveda-product-tabs__ingredients-content">
+                {{ ingredients_background }}
+              </div>
+            {% elsif section.settings.ingredients_fallback != blank %}
+              <div class="dinveda-product-tabs__ingredients-content">
+                {{ section.settings.ingredients_fallback }}
+              </div>
+            {% endif %}
+            <p class="dinveda-product-tabs__ingredients-footnote">
+              *Alle Zutaten sind 100% Bio – aus kontrolliert biologischem Anbau.
+            </p>
+          </div>
+
+          {%- comment -%} Preparation Module {%- endcomment -%}
+          <div class="dinveda-product-tabs__prep-module">
+            <div class="dinveda-product-tabs__module-header">
+              <span class="material-symbols-outlined dinveda-product-tabs__module-icon">restaurant</span>
+              <h3 class="dinveda-product-tabs__module-title">
+                {{ section.settings.prep_title | default: 'Anwendung & Zubereitung' | escape }}
+              </h3>
+            </div>
+            {% if section.settings.prep_intro_text != blank %}
+              <p class="dinveda-product-tabs__prep-intro">{{ section.settings.prep_intro_text | escape }}</p>
+            {% endif %}
+            <div class="dinveda-product-tabs__prep-cards">
+              {% if prep_card_1_title != blank or prep_card_1_body != blank or section.settings.card_1_title_fallback != blank or section.settings.card_1_body_fallback != blank %}
+                <div class="dinveda-product-tabs__prep-card">
+                  {% if prep_card_1_title != blank %}
+                    <h4 class="dinveda-product-tabs__prep-card-title">{{ prep_card_1_title | escape }}</h4>
+                  {% elsif section.settings.card_1_title_fallback != blank %}
+                    <h4 class="dinveda-product-tabs__prep-card-title">{{ section.settings.card_1_title_fallback | escape }}</h4>
+                  {% endif %}
+                  {% if prep_card_1_body != blank %}
+                    <div class="dinveda-product-tabs__prep-card-body">{{ prep_card_1_body }}</div>
+                  {% elsif section.settings.card_1_body_fallback != blank %}
+                    <div class="dinveda-product-tabs__prep-card-body">{{ section.settings.card_1_body_fallback }}</div>
+                  {% endif %}
+                </div>
+              {% endif %}
+              {% if prep_card_2_title != blank or prep_card_2_body != blank or section.settings.card_2_title_fallback != blank or section.settings.card_2_body_fallback != blank %}
+                <div class="dinveda-product-tabs__prep-card">
+                  {% if prep_card_2_title != blank %}
+                    <h4 class="dinveda-product-tabs__prep-card-title">{{ prep_card_2_title | escape }}</h4>
+                  {% elsif section.settings.card_2_title_fallback != blank %}
+                    <h4 class="dinveda-product-tabs__prep-card-title">{{ section.settings.card_2_title_fallback | escape }}</h4>
+                  {% endif %}
+                  {% if prep_card_2_body != blank %}
+                    <div class="dinveda-product-tabs__prep-card-body">{{ prep_card_2_body }}</div>
+                  {% elsif section.settings.card_2_body_fallback != blank %}
+                    <div class="dinveda-product-tabs__prep-card-body">{{ section.settings.card_2_body_fallback }}</div>
+                  {% endif %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} Tab 2: Zutaten (Static - not editable) {%- endcomment -%}
+      <div
+        class="dinveda-product-tabs__tab-panel"
+        id="tab-zutaten"
+        role="tabpanel"
+        aria-labelledby="tab-button-zutaten"
+      >
+        <div class="dinveda-product-tabs__tab-content">
+          <div class="dinveda-product-tabs__static-content">
+            <p>Die vollständige Zutatenliste finden Sie in der Produktinformation.</p>
+            <p class="dinveda-product-tabs__ingredients-footnote">
+              *Alle Zutaten sind 100% Bio – aus kontrolliert biologischem Anbau.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} Tab 3: Versand (Static - not editable) {%- endcomment -%}
+      <div
+        class="dinveda-product-tabs__tab-panel"
+        id="tab-versand"
+        role="tabpanel"
+        aria-labelledby="tab-button-versand"
+      >
+        <div class="dinveda-product-tabs__tab-content">
+          <div class="dinveda-product-tabs__static-content">
+            <p><strong>Versandinformationen:</strong></p>
+            <p>Kostenloser Versand ab 50€ innerhalb Deutschlands.</p>
+            <p>Standardversand: 3-5 Werktage</p>
+            <p>Expressversand: 1-2 Werktage (gegen Aufpreis)</p>
+            <p>Internationaler Versand auf Anfrage.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    const tabsSection = document.getElementById('dinveda-product-tabs-{{ section.id }}');
+    if (!tabsSection) return;
+
+    const navButtons = tabsSection.querySelectorAll('.dinveda-product-tabs__nav-button');
+    const tabPanels = tabsSection.querySelectorAll('.dinveda-product-tabs__tab-panel');
+
+    navButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const targetTabId = this.getAttribute('data-tab-id');
+
+        // Update aria-selected
+        navButtons.forEach(btn => {
+          btn.classList.remove('dinveda-product-tabs__nav-button--active');
+          btn.setAttribute('aria-selected', 'false');
+        });
+        tabPanels.forEach(panel => {
+          panel.classList.remove('dinveda-product-tabs__tab-panel--active');
+        });
+
+        // Activate clicked tab
+        this.classList.add('dinveda-product-tabs__nav-button--active');
+        this.setAttribute('aria-selected', 'true');
+        const targetPanel = tabsSection.querySelector('#' + targetTabId);
+        if (targetPanel) {
+          targetPanel.classList.add('dinveda-product-tabs__tab-panel--active');
+        }
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "DinVeda Product Tabs",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Quote Card"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quote_icon",
+      "label": "Show quote icon",
+      "default": true
+    },
+    {
+      "type": "html",
+      "id": "quote_icon_svg",
+      "label": "Quote Icon SVG",
+      "info": "Optional: SVG icon (e.g., butterfly)"
+    },
+    {
+      "type": "textarea",
+      "id": "quote_fallback",
+      "label": "Quote (fallback)",
+      "info": "Displayed if product.metafields.dinveda.tier_quote is empty"
+    },
+    {
+      "type": "text",
+      "id": "attribution_fallback",
+      "label": "Attribution (fallback)",
+      "info": "Displayed if product.metafields.dinveda.tier_name is empty"
+    },
+    {
+      "type": "header",
+      "content": "Produktinformation Tab"
+    },
+    {
+      "type": "text",
+      "id": "ingredients_title",
+      "label": "Ingredients Module Title",
+      "default": "Zutaten & Traditioneller Hintergrund"
+    },
+    {
+      "type": "richtext",
+      "id": "ingredients_fallback",
+      "label": "Ingredients Content (Fallback)",
+      "info": "Displayed if product.metafields.dinveda.ingredients_background is empty"
+    },
+    {
+      "type": "text",
+      "id": "prep_title",
+      "label": "Preparation Module Title",
+      "default": "Anwendung & Zubereitung"
+    },
+    {
+      "type": "text",
+      "id": "prep_intro_text",
+      "label": "Preparation Intro Text",
+      "info": "Optional intro text before preparation cards (e.g., 'So verwendet der Schmetterling...')"
+    },
+    {
+      "type": "header",
+      "content": "Card 1 Fallbacks"
+    },
+    {
+      "type": "text",
+      "id": "card_1_title_fallback",
+      "label": "Card 1 Title (fallback)",
+      "info": "Used if dinveda.prep_card_1_title is empty"
+    },
+    {
+      "type": "textarea",
+      "id": "card_1_body_fallback",
+      "label": "Card 1 Body (fallback)",
+      "info": "Used if dinveda.prep_card_1_body is empty"
+    },
+    {
+      "type": "header",
+      "content": "Card 2 Fallbacks"
+    },
+    {
+      "type": "text",
+      "id": "card_2_title_fallback",
+      "label": "Card 2 Title (fallback)",
+      "info": "Used if dinveda.prep_card_2_title is empty"
+    },
+    {
+      "type": "textarea",
+      "id": "card_2_body_fallback",
+      "label": "Card 2 Body (fallback)",
+      "info": "Used if dinveda.prep_card_2_body is empty"
+    },
+    {
+      "type": "header",
+      "content": "Note"
+    },
+    {
+      "type": "paragraph",
+      "content": "Zutaten and Versand tabs are static and not editable. All editable content goes in the Produktinformation tab."
+    }
+  ],
+  "presets": [
+    {
+      "name": "DinVeda Product Tabs"
+    }
+  ]
+}
+{% endschema %}

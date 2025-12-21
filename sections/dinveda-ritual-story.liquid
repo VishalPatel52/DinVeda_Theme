@@ -4,27 +4,29 @@
 {% endcomment %}
 
 {%- liquid
-  # Intro paragraphs (from blend_story metafield)
-  assign story_intro = product.metafields.dinveda.blend_story | default: product.description
-  
-  # "Warum" heading (auto-generate if not set)
-  assign story_title = product.metafields.dinveda.story_title | default: product.metafields.dinveda.ritual_story_title
-  if story_title == blank
-    assign story_title = 'Warum ' | append: product.title | append: '?'
+  # Story content: blend_story (primary) or ritual_story, fallback to product.description
+  assign story_intro = product.metafields.dinveda.blend_story | default: product.metafields.dinveda.ritual_story
+  if story_intro == blank
+    assign story_intro = product.description
   endif
   
-  # "Warum" section text
-  assign why_text = product.metafields.dinveda.why_text
+  # Animal name for auto-generating heading
+  assign tier_name = product.metafields.dinveda.tier_name | default: product.metafields.dinveda.animal_name
   
-  # Bullet list heading and items
-  assign bullet_list = product.metafields.dinveda.bullet_list
-  
-  # Closing sentence
-  assign closing_text = product.metafields.dinveda.closing_text
+  # "Warum der {animal}?" heading - auto-generate from animal name
+  assign story_title = section.settings.story_title_override
+  if story_title == blank
+    assign story_title = product.metafields.dinveda.ritual_story_title
+  endif
+  if story_title == blank and tier_name != blank
+    assign story_title = 'Warum der ' | append: tier_name | append: '?'
+  elsif story_title == blank
+    assign story_title = 'Warum der ' | append: product.title | append: '?'
+  endif
   
   # Check if we have content to show
   assign has_content = false
-  if story_intro != blank or why_text != blank or bullet_list != blank or closing_text != blank
+  if story_intro != blank or story_title != blank
     assign has_content = true
   endif
 -%}
@@ -37,9 +39,9 @@
     data-section-type="dinveda-ritual-story"
   >
     {%- liquid
-      assign background_image = section.settings.background_image
+      assign watermark_image = section.settings.watermark_image
     -%}
-    {% if background_image != blank %}
+    {% if section.settings.enable_watermark and watermark_image != blank %}
       {% style %}
         #dinveda-ritual-story-{{ section.id }}::before {
           content: '';
@@ -48,7 +50,7 @@
           left: 0;
           right: 0;
           bottom: 0;
-          background-image: url('{{ background_image | image_url: width: 1200 }}');
+          background-image: url('{{ watermark_image | image_url: width: 1200 }}');
           background-size: cover;
           background-position: center;
           background-repeat: no-repeat;
@@ -58,6 +60,13 @@
         }
       {% endstyle %}
     {% endif %}
+    
+    {% style %}
+      #dinveda-ritual-story-{{ section.id }} {
+        padding-top: {{ section.settings.padding_top }}px;
+        padding-bottom: {{ section.settings.padding_bottom }}px;
+      }
+    {% endstyle %}
     
     <div class="dinveda-ritual-story__container">
       <div class="dinveda-ritual-story__content">
@@ -77,43 +86,20 @@
           </div>
         {% endif %}
 
-        {%- comment -%} "Warum..." heading and paragraph {%- endcomment -%}
+        {%- comment -%} "Warum der {animal}?" heading {%- endcomment -%}
         {% if story_title != blank %}
-          <h3 class="dinveda-ritual-story__why-heading">{{ story_title | escape }}</h3>
+          <h2 class="dinveda-ritual-story__title">{{ story_title | escape }}</h2>
         {% endif %}
         
-        {% if why_text != blank %}
-          <div class="dinveda-ritual-story__why-body">
-            {{ why_text }}
+        {%- comment -%} Story body content {%- endcomment -%}
+        {% if story_intro != blank %}
+          <div class="dinveda-ritual-story__body">
+            {{ story_intro }}
           </div>
-        {% elsif section.settings.why_fallback != blank %}
-          <div class="dinveda-ritual-story__why-body">
-            {{ section.settings.why_fallback }}
+        {% elsif section.settings.intro_fallback != blank %}
+          <div class="dinveda-ritual-story__body">
+            {{ section.settings.intro_fallback }}
           </div>
-        {% endif %}
-
-        {%- comment -%} Bullet list section {%- endcomment -%}
-        {% if bullet_list != blank or section.settings.bullet_list_fallback != blank %}
-          {% assign bullets_to_show = bullet_list | default: section.settings.bullet_list_fallback %}
-          {% if bullets_to_show != blank %}
-            <p class="dinveda-ritual-story__bullet-heading">{{ section.settings.bullet_heading | default: "Zarte, florale Noten – perfekt für:" | escape }}</p>
-            <ul class="dinveda-ritual-story__bullet-list">
-              {% assign bullet_lines = bullets_to_show | newline_to_br | split: '<br />' %}
-              {% for line in bullet_lines %}
-                {% assign trimmed_line = line | strip %}
-                {% if trimmed_line != blank %}
-                  <li>{{ trimmed_line | escape }}</li>
-                {% endif %}
-              {% endfor %}
-            </ul>
-          {% endif %}
-        {% endif %}
-
-        {%- comment -%} Closing sentence {%- endcomment -%}
-        {% if closing_text != blank %}
-          <p class="dinveda-ritual-story__closing">{{ closing_text | escape }}</p>
-        {% elsif section.settings.closing_fallback != blank %}
-          <p class="dinveda-ritual-story__closing">{{ section.settings.closing_fallback | escape }}</p>
         {% endif %}
 
       </div>
@@ -135,38 +121,19 @@
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow label",
-      "default": "DIE RITUAL STORY"
+      "default": "DIE RITUAL-STORY"
+    },
+    {
+      "type": "text",
+      "id": "story_title_override",
+      "label": "Story Title Override",
+      "info": "Optional: Override auto-generated 'Warum der {animal}?' title. Leave blank to auto-generate from product.metafields.dinveda.tier_name"
     },
     {
       "type": "richtext",
       "id": "intro_fallback",
-      "label": "Intro Paragraphs (fallback)",
-      "info": "Used if product.metafields.dinveda.blend_story is empty"
-    },
-    {
-      "type": "richtext",
-      "id": "why_fallback",
-      "label": "Warum Text (fallback)",
-      "info": "Used if product.metafields.dinveda.why_text is empty"
-    },
-    {
-      "type": "text",
-      "id": "bullet_heading",
-      "label": "Bullet List Heading",
-      "default": "Zarte, florale Noten – perfekt für:"
-    },
-    {
-      "type": "textarea",
-      "id": "bullet_list_fallback",
-      "label": "Bullet List (fallback)",
-      "default": "Tee- & Selfcare-Rituale\nWarme Abendgetränke\nSanfte Smoothies & Joghurt\nLeichte, harmonische Desserts",
-      "info": "Each line is a new bullet. Used if product.metafields.dinveda.bullet_list is empty"
-    },
-    {
-      "type": "text",
-      "id": "closing_fallback",
-      "label": "Closing Sentence (fallback)",
-      "info": "Used if product.metafields.dinveda.closing_text is empty"
+      "label": "Story Content (fallback)",
+      "info": "Used if product.metafields.dinveda.blend_story and ritual_story are empty"
     },
     {
       "type": "checkbox",
@@ -179,10 +146,40 @@
       "content": "Background"
     },
     {
+      "type": "checkbox",
+      "id": "enable_watermark",
+      "label": "Enable watermark",
+      "default": false
+    },
+    {
       "type": "image_picker",
-      "id": "background_image",
-      "label": "Background image/texture",
-      "info": "Optional decorative watermark or texture"
+      "id": "watermark_image",
+      "label": "Watermark image",
+      "info": "Optional decorative watermark or animal silhouette (shown at low opacity)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 80
     }
   ],
   "presets": [
