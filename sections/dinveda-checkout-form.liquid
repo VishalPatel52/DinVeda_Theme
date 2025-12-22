@@ -1,0 +1,413 @@
+{% comment %} DinVeda Checkout Form Section {% endcomment %}
+{%- liquid
+  assign show_newsletter_checkbox = section.settings.show_newsletter_checkbox
+  if show_newsletter_checkbox == blank
+    assign show_newsletter_checkbox = true
+  endif
+
+  assign show_save_info_checkbox = section.settings.show_save_info_checkbox
+  if show_save_info_checkbox == blank
+    assign show_save_info_checkbox = true
+  endif
+
+  assign continue_button_label = section.settings.continue_button_label
+  if continue_button_label == blank
+    assign continue_button_label = 'CONTINUE TO SHIPPING'
+  endif
+
+  assign show_discount_code = section.settings.show_discount_code
+  if show_discount_code == blank
+    assign show_discount_code = true
+  endif
+
+  assign show_security_badges = section.settings.show_security_badges
+  if show_security_badges == blank
+    assign show_security_badges = true
+  endif
+
+  assign customer_email = customer.email | default: ''
+  assign customer_first_name = customer.default_address.first_name | default: ''
+  assign customer_last_name = customer.default_address.last_name | default: ''
+  assign customer_address1 = customer.default_address.address1 | default: ''
+  assign customer_address2 = customer.default_address.address2 | default: ''
+  assign customer_city = customer.default_address.city | default: ''
+  assign customer_country = customer.default_address.country | default: 'Germany'
+  assign customer_zip = customer.default_address.zip | default: ''
+  assign customer_phone = customer.default_address.phone | default: ''
+-%}
+
+<section class="dinveda-checkout-form dinveda-checkout-form-{{ section.id }}" data-section-id="{{ section.id }}">
+  <div class="dinveda-checkout-form__wrapper">
+    <div class="grid__wrapper">
+      {%- comment -%} Checkout Form (Left Column) {%- endcomment -%}
+      <div class="dinveda-checkout-form__main span-12 lg-span-7 auto">
+        <form id="dinveda-checkout-form" class="dinveda-checkout-form__form" action="{{ routes.cart_url }}" method="post" novalidate>
+          {%- comment -%} Contact Information {%- endcomment -%}
+          <div class="dinveda-checkout-form__section">
+            <div class="dinveda-checkout-form__section-header">
+              <h2 class="dinveda-checkout-form__section-title">{{ 'checkout.contact.title' | default: 'Contact Information' | t }}</h2>
+              {% unless customer %}
+                <a href="{{ routes.account_login_url }}" class="dinveda-checkout-form__login-link">
+                  {{ 'checkout.contact.already_have_account' | default: 'Already have an account?' | t }} {{ 'checkout.contact.log_in' | default: 'Log in' | t }}
+                </a>
+              {% endunless %}
+            </div>
+
+            <div class="dinveda-checkout-form__field">
+              <label for="checkout_email" class="dinveda-checkout-form__label">
+                {{ 'checkout.contact.email' | default: 'Email address' | t }}
+                <span class="dinveda-checkout-form__required">*</span>
+              </label>
+              <input
+                type="email"
+                id="checkout_email"
+                name="checkout[email]"
+                class="dinveda-checkout-form__input"
+                value="{{ customer_email }}"
+                required
+                autocomplete="email"
+                placeholder="{{ 'checkout.contact.email_placeholder' | default: 'Email address' | t }}"
+              >
+            </div>
+
+            {% if show_newsletter_checkbox %}
+              <div class="dinveda-checkout-form__field dinveda-checkout-form__field--checkbox">
+                <label class="dinveda-checkout-form__checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="checkout[accepts_marketing]"
+                    class="dinveda-checkout-form__checkbox"
+                    value="1"
+                  >
+                  <span class="dinveda-checkout-form__checkbox-text">
+                    {{ 'checkout.contact.newsletter' | default: 'Email me with news and offers regarding rituals' | t }}
+                  </span>
+                </label>
+              </div>
+            {% endif %}
+          </div>
+
+          {%- comment -%} Shipping Address {%- endcomment -%}
+          <div class="dinveda-checkout-form__section">
+            <h2 class="dinveda-checkout-form__section-title">{{ 'checkout.shipping.title' | default: 'Shipping Address' | t }}</h2>
+
+            <div class="dinveda-checkout-form__field-row">
+              <div class="dinveda-checkout-form__field dinveda-checkout-form__field--half">
+                <label for="checkout_first_name" class="dinveda-checkout-form__label">
+                  {{ 'checkout.shipping.first_name' | default: 'First name' | t }}
+                  <span class="dinveda-checkout-form__required">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="checkout_first_name"
+                  name="checkout[shipping_address][first_name]"
+                  class="dinveda-checkout-form__input"
+                  value="{{ customer_first_name }}"
+                  required
+                  autocomplete="given-name"
+                >
+              </div>
+              <div class="dinveda-checkout-form__field dinveda-checkout-form__field--half">
+                <label for="checkout_last_name" class="dinveda-checkout-form__label">
+                  {{ 'checkout.shipping.last_name' | default: 'Last name' | t }}
+                  <span class="dinveda-checkout-form__required">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="checkout_last_name"
+                  name="checkout[shipping_address][last_name]"
+                  class="dinveda-checkout-form__input"
+                  value="{{ customer_last_name }}"
+                  required
+                  autocomplete="family-name"
+                >
+              </div>
+            </div>
+
+            <div class="dinveda-checkout-form__field">
+              <label for="checkout_address1" class="dinveda-checkout-form__label">
+                {{ 'checkout.shipping.address' | default: 'Address' | t }}
+                <span class="dinveda-checkout-form__required">*</span>
+              </label>
+              <input
+                type="text"
+                id="checkout_address1"
+                name="checkout[shipping_address][address1]"
+                class="dinveda-checkout-form__input"
+                value="{{ customer_address1 }}"
+                required
+                autocomplete="street-address"
+              >
+            </div>
+
+            <div class="dinveda-checkout-form__field">
+              <label for="checkout_address2" class="dinveda-checkout-form__label">
+                {{ 'checkout.shipping.apartment' | default: 'Apartment, suite, etc. (optional)' | t }}
+              </label>
+              <input
+                type="text"
+                id="checkout_address2"
+                name="checkout[shipping_address][address2]"
+                class="dinveda-checkout-form__input"
+                value="{{ customer_address2 }}"
+                autocomplete="address-line2"
+              >
+            </div>
+
+            <div class="dinveda-checkout-form__field-row">
+              <div class="dinveda-checkout-form__field dinveda-checkout-form__field--third">
+                <label for="checkout_city" class="dinveda-checkout-form__label">
+                  {{ 'checkout.shipping.city' | default: 'City' | t }}
+                  <span class="dinveda-checkout-form__required">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="checkout_city"
+                  name="checkout[shipping_address][city]"
+                  class="dinveda-checkout-form__input"
+                  value="{{ customer_city }}"
+                  required
+                  autocomplete="address-level2"
+                >
+              </div>
+              <div class="dinveda-checkout-form__field dinveda-checkout-form__field--third">
+                <label for="checkout_country" class="dinveda-checkout-form__label">
+                  {{ 'checkout.shipping.country' | default: 'Country' | t }}
+                  <span class="dinveda-checkout-form__required">*</span>
+                </label>
+                <select
+                  id="checkout_country"
+                  name="checkout[shipping_address][country]"
+                  class="dinveda-checkout-form__select"
+                  required
+                  autocomplete="country"
+                  data-default="{{ customer_country }}"
+                >
+                  <option value="">{{ 'checkout.shipping.country' | default: 'Country' | t }}</option>
+                  {{ country_option_tags }}
+                </select>
+              </div>
+              <div class="dinveda-checkout-form__field dinveda-checkout-form__field--third">
+                <label for="checkout_zip" class="dinveda-checkout-form__label">
+                  {{ 'checkout.shipping.postal_code' | default: 'Postal code' | t }}
+                  <span class="dinveda-checkout-form__required">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="checkout_zip"
+                  name="checkout[shipping_address][zip]"
+                  class="dinveda-checkout-form__input"
+                  value="{{ customer_zip }}"
+                  required
+                  autocomplete="postal-code"
+                >
+              </div>
+            </div>
+
+            {%- comment -%} Province/State Field (hidden by default, shown by CountryProvinceSelector) {%- endcomment -%}
+            <div id="checkout_province_container" class="dinveda-checkout-form__field" style="display: none;">
+              <label for="checkout_province" class="dinveda-checkout-form__label" id="checkout_province_label">
+                {{ 'checkout.shipping.province' | default: 'Province' | t }}
+              </label>
+              <select
+                id="checkout_province"
+                name="checkout[shipping_address][province]"
+                class="dinveda-checkout-form__select"
+                autocomplete="address-level1"
+              >
+              </select>
+            </div>
+
+            <div class="dinveda-checkout-form__field">
+              <label for="checkout_phone" class="dinveda-checkout-form__label">
+                {{ 'checkout.shipping.phone' | default: 'Phone (optional)' | t }}
+              </label>
+              <input
+                type="tel"
+                id="checkout_phone"
+                name="checkout[shipping_address][phone]"
+                class="dinveda-checkout-form__input"
+                value="{{ customer_phone }}"
+                autocomplete="tel"
+              >
+            </div>
+
+            {% if show_save_info_checkbox and customer %}
+              <div class="dinveda-checkout-form__field dinveda-checkout-form__field--checkbox">
+                <label class="dinveda-checkout-form__checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="checkout[save_address]"
+                    class="dinveda-checkout-form__checkbox"
+                    value="1"
+                    checked
+                  >
+                  <span class="dinveda-checkout-form__checkbox-text">
+                    {{ 'checkout.shipping.save_info' | default: 'Save this information for next time' | t }}
+                  </span>
+                </label>
+              </div>
+            {% endif %}
+          </div>
+
+          {%- comment -%} Form Actions {%- endcomment -%}
+          <div class="dinveda-checkout-form__actions">
+            <a href="{{ routes.cart_url }}" class="dinveda-checkout-form__back-link">
+              {{ 'checkout.actions.return_to_cart' | default: '< Return to Cart' | t }}
+            </a>
+            <button type="submit" class="dinveda-checkout-form__continue-btn">
+              {{ continue_button_label | escape }}
+            </button>
+          </div>
+        </form>
+      </div>
+
+      {%- comment -%} Order Summary Sidebar (Right Column) {%- endcomment -%}
+      {% if cart.item_count > 0 %}
+        <div class="dinveda-checkout-form__summary span-12 lg-span-5 auto">
+          <div class="dinveda-checkout-summary">
+            {%- comment -%} Product List {%- endcomment -%}
+            <div class="dinveda-checkout-summary__products">
+              {% for item in cart.items %}
+                <div class="dinveda-checkout-summary__product">
+                  <div class="dinveda-checkout-summary__product-image">
+                    {% if item.image != blank %}
+                      {{ item.image | image_url: width: 80 | image_tag: alt: item.product.title, loading: 'lazy' }}
+                    {% else %}
+                      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                    {% endif %}
+                  </div>
+                  <div class="dinveda-checkout-summary__product-details">
+                    <h3 class="dinveda-checkout-summary__product-title">{{ item.product.title }}</h3>
+                    {% if item.variant.title != blank and item.variant.title != 'Default Title' %}
+                      <p class="dinveda-checkout-summary__product-variant">{{ item.variant.title }}</p>
+                    {% endif %}
+                    <p class="dinveda-checkout-summary__product-price">{{ item.final_price | money }}</p>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+
+            {%- comment -%} Divider {%- endcomment -%}
+            <div class="dinveda-checkout-summary__divider"></div>
+
+            {%- comment -%} Discount Code {%- endcomment -%}
+            {% if show_discount_code %}
+              <div class="dinveda-checkout-summary__discount">
+                <div class="dinveda-checkout-summary__discount-form">
+                  <input
+                    type="text"
+                    id="checkout_discount_code"
+                    class="dinveda-checkout-summary__discount-input"
+                    placeholder="{{ 'checkout.summary.discount_placeholder' | default: 'Discount code or gift card' | t }}"
+                  >
+                  <button type="button" class="dinveda-checkout-summary__discount-btn" id="apply_discount_btn">
+                    {{ 'checkout.summary.apply' | default: 'APPLY' | t }}
+                  </button>
+                </div>
+                <div id="discount_message" class="dinveda-checkout-summary__discount-message" style="display: none;"></div>
+              </div>
+              <div class="dinveda-checkout-summary__divider"></div>
+            {% endif %}
+
+            {%- comment -%} Order Totals {%- endcomment -%}
+            <div class="dinveda-checkout-summary__totals">
+              <div class="dinveda-checkout-summary__total-row">
+                <span class="dinveda-checkout-summary__total-label">{{ 'checkout.summary.subtotal' | default: 'Subtotal' | t }}</span>
+                <span class="dinveda-checkout-summary__total-value js-cart-subtotal">{{ cart.items_subtotal_price | money }}</span>
+              </div>
+              <div class="dinveda-checkout-summary__total-row">
+                <span class="dinveda-checkout-summary__total-label">{{ 'checkout.summary.shipping' | default: 'Shipping' | t }}</span>
+                <span class="dinveda-checkout-summary__total-value">{{ 'checkout.summary.shipping_calculated' | default: '(Calculated at next step)' | t }}</span>
+              </div>
+              <div class="dinveda-checkout-summary__total-row dinveda-checkout-summary__total-row--final">
+                <span class="dinveda-checkout-summary__total-label">{{ 'checkout.summary.total' | default: 'Total' | t }}</span>
+                <span class="dinveda-checkout-summary__total-value dinveda-checkout-summary__total-value--final">
+                  <span class="js-cart-total">{{ cart.total_price | money }}</span>
+                </span>
+              </div>
+            </div>
+
+            {%- comment -%} Security Badges {%- endcomment -%}
+            {% if show_security_badges %}
+              <div class="dinveda-checkout-summary__security">
+                <div class="dinveda-checkout-summary__security-badge">
+                  <span class="dinveda-checkout-summary__security-icon">🛡️</span>
+                  <span class="dinveda-checkout-summary__security-text">{{ 'checkout.security.secure_payment' | default: 'SECURE PAYMENT' | t }}</span>
+                </div>
+                <div class="dinveda-checkout-summary__security-badge">
+                  <span class="dinveda-checkout-summary__security-icon">🚚</span>
+                  <span class="dinveda-checkout-summary__security-text">{{ 'checkout.security.fast_shipping' | default: 'FAST SHIPPING' | t }}</span>
+                </div>
+                <div class="dinveda-checkout-summary__security-badge">
+                  <span class="dinveda-checkout-summary__security-icon">🌿</span>
+                  <span class="dinveda-checkout-summary__security-text">{{ 'checkout.security.carbon_neutral' | default: 'CARBON NEUTRAL' | t }}</span>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{%- comment -%} Initialize Country/Province Selector {%- endcomment -%}
+<script>
+  (function() {
+    if (typeof Shopify !== 'undefined' && Shopify.CountryProvinceSelector) {
+      new Shopify.CountryProvinceSelector('checkout_country', 'checkout_province', {
+        hideElement: 'checkout_province_container'
+      });
+    }
+  })();
+</script>
+
+{%- comment -%} Load checkout JavaScript {%- endcomment -%}
+<script src="{{ 'dinveda-checkout.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "DinVeda Checkout Form",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_newsletter_checkbox",
+      "label": "Show newsletter checkbox",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_save_info_checkbox",
+      "label": "Show save info checkbox",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "continue_button_label",
+      "label": "Continue button label",
+      "default": "CONTINUE TO SHIPPING"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_discount_code",
+      "label": "Show discount code",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_security_badges",
+      "label": "Show security badges",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "DinVeda Checkout Form"
+    }
+  ]
+}
+{% endschema %}
+

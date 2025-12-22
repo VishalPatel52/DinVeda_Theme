@@ -1,0 +1,36 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "checkout_header": {
+      "type": "dinveda-checkout-header",
+      "settings": {
+        "show_progress": true,
+        "back_to_cart_link": "/cart",
+        "current_step": "information"
+      }
+    },
+    "checkout_form": {
+      "type": "dinveda-checkout-form",
+      "settings": {
+        "show_newsletter_checkbox": true,
+        "show_save_info_checkbox": true,
+        "continue_button_label": "CONTINUE TO SHIPPING",
+        "show_discount_code": true,
+        "show_security_badges": true
+      }
+    }
+  },
+  "order": [
+    "checkout_header",
+    "checkout_form"
+  ]
+}
+

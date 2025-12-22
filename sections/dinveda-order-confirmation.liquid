@@ -1,0 +1,353 @@
+{% comment %}
+  DinVeda Order Confirmation - Premium thank you page after checkout
+  Displays personalized thank you message, order status, and purchased items
+{% endcomment %}
+
+{%- liquid
+  assign hero_image = section.settings.hero_image
+  assign hero_image_url = section.settings.hero_image_url
+  
+  comment
+    For local testing: if no uploaded image but image_url is provided, use that
+  endcomment
+  if hero_image == blank and hero_image_url != blank
+    assign use_url_image = true
+  else
+    assign use_url_image = false
+  endif
+
+  assign order_number_label_template = section.settings.order_number_label | default: 'ORDER #%order_number% CONFIRMED'
+  assign thank_you_message_template = section.settings.thank_you_message | default: 'Thank you, %name%'
+  assign subtitle = section.settings.subtitle
+  assign track_order_label = section.settings.track_order_label | default: 'TRACK ORDER STATUS'
+  assign items_heading = section.settings.items_heading | default: 'Your Ritual Selection'
+  assign items_subtitle = section.settings.items_subtitle | default: 'INCLUDED IN THIS ORDER'
+  assign show_status_cards = section.settings.show_status_cards
+  assign show_next_steps = section.settings.show_next_steps
+
+  comment
+    Get customer name for personalization
+  endcomment
+  assign customer_name = 'there'
+  if order.customer.first_name != blank
+    assign customer_name = order.customer.first_name
+  endif
+
+  comment
+    Format order number (remove # if present, add it back)
+  endcomment
+  assign order_number = order.name
+  if order_number contains '#'
+    assign order_number = order_number | remove: '#'
+  endif
+
+  comment
+    Replace placeholders in labels
+  endcomment
+  assign order_number_label = order_number_label_template | replace: '%order_number%', order_number
+  assign thank_you_message = thank_you_message_template | replace: '%name%', customer_name
+-%}
+
+<section
+  id="dinveda-order-confirmation-{{ section.id }}"
+  class="dinveda-order-confirmation"
+  data-section-id="{{ section.id }}"
+  data-section-type="order-confirmation"
+>
+  {%- comment -%} Order Hero Section {%- endcomment -%}
+  <div class="dinveda-order-confirmation__hero">
+    <div class="dinveda-order-confirmation__hero-wrapper">
+      {% if hero_image != blank or use_url_image %}
+        <div class="dinveda-order-confirmation__hero-background">
+          {% if hero_image != blank %}
+            <picture>
+              <source
+                media="(max-width: 767px)"
+                srcset="{{ hero_image | image_url: width: 800 }} 1x, {{ hero_image | image_url: width: 1600 }} 2x"
+              >
+              <img
+                src="{{ hero_image | image_url: width: 1920 }}"
+                srcset="{{ hero_image | image_url: width: 1920 }} 1x, {{ hero_image | image_url: width: 3840 }} 2x"
+                alt="{{ hero_image.alt | escape }}"
+                class="dinveda-order-confirmation__hero-image"
+                loading="eager"
+                fetchpriority="high"
+                width="{{ hero_image.width }}"
+                height="{{ hero_image.height }}"
+              >
+            </picture>
+          {% elsif use_url_image %}
+            <img
+              src="{{ hero_image_url }}"
+              alt="Order confirmation"
+              class="dinveda-order-confirmation__hero-image"
+              loading="eager"
+              fetchpriority="high"
+            >
+          {% endif %}
+          <div class="dinveda-order-confirmation__hero-overlay"></div>
+        </div>
+      {% endif %}
+
+      <div class="dinveda-order-confirmation__hero-content">
+        <div class="dinveda-order-confirmation__hero-inner">
+          {% if order_number_label != blank %}
+            <p class="dinveda-order-confirmation__order-number">
+              {{ order_number_label | escape }}
+            </p>
+          {% endif %}
+
+          {% if thank_you_message != blank %}
+            <h1 class="dinveda-order-confirmation__thank-you">
+              {{ thank_you_message | escape }}
+            </h1>
+          {% endif %}
+
+          {% if subtitle != blank %}
+            <p class="dinveda-order-confirmation__subtitle">{{ subtitle | escape }}</p>
+          {% endif %}
+
+          {% if track_order_label != blank %}
+            <a
+              href="{{ order.order_status_url }}"
+              class="dinveda-order-confirmation__track-button"
+              target="_blank"
+              rel="noopener"
+            >
+              {{ track_order_label | escape }}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Order Status Cards {%- endcomment -%}
+  {% if show_status_cards and section.blocks.size > 0 %}
+    <div class="dinveda-order-confirmation__status">
+      <div class="dinveda-order-confirmation__status-grid">
+        {% for block in section.blocks %}
+          {% if block.type == 'status_card' %}
+            <div class="dinveda-order-confirmation__status-card" {{ block.shopify_attributes }}>
+              <span class="material-symbols-outlined dinveda-order-confirmation__status-icon">
+                {{ block.settings.icon }}
+              </span>
+              {% if block.settings.title != blank %}
+                <h3 class="dinveda-order-confirmation__status-title">{{ block.settings.title | escape }}</h3>
+              {% endif %}
+              {% if block.settings.description != blank %}
+                <p class="dinveda-order-confirmation__status-description">{{ block.settings.description | escape }}</p>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  {%- comment -%} Order Items Section {%- endcomment -%}
+  {% if order.line_items.size > 0 %}
+    <div class="dinveda-order-confirmation__items">
+      <div class="dinveda-order-confirmation__items-header">
+        {% if items_heading != blank %}
+          <h2 class="dinveda-order-confirmation__items-heading">{{ items_heading | escape }}</h2>
+        {% endif %}
+        {% if items_subtitle != blank %}
+          <p class="dinveda-order-confirmation__items-subtitle">{{ items_subtitle | escape }}</p>
+        {% endif %}
+      </div>
+
+      <div class="dinveda-order-confirmation__items-grid">
+        {% for line_item in order.line_items %}
+          {%- liquid
+            assign short_descriptor = ''
+            assign ritual_usage = line_item.product.metafields.dinveda.ritual_usage
+            if ritual_usage != blank
+              assign desc_stripped = ritual_usage | strip_html
+              assign desc_first_line = desc_stripped | split: '.' | first | split: '!' | first | split: '?' | first
+              if desc_first_line.size > 80
+                assign short_descriptor = desc_first_line | truncate: 80, '...'
+              else
+                assign short_descriptor = desc_first_line
+              endif
+            elsif line_item.product.description != blank
+              assign desc_stripped = line_item.product.description | strip_html
+              assign desc_first_line = desc_stripped | split: '.' | first | split: '!' | first | split: '?' | first
+              if desc_first_line.size > 80
+                assign short_descriptor = desc_first_line | truncate: 80, '...'
+              else
+                assign short_descriptor = desc_first_line
+              endif
+            endif
+          -%}
+          <div class="dinveda-order-confirmation__item-card">
+            <div class="dinveda-order-confirmation__item-image">
+              {% if line_item.image != blank %}
+                <a href="{{ line_item.product.url }}" title="{{ line_item.product.title | escape }}">
+                  {{ line_item.image | image_url: width: 400 | image_tag: loading: 'lazy', alt: line_item.product.title, class: 'dinveda-order-confirmation__item-image-img' }}
+                </a>
+              {% else %}
+                <span class="dinveda-order-confirmation__item-placeholder">
+                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                </span>
+              {% endif %}
+            </div>
+            <div class="dinveda-order-confirmation__item-details">
+              <div class="dinveda-order-confirmation__item-header">
+                <h3 class="dinveda-order-confirmation__item-title">
+                  <a href="{{ line_item.product.url }}">{{ line_item.product.title }}</a>
+                </h3>
+                <span class="dinveda-order-confirmation__item-price">{{ line_item.final_price | money }}</span>
+              </div>
+              <p class="dinveda-order-confirmation__item-quantity">QTY: {{ line_item.quantity }}</p>
+              {% if short_descriptor != blank %}
+                <p class="dinveda-order-confirmation__item-description">{{ short_descriptor }}</p>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "DinVeda Order Confirm",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero Section"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero background image",
+      "info": "Recommended: 1920x800px or similar wide ratio"
+    },
+    {
+      "type": "text",
+      "id": "hero_image_url",
+      "label": "Hero image URL (for local testing)",
+      "info": "Optional: Use a direct image URL for local testing"
+    },
+    {
+      "type": "text",
+      "id": "order_number_label",
+      "label": "Order number label",
+      "default": "ORDER #%order_number% CONFIRMED",
+      "info": "Use %order_number% as placeholder for actual order number"
+    },
+    {
+      "type": "text",
+      "id": "thank_you_message",
+      "label": "Thank you message",
+      "default": "Thank you, %name%",
+      "info": "Use %name% as placeholder for customer name"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Your journey to balance has begun. We have received your order and are preparing your rituals with care."
+    },
+    {
+      "type": "text",
+      "id": "track_order_label",
+      "label": "Track order button label",
+      "default": "TRACK ORDER STATUS"
+    },
+    {
+      "type": "header",
+      "content": "Order Items"
+    },
+    {
+      "type": "text",
+      "id": "items_heading",
+      "label": "Items heading",
+      "default": "Your Ritual Selection"
+    },
+    {
+      "type": "text",
+      "id": "items_subtitle",
+      "label": "Items subtitle",
+      "default": "INCLUDED IN THIS ORDER"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_status_cards",
+      "label": "Show status cards",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_next_steps",
+      "label": "Show next steps section",
+      "default": true,
+      "info": "Note: Next steps section should be added as a separate section in the template"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "status_card",
+      "name": "Status Card",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Material Symbol icon name",
+          "default": "mark_email_read",
+          "info": "Enter Material Symbols icon name (e.g., mark_email_read, package_2, local_shipping)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Confirmation Sent"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Check your inbox for details."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DinVeda Order Confirm",
+      "blocks": [
+        {
+          "type": "status_card",
+          "settings": {
+            "icon": "mark_email_read",
+            "title": "Confirmation Sent",
+            "description": "Check your inbox for details."
+          }
+        },
+        {
+          "type": "status_card",
+          "settings": {
+            "icon": "package_2",
+            "title": "Being Prepared",
+            "description": "Crafted in our German manufactory."
+          }
+        },
+        {
+          "type": "status_card",
+          "settings": {
+            "icon": "local_shipping",
+            "title": "Shipping Soon",
+            "description": "Expected delivery: 2-3 Business Days."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

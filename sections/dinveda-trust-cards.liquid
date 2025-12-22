@@ -16,40 +16,20 @@
           <div class="dinveda-trust-cards__card" {{ block.shopify_attributes }}>
             <div class="dinveda-trust-cards__icon">
               {% case block.settings.icon %}
-                {% when 'leaf' %}
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                {% when 'flask' %}
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 2v6M14 2v6M6 8h12M7 8v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                    <line x1="9" y1="12" x2="15" y2="12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                    <line x1="9" y1="16" x2="15" y2="16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
+                {% when 'leaf' or 'eco' %}
+                  <span class="material-symbols-outlined">eco</span>
+                {% when 'flask' or 'precision_manufacturing' %}
+                  <span class="material-symbols-outlined">precision_manufacturing</span>
+                {% when 'recycle' or 'water_drop' %}
+                  <span class="material-symbols-outlined">water_drop</span>
                 {% when 'lotus' %}
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2v10m0-10C8 2 5 5 5 9c0 5 4 8 7 8s7-3 7-8c0-4-3-7-7-7Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M12 12v10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 22h8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
+                  <span class="material-symbols-outlined">spa</span>
                 {% when 'mortar' %}
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21 12c0 1.66-1.34 3-3 3H6c-1.66 0-3-1.34-3-3s1.34-3 3-3h12c1.66 0 3 1.34 3 3Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M9 6V3h6v3M12 9v12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                    <circle cx="12" cy="3" r="1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                {% when 'recycle' %}
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7 19h10M5 7l2 12h10l2-12M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M3 7h18M7 11l-2-4M17 11l2-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                    <circle cx="12" cy="16" r="1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
+                  <span class="material-symbols-outlined">science</span>
                 {% when 'seedling' %}
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M12 2v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24M2 12h6m6 0h6M5.64 18.36l4.24-4.24m4.24-4.24l4.24-4.24M22 12h-6m-6 0H4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
+                  <span class="material-symbols-outlined">eco</span>
+                {% else %}
+                  <span class="material-symbols-outlined">{{ block.settings.icon }}</span>
               {% endcase %}
             </div>
             {% if block.settings.title != blank %}
@@ -82,12 +62,28 @@
           "label": "Icon",
           "options": [
             {
+              "value": "eco",
+              "label": "Eco (Leaf)"
+            },
+            {
+              "value": "precision_manufacturing",
+              "label": "Precision Manufacturing (Made in Germany)"
+            },
+            {
+              "value": "water_drop",
+              "label": "Water Drop (Small Batches)"
+            },
+            {
               "value": "leaf",
-              "label": "Leaf"
+              "label": "Leaf (Legacy)"
             },
             {
               "value": "flask",
-              "label": "Flask"
+              "label": "Flask (Legacy)"
+            },
+            {
+              "value": "recycle",
+              "label": "Recycle (Legacy)"
             },
             {
               "value": "lotus",
@@ -98,15 +94,11 @@
               "label": "Mortar"
             },
             {
-              "value": "recycle",
-              "label": "Recycle"
-            },
-            {
               "value": "seedling",
               "label": "Seedling"
             }
           ],
-          "default": "leaf"
+          "default": "eco"
         },
         {
           "type": "text",
@@ -130,25 +122,25 @@
         {
           "type": "trust_card",
           "settings": {
-            "icon": "leaf",
-            "title": "BIO-zertifiziert",
-            "text": "Zutaten aus kontrolliert biologischem Anbau – transparent & EU-konform."
+            "icon": "eco",
+            "title": "BIO Certified",
+            "text": "100% organic ingredients"
           }
         },
         {
           "type": "trust_card",
           "settings": {
-            "icon": "flask",
-            "title": "Hergestellt in Deutschland",
-            "text": "Sorgfältig gemischt, geprüft und verpackt – mit Qualitätsfokus."
+            "icon": "precision_manufacturing",
+            "title": "Made in Germany",
+            "text": "Crafted with precision"
           }
         },
         {
           "type": "trust_card",
           "settings": {
-            "icon": "mortar",
-            "title": "Kleine Chargen",
-            "text": "Handwerklich gemischt für Frische, Aroma und gleichbleibende Qualität."
+            "icon": "water_drop",
+            "title": "Small Batches",
+            "text": "Maximum freshness"
           }
         }
       ]

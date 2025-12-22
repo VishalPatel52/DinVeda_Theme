@@ -1,0 +1,548 @@
+/**
+ * DinVeda Premium Checkout Page Styles
+ * Scoped to page.checkout template
+ */
+
+/* Checkout Header */
+.dinveda-checkout-header {
+  background-color: var(--design-bg-color, #FFF0DD);
+  border-bottom: 1px solid rgba(234, 221, 207, 0.5);
+  padding: 1.5rem 0;
+}
+
+.dinveda-checkout-header__wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--design-section-spacing-medium, 40px);
+}
+
+.dinveda-checkout-header__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.dinveda-checkout-header__left {
+  flex: 1;
+}
+
+.dinveda-checkout-header__logo {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.dinveda-checkout-header__logo-img {
+  max-height: 40px;
+  width: auto;
+}
+
+.dinveda-checkout-header__logo-text {
+  font-family: var(--heading-family);
+  font-size: 1.5rem;
+  font-weight: var(--heading-weight);
+  color: var(--design-text-color, #5a4533);
+}
+
+.dinveda-checkout-header__center {
+  flex: 1;
+  text-align: center;
+}
+
+.dinveda-checkout-header__title {
+  font-family: var(--heading-family);
+  font-size: var(--design-h1-size, 2rem);
+  font-weight: var(--heading-weight);
+  color: var(--design-text-color, #5a4533);
+  margin: 0;
+}
+
+.dinveda-checkout-header__right {
+  flex: 1;
+  text-align: right;
+}
+
+.dinveda-checkout-header__back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--design-text-color, #5a4533);
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.dinveda-checkout-header__back-link:hover {
+  opacity: 1;
+}
+
+.dinveda-checkout-header__back-icon {
+  font-size: 1rem;
+}
+
+/* Progress Indicator */
+.dinveda-checkout-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--design-text-color, #5a4533);
+}
+
+.dinveda-checkout-progress__step {
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.dinveda-checkout-progress__step--active {
+  opacity: 1;
+  font-weight: 600;
+}
+
+.dinveda-checkout-progress__separator {
+  opacity: 0.3;
+}
+
+/* Checkout Form Section */
+.dinveda-checkout-form {
+  padding: var(--design-section-spacing-large, 60px) 0;
+  background-color: var(--design-bg-color, #FFF0DD);
+  min-height: 60vh;
+}
+
+.dinveda-checkout-form__wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--design-section-spacing-medium, 40px);
+}
+
+.dinveda-checkout-form__main {
+  margin-bottom: 2rem;
+}
+
+.dinveda-checkout-form__section {
+  background-color: #ffffff;
+  border: 1px solid rgba(234, 221, 207, 0.8);
+  border-radius: 0.75rem;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.dinveda-checkout-form__section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.dinveda-checkout-form__section-title {
+  font-family: var(--heading-family);
+  font-size: var(--design-h2-size, 1.25rem);
+  font-weight: var(--heading-weight);
+  color: var(--design-text-color, #5a4533);
+  margin: 0;
+}
+
+.dinveda-checkout-form__login-link {
+  font-size: 0.875rem;
+  color: var(--design-text-color, #5a4533);
+  text-decoration: underline;
+  opacity: 0.7;
+}
+
+.dinveda-checkout-form__login-link:hover {
+  opacity: 1;
+}
+
+.dinveda-checkout-form__field {
+  margin-bottom: 1.25rem;
+}
+
+.dinveda-checkout-form__field--half {
+  flex: 1;
+}
+
+.dinveda-checkout-form__field--third {
+  flex: 1;
+}
+
+.dinveda-checkout-form__field-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.dinveda-checkout-form__field--checkbox {
+  margin-top: 0.5rem;
+}
+
+.dinveda-checkout-form__label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--design-text-color, #5a4533);
+  margin-bottom: 0.5rem;
+}
+
+.dinveda-checkout-form__required {
+  color: #d32f2f;
+  margin-left: 0.25rem;
+}
+
+.dinveda-checkout-form__input,
+.dinveda-checkout-form__select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(234, 221, 207, 0.8);
+  border-radius: 0.5rem;
+  background-color: #ffffff;
+  font-family: var(--main-family);
+  font-size: var(--design-body-font-size);
+  color: var(--design-text-color, #5a4533);
+  transition: border-color 0.2s;
+}
+
+.dinveda-checkout-form__input:focus,
+.dinveda-checkout-form__select:focus {
+  outline: none;
+  border-color: var(--design-accent-color, #b3814a);
+}
+
+.dinveda-checkout-form__input::placeholder {
+  color: var(--design-text-color, #5a4533);
+  opacity: 0.5;
+}
+
+.dinveda-checkout-form__checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+
+.dinveda-checkout-form__checkbox {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.125rem;
+  cursor: pointer;
+  accent-color: var(--design-accent-color, #b3814a);
+}
+
+.dinveda-checkout-form__checkbox-text {
+  font-size: 0.875rem;
+  color: var(--design-text-color, #5a4533);
+  line-height: 1.5;
+}
+
+/* Form Actions */
+.dinveda-checkout-form__actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(234, 221, 207, 0.5);
+}
+
+.dinveda-checkout-form__back-link {
+  font-size: 0.875rem;
+  color: var(--design-text-color, #5a4533);
+  text-decoration: underline;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.dinveda-checkout-form__back-link:hover {
+  opacity: 1;
+}
+
+.dinveda-checkout-form__continue-btn {
+  padding: 1rem 2rem;
+  background-color: var(--design-accent-color, #b3814a);
+  color: #ffffff;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.dinveda-checkout-form__continue-btn:hover {
+  background-color: var(--design-primary-dark, #966b3d);
+}
+
+/* Order Summary Sidebar */
+.dinveda-checkout-form__summary {
+  position: sticky;
+  top: 7rem;
+  align-self: flex-start;
+}
+
+.dinveda-checkout-summary {
+  background-color: #f8f1e9;
+  border: 1px solid rgba(234, 221, 207, 0.8);
+  border-radius: 0.75rem;
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.dinveda-checkout-summary__products {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.dinveda-checkout-summary__product {
+  display: flex;
+  gap: 1rem;
+}
+
+.dinveda-checkout-summary__product-image {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background-color: var(--design-bg-color, #fbf4e8);
+}
+
+.dinveda-checkout-summary__product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dinveda-checkout-summary__product-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.dinveda-checkout-summary__product-title {
+  font-family: var(--heading-family);
+  font-size: 1rem;
+  font-weight: var(--heading-weight);
+  color: var(--design-accent-color, #b3814a);
+  margin: 0;
+}
+
+.dinveda-checkout-summary__product-variant {
+  font-size: 0.875rem;
+  color: var(--design-text-color, #5a4533);
+  opacity: 0.7;
+  margin: 0;
+  font-style: italic;
+}
+
+.dinveda-checkout-summary__product-price {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--design-text-color, #5a4533);
+  margin: 0;
+  margin-top: auto;
+}
+
+.dinveda-checkout-summary__divider {
+  height: 1px;
+  background-color: rgba(90, 69, 51, 0.1);
+  margin: 1.5rem 0;
+}
+
+/* Discount Code */
+.dinveda-checkout-summary__discount {
+  margin-bottom: 1.5rem;
+}
+
+.dinveda-checkout-summary__discount-form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.dinveda-checkout-summary__discount-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(234, 221, 207, 0.8);
+  border-radius: 0.5rem;
+  background-color: #ffffff;
+  font-family: var(--main-family);
+  font-size: 0.875rem;
+  color: var(--design-text-color, #5a4533);
+}
+
+.dinveda-checkout-summary__discount-input:focus {
+  outline: none;
+  border-color: var(--design-accent-color, #b3814a);
+}
+
+.dinveda-checkout-summary__discount-btn {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--design-text-color, #5a4533);
+  color: #ffffff;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.dinveda-checkout-summary__discount-btn:hover {
+  background-color: var(--design-accent-color, #b3814a);
+}
+
+.dinveda-checkout-summary__discount-message {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.dinveda-checkout-summary__discount-message--success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.dinveda-checkout-summary__discount-message--error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Order Totals */
+.dinveda-checkout-summary__totals {
+  margin-bottom: 1.5rem;
+}
+
+.dinveda-checkout-summary__total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+  color: var(--design-text-color, #5a4533);
+  margin-bottom: 0.75rem;
+}
+
+.dinveda-checkout-summary__total-row--final {
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding-top: 0.75rem;
+  margin-top: 0.75rem;
+  border-top: 1px solid rgba(90, 69, 51, 0.1);
+  margin-bottom: 0;
+}
+
+.dinveda-checkout-summary__total-label {
+  font-weight: 500;
+}
+
+.dinveda-checkout-summary__total-value {
+  font-weight: 500;
+}
+
+.dinveda-checkout-summary__total-value--final {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--design-text-color, #5a4533);
+}
+
+/* Security Badges */
+.dinveda-checkout-summary__security {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(90, 69, 51, 0.1);
+}
+
+.dinveda-checkout-summary__security-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--design-text-color, #5a4533);
+  opacity: 0.7;
+}
+
+.dinveda-checkout-summary__security-icon {
+  font-size: 1rem;
+}
+
+.dinveda-checkout-summary__security-text {
+  flex: 1;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 1023px) {
+  .dinveda-checkout-form__summary {
+    position: static;
+    margin-top: 2rem;
+  }
+
+  .dinveda-checkout-header__top {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .dinveda-checkout-header__left,
+  .dinveda-checkout-header__center,
+  .dinveda-checkout-header__right {
+    flex: none;
+    width: 100%;
+  }
+
+  .dinveda-checkout-header__right {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .dinveda-checkout-form__section {
+    padding: 1.5rem;
+  }
+
+  .dinveda-checkout-form__field-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .dinveda-checkout-form__field--half,
+  .dinveda-checkout-form__field--third {
+    width: 100%;
+  }
+
+  .dinveda-checkout-form__actions {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .dinveda-checkout-form__continue-btn {
+    width: 100%;
+  }
+
+  .dinveda-checkout-summary {
+    padding: 1.5rem;
+  }
+
+  .dinveda-checkout-summary__discount-form {
+    flex-direction: column;
+  }
+
+  .dinveda-checkout-summary__discount-btn {
+    width: 100%;
+  }
+}
+

@@ -1,0 +1,204 @@
+{% comment %}
+  DinVeda Recipe Preparation - "Anwendung & Zubereitung"
+  Recipe cards in grid layout with multiple recipe blocks
+{% endcomment %}
+
+{%- liquid
+  assign is_design_mode = request.design_mode
+  assign has_recipe_blocks = false
+  if section.blocks.size > 0
+    for block in section.blocks
+      if block.type == 'recipe_card'
+        assign has_recipe_blocks = true
+        break
+      endif
+    endfor
+  endif
+
+  # Auto-generate intro text from product metafields (only if product exists)
+  assign intro_text = section.settings.intro_text
+  if intro_text == blank and product != blank
+    assign tier_name = product.metafields.dinveda.tier_name | default: product.metafields.dinveda.animal_name
+    assign product_name = product.title
+    if tier_name != blank and product_name != blank
+      assign intro_text = 'So verwendet der ' | append: tier_name | append: ' ' | append: product_name | append: ' in seinem Alltag:'
+    endif
+  endif
+  
+  if has_recipe_blocks or section.settings.show_when_empty or is_design_mode
+    assign should_show = true
+  else
+    assign should_show = false
+  endif
+-%}
+
+{% if should_show %}
+  <section
+    id="dinveda-recipe-preparation-{{ section.id }}"
+    class="dinveda-recipe-preparation"
+    data-section-id="{{ section.id }}"
+    data-section-type="dinveda-recipe-preparation"
+    data-cards-per-row="{{ section.settings.cards_per_row }}"
+    style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+    {{ section.shopify_attributes }}
+  >
+    <div class="dinveda-recipe-preparation__container">
+      <div class="dinveda-recipe-preparation__header">
+        <span class="material-symbols-outlined dinveda-recipe-preparation__icon">{{ section.settings.icon | default: 'restaurant' }}</span>
+        <h2 class="dinveda-recipe-preparation__title">
+          {{ section.settings.heading | default: 'Anwendung & Zubereitung' | escape }}
+        </h2>
+      </div>
+
+      {% if intro_text != blank %}
+        <p class="dinveda-recipe-preparation__intro">
+          {{ intro_text | escape }}
+        </p>
+      {% endif %}
+
+      {% if has_recipe_blocks %}
+        <div class="dinveda-recipe-preparation__grid">
+          {% for block in section.blocks %}
+            {% if block.type == 'recipe_card' %}
+              <div class="dinveda-recipe-preparation__card" {{ block.shopify_attributes }}>
+                {% if block.settings.title != blank %}
+                  <h3 class="dinveda-recipe-preparation__card-title">{{ block.settings.title | escape }}</h3>
+                {% endif %}
+                {% if block.settings.body != blank %}
+                  <div class="dinveda-recipe-preparation__card-body">
+                    {{ block.settings.body }}
+                  </div>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="dinveda-recipe-preparation__empty-state">
+          <p class="dinveda-recipe-preparation__empty-message">
+            Click "Add block" to add recipe cards. Each card should include a recipe title and instructions.
+          </p>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Anwendung & Zubereitung",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "info": "Leave blank to use default 'Anwendung & Zubereitung'"
+    },
+    {
+      "type": "select",
+      "id": "icon",
+      "label": "Icon",
+      "options": [
+        { "value": "restaurant", "label": "Restaurant" },
+        { "value": "dining", "label": "Dining" },
+        { "value": "local_dining", "label": "Local Dining" },
+        { "value": "self_improvement", "label": "Self Improvement" }
+      ],
+      "default": "restaurant"
+    },
+    {
+      "type": "text",
+      "id": "intro_text",
+      "label": "Intro Text",
+      "info": "Optional intro text. Leave blank to auto-generate from product metafields (e.g., 'So verwendet der Schmetterling Ova Harmony in seinem Alltag:')"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_when_empty",
+      "label": "Show section even if no blocks are added",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "cards_per_row",
+      "label": "Cards per row (desktop)",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "recipe_card",
+      "name": "Recipe Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Recipe Title",
+          "info": "Recipe title (e.g., 'Sanfter Tee- oder Drink-Moment')"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Recipe Instructions",
+          "info": "Recipe instructions (e.g., '1 TL (~3 g) in 200 ml warme Pflanzenmilch...')"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Anwendung & Zubereitung",
+      "blocks": [
+        {
+          "type": "recipe_card",
+          "settings": {
+            "title": "Sanfter Tee- oder Drink-Moment",
+            "body": "<p>1 TL (~3 g) in 200 ml warme Pflanzenmilch oder warmes Wasser einrühren. Optional mit etwas Honig oder Agavendicksaft süßen.</p>"
+          }
+        },
+        {
+          "type": "recipe_card",
+          "settings": {
+            "title": "Als Smoothie oder Shake",
+            "body": "<p>1 TL (~3 g) mit 200 ml pflanzlicher Milch, einer Banane und optional etwas Datteln oder Ahornsirup in den Mixer geben und cremig mixen.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

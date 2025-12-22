@@ -1,0 +1,158 @@
+{% comment %}
+  DinVeda Traditional Ingredients - "Zutaten & Traditioneller Hintergrund"
+  List format: ingredient name (bold) – description (regular)
+{% endcomment %}
+
+{%- liquid
+  assign is_design_mode = request.design_mode
+  assign has_ingredient_blocks = false
+  if section.blocks.size > 0
+    for block in section.blocks
+      if block.type == 'ingredient_item'
+        assign has_ingredient_blocks = true
+        break
+      endif
+    endfor
+  endif
+  if has_ingredient_blocks or section.settings.show_when_empty or is_design_mode
+    assign should_show = true
+  else
+    assign should_show = false
+  endif
+-%}
+
+{% if should_show %}
+  <section
+    id="dinveda-traditional-ingredients-{{ section.id }}"
+    class="dinveda-traditional-ingredients"
+    data-section-id="{{ section.id }}"
+    data-section-type="dinveda-traditional-ingredients"
+    style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+    {{ section.shopify_attributes }}
+  >
+    <div class="dinveda-traditional-ingredients__container">
+      <div class="dinveda-traditional-ingredients__header">
+        <span class="material-symbols-outlined dinveda-traditional-ingredients__icon">{{ section.settings.icon | default: 'grain' }}</span>
+        <h2 class="dinveda-traditional-ingredients__title">
+          {{ section.settings.heading | default: 'Zutaten & Traditioneller Hintergrund' | escape }}
+        </h2>
+      </div>
+
+      {% if has_ingredient_blocks %}
+        <ul class="dinveda-traditional-ingredients__list">
+          {% for block in section.blocks %}
+            {% if block.type == 'ingredient_item' %}
+              <li class="dinveda-traditional-ingredients__item" {{ block.shopify_attributes }}>
+                <strong class="dinveda-traditional-ingredients__name">{{ block.settings.ingredient_name | escape }}</strong>
+                <span class="dinveda-traditional-ingredients__separator"> – </span>
+                <span class="dinveda-traditional-ingredients__description">{{ block.settings.description | escape }}</span>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      {% else %}
+        <div class="dinveda-traditional-ingredients__empty-state">
+          <p class="dinveda-traditional-ingredients__empty-message">
+            Click "Add block" to add ingredients to this section. Each ingredient should include a name and description.
+          </p>
+        </div>
+      {% endif %}
+
+      {% if section.settings.footnote != blank %}
+        <p class="dinveda-traditional-ingredients__footnote">
+          {{ section.settings.footnote | escape }}
+        </p>
+      {% endif %}
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Traditional Ingredients",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "info": "Leave blank to use default 'Zutaten & Traditioneller Hintergrund'"
+    },
+    {
+      "type": "select",
+      "id": "icon",
+      "label": "Icon",
+      "options": [
+        { "value": "grain", "label": "Grain" },
+        { "value": "eco", "label": "Eco (Leaf)" },
+        { "value": "spa", "label": "Spa" },
+        { "value": "local_florist", "label": "Local Florist" }
+      ],
+      "default": "grain"
+    },
+    {
+      "type": "text",
+      "id": "footnote",
+      "label": "Footnote",
+      "info": "Optional footnote text (e.g., 'ALLE ZUTATEN SIND 100% BIO – AUS KONTROLLIERT BIOLOGISCHEM ANBAU.')"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_when_empty",
+      "label": "Show section even if no blocks are added",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient_item",
+      "name": "Ingredient",
+      "settings": [
+        {
+          "type": "text",
+          "id": "ingredient_name",
+          "label": "Ingredient Name",
+          "info": "Ingredient name (e.g., 'Shatavari')"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "info": "Ingredient description (e.g., 'eine klassische ayurvedische Wurzel...')"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Zutaten & Traditioneller Hintergrund"
+    }
+  ]
+}
+{% endschema %}
+

@@ -13,6 +13,7 @@
       "type": "dinveda-hero",
       "settings": {
         "image": "",
+        "image_url": "https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?w=1920&q=80",
         "overlay_opacity": 70,
         "min_height_desktop": 600,
         "min_height_mobile": 520,
@@ -54,15 +55,11 @@
         "trust_card_1",
         "trust_card_2",
         "trust_card_3"
-      ]
+      ],
+      "settings": {}
     },
     "dinveda_ritual_picker": {
       "type": "dinveda-ritual-picker",
-      "settings": {
-        "title": "Dein Tag in Balance",
-        "subtitle": "Ayurvedische Rituale für jeden Moment deines Tages",
-        "background_mode": "design_bg"
-      },
       "blocks": {
         "ritual_morgen": {
           "type": "ritual_card",
@@ -122,7 +119,12 @@
         "ritual_tag",
         "ritual_nachmittag",
         "ritual_abend"
-      ]
+      ],
+      "settings": {
+        "title": "Dein Tag in Balance",
+        "subtitle": "Ayurvedische Rituale für jeden Moment deines Tages",
+        "background_mode": "design_bg"
+      }
     },
     "dinveda_split_story": {
       "type": "dinveda-split-story",

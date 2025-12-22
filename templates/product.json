@@ -9,6 +9,45 @@
  */
 {
   "sections": {
+    "dinveda_product_hero": {
+      "type": "dinveda-product-hero",
+      "settings": {
+        "show_breadcrumbs": true,
+        "show_thumbnails": false,
+        "show_quote_card": true,
+        "show_intro": true,
+        "show_badges": true,
+        "show_organic_label": true,
+        "show_vegan_label": true,
+        "show_social_share": false
+      }
+    },
+    "dinveda_ritual_story": {
+      "type": "dinveda-ritual-story",
+      "settings": {}
+    },
+    "dinveda_traditional_ingredients": {
+      "type": "dinveda-traditional-ingredients",
+      "settings": {
+        "show_when_empty": true
+      }
+    },
+    "dinveda_product_ingredients": {
+      "type": "dinveda-product-ingredients",
+      "settings": {
+        "show_when_empty": true
+      }
+    },
+    "dinveda_recipe_preparation": {
+      "type": "dinveda-recipe-preparation",
+      "settings": {
+        "show_when_empty": true
+      }
+    },
+    "dinveda_complete_your_day": {
+      "type": "dinveda-complete-your-day",
+      "settings": {}
+    },
     "main": {
       "type": "main-product",
       "blocks": {
@@ -235,6 +274,12 @@
     }
   },
   "order": [
+    "dinveda_product_hero",
+    "dinveda_ritual_story",
+    "dinveda_traditional_ingredients",
+    "dinveda_product_ingredients",
+    "dinveda_recipe_preparation",
+    "dinveda_complete_your_day",
     "main",
     "d63d8d65-4a6d-4b72-81e5-cdc6c9e33323",
     "product-details",

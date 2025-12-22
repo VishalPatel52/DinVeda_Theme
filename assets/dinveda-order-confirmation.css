@@ -1,0 +1,422 @@
+/**
+ * DinVeda Order Confirmation Premium Styling
+ * Premium thank you page styling matching DinVeda design system
+ */
+
+/* Order Confirmation Hero Section */
+.dinveda-order-confirmation__hero {
+  position: relative;
+  width: 100%;
+  min-height: 400px;
+  margin-bottom: 0;
+  overflow: hidden;
+}
+
+.dinveda-order-confirmation__hero-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.dinveda-order-confirmation__hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.dinveda-order-confirmation__hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.dinveda-order-confirmation__hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(28, 24, 21, 0.6));
+  z-index: 2;
+}
+
+.dinveda-order-confirmation__hero-content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 1200px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.dinveda-order-confirmation__hero-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+.dinveda-order-confirmation__order-number {
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #eaddcf;
+  border-bottom: 1px solid rgba(234, 221, 207, 0.5);
+  padding-bottom: 0.5rem;
+  margin-bottom: 0;
+}
+
+.dinveda-order-confirmation__thank-you {
+  font-family: var(--heading-family, 'Work Sans', sans-serif);
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.033em;
+  color: #fbf4e8;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  margin: 0;
+}
+
+.dinveda-order-confirmation__subtitle {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: #eaddcf;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  margin: 0;
+}
+
+.dinveda-order-confirmation__track-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 160px;
+  height: 3rem;
+  padding: 0 2rem;
+  margin-top: 1rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(0.5rem);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 9999px;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dinveda-order-confirmation__track-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Order Status Cards */
+.dinveda-order-confirmation__status {
+  width: 100%;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+}
+
+.dinveda-order-confirmation__status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.dinveda-order-confirmation__status-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem;
+  background-color: var(--design-secondary-bg, #fefaf6);
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--design-border-color, #ede2d6);
+  gap: 1rem;
+}
+
+.dinveda-order-confirmation__status-icon {
+  font-size: 3rem;
+  color: var(--design-accent-color, #b3814a);
+  margin-bottom: 0;
+}
+
+.dinveda-order-confirmation__status-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--design-text-color, #5a4533);
+  margin: 0;
+}
+
+.dinveda-order-confirmation__status-description {
+  font-size: 0.875rem;
+  color: rgba(var(--design-text-color-rgb, 90, 69, 51), 0.7);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Order Items Section */
+.dinveda-order-confirmation__items {
+  width: 100%;
+  max-width: 1200px;
+  margin: 2.5rem auto;
+  padding: 0 2rem;
+}
+
+.dinveda-order-confirmation__items-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.dinveda-order-confirmation__items-heading {
+  font-family: var(--heading-family, 'Work Sans', sans-serif);
+  font-size: 2.25rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--design-text-color, #5a4533);
+  margin: 0 0 0.5rem;
+}
+
+.dinveda-order-confirmation__items-subtitle {
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--design-accent-color, #b3814a);
+  margin: 0;
+}
+
+.dinveda-order-confirmation__items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.dinveda-order-confirmation__item-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--design-secondary-bg, #fefaf6);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--design-border-color, #f3e9dc);
+  height: 100%;
+}
+
+.dinveda-order-confirmation__item-image {
+  width: 100%;
+  aspect-ratio: 1;
+  background-color: var(--design-bg-color, #fbf4e8);
+  border-radius: 0.75rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.dinveda-order-confirmation__item-image-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dinveda-order-confirmation__item-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dinveda-order-confirmation__item-details {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 0.25rem;
+}
+
+.dinveda-order-confirmation__item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.dinveda-order-confirmation__item-title {
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--design-accent-color, #b3814a);
+  margin: 0;
+  flex: 1;
+}
+
+.dinveda-order-confirmation__item-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.dinveda-order-confirmation__item-title a:hover {
+  opacity: 0.7;
+}
+
+.dinveda-order-confirmation__item-price {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--design-text-color, #5a4533);
+  margin-left: 0.5rem;
+}
+
+.dinveda-order-confirmation__item-quantity {
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(var(--design-text-color-rgb, 90, 69, 51), 0.6);
+  margin: 0 0 0.5rem;
+}
+
+.dinveda-order-confirmation__item-description {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--design-text-color, #5a4533);
+  margin: 0;
+  flex-grow: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 991px) {
+  .dinveda-order-confirmation__hero {
+    min-height: 350px;
+  }
+
+  .dinveda-order-confirmation__hero-wrapper {
+    min-height: 350px;
+  }
+
+  .dinveda-order-confirmation__thank-you {
+    font-size: 2.5rem;
+  }
+
+  .dinveda-order-confirmation__subtitle {
+    font-size: 1rem;
+  }
+
+  .dinveda-order-confirmation__status-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .dinveda-order-confirmation__status-card {
+    flex-direction: row;
+    text-align: left;
+    gap: 1rem;
+  }
+
+  .dinveda-order-confirmation__status-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0;
+  }
+
+  .dinveda-order-confirmation__items-heading {
+    font-size: 1.875rem;
+  }
+
+  .dinveda-order-confirmation__items-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .dinveda-order-confirmation__hero {
+    min-height: 300px;
+  }
+
+  .dinveda-order-confirmation__hero-wrapper {
+    min-height: 300px;
+  }
+
+  .dinveda-order-confirmation__hero-content {
+    padding: 1.5rem;
+  }
+
+  .dinveda-order-confirmation__thank-you {
+    font-size: 2rem;
+  }
+
+  .dinveda-order-confirmation__subtitle {
+    font-size: 0.9375rem;
+  }
+
+  .dinveda-order-confirmation__status {
+    padding: 0 1rem;
+  }
+
+  .dinveda-order-confirmation__items {
+    padding: 0 1rem;
+  }
+
+  .dinveda-order-confirmation__items-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Dark mode support (if theme supports it) */
+@media (prefers-color-scheme: dark) {
+  .dinveda-order-confirmation__status-card {
+    background-color: #241f1b;
+    border-color: #3a322c;
+  }
+
+  .dinveda-order-confirmation__status-title {
+    color: #e0d6cc;
+  }
+
+  .dinveda-order-confirmation__status-description {
+    color: rgba(224, 214, 204, 0.7);
+  }
+
+  .dinveda-order-confirmation__items-heading {
+    color: #e0d6cc;
+  }
+
+  .dinveda-order-confirmation__item-card {
+    background-color: #241f1b;
+    border-color: #3a322c;
+  }
+
+  .dinveda-order-confirmation__item-image {
+    background-color: #2a2420;
+  }
+
+  .dinveda-order-confirmation__item-price {
+    color: #e0d6cc;
+  }
+
+  .dinveda-order-confirmation__item-description {
+    color: #e0d6cc;
+  }
+}
+

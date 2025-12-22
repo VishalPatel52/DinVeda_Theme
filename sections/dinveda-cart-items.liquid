@@ -1,0 +1,347 @@
+{% comment %} DinVeda Premium Cart Items Section {% endcomment %}
+{% comment %} Cart Page Assets {% endcomment %}
+<link
+  rel="preload"
+  href="{{ 'section-main-cart.css' | asset_url }}"
+  as="style"
+  onload="this.onload=null;this.rel='stylesheet'"
+>
+<noscript><link rel="stylesheet" href="{{ 'section-main-cart.css' | asset_url }}"></noscript>
+
+{%- liquid
+  assign show_ritual_timing = section.settings.show_ritual_timing
+  if show_ritual_timing == blank
+    assign show_ritual_timing = true
+  endif
+
+  assign ritual_timing_fallback_tag = section.settings.ritual_timing_fallback_tag
+  if ritual_timing_fallback_tag == blank
+    assign ritual_timing_fallback_tag = true
+  endif
+
+  assign show_variant_title = section.settings.show_variant_title
+  if show_variant_title == blank
+    assign show_variant_title = true
+  endif
+
+  assign checkout_button_label = section.settings.checkout_button_label
+  if checkout_button_label == blank
+    assign checkout_button_label = 'ZUR KASSE'
+  endif
+
+  assign show_security_badges = section.settings.show_security_badges
+  if show_security_badges == blank
+    assign show_security_badges = true
+  endif
+
+  assign show_shipping = section.settings.show_shipping
+  assign show_tax_note = section.settings.show_tax_note
+-%}
+
+<section
+  class="dinveda-cart-items dinveda-cart-items-{{ section.id }} cart-page ajax-cart__page-wrapper pt8 mb8"
+  data-section-id="{{ section.id }}"
+  data-section-type="cart-template"
+  data-section-loaded="false"
+>
+  <div class="loading-wrapper js-mini-cart-loader no-js-hidden">
+    <div class="loading-ripple"><div></div><div></div></div>
+  </div>
+
+  <div class="dinveda-cart-items__wrapper">
+    <div class="grid__wrapper">
+      <div class="dinveda-cart-items__main span-12 lg-span-8 auto">
+        <div class="dinveda-cart-items__header">
+          <h2 class="dinveda-cart-items__title">{{ 'cart.general.title' | t }} <span class="dinveda-cart-items__count">(<span class="js-cart-count">{{ cart.item_count }}</span> {{ 'cart.general.items' | t }})</span></h2>
+          <span class="dinveda-cart-items__label">{{ section.settings.cart_label | default: 'YOUR RITUALS' }}</span>
+        </div>
+
+        <div class="ajax-cart__form-wrapper--nojs js-ajax-cart-content-nojs">
+          {% render "cart-no-js", cart: cart %}
+        </div>
+
+        <div class="ajax-cart__form-wrapper cart-wrapper js-ajax-cart-content">
+          {% if cart.item_count > 0 %}
+            <form class="dinveda-cart-items__form js-cart-form"
+                  action="{{ routes.cart_url }}"
+                  method="post">
+              <div class="dinveda-cart-items__list">
+                {% for item in cart.items %}
+                  <div class="dinveda-cart-item" data-item-id="{{ item.id }}-{{ forloop.index }}" data-item-key="{{ item.key }}">
+                    <div class="dinveda-cart-item__card">
+                      {%- comment -%} Product Image {%- endcomment -%}
+                      <div class="dinveda-cart-item__image">
+                        <a href="{{ item.url }}" title="{{ item.product.title | escape }}">
+                          {% if item.image != blank %}
+                            {% liquid
+                              if forloop.index > 3
+                                assign loading = 'lazy'
+                              else
+                                assign loading = 'eager'
+                              endif
+                            %}
+                            {{ item.image | image_url: width: 200 | image_tag: loading: loading, alt: item.product.title, class: 'dinveda-cart-item__image-img' }}
+                          {% else %}
+                            <span class="dinveda-cart-item__placeholder">{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}</span>
+                          {% endif %}
+                        </a>
+                      </div>
+
+                      {%- comment -%} Product Details {%- endcomment -%}
+                      <div class="dinveda-cart-item__details">
+                        {%- comment -%} Ritual Timing Label {%- endcomment -%}
+                        {% if show_ritual_timing %}
+                          {%- liquid
+                            assign ritual_timing_label = item.product.metafields.dinveda.ritual_timing.value
+                            if ritual_timing_label == blank and ritual_timing_fallback_tag
+                              if item.product.tags contains 'Morgen'
+                                assign ritual_timing_label = 'MORGEN | AKTIVIEREN'
+                              elsif item.product.tags contains 'Tag'
+                                assign ritual_timing_label = 'TAG | ZENTRIEREN'
+                              elsif item.product.tags contains 'Abend'
+                                assign ritual_timing_label = 'ABEND | LOSLASSEN'
+                              elsif item.product.tags contains 'Balance'
+                                assign ritual_timing_label = 'BALANCE | AUSGLEICHEN'
+                              endif
+                            endif
+                          -%}
+                          {% if ritual_timing_label != blank %}
+                            <div class="dinveda-cart-item__ritual-timing">{{ ritual_timing_label | escape }}</div>
+                          {% endif %}
+                        {% endif %}
+
+                        {%- comment -%} Product Title {%- endcomment -%}
+                        <h3 class="dinveda-cart-item__title">
+                          <a href="{{ item.url }}">{{ item.product.title }}</a>
+                        </h3>
+
+                        {%- comment -%} Variant Title {%- endcomment -%}
+                        {% if show_variant_title and item.variant.title != blank and item.variant.title != 'Default Title' %}
+                          <p class="dinveda-cart-item__variant">{{ item.variant.title }}</p>
+                        {% endif %}
+
+                        {%- comment -%} Remove Button {%- endcomment -%}
+                        <button class="dinveda-cart-item__remove js-cart-remove" 
+                                data-item-id="{{ item.id }}-{{ forloop.index }}" 
+                                data-item-key="{{ item.key }}" 
+                                data-line-item="{{ forloop.index }}"
+                                type="button">
+                          {{ 'cart.general.remove' | t }}
+                        </button>
+                      </div>
+
+                      {%- comment -%} Quantity and Price {%- endcomment -%}
+                      <div class="dinveda-cart-item__actions">
+                        {%- comment -%} Quantity Selector {%- endcomment -%}
+                        <div class="dinveda-cart-item__quantity js-item-quantity">
+                          <button
+                            data-ajax-qty-decrease="{{ item.id }}-{{ forloop.index }}"
+                            data-item-key="{{ item.key }}"
+                            class="dinveda-cart-item__qty-btn dinveda-cart-item__qty-btn--decrease"
+                            type="button"
+                            aria-label="{{ 'cart.general.decrease' | t: product: item.title | escape }}">
+                            <span class="visually-hidden">{{ 'cart.general.decrease' | t: product: item.title | escape }}</span>
+                            <span class="dinveda-cart-item__qty-icon">−</span>
+                          </button>
+                          <input id="updates_{{ item.id }}-{{ forloop.index }}" 
+                                 class="dinveda-cart-item__qty-input"
+                                 data-item-qty
+                                 data-item-id="{{ item.id }}-{{ forloop.index }}"
+                                 data-item-key="{{ item.key }}"
+                                 data-item-line="{{ forloop.index }}"
+                                 aria-label="{{ 'cart.general.input_label' | t: product: item.title | escape }}"
+                                 type="number"
+                                 name="updates[]"
+                                 value="{{ item.quantity }}"
+                                 min="0"
+                                 data-limit="{% if item.variant.inventory_management == 'shopify' %}{% unless item.variant.inventory_policy == 'continue' %}{{ item.variant.inventory_quantity }}{% endunless %}{% endif %}" />
+                          <button
+                            data-ajax-qty-increase="{{ item.id }}-{{ forloop.index }}"
+                            data-item-key="{{ item.key }}"
+                            class="dinveda-cart-item__qty-btn dinveda-cart-item__qty-btn--increase"
+                            type="button"
+                            aria-label="{{ 'cart.general.increase' | t: product: item.title | escape }}">
+                            <span class="visually-hidden">{{ 'cart.general.increase' | t: product: item.title | escape }}</span>
+                            <span class="dinveda-cart-item__qty-icon">+</span>
+                          </button>
+                        </div>
+
+                        {%- comment -%} Price {%- endcomment -%}
+                        <div class="dinveda-cart-item__price">
+                          {%- assign has_discount = false -%}
+                          {%- if item.original_price != item.final_price -%}
+                            {%- assign has_discount = true -%}
+                          {%- endif -%}
+                          <span data-cart-item-final-price>{{ item.final_price | money }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </form>
+          {% else %}
+            <div class="dinveda-cart-items__empty js-cart-empty">
+              <p class="dinveda-cart-items__empty-text">{{ 'cart.general.empty' | t }}</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      {%- comment -%} Order Summary Sidebar {%- endcomment -%}
+      {% if cart.item_count > 0 %}
+        <div class="dinveda-cart-items__summary span-12 lg-span-4 auto">
+          <div class="dinveda-cart-summary">
+            <h3 class="dinveda-cart-summary__title">{{ section.settings.summary_title | default: 'Order Summary' }}</h3>
+            
+            <div class="dinveda-cart-summary__details">
+              <div class="dinveda-cart-summary__row">
+                <span class="dinveda-cart-summary__label">{{ 'cart.general.subtotal' | t | upcase }}</span>
+                <span class="dinveda-cart-summary__value js-cart-subtotal">{{ cart.items_subtotal_price | money }}</span>
+              </div>
+
+              {% if show_shipping %}
+                <div class="dinveda-cart-summary__row">
+                  <span class="dinveda-cart-summary__label">{{ 'cart.general.shipping' | t | upcase }}</span>
+                  <span class="dinveda-cart-summary__value">
+                    {% if cart.total_price >= 5000 %}
+                      {{ 'cart.general.free_shipping_qualified' | t }}
+                    {% else %}
+                      {{ 'cart.general.at_checkout' | t }}
+                    {% endif %}
+                  </span>
+                </div>
+              {% endif %}
+
+              {% if show_tax_note %}
+                <div class="dinveda-cart-summary__row dinveda-cart-summary__row--tax">
+                  <span class="dinveda-cart-summary__label dinveda-cart-summary__label--tax">Enthält MwSt. (19%)</span>
+                  <span class="dinveda-cart-summary__value dinveda-cart-summary__value--tax">
+                    {%- assign tax_amount = cart.total_price | times: 19 | divided_by: 119 -%}
+                    {{ tax_amount | money }}
+                  </span>
+                </div>
+              {% endif %}
+
+              {%- if cart.cart_level_discount_applications != blank -%}
+                <div class="dinveda-cart-summary__row dinveda-cart-summary__row--discount">
+                  <span class="dinveda-cart-summary__label">{{ 'cart.general.discounts' | t | upcase }}</span>
+                  <ul class="dinveda-cart-summary__discounts">
+                    {%- for discount_application in cart.cart_level_discount_applications -%}
+                      <li class="dinveda-cart-summary__discount">
+                        {{ discount_application.title }} (-{{ discount_application.total_allocated_amount | money }})
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              {%- endif -%}
+            </div>
+
+            <div class="dinveda-cart-summary__total">
+              <span class="dinveda-cart-summary__total-label">{{ 'cart.general.total' | t | upcase }}</span>
+              <span class="dinveda-cart-summary__total-value">
+                <span class="cart-original-total cart-price js-cart-total">{{ cart.total_price | money }}</span>
+              </span>
+            </div>
+
+            <form action="{{ routes.cart_url }}" method="post" novalidate>
+              <button type="submit" name="checkout" class="dinveda-cart-summary__checkout-btn">
+                {{ checkout_button_label | escape }}
+              </button>
+            </form>
+
+            {% if show_security_badges %}
+              <div class="dinveda-cart-summary__security">
+                <p class="dinveda-cart-summary__security-text">{{ section.settings.security_text | default: 'Secure Checkout with SSL Encryption' }}</p>
+                <div class="dinveda-cart-summary__security-icons">
+                  <span class="material-symbols-outlined">lock</span>
+                  <span class="material-symbols-outlined">verified_user</span>
+                  <span class="material-symbols-outlined">payments</span>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DinVeda Cart Items",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "cart_label",
+      "label": "Cart label",
+      "default": "YOUR RITUALS"
+    },
+    {
+      "type": "text",
+      "id": "summary_title",
+      "label": "Summary title",
+      "default": "Order Summary"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_ritual_timing",
+      "label": "Show ritual timing",
+      "default": true,
+      "info": "Display ritual timing label (MORGEN | AKTIVIEREN, etc.)"
+    },
+    {
+      "type": "checkbox",
+      "id": "ritual_timing_fallback_tag",
+      "label": "Use product tags as fallback",
+      "default": true,
+      "info": "If metafield is empty, use product tags (Morgen, Tag, Abend, Balance)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_variant_title",
+      "label": "Show variant title",
+      "default": true,
+      "info": "Display variant name (e.g., '500g Glass Jar')"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shipping",
+      "label": "Show shipping",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tax_note",
+      "label": "Show tax note",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "checkout_button_label",
+      "label": "Checkout button label",
+      "default": "ZUR KASSE"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_security_badges",
+      "label": "Show security badges",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "security_text",
+      "label": "Security text",
+      "default": "Secure Checkout with SSL Encryption"
+    }
+  ],
+  "presets": [
+    {
+      "name": "DinVeda Cart Items"
+    }
+  ]
+}
+{% endschema %}
+

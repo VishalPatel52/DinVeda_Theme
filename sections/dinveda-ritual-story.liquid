@@ -61,10 +61,14 @@
       {% endstyle %}
     {% endif %}
     
+    {%- liquid
+      assign background_color = section.settings.background_color | default: '#f3e9dc'
+    -%}
     {% style %}
       #dinveda-ritual-story-{{ section.id }} {
         padding-top: {{ section.settings.padding_top }}px;
         padding-bottom: {{ section.settings.padding_bottom }}px;
+        background-color: {{ background_color }};
       }
     {% endstyle %}
     
@@ -73,17 +77,6 @@
         
         {% if section.settings.eyebrow != blank %}
           <p class="dinveda-ritual-story__eyebrow">{{ section.settings.eyebrow | escape }}</p>
-        {% endif %}
-
-        {%- comment -%} Intro paragraphs (lead text) {%- endcomment -%}
-        {% if story_intro != blank %}
-          <div class="dinveda-ritual-story__intro">
-            {{ story_intro }}
-          </div>
-        {% elsif section.settings.intro_fallback != blank %}
-          <div class="dinveda-ritual-story__intro">
-            {{ section.settings.intro_fallback }}
-          </div>
         {% endif %}
 
         {%- comment -%} "Warum der {animal}?" heading {%- endcomment -%}
@@ -121,7 +114,7 @@
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow label",
-      "default": "DIE RITUAL-STORY"
+      "info": "Optional eyebrow text above story title"
     },
     {
       "type": "text",
@@ -144,6 +137,13 @@
     {
       "type": "header",
       "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#f3e9dc",
+      "info": "Default: Philosophy beige (#f3e9dc)"
     },
     {
       "type": "checkbox",

@@ -1,0 +1,116 @@
+{% comment %} DinVeda Checkout Header Section {% endcomment %}
+{%- liquid
+  assign show_progress = section.settings.show_progress
+  if show_progress == blank
+    assign show_progress = true
+  endif
+
+  assign back_to_cart_link = section.settings.back_to_cart_link
+  if back_to_cart_link == blank
+    assign back_to_cart_link = routes.cart_url
+  endif
+
+  assign current_step = section.settings.current_step
+  if current_step == blank
+    assign current_step = 'information'
+  endif
+-%}
+
+<header class="dinveda-checkout-header dinveda-checkout-header-{{ section.id }}" data-section-id="{{ section.id }}">
+  <div class="dinveda-checkout-header__wrapper">
+    <div class="dinveda-checkout-header__top">
+      <div class="dinveda-checkout-header__left">
+        {%- comment -%} Logo/Branding {%- endcomment -%}
+        <a href="{{ routes.root_url }}" class="dinveda-checkout-header__logo">
+          {% if section.settings.logo != blank %}
+            {{ section.settings.logo | image_url: width: 150 | image_tag: alt: shop.name, class: 'dinveda-checkout-header__logo-img' }}
+          {% else %}
+            <span class="dinveda-checkout-header__logo-text">{{ shop.name }}</span>
+          {% endif %}
+        </a>
+      </div>
+      <div class="dinveda-checkout-header__center">
+        <h1 class="dinveda-checkout-header__title">{{ 'checkout.general.title' | default: 'Checkout' | t }}</h1>
+      </div>
+      <div class="dinveda-checkout-header__right">
+        <a href="{{ back_to_cart_link }}" class="dinveda-checkout-header__back-link">
+          <span class="dinveda-checkout-header__back-icon">←</span>
+          <span class="dinveda-checkout-header__back-text">{{ 'checkout.general.back_to_cart' | default: 'Back to Cart' | t }}</span>
+        </a>
+      </div>
+    </div>
+
+    {% if show_progress %}
+      <div class="dinveda-checkout-header__progress">
+        <div class="dinveda-checkout-progress">
+          <div class="dinveda-checkout-progress__step {% if current_step == 'information' %}dinveda-checkout-progress__step--active{% endif %}">
+            <span class="dinveda-checkout-progress__step-label">{{ 'checkout.progress.information' | default: 'Information' | t }}</span>
+          </div>
+          <div class="dinveda-checkout-progress__separator">></div>
+          <div class="dinveda-checkout-progress__step {% if current_step == 'shipping' %}dinveda-checkout-progress__step--active{% endif %}">
+            <span class="dinveda-checkout-progress__step-label">{{ 'checkout.progress.shipping' | default: 'Shipping' | t }}</span>
+          </div>
+          <div class="dinveda-checkout-progress__separator">></div>
+          <div class="dinveda-checkout-progress__step {% if current_step == 'payment' %}dinveda-checkout-progress__step--active{% endif %}">
+            <span class="dinveda-checkout-progress__step-label">{{ 'checkout.progress.payment' | default: 'Payment' | t }}</span>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "DinVeda Checkout Header",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo",
+      "info": "Logo to display in checkout header"
+    },
+    {
+      "type": "text",
+      "id": "back_to_cart_link",
+      "label": "Back to cart link",
+      "default": "/cart",
+      "info": "URL to redirect when 'Back to Cart' is clicked"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_progress",
+      "label": "Show progress indicator",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "current_step",
+      "label": "Current step",
+      "options": [
+        {
+          "value": "information",
+          "label": "Information"
+        },
+        {
+          "value": "shipping",
+          "label": "Shipping"
+        },
+        {
+          "value": "payment",
+          "label": "Payment"
+        }
+      ],
+      "default": "information"
+    }
+  ],
+  "presets": [
+    {
+      "name": "DinVeda Checkout Header"
+    }
+  ]
+}
+{% endschema %}
+

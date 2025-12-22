@@ -1,0 +1,171 @@
+{% comment %}
+  DinVeda Product Ingredients - "Ehrliche Zutaten"
+  Two-column table format: ingredient name + percentage | details
+{% endcomment %}
+
+{%- liquid
+  assign is_design_mode = request.design_mode
+  assign has_table_blocks = false
+  if section.blocks.size > 0
+    for block in section.blocks
+      if block.type == 'ingredient_table_row'
+        assign has_table_blocks = true
+        break
+      endif
+    endfor
+  endif
+  if has_table_blocks or section.settings.show_when_empty or is_design_mode
+    assign should_show = true
+  else
+    assign should_show = false
+  endif
+-%}
+
+{% if should_show %}
+  <section
+    id="dinveda-product-ingredients-{{ section.id }}"
+    class="dinveda-product-ingredients"
+    data-section-id="{{ section.id }}"
+    data-section-type="dinveda-product-ingredients"
+    style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+    {{ section.shopify_attributes }}
+  >
+    <div class="dinveda-product-ingredients__container">
+      <div class="dinveda-product-ingredients__header">
+        <span class="material-symbols-outlined dinveda-product-ingredients__icon">{{ section.settings.icon | default: 'grain' }}</span>
+        <h2 class="dinveda-product-ingredients__title">
+          {{ section.settings.heading | default: 'Ehrliche Zutaten' | escape }}
+        </h2>
+      </div>
+
+      {% if has_table_blocks %}
+        <ul class="dinveda-product-ingredients__table">
+          {% for block in section.blocks %}
+            {% if block.type == 'ingredient_table_row' %}
+              <li class="dinveda-product-ingredients__row" {{ block.shopify_attributes }}>
+                <div class="dinveda-product-ingredients__left">
+                  <span class="dinveda-product-ingredients__name">{{ block.settings.name | escape }}</span>
+                  {% if block.settings.percentage != blank %}
+                    <span class="dinveda-product-ingredients__percentage"> ({{ block.settings.percentage | escape }})</span>
+                  {% endif %}
+                </div>
+                {% if block.settings.additional_info != blank %}
+                  <div class="dinveda-product-ingredients__right">
+                    <span class="dinveda-product-ingredients__info">{{ block.settings.additional_info | escape }}</span>
+                  </div>
+                {% endif %}
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      {% else %}
+        <div class="dinveda-product-ingredients__empty-state">
+          <p class="dinveda-product-ingredients__empty-message">
+            Click "Add block" to add ingredient rows. Each row should include ingredient name, optional percentage, and details.
+          </p>
+        </div>
+      {% endif %}
+
+      {% if section.settings.footnote != blank %}
+        <p class="dinveda-product-ingredients__footnote">
+          {{ section.settings.footnote | escape }}
+        </p>
+      {% endif %}
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Ehrliche Zutaten",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "info": "Leave blank to use default 'Ehrliche Zutaten'"
+    },
+    {
+      "type": "select",
+      "id": "icon",
+      "label": "Icon",
+      "options": [
+        { "value": "grain", "label": "Grain" },
+        { "value": "eco", "label": "Eco (Leaf)" },
+        { "value": "spa", "label": "Spa" }
+      ],
+      "default": "grain"
+    },
+    {
+      "type": "text",
+      "id": "footnote",
+      "label": "Footnote",
+      "info": "Optional footnote text (e.g., '*AUS KONTROLLIERT BIOLOGISCHEM ANBAU (DE-ÖKO-001)')"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_when_empty",
+      "label": "Show section even if no blocks are added",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient_table_row",
+      "name": "Ingredient Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Ingredient Name",
+          "info": "Ingredient name (e.g., 'Kurkuma')"
+        },
+        {
+          "type": "text",
+          "id": "percentage",
+          "label": "Percentage",
+          "info": "Optional percentage (e.g., '55%') - will be displayed in parentheses"
+        },
+        {
+          "type": "text",
+          "id": "additional_info",
+          "label": "Details",
+          "info": "Right column details (e.g., 'Indien, Bio-Qualität')"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ehrliche Zutaten"
+    }
+  ]
+}
+{% endschema %}
+

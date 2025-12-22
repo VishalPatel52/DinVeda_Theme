@@ -1,0 +1,155 @@
+{
+  "sections": {
+    "help_support": {
+      "type": "dinveda-help-support",
+      "settings": {
+        "category_label": "CUSTOMER CARE",
+        "page_title": "Help & Support",
+        "page_subtitle": "Find answers to common questions about our rituals, ingredients, and service. We're here to guide you on your journey.",
+        "search_placeholder": "Search for answers...",
+        "show_all_category": true,
+        "all_category_label": "ALL",
+        "support_heading": "Still need help?",
+        "support_text": "Our support team is available Monday through Friday, 9am - 5pm CET. We are happy to assist you personally.",
+        "email_button_label": "EMAIL SUPPORT",
+        "email_button_link": "/pages/contact",
+        "live_chat_button_label": "LIVE CHAT",
+        "live_chat_button_link": "#"
+      },
+      "blocks": {
+        "category_ordering": {
+          "type": "faq_category",
+          "settings": {
+            "category_name": "ORDERING & SHIPPING",
+            "category_icon": "local_shipping",
+            "category_id": "ordering_shipping"
+          }
+        },
+        "faq_ordering_1": {
+          "type": "faq_item",
+          "settings": {
+            "category": "ordering_shipping",
+            "question": "Where do you ship to?",
+            "answer": "<p>We currently ship to all countries within the European Union. We are working on expanding our shipping options to other regions. Please check our shipping page for the most up-to-date information.</p>"
+          }
+        },
+        "faq_ordering_2": {
+          "type": "faq_item",
+          "settings": {
+            "category": "ordering_shipping",
+            "question": "How long will my order take to arrive?",
+            "answer": "<p>Standard shipping within Germany takes 2-3 business days. For other EU countries, delivery typically takes 5-7 business days. You will receive a tracking number once your order has been shipped.</p>"
+          }
+        },
+        "faq_ordering_3": {
+          "type": "faq_item",
+          "settings": {
+            "category": "ordering_shipping",
+            "question": "Do you offer free shipping?",
+            "answer": "<p>Yes! We offer free shipping on all orders over €50 within Germany. For international orders, free shipping is available on orders over €75.</p>"
+          }
+        },
+        "category_product": {
+          "type": "faq_category",
+          "settings": {
+            "category_name": "PRODUCT INFORMATION",
+            "category_icon": "spa",
+            "category_id": "product_info"
+          }
+        },
+        "faq_product_1": {
+          "type": "faq_item",
+          "settings": {
+            "category": "product_info",
+            "question": "Are your ingredients organic?",
+            "answer": "<p>Yes, all our ingredients are 100% organic and certified by recognized organic certification bodies. We source only the highest quality organic ingredients for our blends.</p>"
+          }
+        },
+        "faq_product_2": {
+          "type": "faq_item",
+          "settings": {
+            "category": "product_info",
+            "question": "How should I store my blends?",
+            "answer": "<p>Store your blends in a cool, dry place away from direct sunlight. Keep the containers tightly sealed to maintain freshness. Our blends are best consumed within 12 months of opening.</p>"
+          }
+        },
+        "faq_product_3": {
+          "type": "faq_item",
+          "settings": {
+            "category": "product_info",
+            "question": "Are these products suitable for vegans?",
+            "answer": "<p>Yes, all our products are 100% vegan. We use only plant-based ingredients and never include any animal-derived products in our formulations.</p>"
+          }
+        },
+        "category_returns": {
+          "type": "faq_category",
+          "settings": {
+            "category_name": "RETURNS & REFUNDS",
+            "category_icon": "replay",
+            "category_id": "returns_refunds"
+          }
+        },
+        "faq_returns_1": {
+          "type": "faq_item",
+          "settings": {
+            "category": "returns_refunds",
+            "question": "What is your return policy?",
+            "answer": "<p>We offer a 30-day return policy on unopened products. If you're not satisfied with your purchase, you can return it within 30 days of delivery for a full refund.</p>"
+          }
+        },
+        "faq_returns_2": {
+          "type": "faq_item",
+          "settings": {
+            "category": "returns_refunds",
+            "question": "How do I initiate a return?",
+            "answer": "<p>To initiate a return, please contact our customer support team at support@ayurvedicrituals.com with your order number. We will provide you with a return label and instructions.</p>"
+          }
+        },
+        "category_account": {
+          "type": "faq_category",
+          "settings": {
+            "category_name": "ACCOUNT MANAGEMENT",
+            "category_icon": "person",
+            "category_id": "account_management"
+          }
+        },
+        "faq_account_1": {
+          "type": "faq_item",
+          "settings": {
+            "category": "account_management",
+            "question": "Do I need an account to place an order?",
+            "answer": "<p>No, you can place an order as a guest. However, creating an account allows you to track your orders, save your shipping addresses, and access exclusive offers.</p>"
+          }
+        },
+        "faq_account_2": {
+          "type": "faq_item",
+          "settings": {
+            "category": "account_management",
+            "question": "How do I reset my password?",
+            "answer": "<p>Click on 'Forgot Password' on the login page and enter your email address. We will send you a link to reset your password. If you don't receive the email, please check your spam folder.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "category_ordering",
+        "faq_ordering_1",
+        "faq_ordering_2",
+        "faq_ordering_3",
+        "category_product",
+        "faq_product_1",
+        "faq_product_2",
+        "faq_product_3",
+        "category_returns",
+        "faq_returns_1",
+        "faq_returns_2",
+        "category_account",
+        "faq_account_1",
+        "faq_account_2"
+      ]
+    }
+  },
+  "order": [
+    "help_support"
+  ]
+}
+

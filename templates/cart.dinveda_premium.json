@@ -1,0 +1,69 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "cart_hero": {
+      "type": "dinveda-cart-hero",
+      "settings": {
+        "hero_image": "",
+        "heading": "Your Selections",
+        "subtitle": "Review the rituals you have chosen for your journey.",
+        "text_alignment": "center",
+        "show_text_overlay": true,
+        "border_radius": 0,
+        "overlay_opacity": 40,
+        "container_max_width": 1200
+      }
+    },
+    "cart_items": {
+      "type": "dinveda-cart-items",
+      "settings": {
+        "cart_label": "YOUR RITUALS",
+        "summary_title": "Order Summary",
+        "show_ritual_timing": true,
+        "ritual_timing_fallback_tag": true,
+        "show_variant_title": true,
+        "show_shipping": true,
+        "show_tax_note": true,
+        "checkout_button_label": "ZUR KASSE",
+        "show_security_badges": true,
+        "security_text": "Secure Checkout with SSL Encryption"
+      }
+    },
+    "complete_your_ritual": {
+      "type": "dinveda-complete-your-day",
+      "settings": {
+        "heading": "Complete Your Ritual",
+        "subheading": "",
+        "view_all_label": "ALLE RITUALE ANSEHEN",
+        "view_all_link": "/collections/all"
+      }
+    },
+    "brand_story": {
+      "type": "dinveda-split-story",
+      "settings": {
+        "image": "",
+        "eyebrow": "OUR PHILOSOPHY",
+        "title": "Guided by Nature's Wisdom",
+        "body": "<p>We believe true wellness isn't about fixing what's broken, but aligning with the natural rhythms of life. Our blends are inspired by the wisdom of the animal kingdom. Each ritual is an invitation to pause, breathe, and reconnect with your inner nature. Not medicine, but a way of life.</p>",
+        "cta_label": "READ OUR STORY →",
+        "cta_link": "",
+        "background_mode": "philosophy_beige"
+      }
+    }
+  },
+  "order": [
+    "cart_hero",
+    "cart_items",
+    "complete_your_ritual",
+    "brand_story"
+  ]
+}
+

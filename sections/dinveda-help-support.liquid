@@ -1,0 +1,371 @@
+{% comment %}
+  DinVeda Help & Support - Premium FAQ page with search and category filtering
+  Includes functional search, category tabs, and accordion FAQs
+{% endcomment %}
+
+{%- liquid
+  assign category_label = section.settings.category_label | default: 'CUSTOMER CARE'
+  assign page_title = section.settings.page_title | default: 'Help & Support'
+  assign page_subtitle = section.settings.page_subtitle
+  assign search_placeholder = section.settings.search_placeholder | default: 'Search for answers...'
+  assign show_all_category = section.settings.show_all_category
+  assign all_category_label = section.settings.all_category_label | default: 'ALL'
+  assign support_heading = section.settings.support_heading | default: 'Still need help?'
+  assign support_text = section.settings.support_text
+  assign email_button_label = section.settings.email_button_label | default: 'EMAIL SUPPORT'
+  assign email_button_link = section.settings.email_button_link
+  assign live_chat_button_label = section.settings.live_chat_button_label | default: 'LIVE CHAT'
+  assign live_chat_button_link = section.settings.live_chat_button_link
+
+  comment
+    Organize blocks by category
+  endcomment
+  assign categories = ''
+  assign faq_items = ''
+  
+  for block in section.blocks
+    if block.type == 'faq_category'
+      if categories == blank
+        assign categories = block.id
+      else
+        assign categories = categories | append: ',' | append: block.id
+      endif
+    elsif block.type == 'faq_item'
+      if faq_items == blank
+        assign faq_items = block.id
+      else
+        assign faq_items = faq_items | append: ',' | append: block.id
+      endif
+    endif
+  endfor
+  
+  assign category_ids = categories | split: ','
+  assign faq_item_ids = faq_items | split: ','
+-%}
+
+<section
+  id="dinveda-help-support-{{ section.id }}"
+  class="dinveda-help-support"
+  data-section-id="{{ section.id }}"
+  data-section-type="help-support"
+>
+  <div class="dinveda-help-support__container">
+    {%- comment -%} Header Section with Background {%- endcomment -%}
+    <div class="dinveda-help-support__header-wrapper">
+      <div class="dinveda-help-support__header-inner">
+        {%- comment -%} Header with Category Label {%- endcomment -%}
+        {% if category_label != blank %}
+          <div class="dinveda-help-support__category-label">
+            <span>{{ category_label | escape }}</span>
+          </div>
+        {% endif %}
+
+        {%- comment -%} Title and Subtitle {%- endcomment -%}
+        <div class="dinveda-help-support__header">
+          {% if page_title != blank %}
+            <h1 class="dinveda-help-support__title">{{ page_title | escape }}</h1>
+          {% endif %}
+          {% if page_subtitle != blank %}
+            <p class="dinveda-help-support__subtitle">{{ page_subtitle | escape }}</p>
+          {% endif %}
+        </div>
+
+        {%- comment -%} Search Bar {%- endcomment -%}
+        <div class="dinveda-help-support__search">
+          <div class="dinveda-help-support__search-wrapper">
+            <span class="material-symbols-outlined dinveda-help-support__search-icon">search</span>
+            <input
+              type="text"
+              id="help-search-input-{{ section.id }}"
+              class="dinveda-help-support__search-input"
+              placeholder="{{ search_placeholder | escape }}"
+              aria-label="{{ search_placeholder | escape }}"
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} Category Navigation Tabs {%- endcomment -%}
+    <div class="dinveda-help-support__categories">
+      <div class="dinveda-help-support__categories-wrapper">
+        {% if show_all_category %}
+          <button
+            type="button"
+            class="dinveda-help-support__category-tab dinveda-help-support__category-tab--active"
+            data-category="all"
+            aria-label="Show all categories"
+          >
+            {{ all_category_label | escape }}
+          </button>
+        {% endif %}
+        {% for block in section.blocks %}
+          {% if block.type == 'faq_category' %}
+            <button
+              type="button"
+              class="dinveda-help-support__category-tab"
+              data-category="{{ block.settings.category_id }}"
+              aria-label="Show {{ block.settings.category_name | escape }} category"
+              {{ block.shopify_attributes }}
+            >
+              {{ block.settings.category_name | escape }}
+            </button>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    {%- comment -%} FAQ Sections by Category {%- endcomment -%}
+    <div class="dinveda-help-support__faqs">
+      {% for block in section.blocks %}
+        {% if block.type == 'faq_category' %}
+          {%- liquid
+            assign category_id = block.settings.category_id
+            assign category_name = block.settings.category_name
+            assign category_icon = block.settings.category_icon
+          -%}
+          {%- liquid
+            assign section_id = category_id | replace: '_', ''
+            if section_id == 'ordering' or section_id == 'orderingshipping'
+              assign section_id = 'ordering'
+            elsif section_id == 'product' or section_id == 'productinfo'
+              assign section_id = 'product'
+            elsif section_id == 'returns' or section_id == 'returnsrefunds'
+              assign section_id = 'returns'
+            elsif section_id == 'account' or section_id == 'accountmanagement'
+              assign section_id = 'account'
+            endif
+          -%}
+          <section
+            class="dinveda-help-support__category-section"
+            id="{{ section_id }}"
+            data-category="{{ category_id }}"
+            {{ block.shopify_attributes }}
+          >
+            <div class="dinveda-help-support__category-header">
+              {% if category_icon != blank %}
+                <span class="material-symbols-outlined dinveda-help-support__category-icon">{{ category_icon }}</span>
+              {% endif %}
+              <h2 class="dinveda-help-support__category-title">{{ category_name | escape }}</h2>
+            </div>
+
+            <div class="dinveda-help-support__category-faqs">
+              {% for faq_block in section.blocks %}
+                {% if faq_block.type == 'faq_item' and faq_block.settings.category == category_id %}
+                  <details
+                    class="dinveda-help-support__faq-item"
+                    data-faq-id="{{ faq_block.id }}"
+                    {{ faq_block.shopify_attributes }}
+                  >
+                    <summary class="dinveda-help-support__faq-question">
+                      <span class="dinveda-help-support__faq-question-text">{{ faq_block.settings.question | escape }}</span>
+                      <span class="material-symbols-outlined dinveda-help-support__faq-icon">expand_more</span>
+                    </summary>
+                    <div class="dinveda-help-support__faq-answer rte">
+                      {{ faq_block.settings.answer }}
+                    </div>
+                  </details>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </section>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    {%- comment -%} Still Need Help Section {%- endcomment -%}
+    {% if support_heading != blank or support_text != blank or email_button_label != blank or live_chat_button_label != blank %}
+      <div class="dinveda-help-support__support">
+        <div class="dinveda-help-support__support-inner">
+          {% if support_heading != blank %}
+            <h2 class="dinveda-help-support__support-heading">{{ support_heading | escape }}</h2>
+          {% endif %}
+          {% if support_text != blank %}
+            <p class="dinveda-help-support__support-text">{{ support_text | escape }}</p>
+          {% endif %}
+          <div class="dinveda-help-support__support-buttons">
+            {% if email_button_label != blank %}
+              <a
+                href="{{ email_button_link | default: '#' }}"
+                class="dinveda-help-support__support-button dinveda-help-support__support-button--email"
+              >
+                <span class="material-symbols-outlined">mail</span>
+                <span>{{ email_button_label | escape }}</span>
+              </a>
+            {% endif %}
+            {% if live_chat_button_label != blank %}
+              <a
+                href="{{ live_chat_button_link | default: '#' }}"
+                class="dinveda-help-support__support-button dinveda-help-support__support-button--chat"
+              >
+                <span class="material-symbols-outlined">chat</span>
+                <span>{{ live_chat_button_label | escape }}</span>
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DinVeda Help & Support",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "category_label",
+      "label": "Category label",
+      "default": "CUSTOMER CARE"
+    },
+    {
+      "type": "text",
+      "id": "page_title",
+      "label": "Page title",
+      "default": "Help & Support"
+    },
+    {
+      "type": "textarea",
+      "id": "page_subtitle",
+      "label": "Page subtitle",
+      "default": "Find answers to common questions about our rituals, ingredients, and service. We're here to guide you on your journey."
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Search placeholder text",
+      "default": "Search for answers..."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_all_category",
+      "label": "Show 'All' category tab",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "all_category_label",
+      "label": "All category label",
+      "default": "ALL"
+    },
+    {
+      "type": "header",
+      "content": "Support Section"
+    },
+    {
+      "type": "text",
+      "id": "support_heading",
+      "label": "Support heading",
+      "default": "Still need help?"
+    },
+    {
+      "type": "textarea",
+      "id": "support_text",
+      "label": "Support text",
+      "default": "Our support team is available Monday through Friday, 9am - 5pm CET. We are happy to assist you personally."
+    },
+    {
+      "type": "text",
+      "id": "email_button_label",
+      "label": "Email button label",
+      "default": "EMAIL SUPPORT"
+    },
+    {
+      "type": "url",
+      "id": "email_button_link",
+      "label": "Email button link"
+    },
+    {
+      "type": "text",
+      "id": "live_chat_button_label",
+      "label": "Live chat button label",
+      "default": "LIVE CHAT"
+    },
+    {
+      "type": "url",
+      "id": "live_chat_button_link",
+      "label": "Live chat button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_category",
+      "name": "FAQ Category",
+      "settings": [
+        {
+          "type": "text",
+          "id": "category_name",
+          "label": "Category name",
+          "default": "ORDERING & SHIPPING"
+        },
+        {
+          "type": "text",
+          "id": "category_icon",
+          "label": "Material Symbol icon name",
+          "default": "local_shipping",
+          "info": "Enter Material Symbols icon name (e.g., local_shipping, eco, refresh, person)"
+        },
+        {
+          "type": "text",
+          "id": "category_id",
+          "label": "Category ID",
+          "default": "ordering_shipping",
+          "info": "Unique identifier for this category (used to link FAQ items)"
+        }
+      ]
+    },
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "category",
+          "label": "Category ID",
+          "default": "ordering_shipping",
+          "info": "Must match a Category ID from a FAQ Category block"
+        },
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Where do you ship to?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>We currently ship to all countries within the European Union.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DinVeda Help & Support",
+      "blocks": [
+        {
+          "type": "faq_category",
+          "settings": {
+            "category_name": "ORDERING & SHIPPING",
+            "category_icon": "local_shipping",
+            "category_id": "ordering_shipping"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "ordering_shipping",
+            "question": "Where do you ship to?",
+            "answer": "<p>We currently ship to all countries within the European Union.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

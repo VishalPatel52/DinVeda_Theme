@@ -9,22 +9,36 @@
  */
 {
   "sections": {
-    "banner": {
-      "type": "banner-image",
-      "settings": {}
+    "order_confirmation": {
+      "type": "dinveda-order-confirmation",
+      "settings": {
+        "hero_image": "",
+        "hero_image_url": "",
+        "order_number_label": "ORDER #%order_number% CONFIRMED",
+        "thank_you_message": "Thank you, %name%",
+        "subtitle": "Your journey to balance has begun. We have received your order and are preparing your rituals with care.",
+        "track_order_label": "TRACK ORDER STATUS",
+        "items_heading": "Your Ritual Selection",
+        "items_subtitle": "INCLUDED IN THIS ORDER",
+        "show_status_cards": true,
+        "show_next_steps": true
+      },
     },
-    "breadcrumbs": {
-      "type": "breadcrumbs",
-      "settings": {}
-    },
-    "main": {
-      "type": "main-account-order",
-      "settings": {}
+    "next_steps": {
+      "type": "dinveda-split-story",
+      "settings": {
+        "image": "",
+        "eyebrow": "WHAT HAPPENS NEXT?",
+        "title": "Guided by Nature's Wisdom",
+        "body": "<p>Just as the Owl prepares silently for the night, we are carefully gathering your selected rituals. Your order is being processed in our small-batch manufactory in Germany.</p><p>You will receive a shipping confirmation email as soon as your package takes flight. In the meantime, we invite you to explore our journal for tips on establishing your daily routine.</p>",
+        "cta_label": "READ THE JOURNAL →",
+        "cta_link": "/blogs/journal",
+        "background_mode": "philosophy_beige"
+      }
     }
   },
   "order": [
-    "banner",
-    "breadcrumbs",
-    "main"
+    "order_confirmation",
+    "next_steps"
   ]
 }

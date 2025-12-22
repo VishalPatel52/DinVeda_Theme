@@ -1071,74 +1071,6 @@ body.template-product.product-template-dinveda-premium .product-loop.grid__wrapp
   background-color: rgba(179, 130, 74, 0.05);
 }
 
-/* ============================================
-   Ritual Preparation Section
-   ============================================ */
-
-.dinveda-ritual-preparation {
-  padding: var(--design-section-spacing-large, 80px) 0;
-  background-color: var(--design-bg-color, #FFF0DD);
-}
-
-.dinveda-ritual-preparation__container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--design-section-spacing-medium, 40px);
-}
-
-.dinveda-ritual-preparation__header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 48px;
-}
-
-.dinveda-ritual-preparation__header-icon {
-  width: 24px;
-  height: 24px;
-  color: var(--design-accent-color, #b3814a);
-  flex-shrink: 0;
-  font-size: 24px;
-}
-
-.dinveda-ritual-preparation__heading {
-  font-family: var(--heading-family);
-  font-size: var(--design-h2-size);
-  font-weight: var(--heading-weight);
-  color: var(--design-text-color, #5a4533);
-  margin: 0;
-}
-
-.dinveda-ritual-preparation__grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
-}
-
-.dinveda-ritual-preparation__card {
-  background-color: #fefaf6; /* card-bg */
-  border: 1px solid rgba(234, 221, 207, 0.5);
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-}
-
-.dinveda-ritual-preparation__card-title {
-  font-family: var(--heading-family);
-  font-size: var(--design-h3-size);
-  font-weight: var(--heading-weight);
-  color: var(--design-text-color, #5a4533);
-  margin: 0 0 16px 0;
-}
-
-.dinveda-ritual-preparation__card-instructions {
-  font-family: var(--main-family);
-  font-size: var(--design-body-font-size);
-  line-height: 1.7;
-  color: var(--design-text-color, #5a4533);
-  opacity: 0.8;
-  margin: 0;
-}
 
 /* ============================================
    Product Tabs Section
@@ -1392,7 +1324,6 @@ body.template-product.product-template-dinveda-premium .product-loop.grid__wrapp
     gap: 12px;
   }
 
-  .dinveda-ritual-preparation__grid {
     grid-template-columns: 1fr;
     gap: 24px;
   }

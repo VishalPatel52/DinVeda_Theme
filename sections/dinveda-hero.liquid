@@ -6,9 +6,19 @@
 
 {%- liquid
   assign hero_image = section.settings.image
+  assign hero_image_url = section.settings.image_url
   assign overlay_opacity = section.settings.overlay_opacity | default: 50
   assign min_height_desktop = section.settings.min_height_desktop | default: 640
   assign min_height_mobile = section.settings.min_height_mobile | default: 520
+  
+  comment
+    For local testing: if no uploaded image but image_url is provided, use that
+  endcomment
+  if hero_image == blank and hero_image_url != blank
+    assign use_url_image = true
+  else
+    assign use_url_image = false
+  endif
 -%}
 
 <section
@@ -19,7 +29,7 @@
   style="--hero-min-height-desktop: {{ min_height_desktop }}px; --hero-min-height-mobile: {{ min_height_mobile }}px; --hero-overlay-opacity: {{ overlay_opacity | divided_by: 100.0 }};"
 >
   <div class="dinveda-hero__wrapper">
-    <div class="dinveda-hero__background{% if hero_image != blank %} dinveda-hero__background--has-image{% else %} dinveda-hero__background--fallback{% endif %}">
+    <div class="dinveda-hero__background{% if hero_image != blank or use_url_image %} dinveda-hero__background--has-image{% else %} dinveda-hero__background--fallback{% endif %}">
       {% if hero_image != blank %}
         <picture>
           <source
@@ -37,6 +47,14 @@
             height="{{ hero_image.height }}"
           >
         </picture>
+      {% elsif use_url_image %}
+        <img
+          src="{{ hero_image_url }}"
+          alt="Hero image"
+          class="dinveda-hero__image"
+          loading="eager"
+          fetchpriority="high"
+        >
       {% endif %}
       <div class="dinveda-hero__overlay"></div>
     </div>
@@ -79,6 +97,12 @@
       "id": "image",
       "label": "Hero image",
       "info": "Recommended: 1920x800px or similar wide ratio. If not set, a warm beige background will be shown."
+    },
+    {
+      "type": "text",
+      "id": "image_url",
+      "label": "Hero image URL (for local testing)",
+      "info": "Optional: Use a direct image URL for local testing. This will be used if no image is uploaded above. Example: https://images.unsplash.com/photo-..."
     },
     {
       "type": "header",

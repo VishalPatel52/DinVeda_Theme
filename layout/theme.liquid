@@ -46,13 +46,13 @@
 
   {{ 'theme.css' | asset_url | stylesheet_tag }}
 
-  {%- comment -%} Load Material Symbols font for DinVeda sections {%- endcomment -%}
-  {%- if template.name == 'product' and template.suffix == 'dinveda-premium' -%}
+  {%- comment -%} Load Material Symbols font for DinVeda product pages {%- endcomment -%}
+  {%- if template.name == 'product' -%}
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
   {%- endif -%}
 
-  {%- comment -%} Load DinVeda premium product CSS only for product.dinveda-premium template {%- endcomment -%}
-  {%- if template.name == 'product' and template.suffix == 'dinveda-premium' -%}
+  {%- comment -%} Load DinVeda premium product CSS for all product templates {%- endcomment -%}
+  {%- if template.name == 'product' -%}
     <link rel="preload" href="{{ 'dinveda-product-premium.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="{{ 'dinveda-product-premium.css' | asset_url }}"></noscript>
   {%- endif -%}
@@ -63,10 +63,56 @@
     <noscript><link rel="stylesheet" href="{{ 'dinveda-home.css' | asset_url }}"></noscript>
   {%- endif -%}
 
-  {%- comment -%} Load DinVeda premium collection CSS only for collection.dinveda_premium template {%- endcomment -%}
-  {%- if template.name == 'collection' and (template.suffix == 'dinveda_premium' or template.suffix == 'dinveda-premium') -%}
+  {%- comment -%} Load Material Symbols font for DinVeda collection pages {%- endcomment -%}
+  {%- if template.name == 'collection' -%}
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  {%- endif -%}
+
+  {%- comment -%} Load DinVeda premium collection CSS for all collection templates {%- endcomment -%}
+  {%- if template.name == 'collection' -%}
     <link rel="preload" href="{{ 'dinveda-collection-premium.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="{{ 'dinveda-collection-premium.css' | asset_url }}"></noscript>
+  {%- endif -%}
+
+  {%- comment -%} Load Material Symbols font for DinVeda premium cart {%- endcomment -%}
+  {%- if template.name == 'cart' and (template.suffix == 'dinveda_premium' or template.suffix == 'dinveda-premium') -%}
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  {%- endif -%}
+
+  {%- comment -%} Load DinVeda premium cart CSS only for cart.dinveda_premium template {%- endcomment -%}
+  {%- if template.name == 'cart' and (template.suffix == 'dinveda_premium' or template.suffix == 'dinveda-premium') -%}
+    <link rel="preload" href="{{ 'dinveda-cart-premium.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ 'dinveda-cart-premium.css' | asset_url }}"></noscript>
+  {%- endif -%}
+
+  {%- comment -%} Load DinVeda premium checkout CSS and JS for checkout page {%- endcomment -%}
+  {%- if template.name == 'page' and page.handle == 'checkout' -%}
+    <link rel="preload" href="{{ 'dinveda-checkout-premium.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ 'dinveda-checkout-premium.css' | asset_url }}"></noscript>
+    <script src="{{ 'dinveda-checkout.js' | asset_url }}" defer></script>
+  {%- endif -%}
+
+  {%- comment -%} Load Material Symbols font for DinVeda help & support page {%- endcomment -%}
+  {%- if template.name == 'page' and page.handle == 'help' -%}
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  {%- endif -%}
+
+  {%- comment -%} Load DinVeda help & support CSS and JS for help page {%- endcomment -%}
+  {%- if template.name == 'page' and page.handle == 'help' -%}
+    <link rel="preload" href="{{ 'dinveda-help-support.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ 'dinveda-help-support.css' | asset_url }}"></noscript>
+    <script src="{{ 'dinveda-help-support.js' | asset_url }}" defer></script>
+  {%- endif -%}
+
+  {%- comment -%} Load Material Symbols font for DinVeda order confirmation page {%- endcomment -%}
+  {%- if template.name == 'customers' and template.suffix == 'order' -%}
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  {%- endif -%}
+
+  {%- comment -%} Load DinVeda order confirmation CSS for customers/order template {%- endcomment -%}
+  {%- if template.name == 'customers' and template.suffix == 'order' -%}
+    <link rel="preload" href="{{ 'dinveda-order-confirmation.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ 'dinveda-order-confirmation.css' | asset_url }}"></noscript>
   {%- endif -%}
 
   {%- unless settings.main_font.system? -%}

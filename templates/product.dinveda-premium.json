@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "dinveda_product_hero": {
@@ -9,16 +18,12 @@
         "quote_text": "Ich starte clever und klar in den Tag. Für Energie, Fokus & innere Wärme.",
         "quote_attribution": "Fuchs",
         "price_note": "inkl. MwSt. / 100g Dose",
-        "show_nutrition_facts": false,
         "add_to_cart_label": "Zum Einkaufswagen hinzufügen",
         "enable_buy_now": true,
         "buy_now_label": "Jetzt kaufen",
         "buy_now_primary": false,
         "show_payment_options_link": false,
         "payment_options_link_text": "WEITERE BEZAHLMÖGLICHKEITEN",
-        "shipping_text": "Kostenloser Versand ab 50€ innerhalb DE",
-        "certification_bio": "100% Bio-Zertifiziert",
-        "certification_made_in": "Made in Germany",
         "show_organic_label": true,
         "show_vegan_label": true,
         "show_social_share": true
@@ -30,13 +35,22 @@
         "eyebrow": "DIE RITUAL-STORY"
       }
     },
-    "dinveda_ingredients_and_ritual": {
-      "type": "dinveda-ingredients-and-ritual",
+    "dinveda_traditional_ingredients": {
+      "type": "dinveda-traditional-ingredients",
       "settings": {
-        "ingredients_heading": "Ehrliche Zutaten",
-        "ritual_heading": "",
-        "ingredients_footnote": "*aus kontrolliert biologischem Anbau",
-        "hide_if_empty": false
+        "show_when_empty": true
+      }
+    },
+    "dinveda_product_ingredients": {
+      "type": "dinveda-product-ingredients",
+      "settings": {
+        "show_when_empty": true
+      }
+    },
+    "dinveda_recipe_preparation": {
+      "type": "dinveda-recipe-preparation",
+      "settings": {
+        "show_when_empty": true
       }
     },
     "dinveda_complete_your_day": {
@@ -45,15 +59,16 @@
         "heading": "Vervollständige deinen Tag",
         "subheading": "WEITERE RITUALE FÜR BALANCE & RUHE",
         "view_all_label": "ALLE RITUALE ANSEHEN",
-        "view_all_link": "/collections/all",
-        "button_label_fallback": "ANSEHEN"
-      },
+        "view_all_link": "/collections/all"
+      }
     }
   },
   "order": [
     "dinveda_product_hero",
     "dinveda_ritual_story",
-    "dinveda_ingredients_and_ritual",
+    "dinveda_traditional_ingredients",
+    "dinveda_product_ingredients",
+    "dinveda_recipe_preparation",
     "dinveda_complete_your_day"
   ]
 }

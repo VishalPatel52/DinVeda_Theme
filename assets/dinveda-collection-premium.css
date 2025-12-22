@@ -1,10 +1,11 @@
 /**
  * DinVeda Premium Collection Page Styles
- * Scoped to collection.dinveda_premium template only
+ * Applied to all collection templates (default and dinveda_premium)
  * Note: Shopify may convert underscores to hyphens in data attributes, so we support both
  */
 
 /* Hero Section Premium Styling */
+.template-collection .dv-collection-hero,
 .template-collection.dinveda-premium .dv-collection-hero,
 .template-collection.dinveda_premium .dv-collection-hero,
 [data-template-suffix="dinveda-premium"] .dv-collection-hero,
@@ -13,6 +14,7 @@
   padding: var(--design-section-spacing-large, 100px) 0;
 }
 
+.template-collection .dv-collection-hero .dv-collection-hero__wrapper,
 .template-collection.dinveda-premium .dv-collection-hero .dv-collection-hero__wrapper,
 .template-collection.dinveda_premium .dv-collection-hero .dv-collection-hero__wrapper,
 [data-template-suffix="dinveda-premium"] .dv-collection-hero .dv-collection-hero__wrapper,
@@ -23,6 +25,7 @@
   margin: 0 auto;
 }
 
+.template-collection .dv-collection-hero .dv-collection-hero__overlay,
 .template-collection.dinveda-premium .dv-collection-hero .dv-collection-hero__overlay,
 .template-collection.dinveda_premium .dv-collection-hero .dv-collection-hero__overlay,
 [data-template-suffix="dinveda-premium"] .dv-collection-hero .dv-collection-hero__overlay,
@@ -30,6 +33,7 @@
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
 }
 
+.template-collection .dv-collection-hero .dv-collection-hero__title,
 .template-collection.dinveda-premium .dv-collection-hero .dv-collection-hero__title,
 .template-collection.dinveda_premium .dv-collection-hero .dv-collection-hero__title,
 [data-template-suffix="dinveda-premium"] .dv-collection-hero .dv-collection-hero__title,
@@ -41,6 +45,7 @@
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+.template-collection .dv-collection-hero .dv-collection-hero__subtitle,
 .template-collection.dinveda-premium .dv-collection-hero .dv-collection-hero__subtitle,
 .template-collection.dinveda_premium .dv-collection-hero .dv-collection-hero__subtitle,
 [data-template-suffix="dinveda-premium"] .dv-collection-hero .dv-collection-hero__subtitle,
@@ -52,6 +57,7 @@
 }
 
 /* Trust Chips Premium Styling */
+.template-collection .dinveda-trust-cards,
 .template-collection.dinveda-premium .dinveda-trust-cards,
 .template-collection.dinveda_premium .dinveda-trust-cards,
 [data-template-suffix="dinveda-premium"] .dinveda-trust-cards,
@@ -59,18 +65,53 @@
   padding: var(--design-section-spacing-medium, 60px) 0;
 }
 
+.template-collection .dinveda-trust-cards__container,
+.template-collection.dinveda-premium .dinveda-trust-cards__container,
+.template-collection.dinveda_premium .dinveda-trust-cards__container,
+[data-template-suffix="dinveda-premium"] .dinveda-trust-cards__container,
+[data-template-suffix="dinveda_premium"] .dinveda-trust-cards__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.template-collection .dinveda-trust-cards__grid,
+.template-collection.dinveda-premium .dinveda-trust-cards__grid,
+.template-collection.dinveda_premium .dinveda-trust-cards__grid,
+[data-template-suffix="dinveda-premium"] .dinveda-trust-cards__grid,
+[data-template-suffix="dinveda_premium"] .dinveda-trust-cards__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+@media (max-width: 767px) {
+  .template-collection .dinveda-trust-cards__grid,
+  .template-collection.dinveda-premium .dinveda-trust-cards__grid,
+  .template-collection.dinveda_premium .dinveda-trust-cards__grid,
+  [data-template-suffix="dinveda-premium"] .dinveda-trust-cards__grid,
+  [data-template-suffix="dinveda_premium"] .dinveda-trust-cards__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.template-collection .dinveda-trust-cards__card,
 .template-collection.dinveda-premium .dinveda-trust-cards__card,
 .template-collection.dinveda_premium .dinveda-trust-cards__card,
 [data-template-suffix="dinveda-premium"] .dinveda-trust-cards__card,
 [data-template-suffix="dinveda_premium"] .dinveda-trust-cards__card {
-  background: var(--design-secondary-bg, #fafafa);
-  border-radius: 24px;
-  padding: var(--design-section-spacing-small, 24px);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  background: var(--design-secondary-bg, #fefaf6);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid rgba(234, 221, 207, 0.6);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
+.template-collection .dinveda-trust-cards__card:hover,
 .template-collection.dinveda-premium .dinveda-trust-cards__card:hover,
 .template-collection.dinveda_premium .dinveda-trust-cards__card:hover,
 [data-template-suffix="dinveda-premium"] .dinveda-trust-cards__card:hover,
@@ -79,7 +120,52 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
+.template-collection .dinveda-trust-cards__icon,
+.template-collection.dinveda-premium .dinveda-trust-cards__icon,
+.template-collection.dinveda_premium .dinveda-trust-cards__icon,
+[data-template-suffix="dinveda-premium"] .dinveda-trust-cards__icon,
+[data-template-suffix="dinveda_premium"] .dinveda-trust-cards__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.template-collection .dinveda-trust-cards__icon .material-symbols-outlined,
+.template-collection.dinveda-premium .dinveda-trust-cards__icon .material-symbols-outlined,
+.template-collection.dinveda_premium .dinveda-trust-cards__icon .material-symbols-outlined,
+[data-template-suffix="dinveda-premium"] .dinveda-trust-cards__icon .material-symbols-outlined,
+[data-template-suffix="dinveda_premium"] .dinveda-trust-cards__icon .material-symbols-outlined {
+  font-size: 3rem;
+  color: var(--design-accent-color, #b3814a);
+  font-variation-settings: 'FILL' 0, 'wght' 400;
+}
+
+.template-collection .dinveda-trust-cards__title,
+.template-collection.dinveda-premium .dinveda-trust-cards__title,
+.template-collection.dinveda_premium .dinveda-trust-cards__title,
+[data-template-suffix="dinveda-premium"] .dinveda-trust-cards__title,
+[data-template-suffix="dinveda_premium"] .dinveda-trust-cards__title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--design-text-color, #5a4533);
+  margin: 0 0 0.25rem 0;
+}
+
+.template-collection .dinveda-trust-cards__text,
+.template-collection.dinveda-premium .dinveda-trust-cards__text,
+.template-collection.dinveda_premium .dinveda-trust-cards__text,
+[data-template-suffix="dinveda-premium"] .dinveda-trust-cards__text,
+[data-template-suffix="dinveda_premium"] .dinveda-trust-cards__text {
+  font-size: 0.75rem;
+  color: var(--design-text-color, #5a4533);
+  opacity: 0.7;
+  margin: 0;
+  line-height: 1.4;
+}
+
 /* Toolbar Premium Styling */
+.template-collection .dinveda-collection-toolbar,
 .template-collection.dinveda-premium .dinveda-collection-toolbar,
 .template-collection.dinveda_premium .dinveda-collection-toolbar,
 [data-template-suffix="dinveda-premium"] .dinveda-collection-toolbar,
@@ -88,8 +174,11 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
+.template-collection .dinveda-collection-toolbar__inner,
 .template-collection.dinveda-premium .dinveda-collection-toolbar__inner,
-[data-template-suffix="dinveda-premium"] .dinveda-collection-toolbar__inner {
+.template-collection.dinveda_premium .dinveda-collection-toolbar__inner,
+[data-template-suffix="dinveda-premium"] .dinveda-collection-toolbar__inner,
+[data-template-suffix="dinveda_premium"] .dinveda-collection-toolbar__inner {
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 2rem;
@@ -100,28 +189,40 @@
   gap: 1rem;
 }
 
+.template-collection .dinveda-collection-toolbar__left,
 .template-collection.dinveda-premium .dinveda-collection-toolbar__left,
-[data-template-suffix="dinveda-premium"] .dinveda-collection-toolbar__left {
+.template-collection.dinveda_premium .dinveda-collection-toolbar__left,
+[data-template-suffix="dinveda-premium"] .dinveda-collection-toolbar__left,
+[data-template-suffix="dinveda_premium"] .dinveda-collection-toolbar__left {
   display: flex;
   align-items: center;
   gap: 1.5rem;
 }
 
+.template-collection .dinveda-collection-toolbar__right,
 .template-collection.dinveda-premium .dinveda-collection-toolbar__right,
-[data-template-suffix="dinveda-premium"] .dinveda-collection-toolbar__right {
+.template-collection.dinveda_premium .dinveda-collection-toolbar__right,
+[data-template-suffix="dinveda-premium"] .dinveda-collection-toolbar__right,
+[data-template-suffix="dinveda_premium"] .dinveda-collection-toolbar__right {
   display: flex;
   align-items: center;
   gap: 1.5rem;
 }
 
+.template-collection .dinveda-collection-toolbar__filter-label,
 .template-collection.dinveda-premium .dinveda-collection-toolbar__filter-label,
-[data-template-suffix="dinveda-premium"] .dinveda-collection-toolbar__filter-label {
+.template-collection.dinveda_premium .dinveda-collection-toolbar__filter-label,
+[data-template-suffix="dinveda-premium"] .dinveda-collection-toolbar__filter-label,
+[data-template-suffix="dinveda_premium"] .dinveda-collection-toolbar__filter-label {
   font-weight: 500;
   margin-right: 1rem;
 }
 
+.template-collection .dinveda-collection-toolbar__product-count,
 .template-collection.dinveda-premium .dinveda-collection-toolbar__product-count,
-[data-template-suffix="dinveda-premium"] .dinveda-collection-toolbar__product-count {
+.template-collection.dinveda_premium .dinveda-collection-toolbar__product-count,
+[data-template-suffix="dinveda-premium"] .dinveda-collection-toolbar__product-count,
+[data-template-suffix="dinveda_premium"] .dinveda-collection-toolbar__product-count {
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -129,15 +230,21 @@
   color: var(--design-text-color);
 }
 
+.template-collection .dinveda-collection-toolbar__category-filter,
 .template-collection.dinveda-premium .dinveda-collection-toolbar__category-filter,
-[data-template-suffix="dinveda-premium"] .dinveda-collection-toolbar__category-filter {
+.template-collection.dinveda_premium .dinveda-collection-toolbar__category-filter,
+[data-template-suffix="dinveda-premium"] .dinveda-collection-toolbar__category-filter,
+[data-template-suffix="dinveda_premium"] .dinveda-collection-toolbar__category-filter {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
+.template-collection .dinveda-collection-toolbar__filter-prefix,
 .template-collection.dinveda-premium .dinveda-collection-toolbar__filter-prefix,
-[data-template-suffix="dinveda-premium"] .dinveda-collection-toolbar__filter-prefix {
+.template-collection.dinveda_premium .dinveda-collection-toolbar__filter-prefix,
+[data-template-suffix="dinveda-premium"] .dinveda-collection-toolbar__filter-prefix,
+[data-template-suffix="dinveda_premium"] .dinveda-collection-toolbar__filter-prefix {
   font-family: var(--main-family);
   font-size: var(--design-body-font-size);
   color: var(--design-text-color);
@@ -146,15 +253,21 @@
   letter-spacing: 0.5px;
 }
 
+.template-collection .dinveda-collection-toolbar__category-links,
 .template-collection.dinveda-premium .dinveda-collection-toolbar__category-links,
-[data-template-suffix="dinveda-premium"] .dinveda-collection-toolbar__category-links {
+.template-collection.dinveda_premium .dinveda-collection-toolbar__category-links,
+[data-template-suffix="dinveda-premium"] .dinveda-collection-toolbar__category-links,
+[data-template-suffix="dinveda_premium"] .dinveda-collection-toolbar__category-links {
   display: flex;
   align-items: center;
   gap: 1.5rem;
 }
 
+.template-collection .dinveda-category-link,
 .template-collection.dinveda-premium .dinveda-category-link,
-[data-template-suffix="dinveda-premium"] .dinveda-category-link {
+.template-collection.dinveda_premium .dinveda-category-link,
+[data-template-suffix="dinveda-premium"] .dinveda-category-link,
+[data-template-suffix="dinveda_premium"] .dinveda-category-link {
   font-family: var(--main-family);
   font-size: var(--design-body-font-size);
   color: var(--design-text-color);
@@ -162,25 +275,37 @@
   transition: all 0.2s ease;
 }
 
+.template-collection .dinveda-category-link:hover,
 .template-collection.dinveda-premium .dinveda-category-link:hover,
-[data-template-suffix="dinveda-premium"] .dinveda-category-link:hover {
+.template-collection.dinveda_premium .dinveda-category-link:hover,
+[data-template-suffix="dinveda-premium"] .dinveda-category-link:hover,
+[data-template-suffix="dinveda_premium"] .dinveda-category-link:hover {
   opacity: 0.7;
 }
 
+.template-collection .dinveda-category-link.active,
 .template-collection.dinveda-premium .dinveda-category-link.active,
-[data-template-suffix="dinveda-premium"] .dinveda-category-link.active {
+.template-collection.dinveda_premium .dinveda-category-link.active,
+[data-template-suffix="dinveda-premium"] .dinveda-category-link.active,
+[data-template-suffix="dinveda_premium"] .dinveda-category-link.active {
   text-decoration: underline;
   font-weight: 500;
 }
 
 /* Premium Product Grid Styling */
+.template-collection .dinveda-premium-grid,
 .template-collection.dinveda-premium .dinveda-premium-grid,
-[data-template-suffix="dinveda-premium"] .dinveda-premium-grid {
+.template-collection.dinveda_premium .dinveda-premium-grid,
+[data-template-suffix="dinveda-premium"] .dinveda-premium-grid,
+[data-template-suffix="dinveda_premium"] .dinveda-premium-grid {
   padding: var(--design-section-spacing-medium) 0;
 }
 
+.template-collection .dinveda-premium-product-card,
 .template-collection.dinveda-premium .dinveda-premium-product-card,
-[data-template-suffix="dinveda-premium"] .dinveda-premium-product-card {
+.template-collection.dinveda_premium .dinveda-premium-product-card,
+[data-template-suffix="dinveda-premium"] .dinveda-premium-product-card,
+[data-template-suffix="dinveda_premium"] .dinveda-premium-product-card {
   background-color: var(--design-secondary-bg, #fafafa);
   border-radius: var(--design-button-radius, 12px);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -190,43 +315,61 @@
   min-height: 500px;
 }
 
+.template-collection .dinveda-premium-card-inner,
 .template-collection.dinveda-premium .dinveda-premium-card-inner,
-[data-template-suffix="dinveda-premium"] .dinveda-premium-card-inner {
+.template-collection.dinveda_premium .dinveda-premium-card-inner,
+[data-template-suffix="dinveda-premium"] .dinveda-premium-card-inner,
+[data-template-suffix="dinveda_premium"] .dinveda-premium-card-inner {
   display: flex;
   flex-direction: column;
   height: 100%;
   padding: var(--design-section-spacing-small, 24px);
 }
 
+.template-collection .dinveda-premium-product-card:hover,
 .template-collection.dinveda-premium .dinveda-premium-product-card:hover,
-[data-template-suffix="dinveda-premium"] .dinveda-premium-product-card:hover {
+.template-collection.dinveda_premium .dinveda-premium-product-card:hover,
+[data-template-suffix="dinveda-premium"] .dinveda-premium-product-card:hover,
+[data-template-suffix="dinveda_premium"] .dinveda-premium-product-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
+.template-collection .dinveda-premium-product-card .product-loop__item,
 .template-collection.dinveda-premium .dinveda-premium-product-card .product-loop__item,
-[data-template-suffix="dinveda-premium"] .dinveda-premium-product-card .product-loop__item {
+.template-collection.dinveda_premium .dinveda-premium-product-card .product-loop__item,
+[data-template-suffix="dinveda-premium"] .dinveda-premium-product-card .product-loop__item,
+[data-template-suffix="dinveda_premium"] .dinveda-premium-product-card .product-loop__item {
   background: transparent;
   border: none;
   box-shadow: none;
 }
 
+.template-collection .dinveda-premium-product-card .product-image,
 .template-collection.dinveda-premium .dinveda-premium-product-card .product-image,
-[data-template-suffix="dinveda-premium"] .dinveda-premium-product-card .product-image {
+.template-collection.dinveda_premium .dinveda-premium-product-card .product-image,
+[data-template-suffix="dinveda-premium"] .dinveda-premium-product-card .product-image,
+[data-template-suffix="dinveda_premium"] .dinveda-premium-product-card .product-image {
   padding: var(--design-section-spacing-small);
   text-align: center;
 }
 
+.template-collection .dinveda-premium-product-card .product-loop__img-wrapper,
 .template-collection.dinveda-premium .dinveda-premium-product-card .product-loop__img-wrapper,
-[data-template-suffix="dinveda-premium"] .dinveda-premium-product-card .product-loop__img-wrapper {
+.template-collection.dinveda_premium .dinveda-premium-product-card .product-loop__img-wrapper,
+[data-template-suffix="dinveda-premium"] .dinveda-premium-product-card .product-loop__img-wrapper,
+[data-template-suffix="dinveda_premium"] .dinveda-premium-product-card .product-loop__img-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 200px;
 }
 
+.template-collection .dinveda-premium-product-card .product-loop__title,
 .template-collection.dinveda-premium .dinveda-premium-product-card .product-loop__title,
-[data-template-suffix="dinveda-premium"] .dinveda-premium-product-card .product-loop__title {
+.template-collection.dinveda_premium .dinveda-premium-product-card .product-loop__title,
+[data-template-suffix="dinveda-premium"] .dinveda-premium-product-card .product-loop__title,
+[data-template-suffix="dinveda_premium"] .dinveda-premium-product-card .product-loop__title {
   font-family: var(--heading-family);
   font-size: var(--design-h3-size);
   font-weight: var(--heading-weight);
@@ -234,20 +377,29 @@
   margin-bottom: 0.5rem;
 }
 
+.template-collection .dinveda-premium-product-card .product-loop__title a,
 .template-collection.dinveda-premium .dinveda-premium-product-card .product-loop__title a,
-[data-template-suffix="dinveda-premium"] .dinveda-premium-product-card .product-loop__title a {
+.template-collection.dinveda_premium .dinveda-premium-product-card .product-loop__title a,
+[data-template-suffix="dinveda-premium"] .dinveda-premium-product-card .product-loop__title a,
+[data-template-suffix="dinveda_premium"] .dinveda-premium-product-card .product-loop__title a {
   color: var(--design-text-color);
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
+.template-collection .dinveda-premium-product-card .product-loop__title a:hover,
 .template-collection.dinveda-premium .dinveda-premium-product-card .product-loop__title a:hover,
-[data-template-suffix="dinveda-premium"] .dinveda-premium-product-card .product-loop__title a:hover {
+.template-collection.dinveda_premium .dinveda-premium-product-card .product-loop__title a:hover,
+[data-template-suffix="dinveda-premium"] .dinveda-premium-product-card .product-loop__title a:hover,
+[data-template-suffix="dinveda_premium"] .dinveda-premium-product-card .product-loop__title a:hover {
   color: var(--design-accent-color);
 }
 
+.template-collection .dinveda-product-meta-row,
 .template-collection.dinveda-premium .dinveda-product-meta-row,
-[data-template-suffix="dinveda-premium"] .dinveda-product-meta-row {
+.template-collection.dinveda_premium .dinveda-product-meta-row,
+[data-template-suffix="dinveda-premium"] .dinveda-product-meta-row,
+[data-template-suffix="dinveda_premium"] .dinveda-product-meta-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -255,8 +407,11 @@
   padding: 0 0.5rem;
 }
 
+.template-collection .dinveda-ritual-timing-label,
 .template-collection.dinveda-premium .dinveda-ritual-timing-label,
-[data-template-suffix="dinveda-premium"] .dinveda-ritual-timing-label {
+.template-collection.dinveda_premium .dinveda-ritual-timing-label,
+[data-template-suffix="dinveda-premium"] .dinveda-ritual-timing-label,
+[data-template-suffix="dinveda_premium"] .dinveda-ritual-timing-label {
   font-size: 0.75rem;
   text-transform: uppercase;
   color: var(--design-accent-color, #8b7355);
@@ -264,16 +419,22 @@
   letter-spacing: 0.5px;
 }
 
+.template-collection .dinveda-product-price,
 .template-collection.dinveda-premium .dinveda-product-price,
-[data-template-suffix="dinveda-premium"] .dinveda-product-price {
+.template-collection.dinveda_premium .dinveda-product-price,
+[data-template-suffix="dinveda-premium"] .dinveda-product-price,
+[data-template-suffix="dinveda_premium"] .dinveda-product-price {
   font-family: var(--main-family);
   font-size: var(--design-body-font-size);
   font-weight: 500;
   color: var(--design-text-color);
 }
 
+.template-collection .dinveda-premium-product-descriptor,
 .template-collection.dinveda-premium .dinveda-premium-product-descriptor,
-[data-template-suffix="dinveda-premium"] .dinveda-premium-product-descriptor {
+.template-collection.dinveda_premium .dinveda-premium-product-descriptor,
+[data-template-suffix="dinveda-premium"] .dinveda-premium-product-descriptor,
+[data-template-suffix="dinveda_premium"] .dinveda-premium-product-descriptor {
   font-family: var(--main-family);
   font-size: calc(var(--design-body-font-size) * 0.9);
   color: var(--design-text-color);
@@ -285,8 +446,11 @@
   flex-grow: 1;
 }
 
+.template-collection .dinveda-cta-button,
 .template-collection.dinveda-premium .dinveda-cta-button,
-[data-template-suffix="dinveda-premium"] .dinveda-cta-button {
+.template-collection.dinveda_premium .dinveda-cta-button,
+[data-template-suffix="dinveda-premium"] .dinveda-cta-button,
+[data-template-suffix="dinveda_premium"] .dinveda-cta-button {
   margin-top: auto;
   padding: 0.75rem 1.5rem;
   background: var(--design-secondary-bg, #fafafa);
@@ -303,16 +467,22 @@
   width: 100%;
 }
 
+.template-collection .dinveda-cta-button:hover,
 .template-collection.dinveda-premium .dinveda-cta-button:hover,
-[data-template-suffix="dinveda-premium"] .dinveda-cta-button:hover {
+.template-collection.dinveda_premium .dinveda-cta-button:hover,
+[data-template-suffix="dinveda-premium"] .dinveda-cta-button:hover,
+[data-template-suffix="dinveda_premium"] .dinveda-cta-button:hover {
   background: var(--design-text-color, #333);
   color: var(--design-secondary-bg, #fafafa);
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.template-collection .dinveda-premium-product-card .product-loop__price,
 .template-collection.dinveda-premium .dinveda-premium-product-card .product-loop__price,
-[data-template-suffix="dinveda-premium"] .dinveda-premium-product-card .product-loop__price {
+.template-collection.dinveda_premium .dinveda-premium-product-card .product-loop__price,
+[data-template-suffix="dinveda-premium"] .dinveda-premium-product-card .product-loop__price,
+[data-template-suffix="dinveda_premium"] .dinveda-premium-product-card .product-loop__price {
   font-family: var(--main-family);
   font-size: var(--design-body-font-size);
   font-weight: 500;
@@ -321,53 +491,77 @@
 }
 
 /* Card Padding Variants */
+.template-collection .premium-card-padding-small,
 .template-collection.dinveda-premium .premium-card-padding-small,
-[data-template-suffix="dinveda-premium"] .premium-card-padding-small {
+.template-collection.dinveda_premium .premium-card-padding-small,
+[data-template-suffix="dinveda-premium"] .premium-card-padding-small,
+[data-template-suffix="dinveda_premium"] .premium-card-padding-small {
   padding: calc(var(--design-section-spacing-small) * 0.5);
 }
 
+.template-collection .premium-card-padding-medium,
 .template-collection.dinveda-premium .premium-card-padding-medium,
-[data-template-suffix="dinveda-premium"] .premium-card-padding-medium {
+.template-collection.dinveda_premium .premium-card-padding-medium,
+[data-template-suffix="dinveda-premium"] .premium-card-padding-medium,
+[data-template-suffix="dinveda_premium"] .premium-card-padding-medium {
   padding: var(--design-section-spacing-small);
 }
 
+.template-collection .premium-card-padding-large,
 .template-collection.dinveda-premium .premium-card-padding-large,
-[data-template-suffix="dinveda-premium"] .premium-card-padding-large {
+.template-collection.dinveda_premium .premium-card-padding-large,
+[data-template-suffix="dinveda-premium"] .premium-card-padding-large,
+[data-template-suffix="dinveda_premium"] .premium-card-padding-large {
   padding: var(--design-section-spacing-medium);
 }
 
 /* Support Card Premium Styling */
+.template-collection .dinveda-support-card,
 .template-collection.dinveda-premium .dinveda-support-card,
-[data-template-suffix="dinveda-premium"] .dinveda-support-card {
+.template-collection.dinveda_premium .dinveda-support-card,
+[data-template-suffix="dinveda-premium"] .dinveda-support-card,
+[data-template-suffix="dinveda_premium"] .dinveda-support-card {
   margin: var(--design-section-spacing-large) 0;
   border-radius: var(--design-button-radius, 0);
 }
 
+.template-collection .dinveda-support-card__wrapper,
 .template-collection.dinveda-premium .dinveda-support-card__wrapper,
-[data-template-suffix="dinveda-premium"] .dinveda-support-card__wrapper {
+.template-collection.dinveda_premium .dinveda-support-card__wrapper,
+[data-template-suffix="dinveda-premium"] .dinveda-support-card__wrapper,
+[data-template-suffix="dinveda_premium"] .dinveda-support-card__wrapper {
   display: flex;
   align-items: stretch;
   min-height: 200px;
 }
 
+.template-collection .dinveda-support-card__left,
 .template-collection.dinveda-premium .dinveda-support-card__left,
-[data-template-suffix="dinveda-premium"] .dinveda-support-card__left {
+.template-collection.dinveda_premium .dinveda-support-card__left,
+[data-template-suffix="dinveda-premium"] .dinveda-support-card__left,
+[data-template-suffix="dinveda_premium"] .dinveda-support-card__left {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: var(--design-section-spacing-medium);
 }
 
+.template-collection .dinveda-support-card__right,
 .template-collection.dinveda-premium .dinveda-support-card__right,
-[data-template-suffix="dinveda-premium"] .dinveda-support-card__right {
+.template-collection.dinveda_premium .dinveda-support-card__right,
+[data-template-suffix="dinveda-premium"] .dinveda-support-card__right,
+[data-template-suffix="dinveda_premium"] .dinveda-support-card__right {
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: var(--design-section-spacing-medium);
 }
 
+.template-collection .dinveda-support-card__icon,
 .template-collection.dinveda-premium .dinveda-support-card__icon,
-[data-template-suffix="dinveda-premium"] .dinveda-support-card__icon {
+.template-collection.dinveda_premium .dinveda-support-card__icon,
+[data-template-suffix="dinveda-premium"] .dinveda-support-card__icon,
+[data-template-suffix="dinveda_premium"] .dinveda-support-card__icon {
   width: 80px;
   height: 80px;
   display: flex;
@@ -375,26 +569,38 @@
   justify-content: center;
 }
 
+.template-collection .dinveda-support-card__icon img,
 .template-collection.dinveda-premium .dinveda-support-card__icon img,
-[data-template-suffix="dinveda-premium"] .dinveda-support-card__icon img {
+.template-collection.dinveda_premium .dinveda-support-card__icon img,
+[data-template-suffix="dinveda-premium"] .dinveda-support-card__icon img,
+[data-template-suffix="dinveda_premium"] .dinveda-support-card__icon img {
   max-width: 100%;
   height: auto;
 }
 
+.template-collection .dinveda-support-card__title,
 .template-collection.dinveda-premium .dinveda-support-card__title,
-[data-template-suffix="dinveda-premium"] .dinveda-support-card__title {
+.template-collection.dinveda_premium .dinveda-support-card__title,
+[data-template-suffix="dinveda-premium"] .dinveda-support-card__title,
+[data-template-suffix="dinveda_premium"] .dinveda-support-card__title {
   margin: 0 0 1rem;
   font-size: var(--design-h2-size);
 }
 
+.template-collection .dinveda-support-card__text,
 .template-collection.dinveda-premium .dinveda-support-card__text,
-[data-template-suffix="dinveda-premium"] .dinveda-support-card__text {
+.template-collection.dinveda_premium .dinveda-support-card__text,
+[data-template-suffix="dinveda-premium"] .dinveda-support-card__text,
+[data-template-suffix="dinveda_premium"] .dinveda-support-card__text {
   margin-bottom: 1.5rem;
   line-height: 1.6;
 }
 
+.template-collection .dinveda-support-card__cta,
 .template-collection.dinveda-premium .dinveda-support-card__cta,
-[data-template-suffix="dinveda-premium"] .dinveda-support-card__cta {
+.template-collection.dinveda_premium .dinveda-support-card__cta,
+[data-template-suffix="dinveda-premium"] .dinveda-support-card__cta,
+[data-template-suffix="dinveda_premium"] .dinveda-support-card__cta {
   display: inline-block;
   padding: 0.75rem 1.5rem;
   background-color: var(--design-accent-color);
@@ -405,40 +611,58 @@
   font-weight: 500;
 }
 
+.template-collection .dinveda-support-card__cta:hover,
 .template-collection.dinveda-premium .dinveda-support-card__cta:hover,
-[data-template-suffix="dinveda-premium"] .dinveda-support-card__cta:hover {
+.template-collection.dinveda_premium .dinveda-support-card__cta:hover,
+[data-template-suffix="dinveda-premium"] .dinveda-support-card__cta:hover,
+[data-template-suffix="dinveda_premium"] .dinveda-support-card__cta:hover {
   background-color: var(--design-text-color);
   transform: translateX(4px);
 }
 
+.template-collection .dinveda-support-card__single,
 .template-collection.dinveda-premium .dinveda-support-card__single,
-[data-template-suffix="dinveda-premium"] .dinveda-support-card__single {
+.template-collection.dinveda_premium .dinveda-support-card__single,
+[data-template-suffix="dinveda-premium"] .dinveda-support-card__single,
+[data-template-suffix="dinveda_premium"] .dinveda-support-card__single {
   padding: var(--design-section-spacing-medium);
 }
 
+.template-collection .dinveda-support-card__content,
 .template-collection.dinveda-premium .dinveda-support-card__content,
-[data-template-suffix="dinveda-premium"] .dinveda-support-card__content {
+.template-collection.dinveda_premium .dinveda-support-card__content,
+[data-template-suffix="dinveda-premium"] .dinveda-support-card__content,
+[data-template-suffix="dinveda_premium"] .dinveda-support-card__content {
   text-align: center;
   max-width: 600px;
   margin: 0 auto;
 }
 
 /* Brand Story Split Section Styling */
+.template-collection .dinveda-split-story,
 .template-collection.dinveda-premium .dinveda-split-story,
-[data-template-suffix="dinveda-premium"] .dinveda-split-story {
+.template-collection.dinveda_premium .dinveda-split-story,
+[data-template-suffix="dinveda-premium"] .dinveda-split-story,
+[data-template-suffix="dinveda_premium"] .dinveda-split-story {
   padding: var(--design-section-spacing-large, 100px) 0;
   background: var(--design-secondary-bg, #fafafa);
 }
 
+.template-collection .dinveda-split-story__container,
 .template-collection.dinveda-premium .dinveda-split-story__container,
-[data-template-suffix="dinveda-premium"] .dinveda-split-story__container {
+.template-collection.dinveda_premium .dinveda-split-story__container,
+[data-template-suffix="dinveda-premium"] .dinveda-split-story__container,
+[data-template-suffix="dinveda_premium"] .dinveda-split-story__container {
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 2rem;
 }
 
+.template-collection .dinveda-split-story__eyebrow,
 .template-collection.dinveda-premium .dinveda-split-story__eyebrow,
-[data-template-suffix="dinveda-premium"] .dinveda-split-story__eyebrow {
+.template-collection.dinveda_premium .dinveda-split-story__eyebrow,
+[data-template-suffix="dinveda-premium"] .dinveda-split-story__eyebrow,
+[data-template-suffix="dinveda_premium"] .dinveda-split-story__eyebrow {
   font-size: 0.875rem;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -446,8 +670,11 @@
   margin-bottom: 0.5rem;
 }
 
+.template-collection .dinveda-split-story__title,
 .template-collection.dinveda-premium .dinveda-split-story__title,
-[data-template-suffix="dinveda-premium"] .dinveda-split-story__title {
+.template-collection.dinveda_premium .dinveda-split-story__title,
+[data-template-suffix="dinveda-premium"] .dinveda-split-story__title,
+[data-template-suffix="dinveda_premium"] .dinveda-split-story__title {
   font-size: var(--design-h2-size, 2.5rem);
   font-weight: var(--heading-weight);
   color: var(--design-text-color);
@@ -455,8 +682,11 @@
   line-height: 1.2;
 }
 
+.template-collection .dinveda-split-story__body,
 .template-collection.dinveda-premium .dinveda-split-story__body,
-[data-template-suffix="dinveda-premium"] .dinveda-split-story__body {
+.template-collection.dinveda_premium .dinveda-split-story__body,
+[data-template-suffix="dinveda-premium"] .dinveda-split-story__body,
+[data-template-suffix="dinveda_premium"] .dinveda-split-story__body {
   font-size: var(--design-body-font-size);
   color: var(--design-text-color);
   line-height: 1.6;
@@ -464,8 +694,11 @@
   opacity: 0.9;
 }
 
+.template-collection .dinveda-split-story__cta,
 .template-collection.dinveda-premium .dinveda-split-story__cta,
-[data-template-suffix="dinveda-premium"] .dinveda-split-story__cta {
+.template-collection.dinveda_premium .dinveda-split-story__cta,
+[data-template-suffix="dinveda-premium"] .dinveda-split-story__cta,
+[data-template-suffix="dinveda_premium"] .dinveda-split-story__cta {
   font-size: 0.875rem;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -475,60 +708,90 @@
   transition: opacity 0.2s ease;
 }
 
+.template-collection .dinveda-split-story__cta:hover,
 .template-collection.dinveda-premium .dinveda-split-story__cta:hover,
-[data-template-suffix="dinveda-premium"] .dinveda-split-story__cta:hover {
+.template-collection.dinveda_premium .dinveda-split-story__cta:hover,
+[data-template-suffix="dinveda-premium"] .dinveda-split-story__cta:hover,
+[data-template-suffix="dinveda_premium"] .dinveda-split-story__cta:hover {
   opacity: 0.7;
 }
 
 /* Responsive Adjustments */
 @media (max-width: 767px) {
+  .template-collection .dinveda-collection-toolbar__inner,
   .template-collection.dinveda-premium .dinveda-collection-toolbar__inner,
-  [data-template-suffix="dinveda-premium"] .dinveda-collection-toolbar__inner {
+  .template-collection.dinveda_premium .dinveda-collection-toolbar__inner,
+  [data-template-suffix="dinveda-premium"] .dinveda-collection-toolbar__inner,
+  [data-template-suffix="dinveda_premium"] .dinveda-collection-toolbar__inner {
     padding: 0 1rem;
     flex-direction: column;
     align-items: flex-start;
   }
 
+  .template-collection .dinveda-collection-toolbar__category-filter,
   .template-collection.dinveda-premium .dinveda-collection-toolbar__category-filter,
-  [data-template-suffix="dinveda-premium"] .dinveda-collection-toolbar__category-filter {
+  .template-collection.dinveda_premium .dinveda-collection-toolbar__category-filter,
+  [data-template-suffix="dinveda-premium"] .dinveda-collection-toolbar__category-filter,
+  [data-template-suffix="dinveda_premium"] .dinveda-collection-toolbar__category-filter {
     flex-wrap: wrap;
   }
 
+  .template-collection .dinveda-collection-toolbar__category-links,
   .template-collection.dinveda-premium .dinveda-collection-toolbar__category-links,
-  [data-template-suffix="dinveda-premium"] .dinveda-collection-toolbar__category-links {
+  .template-collection.dinveda_premium .dinveda-collection-toolbar__category-links,
+  [data-template-suffix="dinveda-premium"] .dinveda-collection-toolbar__category-links,
+  [data-template-suffix="dinveda_premium"] .dinveda-collection-toolbar__category-links {
     gap: 1rem;
   }
 
+  .template-collection .dinveda-support-card__wrapper,
   .template-collection.dinveda-premium .dinveda-support-card__wrapper,
-  [data-template-suffix="dinveda-premium"] .dinveda-support-card__wrapper {
+  .template-collection.dinveda_premium .dinveda-support-card__wrapper,
+  [data-template-suffix="dinveda-premium"] .dinveda-support-card__wrapper,
+  [data-template-suffix="dinveda_premium"] .dinveda-support-card__wrapper {
     flex-direction: column;
   }
 
+  .template-collection .dinveda-support-card__left,
   .template-collection.dinveda-premium .dinveda-support-card__left,
-  [data-template-suffix="dinveda-premium"] .dinveda-support-card__left {
+  .template-collection.dinveda_premium .dinveda-support-card__left,
+  [data-template-suffix="dinveda-premium"] .dinveda-support-card__left,
+  [data-template-suffix="dinveda_premium"] .dinveda-support-card__left {
     min-height: 150px;
   }
 
+  .template-collection .dinveda-support-card__right,
   .template-collection.dinveda-premium .dinveda-support-card__right,
-  [data-template-suffix="dinveda-premium"] .dinveda-support-card__right {
+  .template-collection.dinveda_premium .dinveda-support-card__right,
+  [data-template-suffix="dinveda-premium"] .dinveda-support-card__right,
+  [data-template-suffix="dinveda_premium"] .dinveda-support-card__right {
     padding: var(--design-section-spacing-small);
   }
 
+  .template-collection .dinveda-premium-product-card .product-loop__img-wrapper,
   .template-collection.dinveda-premium .dinveda-premium-product-card .product-loop__img-wrapper,
-  [data-template-suffix="dinveda-premium"] .dinveda-premium-product-card .product-loop__img-wrapper {
+  .template-collection.dinveda_premium .dinveda-premium-product-card .product-loop__img-wrapper,
+  [data-template-suffix="dinveda-premium"] .dinveda-premium-product-card .product-loop__img-wrapper,
+  [data-template-suffix="dinveda_premium"] .dinveda-premium-product-card .product-loop__img-wrapper {
     min-height: 150px;
   }
 }
 
 /* Hide vendor if disabled */
+.template-collection .dinveda-premium-product-card.hide-vendor .product-loop__vendor,
 .template-collection.dinveda-premium .dinveda-premium-product-card.hide-vendor .product-loop__vendor,
-[data-template-suffix="dinveda-premium"] .dinveda-premium-product-card.hide-vendor .product-loop__vendor {
+.template-collection.dinveda_premium .dinveda-premium-product-card.hide-vendor .product-loop__vendor,
+[data-template-suffix="dinveda-premium"] .dinveda-premium-product-card.hide-vendor .product-loop__vendor,
+[data-template-suffix="dinveda_premium"] .dinveda-premium-product-card.hide-vendor .product-loop__vendor {
   display: none;
 }
 
 /* Hide price if disabled */
+.template-collection .dinveda-premium-product-card.hide-price .product-loop__price,
 .template-collection.dinveda-premium .dinveda-premium-product-card.hide-price .product-loop__price,
-[data-template-suffix="dinveda-premium"] .dinveda-premium-product-card.hide-price .product-loop__price {
+.template-collection.dinveda_premium .dinveda-premium-product-card.hide-price .product-loop__price,
+[data-template-suffix="dinveda-premium"] .dinveda-premium-product-card.hide-price .product-loop__price,
+[data-template-suffix="dinveda_premium"] .dinveda-premium-product-card.hide-price .product-loop__price {
   display: none;
 }
 
