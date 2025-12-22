@@ -1,0 +1,31 @@
+{% comment %}
+  DEPRECATED: This section has been replaced by dinveda-recipe-preparation.liquid
+  This stub exists temporarily to allow Shopify validation during migration.
+  Please update all products to use the new "Anwendung & Zubereitung" section instead.
+{% endcomment %}
+
+<section
+  id="dinveda-ritual-preparation-{{ section.id }}"
+  class="dinveda-ritual-preparation-deprecated"
+  data-section-id="{{ section.id }}"
+  data-section-type="dinveda-ritual-preparation"
+  {{ section.shopify_attributes }}
+>
+  <div style="padding: 2rem; text-align: center; background-color: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; margin: 2rem auto; max-width: 800px;">
+    <p style="color: #856404; margin: 0;">
+      <strong>⚠️ This section is deprecated.</strong><br>
+      Please update this product to use the new "Anwendung & Zubereitung" section instead.
+    </p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Prep (Deprecated)",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [],
+  "blocks": [],
+  "presets": []
+}
+{% endschema %}
