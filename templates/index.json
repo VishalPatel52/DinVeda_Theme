@@ -11,12 +11,51 @@
   "sections": {
     "dinveda_hero": {
       "type": "dinveda-hero",
+      "blocks": {
+        "slide_1": {
+          "type": "hero_slide",
+          "settings": {
+            "image": "",
+            "heading": "Alte Weisheit für moderne Tage",
+            "subheading": "Entdecke Bio-Rituale aus Deutschland – im Rhythmus deines Alltags.",
+            "button_label": "Jetzt starten",
+            "button_link": "/collections/pflanzenmischungen"
+          }
+        },
+        "slide_2": {
+          "type": "hero_slide",
+          "settings": {
+            "image": "",
+            "heading": "Alte Weisheit für moderne Tage",
+            "subheading": "Entdecke Bio-Rituale aus Deutschland – im Rhythmus deines Alltags.",
+            "button_label": "Jetzt starten",
+            "button_link": "/collections/pflanzenmischungen"
+          }
+        },
+        "slide_3": {
+          "type": "hero_slide",
+          "settings": {
+            "image": "",
+            "heading": "Alte Weisheit für moderne Tage",
+            "subheading": "Entdecke Bio-Rituale aus Deutschland – im Rhythmus deines Alltags.",
+            "button_label": "Jetzt starten",
+            "button_link": "/collections/pflanzenmischungen"
+          }
+        }
+      },
+      "block_order": [
+        "slide_1",
+        "slide_2",
+        "slide_3"
+      ],
       "settings": {
         "image": "",
         "image_url": "https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?w=1920&q=80",
         "overlay_opacity": 70,
         "min_height_desktop": 600,
         "min_height_mobile": 520,
+        "autoplay_enabled": true,
+        "autoplay_interval": 4,
         "heading": "Alte Weisheit für moderne Tage",
         "subheading": "Entdecke Bio-Rituale aus Deutschland – im Rhythmus deines Alltags.",
         "button_label": "Jetzt starten",

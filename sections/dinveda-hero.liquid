@@ -1,15 +1,30 @@
 {% comment %}
   DinVeda Hero - Premium full-width hero with gradient overlay
-  German-first homepage hero section
-  Always renders with fallback background if no image is set
+  German-first homepage hero section with carousel support
+  Supports up to 5 images in a carousel with auto-rotation
+  Falls back to single image if no blocks are added
 {% endcomment %}
 
 {%- liquid
+  assign hero_slide_count = 0
+  for block in section.blocks
+    if block.type == 'hero_slide'
+      assign hero_slide_count = hero_slide_count | plus: 1
+    endif
+  endfor
+  
+  assign has_hero_slides = false
+  if hero_slide_count > 0
+    assign has_hero_slides = true
+  endif
+  
   assign hero_image = section.settings.image
   assign hero_image_url = section.settings.image_url
   assign overlay_opacity = section.settings.overlay_opacity | default: 50
   assign min_height_desktop = section.settings.min_height_desktop | default: 640
   assign min_height_mobile = section.settings.min_height_mobile | default: 520
+  assign autoplay_interval = section.settings.autoplay_interval | default: 4
+  assign autoplay_enabled = section.settings.autoplay_enabled | default: true
   
   comment
     For local testing: if no uploaded image but image_url is provided, use that
@@ -19,68 +34,286 @@
   else
     assign use_url_image = false
   endif
+  
+  comment
+    Determine if we should use carousel mode (hero_slide blocks exist) or single image mode
+  endcomment
+  if has_hero_slides
+    assign use_carousel = true
+  elsif hero_image != blank or use_url_image
+    assign use_carousel = false
+  else
+    assign use_carousel = false
+  endif
 -%}
 
 <section
   id="dinveda-hero-{{ section.id }}"
-  class="dinveda-hero{% unless hero_image %} dinveda-hero--no-image{% endunless %}"
+  class="dinveda-hero{% unless use_carousel or hero_image %} dinveda-hero--no-image{% endunless %}{% if use_carousel %} dinveda-hero--carousel{% endif %}"
   data-section-id="{{ section.id }}"
   data-section-type="dinveda-hero"
+  data-autoplay-interval="{{ autoplay_interval }}"
+  data-autoplay-enabled="{{ autoplay_enabled }}"
   style="--hero-min-height-desktop: {{ min_height_desktop }}px; --hero-min-height-mobile: {{ min_height_mobile }}px; --hero-overlay-opacity: {{ overlay_opacity | divided_by: 100.0 }};"
 >
   <div class="dinveda-hero__wrapper">
-    <div class="dinveda-hero__background{% if hero_image != blank or use_url_image %} dinveda-hero__background--has-image{% else %} dinveda-hero__background--fallback{% endif %}">
-      {% if hero_image != blank %}
-        <picture>
-          <source
-            media="(max-width: 767px)"
-            srcset="{{ hero_image | image_url: width: 800 }} 1x, {{ hero_image | image_url: width: 1600 }} 2x"
-          >
+    {% if use_carousel %}
+      {% comment %} Carousel mode with blocks {% endcomment %}
+      <div class="dinveda-hero__slides-container">
+        {% for block in section.blocks %}
+          {% if block.type == 'hero_slide' %}
+            {%- liquid
+              assign slide_image = block.settings.image
+              assign slide_heading = block.settings.heading
+              assign slide_subheading = block.settings.subheading
+              assign slide_button_label = block.settings.button_label
+              assign slide_button_link = block.settings.button_link
+              
+              comment
+                Use block-level content if provided, otherwise fall back to section-level
+              endcomment
+              if slide_heading == blank
+                assign slide_heading = section.settings.heading
+              endif
+              if slide_subheading == blank
+                assign slide_subheading = section.settings.subheading
+              endif
+              if slide_button_label == blank
+                assign slide_button_label = section.settings.button_label
+              endif
+              if slide_button_link == blank
+                assign slide_button_link = section.settings.button_link
+              endif
+            -%}
+            
+            <div 
+              class="dinveda-hero__slide{% if forloop.first %} is-active{% endif %}" 
+              data-slide-index="{{ forloop.index0 }}"
+              {{ block.shopify_attributes }}
+            >
+              <div class="dinveda-hero__background{% if slide_image != blank %} dinveda-hero__background--has-image{% else %} dinveda-hero__background--fallback{% endif %}">
+                {% if slide_image != blank %}
+                  <picture>
+                    <source
+                      media="(max-width: 767px)"
+                      srcset="{{ slide_image | image_url: width: 800 }} 1x, {{ slide_image | image_url: width: 1600 }} 2x"
+                    >
+                    <img
+                      src="{{ slide_image | image_url: width: 1920 }}"
+                      srcset="{{ slide_image | image_url: width: 1920 }} 1x, {{ slide_image | image_url: width: 3840 }} 2x"
+                      alt="{{ slide_image.alt | escape }}"
+                      class="dinveda-hero__image"
+                      loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                      fetchpriority="{% if forloop.first %}high{% else %}low{% endif %}"
+                      width="{{ slide_image.width }}"
+                      height="{{ slide_image.height }}"
+                    >
+                  </picture>
+                {% endif %}
+                <div class="dinveda-hero__overlay"></div>
+              </div>
+              
+              <div class="dinveda-hero__content">
+                <div class="dinveda-hero__inner">
+                  {% if slide_heading != blank %}
+                    <h1 class="dinveda-hero__heading">{{ slide_heading | escape }}</h1>
+                  {% endif %}
+
+                  {% if slide_subheading != blank %}
+                    <p class="dinveda-hero__subheading">{{ slide_subheading | escape }}</p>
+                  {% endif %}
+
+                  {% if slide_button_label != blank and slide_button_link != blank %}
+                    <a
+                      href="{{ slide_button_link }}"
+                      class="dinveda-hero__button"
+                    >
+                      {{ slide_button_label | escape }}
+                    </a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      
+      {% comment %} Navigation dots {% endcomment %}
+      {% if hero_slide_count > 1 %}
+        <div class="dinveda-hero__dots">
+          {% for block in section.blocks %}
+            {% if block.type == 'hero_slide' %}
+              <button 
+                class="dinveda-hero__dot{% if forloop.first %} is-active{% endif %}" 
+                data-slide-index="{{ forloop.index0 }}"
+                aria-label="Go to slide {{ forloop.index }}"
+                type="button"
+              >
+                <span class="visually-hidden">Slide {{ forloop.index }}</span>
+              </button>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% else %}
+      {% comment %} Single image mode (backward compatibility) {% endcomment %}
+      <div class="dinveda-hero__background{% if hero_image != blank or use_url_image %} dinveda-hero__background--has-image{% else %} dinveda-hero__background--fallback{% endif %}">
+        {% if hero_image != blank %}
+          <picture>
+            <source
+              media="(max-width: 767px)"
+              srcset="{{ hero_image | image_url: width: 800 }} 1x, {{ hero_image | image_url: width: 1600 }} 2x"
+            >
+            <img
+              src="{{ hero_image | image_url: width: 1920 }}"
+              srcset="{{ hero_image | image_url: width: 1920 }} 1x, {{ hero_image | image_url: width: 3840 }} 2x"
+              alt="{{ hero_image.alt | escape }}"
+              class="dinveda-hero__image"
+              loading="eager"
+              fetchpriority="high"
+              width="{{ hero_image.width }}"
+              height="{{ hero_image.height }}"
+            >
+          </picture>
+        {% elsif use_url_image %}
           <img
-            src="{{ hero_image | image_url: width: 1920 }}"
-            srcset="{{ hero_image | image_url: width: 1920 }} 1x, {{ hero_image | image_url: width: 3840 }} 2x"
-            alt="{{ hero_image.alt | escape }}"
+            src="{{ hero_image_url }}"
+            alt="Hero image"
             class="dinveda-hero__image"
             loading="eager"
             fetchpriority="high"
-            width="{{ hero_image.width }}"
-            height="{{ hero_image.height }}"
           >
-        </picture>
-      {% elsif use_url_image %}
-        <img
-          src="{{ hero_image_url }}"
-          alt="Hero image"
-          class="dinveda-hero__image"
-          loading="eager"
-          fetchpriority="high"
-        >
-      {% endif %}
-      <div class="dinveda-hero__overlay"></div>
-    </div>
-
-    <div class="dinveda-hero__content">
-      <div class="dinveda-hero__inner">
-        {% if section.settings.heading != blank %}
-          <h1 class="dinveda-hero__heading">{{ section.settings.heading | escape }}</h1>
         {% endif %}
-
-        {% if section.settings.subheading != blank %}
-          <p class="dinveda-hero__subheading">{{ section.settings.subheading | escape }}</p>
-        {% endif %}
-
-        {% if section.settings.button_label != blank and section.settings.button_link != blank %}
-          <a
-            href="{{ section.settings.button_link }}"
-            class="dinveda-hero__button"
-          >
-            {{ section.settings.button_label | escape }}
-          </a>
-        {% endif %}
+        <div class="dinveda-hero__overlay"></div>
       </div>
-    </div>
+
+      <div class="dinveda-hero__content">
+        <div class="dinveda-hero__inner">
+          {% if section.settings.heading != blank %}
+            <h1 class="dinveda-hero__heading">{{ section.settings.heading | escape }}</h1>
+          {% endif %}
+
+          {% if section.settings.subheading != blank %}
+            <p class="dinveda-hero__subheading">{{ section.settings.subheading | escape }}</p>
+          {% endif %}
+
+          {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+            <a
+              href="{{ section.settings.button_link }}"
+              class="dinveda-hero__button"
+            >
+              {{ section.settings.button_label | escape }}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
   </div>
 </section>
+
+{% if use_carousel and hero_slide_count > 1 %}
+  <script>
+    (function() {
+      'use strict';
+      
+      var section = document.getElementById('dinveda-hero-{{ section.id }}');
+      if (!section) return;
+      
+      var slides = section.querySelectorAll('.dinveda-hero__slide');
+      var dots = section.querySelectorAll('.dinveda-hero__dot');
+      
+      if (slides.length <= 1) return;
+      
+      var currentIndex = 0;
+      var autoplayInterval = null;
+      var autoplayEnabled = section.dataset.autoplayEnabled === 'true';
+      var autoplayDelay = parseInt(section.dataset.autoplayInterval) * 1000 || 4000;
+      var pauseTimeout = null;
+      var isPaused = false;
+      
+      function showSlide(index) {
+        if (index < 0 || index >= slides.length) return;
+        
+        // Update slides
+        slides.forEach(function(slide, i) {
+          if (i === index) {
+            slide.classList.add('is-active');
+          } else {
+            slide.classList.remove('is-active');
+          }
+        });
+        
+        // Update dots
+        dots.forEach(function(dot, i) {
+          if (i === index) {
+            dot.classList.add('is-active');
+          } else {
+            dot.classList.remove('is-active');
+          }
+        });
+        
+        currentIndex = index;
+      }
+      
+      function nextSlide() {
+        var nextIndex = (currentIndex + 1) % slides.length;
+        showSlide(nextIndex);
+      }
+      
+      function startAutoplay() {
+        if (!autoplayEnabled || slides.length <= 1) return;
+        
+        stopAutoplay();
+        autoplayInterval = setInterval(function() {
+          if (!isPaused) {
+            nextSlide();
+          }
+        }, autoplayDelay);
+      }
+      
+      function stopAutoplay() {
+        if (autoplayInterval) {
+          clearInterval(autoplayInterval);
+          autoplayInterval = null;
+        }
+      }
+      
+      function pauseAutoplay() {
+        isPaused = true;
+        if (pauseTimeout) {
+          clearTimeout(pauseTimeout);
+        }
+        pauseTimeout = setTimeout(function() {
+          isPaused = false;
+        }, 2000);
+      }
+      
+      // Dot navigation
+      dots.forEach(function(dot) {
+        dot.addEventListener('click', function() {
+          var index = parseInt(dot.dataset.slideIndex) || 0;
+          showSlide(index);
+          pauseAutoplay();
+        });
+      });
+      
+      // Pause on hover
+      section.addEventListener('mouseenter', function() {
+        isPaused = true;
+      });
+      
+      section.addEventListener('mouseleave', function() {
+        isPaused = false;
+      });
+      
+      // Initialize
+      showSlide(0);
+      if (autoplayEnabled) {
+        startAutoplay();
+      }
+    })();
+  </script>
+{% endif %}
 
 {% schema %}
 {
@@ -90,19 +323,41 @@
   "settings": [
     {
       "type": "header",
-      "content": "Image"
+      "content": "Carousel Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay_enabled",
+      "label": "Enable autoplay",
+      "default": true,
+      "info": "Automatically rotate through carousel images"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_interval",
+      "label": "Autoplay interval",
+      "min": 3,
+      "max": 5,
+      "step": 1,
+      "unit": "s",
+      "default": 4,
+      "info": "Time between slide changes (3-5 seconds)"
+    },
+    {
+      "type": "header",
+      "content": "Single Image (Fallback)"
     },
     {
       "type": "image_picker",
       "id": "image",
       "label": "Hero image",
-      "info": "Recommended: 1920x800px or similar wide ratio. If not set, a warm beige background will be shown."
+      "info": "Used if no carousel blocks are added. Recommended: 1920x800px or similar wide ratio."
     },
     {
       "type": "text",
       "id": "image_url",
       "label": "Hero image URL (for local testing)",
-      "info": "Optional: Use a direct image URL for local testing. This will be used if no image is uploaded above. Example: https://images.unsplash.com/photo-..."
+      "info": "Optional: Use a direct image URL for local testing. This will be used if no image is uploaded above."
     },
     {
       "type": "header",
@@ -143,30 +398,77 @@
     },
     {
       "type": "header",
-      "content": "Content"
+      "content": "Default Content"
     },
     {
       "type": "text",
       "id": "heading",
       "label": "Heading (H1)",
-      "default": "Alte Weisheit für moderne Tage"
+      "default": "Alte Weisheit für moderne Tage",
+      "info": "Used as fallback if individual slides don't have their own heading"
     },
     {
       "type": "textarea",
       "id": "subheading",
       "label": "Subheading",
-      "default": "Entdecke Bio-Rituale aus Deutschland – im Rhythmus deines Alltags."
+      "default": "Entdecke Bio-Rituale aus Deutschland – im Rhythmus deines Alltags.",
+      "info": "Used as fallback if individual slides don't have their own subheading"
     },
     {
       "type": "text",
       "id": "button_label",
       "label": "Button label",
-      "default": "Jetzt starten"
+      "default": "Jetzt starten",
+      "info": "Used as fallback if individual slides don't have their own button"
     },
     {
       "type": "url",
       "id": "button_link",
-      "label": "Button link"
+      "label": "Button link",
+      "info": "Used as fallback if individual slides don't have their own button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero_slide",
+      "name": "Hero Slide",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Slide image",
+          "info": "Recommended: 1920x800px or similar wide ratio"
+        },
+        {
+          "type": "header",
+          "content": "Slide Content (Optional)"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "info": "Leave blank to use default heading from section settings"
+        },
+        {
+          "type": "textarea",
+          "id": "subheading",
+          "label": "Subheading",
+          "info": "Leave blank to use default subheading from section settings"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "info": "Leave blank to use default button label from section settings"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link",
+          "info": "Leave blank to use default button link from section settings"
+        }
+      ]
     }
   ],
   "presets": [

@@ -148,6 +148,146 @@
 }
 
 /* ============================================
+   Hero Carousel Styles
+   ============================================ */
+
+/* Slides container */
+.dinveda-hero__slides-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: var(--hero-min-height-desktop, 700px);
+}
+
+/* Individual slide */
+.dinveda-hero__slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  min-height: var(--hero-min-height-desktop, 700px);
+  opacity: 0;
+  z-index: 1;
+  transition: opacity 600ms ease-in-out;
+  pointer-events: none;
+}
+
+.dinveda-hero__slide.is-active {
+  opacity: 1;
+  z-index: 2;
+  pointer-events: auto;
+}
+
+.dinveda-hero__slide .dinveda-hero__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.dinveda-hero__slide .dinveda-hero__content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 100px var(--design-section-spacing-medium) 80px;
+  min-height: var(--hero-min-height-desktop, 700px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+/* Navigation dots */
+.dinveda-hero__dots {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--design-section-spacing-medium);
+}
+
+.dinveda-hero__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  background-color: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.dinveda-hero__dot:hover {
+  border-color: rgba(255, 255, 255, 0.8);
+  transform: scale(1.2);
+}
+
+.dinveda-hero__dot.is-active {
+  background-color: #ffffff;
+  border-color: #ffffff;
+  width: 12px;
+  height: 12px;
+}
+
+.dinveda-hero__dot .visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Carousel mode adjustments */
+.dinveda-hero--carousel .dinveda-hero__wrapper {
+  position: relative;
+}
+
+/* Mobile carousel styles */
+@media (max-width: 767px) {
+  .dinveda-hero__slides-container {
+    min-height: var(--hero-min-height-mobile, 520px);
+  }
+
+  .dinveda-hero__slide {
+    min-height: var(--hero-min-height-mobile, 520px);
+  }
+
+  .dinveda-hero__slide .dinveda-hero__content {
+    padding: 60px 24px 50px;
+    min-height: var(--hero-min-height-mobile, 520px);
+  }
+
+  .dinveda-hero__dots {
+    bottom: 30px;
+    gap: 10px;
+  }
+
+  .dinveda-hero__dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .dinveda-hero__dot.is-active {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+/* ============================================
    Trust Cards Section
    ============================================ */
 
