@@ -292,7 +292,7 @@
    ============================================ */
 
 .dinveda-trust-cards {
-  padding: var(--design-section-spacing-large) 0;
+  padding: var(--design-section-spacing-medium) 0;
   width: 100%;
   background-color: var(--design-bg-color);
 }
@@ -306,8 +306,15 @@
 .dinveda-trust-cards__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
+  gap: 32px;
   align-items: stretch;
+}
+
+/* Trust Cards - Card Wrapper for overlay positioning */
+.dinveda-trust-cards__card-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: visible; /* Allow overlay to extend outside */
 }
 
 .dinveda-trust-cards__card {
@@ -315,7 +322,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 48px 32px;
+  padding: 32px 24px;
   background-color: #ffffff;
   border-radius: 16px;
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
@@ -329,21 +336,27 @@
 }
 
 .dinveda-trust-cards__icon {
-  width: 56px;
-  height: 56px;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   color: var(--design-text-color);
   flex-shrink: 0;
+}
+
+.dinveda-trust-cards__icon .material-symbols-outlined {
+  font-size: 2.5rem;
+  color: var(--design-text-color);
+  font-variation-settings: 'FILL' 0, 'wght' 400;
 }
 
 .dinveda-trust-cards__icon svg {
   width: 100%;
   height: 100%;
-  max-width: 56px;
-  max-height: 56px;
+  max-width: 48px;
+  max-height: 48px;
 }
 
 .dinveda-trust-cards__title {
@@ -353,8 +366,11 @@
   font-style: var(--heading-style);
   letter-spacing: var(--heading-spacing);
   color: var(--design-text-color);
-  margin: 0 0 16px 0;
+  margin: 0 0 12px 0;
   line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dinveda-trust-cards__text {
@@ -366,6 +382,50 @@
   margin: 0;
   opacity: 0.85;
   flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Trust Cards - Overlay Image (subtle personality layer) */
+.dinveda-trust-cards__overlay {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none; /* Don't block card clicks */
+  width: var(--ov-size, 64px);
+  height: var(--ov-size, 64px);
+  transform: translate(var(--ov-x, -8px), var(--ov-y, -40px));
+  transition: transform 0.3s ease;
+  opacity: 0.85; /* Subtle, not dominant */
+}
+
+.dinveda-trust-cards__overlay-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Anchor Position Presets */
+.dinveda-trust-cards__overlay--top_left {
+  top: 0;
+  left: 0;
+}
+
+.dinveda-trust-cards__overlay--top_center {
+  top: 0;
+  left: 50%;
+  transform: translate(calc(-50% + var(--ov-x, -8px)), var(--ov-y, -40px));
+}
+
+.dinveda-trust-cards__overlay--top_right {
+  top: 0;
+  right: 0;
 }
 
 /* ============================================
@@ -568,6 +628,15 @@
 
   .dinveda-trust-cards__text {
     font-size: calc(var(--design-body-font-size) * 0.95);
+  }
+  
+  .dinveda-trust-cards__card-wrapper {
+    overflow: visible;
+  }
+  
+  .dinveda-trust-cards__overlay {
+    width: clamp(40px, var(--ov-size, 64px), 80px);
+    height: clamp(40px, var(--ov-size, 64px), 80px);
   }
 
   /* Ritual Picker Mobile - handled by section-dinveda-ritual-picker.css */

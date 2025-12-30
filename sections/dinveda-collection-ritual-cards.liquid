@@ -1,0 +1,574 @@
+{% comment %}
+  DinVeda Collection Ritual Cards - Display collection products in ritual picker card style
+  Dynamically pulls product data from collection with metafield mapping
+{% endcomment %}
+
+{%- liquid
+  assign page_limit = section.settings.items_per_page | default: 12
+  assign layout = section.settings.layout | default: 'grid_4'
+  assign background_mode = section.settings.background_mode | default: 'design_bg'
+  assign button_label = section.settings.button_label | default: 'Zu diesem Ritual'
+  
+  # Get current filter from URL
+  assign current_filter = ''
+  if request.url contains '?filter='
+    assign url_parts = request.url | split: '?filter='
+    if url_parts.size > 1
+      assign current_filter = url_parts[1] | split: '&' | first | split: '#' | first
+    endif
+  endif
+  
+  assign empty_collection = true
+  if collection.products.size > 0
+    assign empty_collection = false
+  endif
+-%}
+
+<link rel="preload" href="{{ 'section-dinveda-ritual-picker.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{{ 'section-dinveda-ritual-picker.css' | asset_url }}"></noscript>
+
+<section
+  id="dinveda-collection-ritual-cards-{{ section.id }}"
+  class="dinveda-ritual-picker dinveda-ritual-picker--layout-{{ layout }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="dinveda-collection-ritual-cards"
+  data-collection-handle="{{ collection.handle }}"
+  data-empty="{{ empty_collection }}"
+>
+  <div class="dinveda-ritual-picker__container">
+    
+    {% paginate collection.products by page_limit %}
+      {%- if collection.products.size >= 1 -%}
+        <div class="dinveda-ritual-picker__grid dinveda-ritual-picker__grid--{{ layout }}">
+          {% for product in collection.products limit: page_limit %}
+            {%- liquid
+              # Filter logic - check if product matches current filter
+              assign show_product = true
+              if current_filter != blank and current_filter != ''
+                unless product.tags contains current_filter
+                  assign show_product = false
+                endunless
+              endif
+            -%}
+            
+            {% if show_product %}
+              {%- liquid
+                # Map product metafields to card content
+                # Phase label: ritual_timing with tag fallback
+                assign phase_label = product.metafields.dinveda.ritual_timing
+                if phase_label == blank
+                  if product.tags contains 'Morgen'
+                    assign phase_label = 'MORGEN | AKTIVIEREN'
+                  elsif product.tags contains 'Tag'
+                    assign phase_label = 'TAG | ZENTRIEREN'
+                  elsif product.tags contains 'Abend'
+                    assign phase_label = 'ABEND | LOSLASSEN'
+                  elsif product.tags contains 'Balance'
+                    assign phase_label = 'BALANCE | AUSGLEICHEN'
+                  endif
+                else
+                  assign phase_label = phase_label | upcase
+                endif
+                
+                # Blend name: product title
+                assign blend_name = product.title
+                
+                # Quote line: animal_quote or ritual_tagline
+                assign quote_line = product.metafields.dinveda.animal_quote
+                if quote_line == blank
+                  assign quote_line = product.metafields.dinveda.ritual_tagline
+                endif
+                
+                # Descriptor: first line of ritual_usage or product description
+                assign descriptor = ''
+                assign ritual_usage = product.metafields.dinveda.ritual_usage
+                if ritual_usage != blank
+                  assign desc_stripped = ritual_usage | strip_html
+                  assign desc_first_line = desc_stripped | split: '.' | first | split: '!' | first | split: '?' | first
+                  if desc_first_line.size > 80
+                    assign descriptor = desc_first_line | truncate: 80, '...'
+                  else
+                    assign descriptor = desc_first_line
+                  endif
+                elsif product.description != blank
+                  assign desc_stripped = product.description | strip_html
+                  assign desc_first_line = desc_stripped | split: '.' | first | split: '!' | first | split: '?' | first
+                  if desc_first_line.size > 80
+                    assign descriptor = desc_first_line | truncate: 80, '...'
+                  else
+                    assign descriptor = desc_first_line
+                  endif
+                endif
+                
+                # Attribution: animal_name formatted as "— sagt der {animal}"
+                assign animal_name = product.metafields.dinveda.animal_name
+                assign attribution_line = ''
+                if animal_name != blank
+                  assign attribution_line = '— sagt der ' | append: animal_name
+                endif
+                
+                # Image: product featured image
+                assign card_image = product.featured_image
+                
+                # Link: product URL
+                assign card_link = product.url
+                
+                # Image alt
+                assign image_alt = product.featured_image.alt | default: product.title
+                
+                # Product variant info for quick add
+                assign current_variant = product.selected_or_first_available_variant
+                assign is_single_variant = false
+                if product.variants.size == 1
+                  assign is_single_variant = true
+                endif
+                assign product_available = current_variant.available
+                assign product_price = current_variant.price | money
+              -%}
+              
+              <article 
+                class="dinveda-ritual-picker__card{% if card_link != blank %} dinveda-ritual-picker__card--has-link{% endif %}"
+                data-product-id="{{ product.id }}"
+                data-product-handle="{{ product.handle }}"
+                data-single-variant="{{ is_single_variant }}"
+                data-variant-id="{{ current_variant.id }}"
+              >
+                {% if card_link != blank %}
+                  <a href="{{ card_link }}" class="dinveda-ritual-picker__card-link" aria-label="{{ blend_name | escape }}">
+                {% endif %}
+                
+                <div class="dinveda-ritual-picker__card-inner">
+                  
+                  {%- comment -%} Image {%- endcomment -%}
+                  {% if card_image != blank %}
+                    <div class="dinveda-ritual-picker__image-wrapper">
+                      {{ card_image | image_url: width: 600 | image_tag: alt: image_alt, loading: 'lazy', class: 'dinveda-ritual-picker__image' }}
+                    </div>
+                  {% else %}
+                    <div class="dinveda-ritual-picker__image-wrapper dinveda-ritual-picker__image-wrapper--placeholder">
+                      {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                    </div>
+                  {% endif %}
+
+                  {%- comment -%} Content {%- endcomment -%}
+                  <div class="dinveda-ritual-picker__content">
+                    
+                    {% if phase_label != blank %}
+                      <p class="dinveda-ritual-picker__phase-label">{{ phase_label | escape }}</p>
+                    {% endif %}
+
+                    {% if blend_name != blank %}
+                      <h3 class="dinveda-ritual-picker__blend-name">{{ blend_name | escape }}</h3>
+                    {% endif %}
+
+                    {% if quote_line != blank or descriptor != blank or attribution_line != blank %}
+                      <div class="dinveda-ritual-picker__quote-block">
+                        {% if quote_line != blank %}
+                          <p class="dinveda-ritual-picker__quote-line">{{ quote_line | escape }}</p>
+                        {% endif %}
+                        {% if descriptor != blank %}
+                          <p class="dinveda-ritual-picker__descriptor">{{ descriptor | escape }}</p>
+                        {% endif %}
+                        {% if attribution_line != blank %}
+                          <p class="dinveda-ritual-picker__animal-name">{{ attribution_line | escape }}</p>
+                        {% endif %}
+                      </div>
+                    {% endif %}
+
+                    {%- comment -%} Buttons {%- endcomment -%}
+                    <div class="dinveda-ritual-picker__button-wrapper">
+                      {%- comment -%} Quick Add to Cart Button {%- endcomment -%}
+                      {% if section.settings.enable_quick_add and product_available %}
+                        {% form 'product', product, id: 'quick-add-form-' | append: product.id, class: 'dinveda-ritual-picker__quick-add-form', data-product-id: product.id %}
+                          <input type="hidden" name="id" value="{{ current_variant.id }}">
+                          <button
+                            type="submit"
+                            class="dinveda-ritual-picker__quick-add-button button{% if section.settings.quick_add_button_style == 'primary' %} btn-primary{% else %} btn-outline{% endif %}"
+                            data-quick-add
+                            data-variant-id="{{ current_variant.id }}"
+                            {% unless product_available %}disabled{% endunless %}
+                            {% if is_single_variant == false and section.settings.multi_variant_behavior == 'redirect' %}data-redirect-to-product{% endif %}
+                          >
+                            <span class="dinveda-ritual-picker__quick-add-text" data-add-to-cart-text>
+                              {% if section.settings.show_price_on_button %}
+                                {{ product.price | money }} — 
+                              {% endif %}
+                              {{ section.settings.quick_add_button_label | default: 'In den Warenkorb' }}
+                            </span>
+                            <span class="dinveda-ritual-picker__quick-add-loading" style="display: none;">
+                              {{ 'products.product.adding' | t | default: 'Adding...' }}
+                            </span>
+                          </button>
+                          <div class="dinveda-ritual-picker__quick-add-message dinveda-ritual-picker__quick-add-success" style="display: none;">
+                            {{ 'products.product.added' | t | default: 'Added to cart!' }}
+                          </div>
+                          <div class="dinveda-ritual-picker__quick-add-message dinveda-ritual-picker__quick-add-error" style="display: none;">
+                            {{ 'cart.general.cart_error' | t | default: 'Error adding to cart' }}
+                          </div>
+                        {% endform %}
+                      {% endif %}
+                      
+                      {%- comment -%} View Product Button {%- endcomment -%}
+                      {% if button_label != blank %}
+                        <a href="{{ card_link }}" class="dinveda-ritual-picker__button button btn-outline">
+                          {{ button_label | escape }}
+                        </a>
+                      {% endif %}
+                    </div>
+
+                  </div>
+
+                </div>
+
+                {% if card_link != blank %}
+                  </a>
+                {% endif %}
+              </article>
+            {% endif %}
+          {% endfor %}
+        </div>
+        
+        {%- comment -%} Pagination {%- endcomment -%}
+        {% unless collection.products_count <= page_limit %}
+          <div class="dinveda-collection-ritual-cards__pagination">
+            {% render 'snip-pagination', paginate: paginate %}
+          </div>
+        {% endunless %}
+      {%- else -%}
+        <div class="dinveda-collection-ritual-cards__empty">
+          <p>{{ 'collections.general.empty' | t }}</p>
+        </div>
+      {%- endif -%}
+    {% endpaginate %}
+
+  </div>
+</section>
+
+{% style %}
+  #dinveda-collection-ritual-cards-{{ section.id }} {
+    {% case background_mode %}
+      {% when 'design_bg' %}
+        background-color: var(--design-bg-color);
+      {% when 'design_secondary_bg' %}
+        background-color: var(--design-secondary-bg);
+      {% when 'transparent' %}
+        background-color: transparent;
+    {% endcase %}
+  }
+  
+  .dinveda-collection-ritual-cards__pagination {
+    margin-top: 48px;
+    text-align: center;
+  }
+  
+  .dinveda-collection-ritual-cards__empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--design-text-color);
+  }
+  
+  .dinveda-ritual-picker__button-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: auto;
+  }
+  
+  .dinveda-ritual-picker__quick-add-form {
+    width: 100%;
+  }
+  
+  .dinveda-ritual-picker__quick-add-button {
+    width: 100%;
+    position: relative;
+  }
+  
+  .dinveda-ritual-picker__quick-add-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .dinveda-ritual-picker__quick-add-loading {
+    display: none;
+  }
+  
+  .dinveda-ritual-picker__quick-add-button.loading .dinveda-ritual-picker__quick-add-text {
+    display: none;
+  }
+  
+  .dinveda-ritual-picker__quick-add-button.loading .dinveda-ritual-picker__quick-add-loading {
+    display: inline;
+  }
+  
+  .dinveda-ritual-picker__quick-add-message {
+    font-size: 0.875rem;
+    text-align: center;
+    padding: 8px;
+    margin-top: 8px;
+    border-radius: 4px;
+  }
+  
+  .dinveda-ritual-picker__quick-add-success {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  .dinveda-ritual-picker__quick-add-error {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+{% endstyle %}
+
+<script>
+(function() {
+  'use strict';
+  
+  var section = document.getElementById('dinveda-collection-ritual-cards-{{ section.id }}');
+  if (!section) return;
+  
+  var quickAddButtons = section.querySelectorAll('[data-quick-add]');
+  if (quickAddButtons.length === 0) return;
+  
+  var cartConfig = document.getElementById('cart-config');
+  if (!cartConfig) return;
+  cartConfig = JSON.parse(cartConfig.innerHTML || '{}');
+  
+  quickAddButtons.forEach(function(button) {
+    var form = button.closest('form');
+    if (!form) return;
+    
+    var card = button.closest('[data-product-id]');
+    var isSingleVariant = card && card.dataset.singleVariant === 'true';
+    var redirectToProduct = button.hasAttribute('data-redirect-to-product');
+    var variantId = button.dataset.variantId;
+    
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      // Handle multi-variant products - redirect to product page
+      if (redirectToProduct) {
+        var productHandle = card.dataset.productHandle;
+        if (productHandle) {
+          window.location.href = '/products/' + productHandle;
+        }
+        return false;
+      }
+      
+      // Disable button and show loading
+      button.disabled = true;
+      button.classList.add('loading');
+      
+      var addText = button.querySelector('[data-add-to-cart-text]');
+      var loadingText = button.querySelector('.dinveda-ritual-picker__quick-add-loading');
+      var successMsg = card.querySelector('.dinveda-ritual-picker__quick-add-success');
+      var errorMsg = card.querySelector('.dinveda-ritual-picker__quick-add-error');
+      
+      // Hide previous messages
+      if (successMsg) successMsg.style.display = 'none';
+      if (errorMsg) errorMsg.style.display = 'none';
+      
+      // Use Shopify AJAX API directly
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: variantId,
+          quantity: 1
+        })
+      })
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        // Success
+        button.disabled = false;
+        button.classList.remove('loading');
+        
+        if (successMsg) {
+          successMsg.style.display = 'block';
+          setTimeout(function() {
+            successMsg.style.display = 'none';
+          }, 3000);
+        }
+        
+        // Trigger cart update event for theme integration
+        document.dispatchEvent(new CustomEvent('cart:updated'));
+        
+        // Update cart if theme has cart drawer/count
+        if (typeof WAU !== 'undefined' && WAU.ThemeCart && WAU.ThemeCart.getCart) {
+          WAU.ThemeCart.getCart().then(function(cart) {
+            if (typeof WAU !== 'undefined' && WAU.AjaxCart && WAU.AjaxCart.updateView) {
+              WAU.AjaxCart.updateView(cartConfig, cart);
+            }
+          });
+        }
+      })
+      .catch(function(error) {
+        // Error
+        button.disabled = false;
+        button.classList.remove('loading');
+        
+        if (errorMsg) {
+          errorMsg.style.display = 'block';
+          setTimeout(function() {
+            errorMsg.style.display = 'none';
+          }, 4000);
+        }
+      });
+      
+      return false;
+    });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Collection Ritual Cards",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Pagination"
+    },
+    {
+      "type": "range",
+      "id": "items_per_page",
+      "min": 4,
+      "max": 48,
+      "step": 4,
+      "label": "Products per page",
+      "default": 12,
+      "info": "Number of products to show per page before pagination"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Card layout",
+      "options": [
+        {
+          "value": "grid_4",
+          "label": "4 cards desktop / 2x2 tablet / 2x2 mobile"
+        },
+        {
+          "value": "grid_2x2",
+          "label": "2x2 desktop/tablet / 2x2 mobile"
+        }
+      ],
+      "default": "grid_4",
+      "info": "Desktop shows 4 columns, mobile shows 2 columns"
+    },
+    {
+      "type": "select",
+      "id": "background_mode",
+      "label": "Background color",
+      "options": [
+        {
+          "value": "design_bg",
+          "label": "Design System Background"
+        },
+        {
+          "value": "design_secondary_bg",
+          "label": "Design System Secondary Background"
+        },
+        {
+          "value": "transparent",
+          "label": "Transparent"
+        }
+      ],
+      "default": "design_bg"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Zu diesem Ritual",
+      "info": "Label for the CTA button on each product card"
+    },
+    {
+      "type": "header",
+      "content": "Quick Add to Cart"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_quick_add",
+      "label": "Enable quick add to cart",
+      "default": true,
+      "info": "Show 'Add to Cart' button on each product card"
+    },
+    {
+      "type": "text",
+      "id": "quick_add_button_label",
+      "label": "Quick add button label",
+      "default": "In den Warenkorb",
+      "info": "Label for the quick add to cart button"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price_on_button",
+      "label": "Show price on quick add button",
+      "default": false,
+      "info": "Display product price on the add to cart button"
+    },
+    {
+      "type": "select",
+      "id": "quick_add_button_style",
+      "label": "Quick add button style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "select",
+      "id": "multi_variant_behavior",
+      "label": "Multi-variant product behavior",
+      "options": [
+        {
+          "value": "redirect",
+          "label": "Redirect to product page"
+        },
+        {
+          "value": "quickshop",
+          "label": "Show quick shop (if available)"
+        }
+      ],
+      "default": "redirect",
+      "info": "What happens when clicking add to cart on products with multiple variants"
+    },
+    {
+      "type": "header",
+      "content": "Filtering"
+    },
+    {
+      "type": "paragraph",
+      "content": "Filtering is handled by the collection toolbar section. Products are filtered by tags (Morgen, Tag, Abend, Balance) via URL parameters."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Ritual Cards"
+    }
+  ]
+}
+{% endschema %}
+

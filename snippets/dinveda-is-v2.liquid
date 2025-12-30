@@ -1,0 +1,28 @@
+{% comment %}
+  DinVeda v2 Template Detection Snippet
+  Sets dinveda_is_v2 to true if:
+  - Template suffix is 'dinveda-premium-v2'
+  - OR template is product AND query param pdp=v2 is present (case-insensitive, exact match)
+{% endcomment %}
+
+{%- liquid
+  assign dinveda_is_v2 = false
+  
+  # Check template suffix first
+  if template.suffix == 'dinveda-premium-v2'
+    assign dinveda_is_v2 = true
+  # Check query parameter for local testing override
+  elsif template.name == 'product' and request.query_string != blank
+    # Parse query string: split by '&' and check each param for exact match
+    assign query_params = request.query_string | split: '&'
+    for param in query_params
+      assign param_trimmed = param | strip
+      assign param_lower = param_trimmed | downcase
+      if param_lower == 'pdp=v2'
+        assign dinveda_is_v2 = true
+        break
+      endif
+    endfor
+  endif
+-%}
+

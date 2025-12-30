@@ -63,6 +63,11 @@
     <noscript><link rel="stylesheet" href="{{ 'dinveda-home.css' | asset_url }}"></noscript>
   {%- endif -%}
 
+  {%- comment -%} Load Material Symbols font for DinVeda homepage {%- endcomment -%}
+  {%- if template == 'index' -%}
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  {%- endif -%}
+
   {%- comment -%} Load Material Symbols font for DinVeda collection pages {%- endcomment -%}
   {%- if template.name == 'collection' -%}
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
@@ -129,8 +134,15 @@
   {{ 'vendor-flickity.js' | asset_url | script_tag }}
 </head>
 
+{%- comment -%} DEV ONLY: ?pdp=v2 forces DinVeda v2 styles for local testing {%- endcomment -%}
+{%- if template.name == 'product' -%}
+  {% render 'dinveda-is-v2' %}
+{%- else -%}
+  {%- assign dinveda_is_v2 = false -%}
+{%- endif -%}
+
 <body id="{{ page_title | handle }}"
-      class="template-{{ template.name | handle }}{% if template.suffix %} product-template-{{ template.suffix }}{% endif %} js-slideout-toggle-wrapper js-modal-toggle-wrapper {{ settings.scroll_animation }} {{ settings.text_animation }} section-fade-in buttons--{{ settings.button_animation }}">
+      class="template-{{ template.name | handle }}{% if template.suffix %} product-template-{{ template.suffix }}{% endif %}{% if template.name == 'product' and dinveda_is_v2 %} product-template-dinveda-premium-v2{% endif %} js-slideout-toggle-wrapper js-modal-toggle-wrapper {{ settings.scroll_animation }} {{ settings.text_animation }} section-fade-in buttons--{{ settings.button_animation }}">
   {% render 'snip-skip-link' %}
 
   {% if settings.enable_age_verify %}
@@ -210,5 +222,62 @@
     ></aside>
 
     <wau-popover-loader data-asset-url='{{ 'vendor-popover-polyfill.js' | asset_url }}' data-css-class="popover"></wau-popover-loader>
+
+    {%- comment -%} DEV ONLY: Preserve ?pdp=v2 query param across navigation {%- endcomment -%}
+    {%- if request.query_string contains 'pdp=v2' or request.query_string contains 'PDP=V2' -%}
+    <script>
+      (function() {
+        'use strict';
+        var hasV2Param = false;
+        var queryString = window.location.search;
+        if (queryString) {
+          var params = queryString.substring(1).split('&');
+          for (var i = 0; i < params.length; i++) {
+            var param = params[i].toLowerCase();
+            if (param === 'pdp=v2') {
+              hasV2Param = true;
+              break;
+            }
+          }
+        }
+        
+        if (hasV2Param) {
+          // Preserve pdp=v2 on internal product and collection links
+          document.addEventListener('click', function(e) {
+            var target = e.target.closest('a');
+            if (!target || !target.href) return;
+            
+            try {
+              var url = new URL(target.href, window.location.origin);
+              var isProductOrCollection = url.pathname.startsWith('/products/') || url.pathname.startsWith('/collections/');
+              
+              if (isProductOrCollection && url.hostname === window.location.hostname) {
+                // Check if pdp=v2 already exists
+                var hasParam = false;
+                if (url.search) {
+                  var existingParams = url.search.substring(1).split('&');
+                  for (var j = 0; j < existingParams.length; j++) {
+                    if (existingParams[j].toLowerCase() === 'pdp=v2') {
+                      hasParam = true;
+                      break;
+                    }
+                  }
+                }
+                
+                // Add pdp=v2 if not present
+                if (!hasParam) {
+                  var separator = url.search ? '&' : '?';
+                  url.search += separator + 'pdp=v2';
+                  target.href = url.toString();
+                }
+              }
+            } catch (err) {
+              // Silently fail if URL parsing fails
+            }
+          });
+        }
+      })();
+    </script>
+    {%- endif -%}
   </body>
 </html>

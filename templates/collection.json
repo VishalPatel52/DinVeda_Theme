@@ -36,7 +36,7 @@
         "trust_chip_2": {
           "type": "trust_card",
           "settings": {
-            "icon": "precision_manufacturing",
+            "icon": "germany",
             "title": "Made in Germany",
             "text": "Crafted with precision"
           }
@@ -74,23 +74,13 @@
         "category_abend_label": "Abend"
       }
     },
-    "grid": {
-      "type": "dinveda-collection-grid",
+    "ritual_cards": {
+      "type": "dinveda-collection-ritual-cards",
       "settings": {
         "items_per_page": 12,
-        "items_per_row": 4,
-        "mobile_items_per_row": "2",
-        "show_short_descriptor": true,
-        "card_padding": "medium",
-        "card_border_radius": 0,
-        "show_vendor": false,
-        "show_price": true,
-        "show_quick_add": false,
-        "show_ritual_timing": true,
-        "ritual_timing_fallback_tag": true,
-        "show_cta_button": true,
-        "cta_button_label": "ZUM RITUAL",
-        "card_min_height": 500
+        "layout": "grid_4",
+        "background_mode": "design_bg",
+        "button_label": "Zu diesem Ritual"
       }
     },
     "brand_story": {
@@ -110,7 +100,7 @@
     "hero",
     "trust_chips",
     "toolbar",
-    "grid",
+    "ritual_cards",
     "brand_story"
   ]
 }

@@ -15,31 +15,28 @@
         "slide_1": {
           "type": "hero_slide",
           "settings": {
-            "image": "",
             "heading": "Alte Weisheit für moderne Tage",
             "subheading": "Entdecke Bio-Rituale aus Deutschland – im Rhythmus deines Alltags.",
             "button_label": "Jetzt starten",
-            "button_link": "/collections/pflanzenmischungen"
+            "button_link": "#dein-tag-in-balance"
           }
         },
         "slide_2": {
           "type": "hero_slide",
           "settings": {
-            "image": "",
             "heading": "Alte Weisheit für moderne Tage",
             "subheading": "Entdecke Bio-Rituale aus Deutschland – im Rhythmus deines Alltags.",
             "button_label": "Jetzt starten",
-            "button_link": "/collections/pflanzenmischungen"
+            "button_link": "#dein-tag-in-balance"
           }
         },
         "slide_3": {
           "type": "hero_slide",
           "settings": {
-            "image": "",
             "heading": "Alte Weisheit für moderne Tage",
             "subheading": "Entdecke Bio-Rituale aus Deutschland – im Rhythmus deines Alltags.",
             "button_label": "Jetzt starten",
-            "button_link": "/collections/pflanzenmischungen"
+            "button_link": "#dein-tag-in-balance"
           }
         }
       },
@@ -49,17 +46,16 @@
         "slide_3"
       ],
       "settings": {
-        "image": "",
+        "autoplay_enabled": true,
+        "autoplay_interval": 4,
         "image_url": "https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?w=1920&q=80",
         "overlay_opacity": 70,
         "min_height_desktop": 600,
         "min_height_mobile": 520,
-        "autoplay_enabled": true,
-        "autoplay_interval": 4,
         "heading": "Alte Weisheit für moderne Tage",
         "subheading": "Entdecke Bio-Rituale aus Deutschland – im Rhythmus deines Alltags.",
         "button_label": "Jetzt starten",
-        "button_link": "/collections/pflanzenmischungen"
+        "button_link": "#dein-tag-in-balance"
       }
     },
     "dinveda_trust_cards": {
@@ -70,7 +66,11 @@
           "settings": {
             "icon": "leaf",
             "title": "BIO-zertifiziert",
-            "text": "Zutaten aus kontrolliert biologischem Anbau – transparent & EU-konform."
+            "text": "Zutaten aus kontrolliert biologischem Anbau – transparent & EU-konform.",
+            "overlay_size": 64,
+            "overlay_offset_x": -8,
+            "overlay_offset_y": -40,
+            "overlay_anchor": "top_left"
           }
         },
         "trust_card_2": {
@@ -78,7 +78,11 @@
           "settings": {
             "icon": "flask",
             "title": "Hergestellt in Deutschland",
-            "text": "Sorgfältig gemischt, geprüft und verpackt – mit Qualitätsfokus."
+            "text": "Sorgfältig gemischt, geprüft und verpackt – mit Qualitätsfokus.",
+            "overlay_size": 64,
+            "overlay_offset_x": -8,
+            "overlay_offset_y": -40,
+            "overlay_anchor": "top_left"
           }
         },
         "trust_card_3": {
@@ -86,7 +90,11 @@
           "settings": {
             "icon": "mortar",
             "title": "Kleine Chargen",
-            "text": "Handwerklich gemischt für Frische, Aroma und gleichbleibende Qualität."
+            "text": "Handwerklich gemischt für Frische, Aroma und gleichbleibende Qualität.",
+            "overlay_size": 64,
+            "overlay_offset_x": -8,
+            "overlay_offset_y": -40,
+            "overlay_anchor": "top_left"
           }
         }
       },
@@ -103,25 +111,31 @@
         "ritual_morgen": {
           "type": "ritual_card",
           "settings": {
-            "image": "",
             "phase_label": "MORGEN | AKTIVIEREN",
             "blend_name": "Golden Boost",
             "quote_line": "Ich starte clever und klar in den Tag.",
             "descriptor": "Für Energie, Fokus & innere Wärme",
             "attribution_line": "— sagt der Fuchs",
+            "overlay_size": 96,
+            "overlay_offset_x": -9,
+            "overlay_offset_y": -56,
+            "overlay_anchor": "top_left",
             "button_label": "Zu diesem Ritual",
-            "link": "/products/golden-boost"
+            "link": "shopify://products/golden-boost-bio-ayurveda-gewurzmischung-fuchs-blend-copy"
           }
         },
         "ritual_tag": {
           "type": "ritual_card",
           "settings": {
-            "image": "",
             "phase_label": "TAG | ZENTRIEREN",
             "blend_name": "Flow & Glow",
             "quote_line": "Ich genieße Balance und Ruhe.",
             "descriptor": "Für Leichtigkeit, Balance & innere Strahlkraft",
             "attribution_line": "— sagt der Panda",
+            "overlay_size": 96,
+            "overlay_offset_x": -9,
+            "overlay_offset_y": -56,
+            "overlay_anchor": "top_left",
             "button_label": "Zu diesem Ritual",
             "link": "/products/flow-glow"
           }
@@ -129,12 +143,15 @@
         "ritual_nachmittag": {
           "type": "ritual_card",
           "settings": {
-            "image": "",
             "phase_label": "BALANCE | AUSGLEICHEN",
             "blend_name": "Ova Harmony",
             "quote_line": "Ich blühe in Leichtigkeit & Harmonie.",
             "descriptor": "Für Ausgleich, Harmonie & sanfte Energie",
             "attribution_line": "— sagt der Schmetterling",
+            "overlay_size": 96,
+            "overlay_offset_x": -9,
+            "overlay_offset_y": -56,
+            "overlay_anchor": "top_left",
             "button_label": "Zu diesem Ritual",
             "link": "/products/ova-harmony"
           }
@@ -142,12 +159,15 @@
         "ritual_abend": {
           "type": "ritual_card",
           "settings": {
-            "image": "",
             "phase_label": "ABEND | LOSLASSEN",
             "blend_name": "Moon Rest",
             "quote_line": "Ich finde Ruhe am Abend und lasse los.",
             "descriptor": "Für Entspannung, Ruhe & erholsamen Schlaf",
             "attribution_line": "— sagt der Koala",
+            "overlay_size": 96,
+            "overlay_offset_x": -9,
+            "overlay_offset_y": -56,
+            "overlay_anchor": "top_left",
             "button_label": "Zu diesem Ritual",
             "link": "/products/moon-rest"
           }
@@ -162,13 +182,19 @@
       "settings": {
         "title": "Dein Tag in Balance",
         "subtitle": "Ayurvedische Rituale für jeden Moment deines Tages",
-        "background_mode": "design_bg"
+        "layout": "grid_4",
+        "background_mode": "design_bg",
+        "enable_quick_add": true,
+        "quick_add_button_label": "In den Warenkorb",
+        "show_price_on_button": false,
+        "quick_add_button_style": "primary",
+        "multi_variant_behavior": "redirect",
+        "debug_mode": false
       }
     },
     "dinveda_split_story": {
       "type": "dinveda-split-story",
       "settings": {
-        "image": "",
         "eyebrow": "Unsere Philosophie",
         "title": "Geführt von der Weisheit der Natur",
         "body": "<p>Wir glauben an den Rhythmus des Tages – an Momente der Aktivierung, der Zentrierung, des Ausgleichs und der Ruhe. Jede unserer Mischungen ist inspiriert von der ayurvedischen Tradition und den Tieren, die diese Qualitäten verkörpern.</p><p>Unsere Rituale sind keine medizinischen Produkte, sondern kleine tägliche Pausen für dein Wohlbefinden. Handwerklich gemischt in Deutschland, mit Zutaten aus kontrolliert biologischem Anbau.</p>",

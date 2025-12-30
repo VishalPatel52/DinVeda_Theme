@@ -36,7 +36,7 @@
         "trust_chip_2": {
           "type": "trust_card",
           "settings": {
-            "icon": "precision_manufacturing",
+            "icon": "germany",
             "title": "Made in Germany",
             "text": "Crafted with precision"
           }

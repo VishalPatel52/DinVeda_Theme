@@ -14,6 +14,16 @@
       "settings": {
         "show_breadcrumbs": false,
         "show_thumbnails": false,
+        "category_text": "MORGEN | AKTIVIEREN",
+        "quote_text": "Ich starte clever und klar in den Tag. Für Energie, Fokus & innere Wärme.",
+        "quote_attribution": "Fuchs",
+        "price_note": "inkl. MwSt. / 100g Dose",
+        "add_to_cart_label": "Zum Einkaufswagen hinzufügen",
+        "enable_buy_now": true,
+        "buy_now_label": "Jetzt kaufen",
+        "buy_now_primary": false,
+        "show_payment_options_link": false,
+        "payment_options_link_text": "WEITERE BEZAHLMÖGLICHKEITEN",
         "show_organic_label": true,
         "show_vegan_label": true,
         "show_social_share": true
@@ -22,9 +32,7 @@
     "dinveda_ritual_story": {
       "type": "dinveda-ritual-story",
       "settings": {
-        "eyebrow": "DIE RITUAL-STORY",
-        "show_when_empty": true,
-        "show_traditional_benefits": true
+        "eyebrow": "DIE RITUAL-STORY"
       }
     },
     "dinveda_traditional_ingredients": {
@@ -42,8 +50,7 @@
     "dinveda_recipe_preparation": {
       "type": "dinveda-recipe-preparation",
       "settings": {
-        "show_when_empty": true,
-        "show_ritual_detail_block": true
+        "show_when_empty": true
       }
     },
     "dinveda_complete_your_day": {
@@ -65,3 +72,4 @@
     "dinveda_complete_your_day"
   ]
 }
+

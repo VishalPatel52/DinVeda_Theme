@@ -13,30 +13,51 @@
     <div class="dinveda-trust-cards__grid">
       {% for block in section.blocks %}
         {% if block.type == 'trust_card' %}
-          <div class="dinveda-trust-cards__card" {{ block.shopify_attributes }}>
-            <div class="dinveda-trust-cards__icon">
-              {% case block.settings.icon %}
-                {% when 'leaf' or 'eco' %}
-                  <span class="material-symbols-outlined">eco</span>
-                {% when 'flask' or 'precision_manufacturing' %}
-                  <span class="material-symbols-outlined">precision_manufacturing</span>
-                {% when 'recycle' or 'water_drop' %}
-                  <span class="material-symbols-outlined">water_drop</span>
-                {% when 'lotus' %}
-                  <span class="material-symbols-outlined">spa</span>
-                {% when 'mortar' %}
-                  <span class="material-symbols-outlined">science</span>
-                {% when 'seedling' %}
-                  <span class="material-symbols-outlined">eco</span>
-                {% else %}
-                  <span class="material-symbols-outlined">{{ block.settings.icon }}</span>
-              {% endcase %}
+          <div class="dinveda-trust-cards__card-wrapper">
+            <div class="dinveda-trust-cards__card" {{ block.shopify_attributes }}>
+              <div class="dinveda-trust-cards__icon">
+                {% case block.settings.icon %}
+                  {% when 'leaf' or 'eco' %}
+                    <span class="material-symbols-outlined">eco</span>
+                  {% when 'flask' or 'precision_manufacturing' %}
+                    <span class="material-symbols-outlined">precision_manufacturing</span>
+                  {% when 'recycle' or 'water_drop' %}
+                    <span class="material-symbols-outlined">water_drop</span>
+                  {% when 'lotus' %}
+                    <span class="material-symbols-outlined">spa</span>
+                  {% when 'mortar' %}
+                    <span class="material-symbols-outlined">science</span>
+                  {% when 'seedling' %}
+                    <span class="material-symbols-outlined">eco</span>
+                  {% when 'germany' or 'germany_flag' %}
+                    {%- comment -%} German flag icon - black, red, gold stripes {%- endcomment -%}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="2" y="4" width="20" height="6" fill="#000000"/>
+                      <rect x="2" y="10" width="20" height="6" fill="#DD0000"/>
+                      <rect x="2" y="16" width="20" height="6" fill="#FFCE00"/>
+                    </svg>
+                  {% when 'handmade' or 'craft' %}
+                    <span class="material-symbols-outlined">construction</span>
+                  {% when 'hand_craft' %}
+                    <span class="material-symbols-outlined">handshake</span>
+                  {% else %}
+                    <span class="material-symbols-outlined">{{ block.settings.icon }}</span>
+                {% endcase %}
+              </div>
+              {% if block.settings.title != blank %}
+                <h3 class="dinveda-trust-cards__title">{{ block.settings.title | escape }}</h3>
+              {% endif %}
+              {% if block.settings.text != blank %}
+                <p class="dinveda-trust-cards__text">{{ block.settings.text | escape }}</p>
+              {% endif %}
             </div>
-            {% if block.settings.title != blank %}
-              <h3 class="dinveda-trust-cards__title">{{ block.settings.title | escape }}</h3>
-            {% endif %}
-            {% if block.settings.text != blank %}
-              <p class="dinveda-trust-cards__text">{{ block.settings.text | escape }}</p>
+            
+            {%- comment -%} Overlay Image (positioned outside card, relative to wrapper) {%- endcomment -%}
+            {% if block.settings.overlay_image != blank %}
+              <div class="dinveda-trust-cards__overlay dinveda-trust-cards__overlay--{{ block.settings.overlay_anchor }}"
+                   style="--ov-size: {{ block.settings.overlay_size }}px; --ov-x: {{ block.settings.overlay_offset_x }}px; --ov-y: {{ block.settings.overlay_offset_y }}px;">
+                {{ block.settings.overlay_image | image_url: width: 400 | image_tag: alt: block.settings.title | default: 'Trust card overlay', class: 'dinveda-trust-cards__overlay-img', loading: 'lazy' }}
+              </div>
             {% endif %}
           </div>
         {% endif %}
@@ -67,7 +88,19 @@
             },
             {
               "value": "precision_manufacturing",
-              "label": "Precision Manufacturing (Made in Germany)"
+              "label": "Precision Manufacturing (Legacy)"
+            },
+            {
+              "value": "germany",
+              "label": "Germany Flag (Made in Germany)"
+            },
+            {
+              "value": "handmade",
+              "label": "Handmade/Craft"
+            },
+            {
+              "value": "hand_craft",
+              "label": "Hand Craftsmanship"
             },
             {
               "value": "water_drop",
@@ -111,6 +144,70 @@
           "id": "text",
           "label": "Text",
           "default": "Zutaten aus kontrolliert biologischem Anbau – transparent & EU-konform."
+        },
+        {
+          "type": "header",
+          "content": "Overlay Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "overlay_image",
+          "label": "Overlay image",
+          "info": "Optional subtle animal overlay (transparent background recommended)"
+        },
+        {
+          "type": "range",
+          "id": "overlay_size",
+          "label": "Overlay size",
+          "min": 40,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "default": 64,
+          "info": "Size of the overlay image (keep subtle)"
+        },
+        {
+          "type": "range",
+          "id": "overlay_offset_x",
+          "label": "Horizontal offset",
+          "min": -60,
+          "max": 60,
+          "step": 2,
+          "unit": "px",
+          "default": -8,
+          "info": "Move overlay left (negative) or right (positive)"
+        },
+        {
+          "type": "range",
+          "id": "overlay_offset_y",
+          "label": "Vertical offset",
+          "min": -80,
+          "max": 60,
+          "step": 2,
+          "unit": "px",
+          "default": -40,
+          "info": "Move overlay up (negative = above card) or down (positive)"
+        },
+        {
+          "type": "select",
+          "id": "overlay_anchor",
+          "label": "Overlay anchor",
+          "options": [
+            {
+              "value": "top_left",
+              "label": "Top Left"
+            },
+            {
+              "value": "top_center",
+              "label": "Top Center"
+            },
+            {
+              "value": "top_right",
+              "label": "Top Right"
+            }
+          ],
+          "default": "top_left",
+          "info": "Anchor point for overlay positioning"
         }
       ]
     }
@@ -130,7 +227,7 @@
         {
           "type": "trust_card",
           "settings": {
-            "icon": "precision_manufacturing",
+            "icon": "germany",
             "title": "Made in Germany",
             "text": "Crafted with precision"
           }
