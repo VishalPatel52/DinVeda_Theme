@@ -67,6 +67,7 @@
             "icon": "leaf",
             "title": "BIO-zertifiziert",
             "text": "Zutaten aus kontrolliert biologischem Anbau – transparent & EU-konform.",
+            "overlay_image": "shopify://shop_images/Fox_GB.png",
             "overlay_size": 64,
             "overlay_offset_x": -8,
             "overlay_offset_y": -40,
@@ -76,9 +77,10 @@
         "trust_card_2": {
           "type": "trust_card",
           "settings": {
-            "icon": "flask",
+            "icon": "germany",
             "title": "Hergestellt in Deutschland",
             "text": "Sorgfältig gemischt, geprüft und verpackt – mit Qualitätsfokus.",
+            "overlay_image": "shopify://shop_images/Flamingo_FG.png",
             "overlay_size": 64,
             "overlay_offset_x": -8,
             "overlay_offset_y": -40,
@@ -91,6 +93,7 @@
             "icon": "mortar",
             "title": "Kleine Chargen",
             "text": "Handwerklich gemischt für Frische, Aroma und gleichbleibende Qualität.",
+            "overlay_image": "shopify://shop_images/Koala_MR.png",
             "overlay_size": 64,
             "overlay_offset_x": -8,
             "overlay_offset_y": -40,
@@ -116,6 +119,7 @@
             "quote_line": "Ich starte clever und klar in den Tag.",
             "descriptor": "Für Energie, Fokus & innere Wärme",
             "attribution_line": "— sagt der Fuchs",
+            "overlay_image": "shopify://shop_images/Fox_GB.png",
             "overlay_size": 96,
             "overlay_offset_x": -9,
             "overlay_offset_y": -56,
@@ -132,12 +136,13 @@
             "quote_line": "Ich genieße Balance und Ruhe.",
             "descriptor": "Für Leichtigkeit, Balance & innere Strahlkraft",
             "attribution_line": "— sagt der Panda",
+            "overlay_image": "shopify://shop_images/Asset_2.png",
             "overlay_size": 96,
             "overlay_offset_x": -9,
             "overlay_offset_y": -56,
             "overlay_anchor": "top_left",
             "button_label": "Zu diesem Ritual",
-            "link": "/products/flow-glow"
+            "link": "shopify://products/flow-glow-bio-ayurveda-gewurzmischung-panda-blend-copy"
           }
         },
         "ritual_nachmittag": {
@@ -148,12 +153,13 @@
             "quote_line": "Ich blühe in Leichtigkeit & Harmonie.",
             "descriptor": "Für Ausgleich, Harmonie & sanfte Energie",
             "attribution_line": "— sagt der Schmetterling",
+            "overlay_image": "shopify://shop_images/Butterfly_OH.png",
             "overlay_size": 96,
             "overlay_offset_x": -9,
             "overlay_offset_y": -56,
             "overlay_anchor": "top_left",
             "button_label": "Zu diesem Ritual",
-            "link": "/products/ova-harmony"
+            "link": "shopify://products/ova-harmony-bio-krautermix-fur-balance-selfcare-copy"
           }
         },
         "ritual_abend": {
@@ -164,12 +170,13 @@
             "quote_line": "Ich finde Ruhe am Abend und lasse los.",
             "descriptor": "Für Entspannung, Ruhe & erholsamen Schlaf",
             "attribution_line": "— sagt der Koala",
+            "overlay_image": "shopify://shop_images/Koala_MR.png",
             "overlay_size": 96,
             "overlay_offset_x": -9,
             "overlay_offset_y": -56,
             "overlay_anchor": "top_left",
             "button_label": "Zu diesem Ritual",
-            "link": "/products/moon-rest"
+            "link": "shopify://products/moon-rest-bio-ayurveda-abendmischung-koala-blend-copy"
           }
         }
       },
