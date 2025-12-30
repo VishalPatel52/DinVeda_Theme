@@ -29,6 +29,14 @@
   if story_intro != blank or story_title != blank
     assign has_content = true
   endif
+  
+  # Traditional benefits bullets
+  assign traditional_bullets = product.metafields.dinveda.ritual_bullets | default: product.metafields.dinveda.ritual_benefits
+  assign has_traditional_bullets = false
+  if section.settings.show_traditional_benefits and traditional_bullets != blank
+    assign has_traditional_bullets = true
+    assign bullets_lines = traditional_bullets | newline_to_br | split: '<br />'
+  endif
 -%}
 
 {% if has_content or section.settings.show_when_empty %}
@@ -95,6 +103,26 @@
           </div>
         {% endif %}
 
+        {%- comment -%} Traditional Benefits (v2 only) {%- endcomment -%}
+        {% if has_traditional_bullets %}
+          <div class="dinveda-ritual-story__traditional-benefits">
+            <h3 class="dinveda-ritual-story__traditional-heading">Traditionell geschätzt für …</h3>
+            <ul class="dinveda-ritual-story__bullet-list">
+              {% assign items_rendered = 0 %}
+              {% for line in bullets_lines %}
+                {% assign trimmed_line = line | strip %}
+                {% if trimmed_line != blank and items_rendered < 5 %}
+                  {% assign clean_line = trimmed_line | replace: '• ', '' | replace: '•', '' | replace: '- ', '' | strip %}
+                  {% if clean_line != blank %}
+                    <li>{{ clean_line | escape }}</li>
+                    {% assign items_rendered = items_rendered | plus: 1 %}
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+
       </div>
     </div>
   </section>
@@ -133,6 +161,13 @@
       "id": "show_when_empty",
       "label": "Show section even if all metafields are empty",
       "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_traditional_benefits",
+      "label": "Show traditional benefits",
+      "info": "Display 'Traditionell geschätzt für …' bullet list.",
+      "default": true
     },
     {
       "type": "header",

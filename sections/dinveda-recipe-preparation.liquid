@@ -25,6 +25,19 @@
     endif
   endif
   
+  # Ritual im Detail micro-block
+  assign taste_notes = product.metafields.dinveda.taste_character
+  assign pairing_ideas = product.metafields.dinveda.pairing_ideas
+  assign serving_suggestion = product.metafields.dinveda.serving_suggestion
+  assign frequency = product.metafields.dinveda.frequency
+  
+  assign has_ritual_detail = false
+  if section.settings.show_ritual_detail_block
+    if taste_notes != blank or pairing_ideas != blank or serving_suggestion != blank or frequency != blank
+      assign has_ritual_detail = true
+    endif
+  endif
+  
   if has_recipe_blocks or section.settings.show_when_empty or is_design_mode
     assign should_show = true
   else
@@ -54,6 +67,38 @@
         <p class="dinveda-recipe-preparation__intro">
           {{ intro_text | escape }}
         </p>
+      {% endif %}
+
+      {%- comment -%} Ritual im Detail micro-block {%- endcomment -%}
+      {% if has_ritual_detail %}
+        <div class="dinveda-recipe-preparation__ritual-detail">
+          <div class="dinveda-recipe-preparation__ritual-detail-grid">
+            {% if taste_notes != blank %}
+              <div class="dinveda-recipe-preparation__ritual-detail-item">
+                <div class="dinveda-recipe-preparation__ritual-detail-label">Geschmack</div>
+                <div class="dinveda-recipe-preparation__ritual-detail-value">{{ taste_notes | escape }}</div>
+              </div>
+            {% endif %}
+            {% if pairing_ideas != blank %}
+              <div class="dinveda-recipe-preparation__ritual-detail-item">
+                <div class="dinveda-recipe-preparation__ritual-detail-label">Passt zu</div>
+                <div class="dinveda-recipe-preparation__ritual-detail-value">{{ pairing_ideas | escape | newline_to_br }}</div>
+              </div>
+            {% endif %}
+            {% if serving_suggestion != blank %}
+              <div class="dinveda-recipe-preparation__ritual-detail-item">
+                <div class="dinveda-recipe-preparation__ritual-detail-label">Portion</div>
+                <div class="dinveda-recipe-preparation__ritual-detail-value">{{ serving_suggestion | escape | newline_to_br }}</div>
+              </div>
+            {% endif %}
+            {% if frequency != blank %}
+              <div class="dinveda-recipe-preparation__ritual-detail-item">
+                <div class="dinveda-recipe-preparation__ritual-detail-label">Häufigkeit</div>
+                <div class="dinveda-recipe-preparation__ritual-detail-value">{{ frequency | escape }}</div>
+              </div>
+            {% endif %}
+          </div>
+        </div>
       {% endif %}
 
       {% if has_recipe_blocks %}
@@ -118,6 +163,13 @@
       "type": "checkbox",
       "id": "show_when_empty",
       "label": "Show section even if no blocks are added",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_ritual_detail_block",
+      "label": "Show Ritual im Detail block",
+      "info": "Display taste, pairing, serving, and frequency details.",
       "default": true
     },
     {

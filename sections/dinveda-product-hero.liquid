@@ -4,6 +4,9 @@
   Proper Shopify product form with variants support
 {% endcomment %}
 
+{%- comment -%} Check if v2 template (via suffix or query param) {%- endcomment -%}
+{% render 'dinveda-is-v2' %}
+
 {%- liquid
   if product
     assign current_variant = product.selected_or_first_available_variant
@@ -45,6 +48,10 @@
       assign intro_text = product.description | strip_html | truncate: 200
     endif
   endif
+  
+  # Ritual auf einen Blick metafields (v2)
+  assign preparation_mode = product.metafields.dinveda.preparation_mode | default: "Warm"
+  assign ritual_duration = product.metafields.dinveda.ritual_duration | default: "1–2 Min"
 -%}
 
 {%- comment -%} Product JSON for Product object initialization {%- endcomment -%}
@@ -311,6 +318,24 @@
             {% endif %}
 
           {% endform %}
+        {% endif %}
+
+        {%- comment -%} Ritual auf einen Blick {%- endcomment -%}
+        {% if section.settings.show_ritual_glance_row %}
+          <div class="dinveda-product-hero__ritual-glance">
+            <div class="dinveda-product-hero__ritual-glance-item">
+              <span class="dinveda-product-hero__ritual-glance-label">Tageszeit</span>
+              <span class="dinveda-product-hero__ritual-glance-value">{{ phase_label | escape }}</span>
+            </div>
+            <div class="dinveda-product-hero__ritual-glance-item">
+              <span class="dinveda-product-hero__ritual-glance-label">Zubereitung</span>
+              <span class="dinveda-product-hero__ritual-glance-value">{{ preparation_mode | escape }}</span>
+            </div>
+            <div class="dinveda-product-hero__ritual-glance-item">
+              <span class="dinveda-product-hero__ritual-glance-label">Dauer</span>
+              <span class="dinveda-product-hero__ritual-glance-value">{{ ritual_duration | escape }}</span>
+            </div>
+          </div>
         {% endif %}
 
         {%- comment -%} Social Share (if enabled) {%- endcomment -%}
@@ -656,6 +681,17 @@
       "id": "show_social_share",
       "label": "Social Sharing anzeigen",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Ritual auf einen Blick (v2)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_ritual_glance_row",
+      "label": "Show 'Ritual auf einen Blick' row",
+      "default": true,
+      "info": "Displays Tageszeit, Zubereitung, and Dauer in a micro-row"
     }
   ],
   "blocks": [

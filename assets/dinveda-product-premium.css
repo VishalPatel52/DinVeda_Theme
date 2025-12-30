@@ -2351,3 +2351,116 @@ body.product-template-dinveda-premium .dinveda-ingredients-prep:last-of-type {
   margin: 0;
   font-style: italic;
 }
+
+/* ============================================
+   Ritual im Detail Micro-Block
+   ============================================ */
+
+.dinveda-recipe-preparation__ritual-detail {
+  margin: 2rem 0;
+  padding: 1.5rem 0;
+  border-top: 1px solid rgba(234, 221, 207, 0.4);
+  border-bottom: 1px solid rgba(234, 221, 207, 0.4);
+}
+
+.dinveda-recipe-preparation__ritual-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem 2rem;
+}
+
+.dinveda-recipe-preparation__ritual-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dinveda-recipe-preparation__ritual-detail-label {
+  font-family: var(--main-family);
+  font-size: calc(var(--design-body-font-size) - 2px);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--design-text-color, #5a4533);
+  opacity: 0.7;
+}
+
+.dinveda-recipe-preparation__ritual-detail-value {
+  font-family: var(--main-family);
+  font-size: var(--design-body-font-size);
+  line-height: 1.6;
+  color: var(--design-text-color, #5a4533);
+  opacity: 0.9;
+}
+
+@media (max-width: 767px) {
+  .dinveda-recipe-preparation__ritual-detail-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  
+  .dinveda-recipe-preparation__ritual-detail {
+    margin: 1.5rem 0;
+    padding: 1.25rem 0;
+  }
+}
+
+/* ============================================
+   Hero Ritual Glance Row
+   ============================================ */
+
+.dinveda-product-hero__ritual-glance {
+  display: flex;
+  gap: 24px;
+  padding: 16px 0;
+  border-top: 1px solid var(--design-border-color, #eaddcf);
+  margin-top: 24px;
+}
+
+.dinveda-product-hero__ritual-glance-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.dinveda-product-hero__ritual-glance-label {
+  font-family: var(--main-family);
+  font-size: calc(var(--design-body-font-size) - 4px);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(90, 69, 51, 0.6);
+  font-weight: 600;
+}
+
+.dinveda-product-hero__ritual-glance-value {
+  font-family: var(--main-family);
+  font-size: var(--design-body-font-size);
+  color: var(--design-text-color, #5a4533);
+  font-weight: 500;
+}
+
+@media (max-width: 767px) {
+  .dinveda-product-hero__ritual-glance {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+/* ============================================
+   Traditional Benefits Block
+   ============================================ */
+
+.dinveda-ritual-story__traditional-benefits {
+  margin-top: 32px;
+  margin-bottom: 0;
+}
+
+.dinveda-ritual-story__traditional-heading {
+  font-family: var(--main-family);
+  font-size: calc(var(--design-body-font-size) + 2px);
+  font-weight: 700;
+  color: var(--design-text-color, #5a4533);
+  margin: 0 0 16px 0;
+  text-align: left;
+}
