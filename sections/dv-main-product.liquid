@@ -25,12 +25,12 @@
   endif
 
   # Read from metafields (priority) or section settings (fallback)
-  assign subtitle = product.metafields.dinveda.dv_subtitle
+  assign subtitle = product.metafields.custom.dv_subtitle
   if subtitle == blank
     assign subtitle = section.settings.subtitle
   endif
   
-  assign quote = product.metafields.dinveda.dv_quote
+  assign quote = product.metafields.custom.dv_quote
   if quote == blank
     assign quote = section.settings.quote
   endif
@@ -287,38 +287,27 @@
                     type="number"
                     id="Quantity-{{ section.id }}"
                     name="quantity"
-                    value="1"
-                    min="1"
+                    value="0"
+                    min="0"
                     class="dv-main-product__quantity-input"
                     data-quantity-input
+                    readonly
                   >
                   <button type="button" class="dv-main-product__quantity-btn" data-quantity-increase>+</button>
                 </div>
               </div>
             {% endif %}
 
-            {%- comment -%} Add to Cart Button {%- endcomment -%}
+            {%- comment -%} Buy Now Button {%- endcomment -%}
             <button
-              type="submit"
-              name="add"
-              class="dv-main-product__add-to-cart"
+              type="button"
+              class="dv-main-product__buy-now"
+              data-buy-now
+              data-variant-id="{{ current_variant.id }}"
               {% unless current_variant.available %}disabled{% endunless %}
-              data-add-to-cart-text
             >
-              {{ section.settings.add_to_cart_label | default: "IN DEN WARENKORB" | escape }}
+              {{ section.settings.buy_now_label | default: "Jetzt kaufen" | escape }}
             </button>
-
-            {%- comment -%} Buy Now Button (if enabled) {%- endcomment -%}
-            {% if section.settings.enable_buy_now and current_variant.available %}
-              <button
-                type="button"
-                class="dv-main-product__buy-now"
-                data-buy-now
-                data-variant-id="{{ current_variant.id }}"
-              >
-                {{ section.settings.buy_now_label | default: "Jetzt kaufen" | escape }}
-              </button>
-            {% endif %}
 
           {% endform %}
         {% endif %}
@@ -405,33 +394,85 @@
         });
       }
 
-      // Quantity selector
+      // Quantity selector and cart integration
       const qtyDecrease = section.querySelector('[data-quantity-decrease]');
       const qtyIncrease = section.querySelector('[data-quantity-increase]');
       const qtyInput = section.querySelector('[data-quantity-input]');
-      
-      if (qtyDecrease && qtyIncrease && qtyInput) {
-        qtyDecrease.addEventListener('click', function() {
-          const current = parseInt(qtyInput.value, 10) || 1;
-          if (current > 1) {
-            qtyInput.value = current - 1;
-          }
-        });
-        
-        qtyIncrease.addEventListener('click', function() {
-          const current = parseInt(qtyInput.value, 10) || 1;
-          qtyInput.value = current + 1;
-        });
-      }
-
-      // Buy Now button
-      const buyNowBtn = section.querySelector('[data-buy-now]');
       const variantSelect = section.querySelector('#formVariantId');
+      const buyNowBtn = section.querySelector('[data-buy-now]');
       
-      if (buyNowBtn && variantSelect) {
-        buyNowBtn.addEventListener('click', function() {
-          const variantId = variantSelect.value;
-          const quantity = qtyInput ? parseInt(qtyInput.value, 10) || 1 : 1;
+      // Function to get current variant ID
+      function getCurrentVariantId() {
+        if (variantSelect) {
+          return variantSelect.value;
+        }
+        return null;
+      }
+      
+      // Function to fetch cart and find variant quantity
+      function getCartQuantityForVariant(variantId, callback) {
+        fetch('/cart.js')
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(cart) {
+            let quantity = 0;
+            if (cart && cart.items) {
+              const item = cart.items.find(function(item) {
+                return item.variant_id === parseInt(variantId, 10);
+              });
+              if (item) {
+                quantity = item.quantity;
+              }
+            }
+            if (callback) callback(quantity);
+          })
+          .catch(function(error) {
+            console.error('Error fetching cart:', error);
+            if (callback) callback(0);
+          });
+      }
+      
+      // Function to update quantity display
+      function updateQuantityDisplay(quantity) {
+        if (qtyInput) {
+          qtyInput.value = quantity;
+        }
+        // Enable/disable buttons and buy now button
+        if (qtyDecrease) {
+          qtyDecrease.disabled = quantity <= 0;
+        }
+        if (buyNowBtn) {
+          buyNowBtn.disabled = quantity <= 0;
+        }
+      }
+      
+      // Initialize: Fetch cart and set initial quantity
+      function initializeCartQuantity() {
+        const variantId = getCurrentVariantId();
+        if (variantId) {
+          getCartQuantityForVariant(variantId, function(quantity) {
+            updateQuantityDisplay(quantity);
+          });
+        } else {
+          // If no variant ID yet, initialize with 0
+          updateQuantityDisplay(0);
+        }
+      }
+      
+      // Initialize on page load (with slight delay to ensure product.js has run)
+      setTimeout(function() {
+        initializeCartQuantity();
+      }, 100);
+      
+      // Quantity increase button: Add 1 to cart
+      if (qtyIncrease) {
+        qtyIncrease.addEventListener('click', function() {
+          const variantId = getCurrentVariantId();
+          if (!variantId) return;
+          
+          // Disable button during request
+          qtyIncrease.disabled = true;
           
           fetch('/cart/add.js', {
             method: 'POST',
@@ -440,18 +481,108 @@
             },
             body: JSON.stringify({
               id: variantId,
-              quantity: quantity
+              quantity: 1
             })
           })
           .then(function(response) {
             return response.json();
           })
-          .then(function(item) {
-            window.location.href = '/checkout';
+          .then(function(data) {
+            // Success - fetch updated cart and update display
+            getCartQuantityForVariant(variantId, function(quantity) {
+              updateQuantityDisplay(quantity);
+              qtyIncrease.disabled = false;
+              
+              // Trigger cart update event for theme integration
+              document.dispatchEvent(new CustomEvent('cart:updated'));
+            });
           })
           .catch(function(error) {
-            console.error('Error:', error);
+            console.error('Error adding to cart:', error);
+            qtyIncrease.disabled = false;
           });
+        });
+      }
+      
+      // Quantity decrease button: Remove 1 from cart
+      if (qtyDecrease && variantSelect) {
+        qtyDecrease.addEventListener('click', function() {
+          const variantId = getCurrentVariantId();
+          if (!variantId) return;
+          
+          // Disable button during request
+          qtyDecrease.disabled = true;
+          
+          // Fetch cart to get current quantity and item key
+          fetch('/cart.js')
+            .then(function(response) {
+              return response.json();
+            })
+            .then(function(cart) {
+              const item = cart.items.find(function(item) {
+                return item.variant_id === parseInt(variantId, 10);
+              });
+              
+              if (!item || item.quantity <= 0) {
+                qtyDecrease.disabled = false;
+                updateQuantityDisplay(0);
+                return;
+              }
+              
+              const newQuantity = item.quantity - 1;
+              
+              // Update cart using change.js endpoint
+              fetch('/cart/change.js', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  id: item.key,
+                  quantity: newQuantity
+                })
+              })
+              .then(function(response) {
+                return response.json();
+              })
+              .then(function(data) {
+                // Success - update display
+                updateQuantityDisplay(newQuantity);
+                qtyDecrease.disabled = false;
+                
+                // Trigger cart update event for theme integration
+                document.dispatchEvent(new CustomEvent('cart:updated'));
+              })
+              .catch(function(error) {
+                console.error('Error updating cart:', error);
+                qtyDecrease.disabled = false;
+              });
+            })
+            .catch(function(error) {
+              console.error('Error fetching cart:', error);
+              qtyDecrease.disabled = false;
+            });
+        });
+      }
+      
+      // Handle variant changes: Update quantity display for new variant
+      // Listen to formVariantId change (updated by product.js)
+      if (variantSelect) {
+        variantSelect.addEventListener('change', function() {
+          const variantId = getCurrentVariantId();
+          if (variantId) {
+            getCartQuantityForVariant(variantId, function(quantity) {
+              updateQuantityDisplay(quantity);
+            });
+          }
+        });
+      }
+
+      // Buy Now button: Redirect to checkout (cart already has items)
+      if (buyNowBtn) {
+        buyNowBtn.addEventListener('click', function() {
+          if (this.disabled) return;
+          window.location.href = '/checkout';
         });
       }
     }
@@ -518,15 +649,15 @@
     },
     {
       "type": "text",
-      "id": "subtitle_fallback",
-      "label": "Subtitle (fallback)",
-      "info": "Used if DV:SUBTITLE marker not found in product.description"
+      "id": "subtitle",
+      "label": "Subtitle",
+      "info": "Used if product.metafields.custom.dv_subtitle is empty"
     },
     {
       "type": "text",
-      "id": "quote_fallback",
-      "label": "Quote (fallback)",
-      "info": "Used if DV:QUOTE marker not found in product.description"
+      "id": "quote",
+      "label": "Quote",
+      "info": "Used if product.metafields.custom.dv_quote is empty"
     },
     {
       "type": "text",

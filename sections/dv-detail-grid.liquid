@@ -1,35 +1,26 @@
 {% comment %}
   DinVeda Detail Grid Section (DV Template)
   "Dein Ritual im Detail" - two-column layout with tradition and facts
-  Uses description markers and blocks (NO metafields)
+  Uses product metafields (product database) with theme editor fallbacks
 {% endcomment %}
 
 {%- liquid
   # Read from metafields (priority) or section settings (fallback)
-  assign detail_left_title = product.metafields.dinveda.dv_detail_left_title
+  assign detail_left_title = product.metafields.custom.dv_detail_left_title
   if detail_left_title == blank
     assign detail_left_title = section.settings.left_title
   endif
   
-  assign detail_left_body = product.metafields.dinveda.dv_detail_left_body
-  if detail_left_body == blank
-    assign detail_left_body = section.settings.left_body
-  endif
+  assign detail_left_body_metafield = product.metafields.custom.dv_detail_left_body
   
-  assign facts_title = product.metafields.dinveda.dv_facts_title
+  assign facts_title = product.metafields.custom.dv_facts_title
   if facts_title == blank
     assign facts_title = section.settings.facts_title
   endif
   
-  assign ingredients_content = product.metafields.dinveda.dv_ingredients
-  if ingredients_content == blank
-    assign ingredients_content = section.settings.ingredients_content
-  endif
+  assign ingredients_content_metafield = product.metafields.custom.dv_ingredients
   
-  assign allergens_notes = product.metafields.dinveda.dv_allergens_notes
-  if allergens_notes == blank
-    assign allergens_notes = section.settings.allergens_notes
-  endif
+  assign allergens_notes_metafield = product.metafields.custom.dv_allergens_notes
   
   # Count icon items and certification blocks
   assign has_icon_items = false
@@ -46,7 +37,7 @@
   
   # Check if we have content to show
   assign has_content = false
-  if detail_left_title != blank or detail_left_body != blank or facts_title != blank or ingredients_content != blank or allergens_notes != blank or has_icon_items or has_certifications
+  if detail_left_title != blank or detail_left_body_metafield != blank or section.settings.left_body != blank or facts_title != blank or ingredients_content_metafield != blank or section.settings.ingredients_content != blank or allergens_notes_metafield != blank or section.settings.allergens_notes != blank or has_icon_items or has_certifications
     assign has_content = true
   endif
 -%}
@@ -76,9 +67,13 @@
           </h2>
         {% endif %}
         
-        {% if detail_left_body != blank %}
-          <div class="dv-detail-grid__left-body">
-            {{ detail_left_body }}
+        {% if detail_left_body_metafield != blank %}
+          <div class="dv-detail-grid__left-body rte">
+            {{ detail_left_body_metafield | metafield_tag }}
+          </div>
+        {% elsif section.settings.left_body != blank %}
+          <div class="dv-detail-grid__left-body rte">
+            {{ section.settings.left_body }}
           </div>
         {% endif %}
         
@@ -115,19 +110,31 @@
         {% endif %}
         
         {%- comment -%} Ingredients Section {%- endcomment -%}
-        {% if ingredients_content != blank %}
+        {% if ingredients_content_metafield != blank %}
           <div class="dv-detail-grid__ingredients">
-            <div class="dv-detail-grid__ingredients-content">
-              {{ ingredients_content }}
+            <div class="dv-detail-grid__ingredients-content rte">
+              {{ ingredients_content_metafield | metafield_tag }}
+            </div>
+          </div>
+        {% elsif section.settings.ingredients_content != blank %}
+          <div class="dv-detail-grid__ingredients">
+            <div class="dv-detail-grid__ingredients-content rte">
+              {{ section.settings.ingredients_content }}
             </div>
           </div>
         {% endif %}
         
         {%- comment -%} Allergens & Notes Section {%- endcomment -%}
-        {% if allergens_notes != blank %}
+        {% if allergens_notes_metafield != blank %}
           <div class="dv-detail-grid__allergens">
-            <div class="dv-detail-grid__allergens-content">
-              {{ allergens_notes }}
+            <div class="dv-detail-grid__allergens-content rte">
+              {{ allergens_notes_metafield | metafield_tag }}
+            </div>
+          </div>
+        {% elsif section.settings.allergens_notes != blank %}
+          <div class="dv-detail-grid__allergens">
+            <div class="dv-detail-grid__allergens-content rte">
+              {{ section.settings.allergens_notes }}
             </div>
           </div>
         {% endif %}
@@ -170,16 +177,16 @@
     },
     {
       "type": "text",
-      "id": "left_title_fallback",
-      "label": "Left Title (fallback)",
-      "default": "Tradition in der Ayurveda-Küche",
-      "info": "Used if DV:DETAIL_LEFT_TITLE marker not found in product.description"
+      "id": "left_title",
+      "label": "Left Column Title",
+      "default": "Dein Ritual im Detail",
+      "info": "Editable title. Product metafield custom.dv_detail_left_title takes priority if present."
     },
     {
       "type": "richtext",
-      "id": "left_body_fallback",
-      "label": "Left Body (fallback)",
-      "info": "Used if DV:DETAIL_LEFT_BODY marker not found in product.description"
+      "id": "left_body",
+      "label": "Left Column Body",
+      "info": "Editable content. Supports formatted text with bullets. Product metafield custom.dv_detail_left_body takes priority if present."
     },
     {
       "type": "header",
@@ -187,16 +194,22 @@
     },
     {
       "type": "text",
-      "id": "facts_title_fallback",
-      "label": "Facts Title (fallback)",
+      "id": "facts_title",
+      "label": "Right Column Title",
       "default": "Zutaten & Fakten",
-      "info": "Used if DV:FACTS_TITLE marker not found in product.description"
+      "info": "Editable title. Product metafield custom.dv_facts_title takes priority if present."
     },
     {
       "type": "richtext",
-      "id": "facts_body_fallback",
-      "label": "Facts Body (fallback)",
-      "info": "Used if DV:FACTS_BODY marker not found in product.description"
+      "id": "ingredients_content",
+      "label": "Ingredients Content",
+      "info": "Editable content for ingredients list. Product metafield custom.dv_ingredients (from product database) takes priority if present."
+    },
+    {
+      "type": "richtext",
+      "id": "allergens_notes",
+      "label": "Allergens & Notes",
+      "info": "Editable content for allergens and notes. Product metafield custom.dv_allergens_notes (from product database) takes priority if present."
     },
     {
       "type": "checkbox",

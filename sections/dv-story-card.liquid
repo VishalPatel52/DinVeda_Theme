@@ -5,17 +5,14 @@
 
 {%- liquid
   # Read from metafields (priority) or section settings (fallback)
-  assign story_title = product.metafields.dinveda.dv_story_title
+  assign story_title = product.metafields.custom.dv_story_title
   if story_title == blank
     assign story_title = section.settings.title
   endif
   
-  assign story_content = product.metafields.dinveda.dv_story_content
-  if story_content == blank
-    assign story_content = section.settings.content
-  endif
+  assign story_content_metafield = product.metafields.custom.dv_story_content
   
-  assign traditional_bullets = product.metafields.dinveda.dv_traditional_benefits
+  assign traditional_bullets = product.metafields.custom.dv_traditional_benefits
   
   # Parse traditional benefits bullets (if available)
   assign bullets_array = '' | split: ','
@@ -38,7 +35,7 @@
   
   # Check if we have content to show
   assign has_content = false
-  if story_title != blank or story_content != blank or bullets_array.size > 0
+  if story_title != blank or story_content_metafield != blank or section.settings.content != blank or bullets_array.size > 0
     assign has_content = true
   endif
 -%}
@@ -72,9 +69,13 @@
       {% endif %}
       
       {%- comment -%} Story Content {%- endcomment -%}
-      {% if story_content != blank %}
-        <div class="dv-story-card__body">
-          {{ story_content }}
+      {% if story_content_metafield != blank %}
+        <div class="dv-story-card__body rte">
+          {{ story_content_metafield | metafield_tag }}
+        </div>
+      {% elsif section.settings.content != blank %}
+        <div class="dv-story-card__body rte">
+          {{ section.settings.content }}
         </div>
       {% endif %}
 
@@ -117,13 +118,13 @@
       "id": "title",
       "label": "Story Title",
       "default": "Warum der Fuchs?",
-      "info": "Used if product.metafields.dinveda.dv_story_title is empty"
+      "info": "Used if product.metafields.custom.dv_story_title is empty"
     },
     {
       "type": "richtext",
       "id": "content",
       "label": "Story Content",
-      "info": "Used if product.metafields.dinveda.dv_story_content is empty"
+      "info": "Used if product.metafields.custom.dv_story_content is empty"
     },
     {
       "type": "checkbox",

@@ -225,7 +225,7 @@
 .dv-main-product__form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
 }
 
 .dv-main-product__variants {
@@ -261,13 +261,13 @@
 .dv-main-product__quantity {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .dv-main-product__quantity-label {
   font-family: var(--main-family, sans-serif);
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--dv-text-color);
 }
 
@@ -276,58 +276,65 @@
   align-items: center;
   gap: 0;
   border: 1px solid var(--dv-border-dark);
-  border-radius: 4px;
+  border-radius: 6px;
   overflow: hidden;
   width: fit-content;
 }
 
 .dv-main-product__quantity-btn {
-  padding: 12px 16px;
+  padding: 14px 18px;
   border: none;
   background-color: #ffffff;
   color: var(--dv-text-color);
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
-.dv-main-product__quantity-btn:hover {
-  background-color: #f5f5f5;
+.dv-main-product__quantity-btn:hover:not(:disabled) {
+  background-color: #fafafa;
+}
+
+.dv-main-product__quantity-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .dv-main-product__quantity-input {
-  width: 60px;
-  padding: 12px 8px;
+  width: 70px;
+  padding: 14px 8px;
   border: none;
-  border-left: 1px solid var(--dv-border-dark);
-  border-right: 1px solid var(--dv-border-dark);
   text-align: center;
   font-family: var(--main-family, sans-serif);
   font-size: 14px;
   background-color: #ffffff;
   color: var(--dv-text-color);
+  cursor: default;
+}
+
+.dv-main-product__quantity-input:read-only {
+  cursor: default;
 }
 
 .dv-main-product__add-to-cart {
   width: 100%;
-  padding: 16px 24px;
+  padding: 18px 24px;
   background-color: var(--dv-accent);
   color: #ffffff;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   font-family: var(--main-family, sans-serif);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.1s;
+  transition: background-color 0.2s;
 }
 
 .dv-main-product__add-to-cart:hover:not(:disabled) {
   background-color: #9d7140;
-  transform: translateY(-1px);
 }
 
 .dv-main-product__add-to-cart:disabled {
@@ -337,23 +344,32 @@
 
 .dv-main-product__buy-now {
   width: 100%;
-  padding: 16px 24px;
-  background-color: transparent;
-  color: var(--dv-accent);
-  border: 2px solid var(--dv-accent);
-  border-radius: 4px;
+  padding: 18px 24px;
+  background-color: var(--dv-accent);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
   font-family: var(--main-family, sans-serif);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
+  transition: background-color 0.2s;
 }
 
-.dv-main-product__buy-now:hover {
-  background-color: var(--dv-accent);
-  color: #ffffff;
+.dv-main-product__buy-now:hover:not(:disabled) {
+  background-color: #9d7140;
+}
+
+.dv-main-product__buy-now:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.dv-main-product__buy-now:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* Ritual Glance */

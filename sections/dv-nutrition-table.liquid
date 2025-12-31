@@ -5,15 +5,11 @@
 
 {%- liquid
   # Get nutrition content from metafield or section setting
-  assign nutrition_content = product.metafields.dinveda.dv_nutrition_content
-  
-  if nutrition_content == blank
-    assign nutrition_content = section.settings.nutrition_content
-  endif
+  assign nutrition_content_metafield = product.metafields.custom.dv_nutrition_content
   
   # Check if we have content to show
   assign has_content = false
-  if nutrition_content != blank
+  if nutrition_content_metafield != blank or section.settings.nutrition_content != blank
     assign has_content = true
   endif
 -%}
@@ -38,9 +34,13 @@
       <h2 class="dv-nutrition-table__heading">{{ section.settings.heading | escape }}</h2>
     {% endif %}
     
-    {% if nutrition_content != blank %}
-      <div class="dv-nutrition-table__content">
-        {{ nutrition_content }}
+    {% if nutrition_content_metafield != blank %}
+      <div class="dv-nutrition-table__content rte">
+        {{ nutrition_content_metafield | metafield_tag }}
+      </div>
+    {% elsif section.settings.nutrition_content != blank %}
+      <div class="dv-nutrition-table__content rte">
+        {{ section.settings.nutrition_content }}
       </div>
     {% endif %}
     
@@ -69,7 +69,7 @@
       "type": "richtext",
       "id": "nutrition_content",
       "label": "Nutrition Table Content",
-      "info": "Paste HTML table here, or use as fallback if product.metafields.dinveda.dv_nutrition_content is empty"
+      "info": "Paste HTML table here, or use as fallback if product.metafields.custom.dv_nutrition_content is empty"
     },
     {
       "type": "checkbox",

@@ -6,15 +6,9 @@
 
 {%- liquid
   # Read from metafields (priority) or section settings (fallback)
-  assign compliance_storage = product.metafields.dinveda.dv_compliance_storage
-  if compliance_storage == blank
-    assign compliance_storage = section.settings.storage_content
-  endif
+  assign compliance_storage_metafield = product.metafields.custom.dv_compliance_storage
   
-  assign compliance_legal = product.metafields.dinveda.dv_compliance_legal
-  if compliance_legal == blank
-    assign compliance_legal = section.settings.legal_content
-  endif
+  assign compliance_legal_metafield = product.metafields.custom.dv_compliance_legal
   
   # Check if we have blocks (additional compliance items)
   assign has_blocks = false
@@ -29,7 +23,7 @@
   
   # Check if we have content to show
   assign has_content = false
-  if compliance_storage != blank or compliance_legal != blank or has_blocks
+  if compliance_storage_metafield != blank or section.settings.storage_content != blank or compliance_legal_metafield != blank or section.settings.legal_content != blank or has_blocks
     assign has_content = true
   endif
 -%}
@@ -57,21 +51,35 @@
     <div class="dv-compliance-accordion__items">
       
       {%- comment -%} Storage (static display) {%- endcomment -%}
-      {% if compliance_storage != blank %}
+      {% if compliance_storage_metafield != blank %}
         <div class="dv-compliance-accordion__item">
           <h3 class="dv-compliance-accordion__item-title">{{ section.settings.storage_label | default: 'Lagerung' | escape }}</h3>
-          <div class="dv-compliance-accordion__item-content">
-            {{ compliance_storage }}
+          <div class="dv-compliance-accordion__item-content rte">
+            {{ compliance_storage_metafield | metafield_tag }}
+          </div>
+        </div>
+      {% elsif section.settings.storage_content != blank %}
+        <div class="dv-compliance-accordion__item">
+          <h3 class="dv-compliance-accordion__item-title">{{ section.settings.storage_label | default: 'Lagerung' | escape }}</h3>
+          <div class="dv-compliance-accordion__item-content rte">
+            {{ section.settings.storage_content }}
           </div>
         </div>
       {% endif %}
       
       {%- comment -%} Legal (static display) {%- endcomment -%}
-      {% if compliance_legal != blank %}
+      {% if compliance_legal_metafield != blank %}
         <div class="dv-compliance-accordion__item">
           <h3 class="dv-compliance-accordion__item-title">{{ section.settings.legal_label | default: 'Rechtlicher Hinweis' | escape }}</h3>
-          <div class="dv-compliance-accordion__item-content">
-            {{ compliance_legal }}
+          <div class="dv-compliance-accordion__item-content rte">
+            {{ compliance_legal_metafield | metafield_tag }}
+          </div>
+        </div>
+      {% elsif section.settings.legal_content != blank %}
+        <div class="dv-compliance-accordion__item">
+          <h3 class="dv-compliance-accordion__item-title">{{ section.settings.legal_label | default: 'Rechtlicher Hinweis' | escape }}</h3>
+          <div class="dv-compliance-accordion__item-content rte">
+            {{ section.settings.legal_content }}
           </div>
         </div>
       {% endif %}
@@ -121,7 +129,8 @@
       "type": "richtext",
       "id": "storage_content",
       "label": "Storage Content",
-      "info": "Used if product.metafields.dinveda.dv_compliance_storage is empty"
+      "default": "<p>Kühl, trocken und lichtgeschützt lagern. Nach dem Öffnen gut verschließen.</p>",
+      "info": "Used if product.metafields.custom.dv_compliance_storage is empty"
     },
     {
       "type": "text",
@@ -133,7 +142,8 @@
       "type": "richtext",
       "id": "legal_content",
       "label": "Legal Content",
-      "info": "Used if product.metafields.dinveda.dv_compliance_legal is empty"
+      "default": "<ul><li>Kann Spuren von Nüssen, Soja, Senf, Sesam und anderen Saaten enthalten.</li><li>Für Kinder weniger geeignet.</li><li>Nicht empfohlen für Schwangere oder Stillende.</li><li>Bei bekannten Unverträglichkeiten bitte ärztlichen Rat einholen.</li><li>Kühl, trocken und lichtgeschützt lagern.</li><li>Nach dem Öffnen gut verschließen.</li></ul>",
+      "info": "Used if product.metafields.custom.dv_compliance_legal is empty"
     },
     {
       "type": "checkbox",
