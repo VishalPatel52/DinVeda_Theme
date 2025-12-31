@@ -1,0 +1,637 @@
+{% comment %}
+  DinVeda Main Product Hero Section (DV Template)
+  Product hero with buy box - uses description markers and tags (NO metafields)
+{% endcomment %}
+
+{%- liquid
+  if product
+    assign current_variant = product.selected_or_first_available_variant
+  else
+    assign current_variant = null
+  endif
+  
+  assign product_form_id = 'product-form-' | append: section.id
+  
+  if product and product.template_suffix == 'pre-order'
+    assign call_to_action = 'products.product.pre_order' | t
+  elsif product
+    assign call_to_action = 'products.product.add_to_cart' | t
+  else
+    assign call_to_action = 'Add to cart'
+  endif
+
+  if current_variant and current_variant.available == false
+    assign call_to_action = 'products.product.sold_out' | t
+  endif
+
+  # Read from metafields (priority) or section settings (fallback)
+  assign subtitle = product.metafields.dinveda.dv_subtitle
+  if subtitle == blank
+    assign subtitle = section.settings.subtitle
+  endif
+  
+  assign quote = product.metafields.dinveda.dv_quote
+  if quote == blank
+    assign quote = section.settings.quote
+  endif
+  
+  # Parse tags for ritual attributes
+  assign ritual_time = ''
+  assign ritual_prep = ''
+  assign ritual_duration = ''
+  
+  if product.tags.size > 0
+    for tag in product.tags
+      assign tag_lower = tag | downcase
+      if tag_lower contains 'dv_time:'
+        assign tag_parts = tag | split: ':'
+        if tag_parts.size > 1
+          assign ritual_time = tag_parts[1] | strip | capitalize
+        endif
+      elsif tag_lower contains 'dv_prep:'
+        assign tag_parts = tag | split: ':'
+        if tag_parts.size > 1
+          assign ritual_prep = tag_parts[1] | strip | capitalize
+        endif
+      elsif tag_lower contains 'dv_duration:'
+        assign tag_parts = tag | split: ':'
+        if tag_parts.size > 1
+          assign ritual_duration = tag_parts[1] | strip
+        endif
+      endif
+    endfor
+  endif
+  
+  # Fallbacks for ritual attributes
+  if ritual_time == blank
+    assign ritual_time = section.settings.time_fallback | default: 'Morgen'
+  endif
+  if ritual_prep == blank
+    assign ritual_prep = section.settings.prep_fallback | default: 'Warm'
+  endif
+  if ritual_duration == blank
+    assign ritual_duration = section.settings.duration_fallback | default: '1-2 Min'
+  endif
+-%}
+
+{%- comment -%} Product JSON for Product object initialization {%- endcomment -%}
+{% if product %}
+  {% render 'product-json', product: product %}
+{% endif %}
+
+{%- comment -%} Product form config {%- endcomment -%}
+{%- liquid
+  assign product_variants_setting = settings.product_variants | default: 'dropdowns'
+-%}
+{% capture product_form_config %}
+{
+  "money_format": {{ shop.money_format | json }},
+  "enable_history": true,
+  "sold_out": {{ "products.product.sold_out" | t | json }},
+  "button": {{ call_to_action | json }},
+  "unavailable": {{ 'products.product.unavailable' | t | json }},
+  "quickview": false,
+  "featured_product": false,
+  "swatches": {{ product_variants_setting | json }}
+}
+{% endcapture %}
+
+{% style %}
+  #dv-main-product-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{% endstyle %}
+
+<section
+  id="dv-main-product-{{ section.id }}"
+  class="dv-main-product"
+  data-section-id="{{ section.id }}"
+  data-section-type="dv-main-product"
+  {% if product %}data-product-id="{{ product.id }}"{% endif %}
+  data-asset-url="{{ 'section-product.js' | asset_url }}"
+>
+  <div class="dv-main-product__container">
+    <div class="dv-main-product__grid">
+      
+      {%- comment -%} Left Column: Product Gallery {%- endcomment -%}
+      <div class="dv-main-product__gallery">
+        {% if product and product.media.size > 0 %}
+          {%- assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
+          
+          {%- comment -%} Main Image {%- endcomment -%}
+          <div class="dv-main-product__main-image">
+            {% if featured_media %}
+              <img
+                src="{{ featured_media | image_url: width: 800 }}"
+                alt="{{ featured_media.alt | escape }}"
+                class="dv-main-product__image"
+                data-media-id="{{ featured_media.id }}"
+                loading="eager"
+                width="{{ featured_media.width }}"
+                height="{{ featured_media.height }}"
+              >
+              {%- comment -%} Image Labels {%- endcomment -%}
+              <div class="dv-main-product__image-labels">
+                {% if section.settings.show_organic_label %}
+                  <span class="dv-main-product__image-label dv-main-product__image-label--organic">ORGANIC</span>
+                {% endif %}
+                {% if section.settings.show_vegan_label %}
+                  <span class="dv-main-product__image-label dv-main-product__image-label--vegan">VEGAN</span>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+
+          {%- comment -%} Thumbnails {%- endcomment -%}
+          {% if product.media.size > 1 and section.settings.show_thumbnails %}
+            <div class="dv-main-product__thumbnails">
+              {% for media in product.media limit: 4 %}
+                <button
+                  type="button"
+                  class="dv-main-product__thumbnail {% if forloop.first %}dv-main-product__thumbnail--active{% endif %}"
+                  data-media-id="{{ media.id }}"
+                  aria-label="View image {{ forloop.index }}"
+                >
+                  <img
+                    src="{{ media | image_url: width: 150 }}"
+                    alt="{{ media.alt | escape }}"
+                    class="dv-main-product__thumbnail-img"
+                    loading="lazy"
+                    width="150"
+                    height="150"
+                  >
+                </button>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% else %}
+          <div class="dv-main-product__main-image">
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        {% endif %}
+      </div>
+
+      {%- comment -%} Right Column: Buy Box {%- endcomment -%}
+      <div class="dv-main-product__buy-box">
+        
+        {%- comment -%} Subtitle {%- endcomment -%}
+        {% if subtitle != blank %}
+          <p class="dv-main-product__subtitle">{{ subtitle | escape }}</p>
+        {% endif %}
+
+        {%- comment -%} Product Title {%- endcomment -%}
+        {% if product %}
+          <h1 class="dv-main-product__title">{{ product.title }}</h1>
+        {% else %}
+          <h1 class="dv-main-product__title">Product Title</h1>
+        {% endif %}
+
+        {%- comment -%} Quote {%- endcomment -%}
+        {% if quote != blank %}
+          <div class="dv-main-product__quote-card">
+            <blockquote class="dv-main-product__quote-text">{{ quote | escape }}</blockquote>
+          </div>
+        {% endif %}
+        
+        {%- comment -%} Product Badges/Features (blocks) {%- endcomment -%}
+        {% if section.blocks.size > 0 %}
+          {% assign has_badges = false %}
+          {% for block in section.blocks %}
+            {% if block.type == 'product_badge' %}
+              {% assign has_badges = true %}
+              {% break %}
+            {% endif %}
+          {% endfor %}
+          
+          {% if has_badges %}
+            <div class="dv-main-product__badges">
+              {% for block in section.blocks %}
+                {% if block.type == 'product_badge' %}
+                  <div class="dv-main-product__badge" {{ block.shopify_attributes }}>
+                    {% if block.settings.icon_emoji != blank %}
+                      <span class="dv-main-product__badge-emoji">{{ block.settings.icon_emoji | escape }}</span>
+                    {% endif %}
+                    {% if block.settings.text != blank %}
+                      <span class="dv-main-product__badge-text">{{ block.settings.text | escape }}</span>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endif %}
+
+        {%- comment -%} Price {%- endcomment -%}
+        {% if product and current_variant %}
+          <div class="dv-main-product__price-section">
+            <div class="dv-main-product__price-wrapper">
+              <div class="dv-main-product__price" data-product-price>
+                <span data-regular-price>{{ current_variant.price | money }}</span>
+                {% if current_variant.compare_at_price > current_variant.price %}
+                  <span class="dv-main-product__compare-price" data-compare-price>
+                    {{ current_variant.compare_at_price | money }}
+                  </span>
+                {% endif %}
+              </div>
+              {% if section.settings.price_note != blank %}
+                <span class="dv-main-product__price-note">{{ section.settings.price_note | escape }}</span>
+              {% endif %}
+            </div>
+          </div>
+
+          {%- comment -%} Product Form {%- endcomment -%}
+          {% form 'product', product,
+            id: product_form_id,
+            class: "dv-main-product__form js-prod-form-submit"
+          %}
+            
+            <input type="hidden" name="id" id="formVariantId" value="{{ current_variant.id }}">
+
+            {%- comment -%} Variants {%- endcomment -%}
+            {% unless product.has_only_default_variant %}
+            <div class="dv-main-product__variants" data-section="{{ section.id }}">
+              {% for option in product.options_with_values %}
+                <div class="dv-main-product__variant-option">
+                  <label class="dv-main-product__variant-label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
+                    {{ option.name }}
+                  </label>
+                  <div class="dv-main-product__variant-select">
+                    <select
+                      id="Option-{{ section.id }}-{{ forloop.index0 }}"
+                      class="js-variant-selector"
+                      name="options[{{ option.name | escape }}]"
+                    >
+                      {% for value in option.values %}
+                        <option
+                          value="{{ value | escape }}"
+                          {% if option.selected_value == value %}selected="selected"{% endif %}
+                        >
+                          {{ value }}
+                        </option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% endunless %}
+
+            {%- comment -%} Quantity {%- endcomment -%}
+            {% if section.settings.show_quantity %}
+              <div class="dv-main-product__quantity">
+                <label for="Quantity-{{ section.id }}" class="dv-main-product__quantity-label">Quantity</label>
+                <div class="dv-main-product__quantity-selector">
+                  <button type="button" class="dv-main-product__quantity-btn" data-quantity-decrease>-</button>
+                  <input
+                    type="number"
+                    id="Quantity-{{ section.id }}"
+                    name="quantity"
+                    value="1"
+                    min="1"
+                    class="dv-main-product__quantity-input"
+                    data-quantity-input
+                  >
+                  <button type="button" class="dv-main-product__quantity-btn" data-quantity-increase>+</button>
+                </div>
+              </div>
+            {% endif %}
+
+            {%- comment -%} Add to Cart Button {%- endcomment -%}
+            <button
+              type="submit"
+              name="add"
+              class="dv-main-product__add-to-cart"
+              {% unless current_variant.available %}disabled{% endunless %}
+              data-add-to-cart-text
+            >
+              {{ section.settings.add_to_cart_label | default: "IN DEN WARENKORB" | escape }}
+            </button>
+
+            {%- comment -%} Buy Now Button (if enabled) {%- endcomment -%}
+            {% if section.settings.enable_buy_now and current_variant.available %}
+              <button
+                type="button"
+                class="dv-main-product__buy-now"
+                data-buy-now
+                data-variant-id="{{ current_variant.id }}"
+              >
+                {{ section.settings.buy_now_label | default: "Jetzt kaufen" | escape }}
+              </button>
+            {% endif %}
+
+          {% endform %}
+        {% endif %}
+
+        {%- comment -%} Ritual auf einen Blick (from tags) {%- endcomment -%}
+        {% if section.settings.show_ritual_glance %}
+          <div class="dv-main-product__ritual-glance">
+            <div class="dv-main-product__ritual-glance-item">
+              <span class="dv-main-product__ritual-glance-label">Tageszeit</span>
+              <span class="dv-main-product__ritual-glance-value">{{ ritual_time | escape }}</span>
+            </div>
+            <div class="dv-main-product__ritual-glance-item">
+              <span class="dv-main-product__ritual-glance-label">Zubereitung</span>
+              <span class="dv-main-product__ritual-glance-value">{{ ritual_prep | escape }}</span>
+            </div>
+            <div class="dv-main-product__ritual-glance-item">
+              <span class="dv-main-product__ritual-glance-label">Dauer</span>
+              <span class="dv-main-product__ritual-glance-value">{{ ritual_duration | escape }}</span>
+            </div>
+          </div>
+        {% endif %}
+
+        {%- comment -%} Social Share (if enabled) {%- endcomment -%}
+        {% if section.settings.show_social_share %}
+          <div class="dv-main-product__social-share">
+            <span class="dv-main-product__social-label">TEILEN</span>
+            <div class="dv-main-product__social-icons">
+              <a href="https://www.facebook.com/sharer/sharer.php?u={{ shop.url | append: product.url | url_param_escape }}" target="_blank" rel="noopener" class="dv-main-product__social-icon" aria-label="Share on Facebook">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                </svg>
+              </a>
+              <a href="https://twitter.com/intent/tweet?url={{ shop.url | append: product.url | url_param_escape }}&text={{ product.title | url_param_escape }}" target="_blank" rel="noopener" class="dv-main-product__social-icon" aria-label="Share on Twitter">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+                </svg>
+              </a>
+              <a href="https://pinterest.com/pin/create/button/?url={{ shop.url | append: product.url | url_param_escape }}&media={{ product.featured_image | image_url: width: 1200 | url_param_escape }}&description={{ product.title | url_param_escape }}" target="_blank" rel="noopener" class="dv-main-product__social-icon" aria-label="Share on Pinterest">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.48 2 2 6.48 2 12c0 4.84 3.44 8.87 8 9.8-.11-.98-.2-2.48.04-3.54.22-.94 1.43-6.35 1.43-6.35s-.36-.72-.36-1.78c0-1.66.96-2.9 2.16-2.9 1.02 0 1.51.77 1.51 1.69 0 1.02-.65 2.55-.99 3.97-.28 1.2.6 2.18 1.78 2.18 2.14 0 3.78-2.26 3.78-5.52 0-2.88-2.07-4.9-5.03-4.9-3.43 0-5.44 2.57-5.44 5.23 0 1.02.39 2.12.88 2.72a.36.36 0 0 1 .08.4l-.33 1.33c-.05.2-.16.24-.37.15-1.38-.64-2.24-2.65-2.24-4.26 0-3.48 2.53-6.68 7.3-6.68 3.83 0 6.8 2.73 6.8 6.38 0 3.8-2.4 6.86-5.86 6.86-1.15 0-2.23-.6-2.6-1.3l-.71 2.7c-.26 1-.96 2.25-1.43 3.01 1.08.33 2.22.51 3.4.51 5.52 0 10-4.48 10-10S17.52 2 12 2z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} Load product form JS {%- endcomment -%}
+<script src="{{ 'product.js' | asset_url }}" defer></script>
+
+<script>
+  (function() {
+    'use strict';
+    
+    function initMainProductSection() {
+      const section = document.querySelector('#dv-main-product-{{ section.id }}');
+      if (!section) return;
+
+      // Gallery thumbnail switching
+      const thumbs = section.querySelectorAll('.dv-main-product__thumbnail');
+      const mainImage = section.querySelector('.dv-main-product__image');
+      
+      if (thumbs.length > 0 && mainImage) {
+        thumbs.forEach(function(thumb) {
+          thumb.addEventListener('click', function() {
+            const mediaId = this.getAttribute('data-media-id');
+            const thumbImg = this.querySelector('.dv-main-product__thumbnail-img');
+            
+            if (thumbImg && mediaId) {
+              const newSrc = thumbImg.src.replace(/width=\d+/, 'width=800').replace(/_\d+x\d+/, '');
+              mainImage.src = newSrc;
+              mainImage.setAttribute('data-media-id', mediaId);
+              
+              thumbs.forEach(function(t) {
+                t.classList.remove('dv-main-product__thumbnail--active');
+              });
+              this.classList.add('dv-main-product__thumbnail--active');
+            }
+          });
+        });
+      }
+
+      // Quantity selector
+      const qtyDecrease = section.querySelector('[data-quantity-decrease]');
+      const qtyIncrease = section.querySelector('[data-quantity-increase]');
+      const qtyInput = section.querySelector('[data-quantity-input]');
+      
+      if (qtyDecrease && qtyIncrease && qtyInput) {
+        qtyDecrease.addEventListener('click', function() {
+          const current = parseInt(qtyInput.value, 10) || 1;
+          if (current > 1) {
+            qtyInput.value = current - 1;
+          }
+        });
+        
+        qtyIncrease.addEventListener('click', function() {
+          const current = parseInt(qtyInput.value, 10) || 1;
+          qtyInput.value = current + 1;
+        });
+      }
+
+      // Buy Now button
+      const buyNowBtn = section.querySelector('[data-buy-now]');
+      const variantSelect = section.querySelector('#formVariantId');
+      
+      if (buyNowBtn && variantSelect) {
+        buyNowBtn.addEventListener('click', function() {
+          const variantId = variantSelect.value;
+          const quantity = qtyInput ? parseInt(qtyInput.value, 10) || 1 : 1;
+          
+          fetch('/cart/add.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              id: variantId,
+              quantity: quantity
+            })
+          })
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(item) {
+            window.location.href = '/checkout';
+          })
+          .catch(function(error) {
+            console.error('Error:', error);
+          });
+        });
+      }
+    }
+    
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initMainProductSection);
+    } else {
+      initMainProductSection();
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "DV Main Product",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "checkbox",
+      "id": "show_thumbnails",
+      "label": "Show thumbnails",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_organic_label",
+      "label": "Show organic label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vegan_label",
+      "label": "Show vegan label",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "subtitle_fallback",
+      "label": "Subtitle (fallback)",
+      "info": "Used if DV:SUBTITLE marker not found in product.description"
+    },
+    {
+      "type": "text",
+      "id": "quote_fallback",
+      "label": "Quote (fallback)",
+      "info": "Used if DV:QUOTE marker not found in product.description"
+    },
+    {
+      "type": "text",
+      "id": "price_note",
+      "label": "Price note",
+      "default": "inkl. MwSt. / 100g Dose"
+    },
+    {
+      "type": "header",
+      "content": "Form"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quantity",
+      "label": "Show quantity selector",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "add_to_cart_label",
+      "label": "Add to cart label",
+      "default": "IN DEN WARENKORB"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_buy_now",
+      "label": "Enable buy now button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "buy_now_label",
+      "label": "Buy now label",
+      "default": "Jetzt kaufen"
+    },
+    {
+      "type": "header",
+      "content": "Ritual Attributes"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_ritual_glance",
+      "label": "Show ritual glance row",
+      "default": true,
+      "info": "Displays Tageszeit, Zubereitung, Dauer from product tags (dv_time:, dv_prep:, dv_duration:)"
+    },
+    {
+      "type": "text",
+      "id": "time_fallback",
+      "label": "Time fallback",
+      "default": "Morgen",
+      "info": "Used if dv_time: tag not found"
+    },
+    {
+      "type": "text",
+      "id": "prep_fallback",
+      "label": "Prep fallback",
+      "default": "Warm",
+      "info": "Used if dv_prep: tag not found"
+    },
+    {
+      "type": "text",
+      "id": "duration_fallback",
+      "label": "Duration fallback",
+      "default": "1-2 Min",
+      "info": "Used if dv_duration: tag not found"
+    },
+    {
+      "type": "header",
+      "content": "Social"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_share",
+      "label": "Show social share",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_badge",
+      "name": "Product Badge",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon_emoji",
+          "label": "Icon Emoji",
+          "default": "🌿",
+          "info": "Emoji icon (e.g., 🌿, 🌸, 🥛, 👐)"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Badge Text",
+          "default": "100 % Bio & vegan"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DV Main Product"
+    }
+  ]
+}
+{% endschema %}
+

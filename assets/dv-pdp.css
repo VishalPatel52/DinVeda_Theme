@@ -1,0 +1,1231 @@
+/* 
+ * DinVeda DV Template Product Page Styles
+ * Scoped to dv-* classes - NO impact on other templates
+ * Warm beige background, rounded cards, subtle borders, minimal shadows
+ */
+
+:root {
+  --dv-bg-beige: #FFF0DD;
+  --dv-bg-story: #f3e9dc;
+  --dv-text-color: #5a4533;
+  --dv-text-light: rgba(90, 69, 51, 0.7);
+  --dv-border-color: rgba(234, 221, 207, 0.4);
+  --dv-border-dark: rgba(90, 69, 51, 0.2);
+  --dv-accent: #b3814a;
+}
+
+/* ============================================
+   Main Product Hero Section
+   ============================================ */
+
+.dv-main-product {
+  padding: 80px 0;
+  background-color: var(--dv-bg-beige);
+}
+
+.dv-main-product__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.dv-main-product__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+/* Gallery */
+.dv-main-product__gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dv-main-product__main-image {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: #ffffff;
+  position: relative;
+}
+
+.dv-main-product__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.dv-main-product__image-labels {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  z-index: 10;
+}
+
+.dv-main-product__image-label {
+  display: inline-block;
+  padding: 6px 12px;
+  background-color: rgba(255, 255, 255, 0.95);
+  color: var(--dv-text-color);
+  border: 1px solid var(--dv-border-color);
+  border-radius: 20px;
+  font-family: var(--main-family, sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dv-main-product__thumbnails {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.dv-main-product__thumbnail {
+  aspect-ratio: 1;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  overflow: hidden;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  transition: border-color 0.2s, opacity 0.2s;
+}
+
+.dv-main-product__thumbnail:hover {
+  border-color: var(--dv-accent);
+  opacity: 1;
+}
+
+.dv-main-product__thumbnail--active {
+  border-color: var(--dv-accent);
+}
+
+.dv-main-product__thumbnail-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Buy Box */
+.dv-main-product__buy-box {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-top: 16px;
+}
+
+.dv-main-product__subtitle {
+  font-family: var(--main-family, sans-serif);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--dv-accent);
+  margin: 0 0 16px 0;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--dv-accent);
+  display: inline-block;
+}
+
+.dv-main-product__title {
+  font-family: var(--heading-family, serif);
+  font-size: 42px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--dv-text-color);
+  margin: 0 0 24px 0;
+}
+
+.dv-main-product__quote-card {
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  border: 1px solid var(--dv-border-color);
+  margin-bottom: 8px;
+}
+
+.dv-main-product__quote-text {
+  font-family: var(--main-family, sans-serif);
+  font-size: 16px;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--dv-text-color);
+  margin: 0;
+}
+
+/* Product Badges */
+.dv-main-product__badges {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.dv-main-product__badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--main-family, sans-serif);
+  font-size: 14px;
+  color: var(--dv-text-color);
+}
+
+.dv-main-product__badge-emoji {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.dv-main-product__badge-text {
+  font-weight: 600;
+}
+
+.dv-main-product__price-section {
+  margin: 8px 0;
+}
+
+.dv-main-product__price-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dv-main-product__price {
+  font-family: var(--heading-family, serif);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--dv-text-color);
+}
+
+.dv-main-product__compare-price {
+  font-size: 24px;
+  font-weight: 400;
+  text-decoration: line-through;
+  opacity: 0.6;
+  margin-left: 12px;
+}
+
+.dv-main-product__price-note {
+  font-family: var(--main-family, sans-serif);
+  font-size: 13px;
+  color: var(--dv-text-light);
+}
+
+/* Form */
+.dv-main-product__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dv-main-product__variants {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dv-main-product__variant-option {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dv-main-product__variant-label {
+  font-family: var(--main-family, sans-serif);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dv-text-color);
+}
+
+.dv-main-product__variant-select select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--dv-border-dark);
+  border-radius: 4px;
+  font-family: var(--main-family, sans-serif);
+  font-size: 14px;
+  background-color: #ffffff;
+  color: var(--dv-text-color);
+}
+
+.dv-main-product__quantity {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dv-main-product__quantity-label {
+  font-family: var(--main-family, sans-serif);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dv-text-color);
+}
+
+.dv-main-product__quantity-selector {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 1px solid var(--dv-border-dark);
+  border-radius: 4px;
+  overflow: hidden;
+  width: fit-content;
+}
+
+.dv-main-product__quantity-btn {
+  padding: 12px 16px;
+  border: none;
+  background-color: #ffffff;
+  color: var(--dv-text-color);
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.dv-main-product__quantity-btn:hover {
+  background-color: #f5f5f5;
+}
+
+.dv-main-product__quantity-input {
+  width: 60px;
+  padding: 12px 8px;
+  border: none;
+  border-left: 1px solid var(--dv-border-dark);
+  border-right: 1px solid var(--dv-border-dark);
+  text-align: center;
+  font-family: var(--main-family, sans-serif);
+  font-size: 14px;
+  background-color: #ffffff;
+  color: var(--dv-text-color);
+}
+
+.dv-main-product__add-to-cart {
+  width: 100%;
+  padding: 16px 24px;
+  background-color: var(--dv-accent);
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-family: var(--main-family, sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.dv-main-product__add-to-cart:hover:not(:disabled) {
+  background-color: #9d7140;
+  transform: translateY(-1px);
+}
+
+.dv-main-product__add-to-cart:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.dv-main-product__buy-now {
+  width: 100%;
+  padding: 16px 24px;
+  background-color: transparent;
+  color: var(--dv-accent);
+  border: 2px solid var(--dv-accent);
+  border-radius: 4px;
+  font-family: var(--main-family, sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.dv-main-product__buy-now:hover {
+  background-color: var(--dv-accent);
+  color: #ffffff;
+}
+
+/* Ritual Glance */
+.dv-main-product__ritual-glance {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--dv-border-color);
+}
+
+.dv-main-product__ritual-glance-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dv-main-product__ritual-glance-label {
+  font-family: var(--main-family, sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--dv-text-light);
+}
+
+.dv-main-product__ritual-glance-value {
+  font-family: var(--main-family, sans-serif);
+  font-size: 14px;
+  color: var(--dv-text-color);
+}
+
+/* Social Share */
+.dv-main-product__social-share {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 16px;
+}
+
+.dv-main-product__social-label {
+  font-family: var(--main-family, sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--dv-text-light);
+}
+
+.dv-main-product__social-icons {
+  display: flex;
+  gap: 16px;
+}
+
+.dv-main-product__social-icon {
+  color: var(--dv-text-color);
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.dv-main-product__social-icon:hover {
+  opacity: 1;
+}
+
+/* ============================================
+   Story Card Section
+   ============================================ */
+
+.dv-story-card {
+  background-color: var(--dv-bg-story);
+}
+
+.dv-story-card__container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.dv-story-card__content {
+  padding: 60px 0;
+}
+
+.dv-story-card__title {
+  font-family: var(--heading-family, serif);
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--dv-text-color);
+  margin: 0 0 32px 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dv-story-card__title-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.dv-story-card__body {
+  font-family: var(--main-family, sans-serif);
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--dv-text-color);
+  margin-bottom: 32px;
+}
+
+.dv-story-card__body p {
+  margin: 0 0 16px 0;
+}
+
+.dv-story-card__body p:last-child {
+  margin-bottom: 0;
+}
+
+.dv-story-card__traditional-benefits {
+  margin: 32px 0;
+}
+
+.dv-story-card__traditional-heading {
+  font-family: var(--main-family, sans-serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--dv-text-color);
+  margin: 0 0 16px 0;
+}
+
+.dv-story-card__bullet-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dv-story-card__bullet-list li {
+  font-family: var(--main-family, sans-serif);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--dv-text-color);
+  padding-left: 24px;
+  position: relative;
+}
+
+.dv-story-card__bullet-list li::before {
+  content: '•';
+  position: absolute;
+  left: 8px;
+  color: var(--dv-accent);
+  font-weight: 700;
+}
+
+.dv-story-card__disclaimer {
+  font-family: var(--main-family, sans-serif);
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--dv-text-light);
+  margin: 32px 0 0 0;
+  font-style: italic;
+}
+
+/* ============================================
+   Detail Grid Section (Two-Column)
+   ============================================ */
+
+.dv-detail-grid {
+  background-color: var(--dv-bg-beige);
+}
+
+.dv-detail-grid__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.dv-detail-grid__layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  padding: 60px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dv-detail-grid__column {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.dv-detail-grid__left-title,
+.dv-detail-grid__facts-title {
+  font-family: var(--heading-family, serif);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--dv-text-color);
+  margin: 0 0 16px 0;
+}
+
+.dv-detail-grid__left-body {
+  font-family: var(--main-family, sans-serif);
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--dv-text-color);
+}
+
+.dv-detail-grid__left-body p {
+  margin: 0 0 16px 0;
+}
+
+.dv-detail-grid__left-body p:last-child {
+  margin-bottom: 0;
+}
+
+.dv-detail-grid__ingredients {
+  margin-bottom: 32px;
+}
+
+.dv-detail-grid__ingredients-content {
+  font-family: var(--main-family, sans-serif);
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--dv-text-color);
+}
+
+.dv-detail-grid__ingredients-content p {
+  margin: 0 0 16px 0;
+}
+
+.dv-detail-grid__ingredients-content p:last-child {
+  margin-bottom: 0;
+}
+
+.dv-detail-grid__ingredients-content ul,
+.dv-detail-grid__ingredients-content ol {
+  margin: 16px 0;
+  padding-left: 24px;
+}
+
+.dv-detail-grid__ingredients-content li {
+  margin-bottom: 8px;
+}
+
+.dv-detail-grid__allergens {
+  margin-top: 32px;
+  padding-top: 32px;
+  border-top: 1px solid var(--dv-border-color);
+}
+
+.dv-detail-grid__allergens-content {
+  font-family: var(--main-family, sans-serif);
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--dv-text-color);
+}
+
+.dv-detail-grid__allergens-content p {
+  margin: 0 0 12px 0;
+}
+
+.dv-detail-grid__allergens-content p:last-child {
+  margin-bottom: 0;
+}
+
+.dv-detail-grid__allergens-content ul,
+.dv-detail-grid__allergens-content ol {
+  margin: 12px 0;
+  padding-left: 24px;
+}
+
+.dv-detail-grid__allergens-content li {
+  margin-bottom: 8px;
+}
+
+/* Icon Items */
+.dv-detail-grid__icon-items {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 8px;
+}
+
+.dv-detail-grid__icon-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.dv-detail-grid__icon-item-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+}
+
+.dv-detail-grid__icon-item-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.dv-detail-grid__icon-item-name {
+  font-family: var(--main-family, sans-serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--dv-text-color);
+  margin-bottom: 4px;
+}
+
+.dv-detail-grid__icon-item-desc {
+  font-family: var(--main-family, sans-serif);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--dv-text-light);
+}
+
+/* Certifications */
+.dv-detail-grid__certifications {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.dv-detail-grid__certification {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dv-detail-grid__certification-icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.dv-detail-grid__certification-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.dv-detail-grid__certification-label {
+  font-family: var(--main-family, sans-serif);
+  font-size: 13px;
+  color: var(--dv-text-color);
+}
+
+/* ============================================
+   Daily Ritual Section (Step Cards)
+   ============================================ */
+
+.dv-daily-ritual {
+  background-color: var(--dv-bg-beige);
+}
+
+.dv-daily-ritual__container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.dv-daily-ritual__heading {
+  font-family: var(--heading-family, serif);
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--dv-text-color);
+  margin: 0 0 48px 0;
+  text-align: center;
+}
+
+.dv-daily-ritual__steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-bottom: 48px;
+}
+
+.dv-daily-ritual__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  padding: 32px 24px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid var(--dv-border-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.dv-daily-ritual__step-icon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.dv-daily-ritual__step-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.dv-daily-ritual__step-heading {
+  font-family: var(--main-family, sans-serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--dv-text-color);
+  margin: 0;
+}
+
+.dv-daily-ritual__step-text {
+  font-family: var(--main-family, sans-serif);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--dv-text-color);
+  margin: 0;
+}
+
+.dv-daily-ritual__quote {
+  font-family: var(--main-family, sans-serif);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--dv-text-light);
+  text-align: center;
+  font-style: italic;
+  margin: 0;
+}
+
+/* ============================================
+   Preparation Tips Section
+   ============================================ */
+
+.dv-preparation-tips {
+  background-color: var(--dv-bg-beige);
+}
+
+.dv-preparation-tips__container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.dv-preparation-tips__heading {
+  font-family: var(--heading-family, serif);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--dv-text-color);
+  margin: 0 0 32px 0;
+  text-align: center;
+}
+
+.dv-preparation-tips__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dv-preparation-tips__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  font-family: var(--main-family, sans-serif);
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--dv-text-color);
+}
+
+.dv-preparation-tips__icon {
+  font-size: 20px;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.dv-preparation-tips__text {
+  flex: 1;
+}
+
+/* ============================================
+   Complete Ritual Section (Related Products)
+   ============================================ */
+
+.dv-complete-ritual {
+  background-color: var(--dv-bg-beige);
+}
+
+.dv-complete-ritual__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.dv-complete-ritual__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 48px;
+  gap: 24px;
+  border-top: 1px solid var(--dv-border-color);
+  padding-top: 48px;
+}
+
+.dv-complete-ritual__header-left {
+  flex: 1;
+}
+
+.dv-complete-ritual__title {
+  font-family: var(--heading-family, serif);
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--dv-text-color);
+  margin: 0 0 8px 0;
+}
+
+.dv-complete-ritual__subtitle {
+  font-family: var(--main-family, sans-serif);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--dv-text-light);
+  margin: 0;
+}
+
+.dv-complete-ritual__view-all {
+  font-family: var(--main-family, sans-serif);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--dv-text-color);
+  text-decoration: none;
+  border-bottom: 2px solid var(--dv-accent);
+  padding-bottom: 4px;
+  transition: color 0.2s;
+}
+
+.dv-complete-ritual__view-all:hover {
+  color: var(--dv-accent);
+}
+
+.dv-complete-ritual__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.dv-complete-ritual__card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--dv-border-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.dv-complete-ritual__card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dv-complete-ritual__card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.dv-complete-ritual__card-inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.dv-complete-ritual__image-wrapper {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background-color: #f5f5f5;
+}
+
+.dv-complete-ritual__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.dv-complete-ritual__placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dv-complete-ritual__content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.dv-complete-ritual__label {
+  font-family: var(--main-family, sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--dv-accent);
+  margin: 0;
+}
+
+.dv-complete-ritual__card-title {
+  font-family: var(--heading-family, serif);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--dv-text-color);
+  margin: 0;
+}
+
+.dv-complete-ritual__benefit {
+  font-family: var(--main-family, sans-serif);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--dv-text-light);
+  margin: 0;
+}
+
+.dv-complete-ritual__button-wrapper {
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.dv-complete-ritual__button {
+  font-family: var(--main-family, sans-serif);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--dv-text-color);
+  display: inline-block;
+  padding-bottom: 4px;
+  border-bottom: 2px solid var(--dv-accent);
+}
+
+/* ============================================
+   Compliance Section (Static Display)
+   ============================================ */
+
+.dv-compliance-accordion {
+  background-color: var(--dv-bg-beige);
+}
+
+.dv-compliance-accordion__container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.dv-compliance-accordion__heading {
+  font-family: var(--heading-family, serif);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--dv-text-color);
+  margin: 0 0 32px 0;
+  text-align: center;
+}
+
+.dv-compliance-accordion__items {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.dv-compliance-accordion__item {
+  padding: 32px 0;
+  border-bottom: 1px solid var(--dv-border-color);
+}
+
+.dv-compliance-accordion__item:first-child {
+  border-top: 1px solid var(--dv-border-color);
+}
+
+.dv-compliance-accordion__item:last-child {
+  border-bottom: none;
+}
+
+.dv-compliance-accordion__item-title {
+  font-family: var(--main-family, sans-serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--dv-text-color);
+  margin: 0 0 16px 0;
+}
+
+.dv-compliance-accordion__item-content {
+  font-family: var(--main-family, sans-serif);
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--dv-text-color);
+}
+
+.dv-compliance-accordion__item-content p {
+  margin: 0 0 12px 0;
+}
+
+.dv-compliance-accordion__item-content p:last-child {
+  margin-bottom: 0;
+}
+
+.dv-compliance-accordion__item-content ul,
+.dv-compliance-accordion__item-content ol {
+  margin: 12px 0;
+  padding-left: 24px;
+}
+
+.dv-compliance-accordion__item-content li {
+  margin-bottom: 8px;
+}
+
+/* ============================================
+   Nutrition Table Section
+   ============================================ */
+
+.dv-nutrition-table {
+  background-color: var(--dv-bg-beige);
+}
+
+.dv-nutrition-table__container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.dv-nutrition-table__heading {
+  font-family: var(--heading-family, serif);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--dv-text-color);
+  margin: 0 0 32px 0;
+  text-align: center;
+}
+
+.dv-nutrition-table__content {
+  font-family: var(--main-family, sans-serif);
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--dv-text-color);
+}
+
+.dv-nutrition-table__content table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--dv-border-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.dv-nutrition-table__content thead {
+  background-color: rgba(243, 233, 220, 0.5);
+}
+
+.dv-nutrition-table__content th {
+  font-family: var(--main-family, sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  text-align: left;
+  padding: 16px 20px;
+  color: var(--dv-text-color);
+  border-bottom: 2px solid var(--dv-border-color);
+}
+
+.dv-nutrition-table__content td {
+  font-family: var(--main-family, sans-serif);
+  font-size: 14px;
+  padding: 12px 20px;
+  color: var(--dv-text-color);
+  border-bottom: 1px solid var(--dv-border-color);
+}
+
+.dv-nutrition-table__content tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.dv-nutrition-table__content tbody tr:nth-child(even) {
+  background-color: rgba(243, 233, 220, 0.2);
+}
+
+/* ============================================
+   Responsive Styles
+   ============================================ */
+
+@media (max-width: 991px) {
+  .dv-main-product__grid,
+  .dv-detail-grid__layout {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  
+  .dv-daily-ritual__steps {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .dv-complete-ritual__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .dv-main-product__container,
+  .dv-story-card__container,
+  .dv-detail-grid__container,
+  .dv-daily-ritual__container,
+  .dv-complete-ritual__container,
+  .dv-compliance-accordion__container {
+    padding: 0 24px;
+  }
+  
+  .dv-main-product {
+    padding: 48px 0;
+  }
+  
+  .dv-main-product__title {
+    font-size: 32px;
+  }
+  
+  .dv-story-card__title,
+  .dv-daily-ritual__heading,
+  .dv-complete-ritual__title {
+    font-size: 28px;
+  }
+  
+  .dv-complete-ritual__grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .dv-detail-grid__certifications {
+    grid-template-columns: 1fr;
+  }
+  
+  .dv-main-product__thumbnails {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  
+  .dv-nutrition-table__container,
+  .dv-preparation-tips__container {
+    padding: 0 24px;
+  }
+  
+  .dv-nutrition-table__content table {
+    font-size: 13px;
+  }
+  
+  .dv-nutrition-table__content th,
+  .dv-nutrition-table__content td {
+    padding: 10px 12px;
+  }
+}
+

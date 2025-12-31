@@ -1,0 +1,178 @@
+{% comment %}
+  DinVeda Preparation Tips Section (DV Template)
+  "Zubereitungstipps" - Preparation methods with icons
+  Uses blocks for recipe items (NO metafields)
+{% endcomment %}
+
+{%- liquid
+  # Check if we have blocks
+  assign has_recipe_blocks = false
+  if section.blocks.size > 0
+    for block in section.blocks
+      if block.type == 'preparation_recipe'
+        assign has_recipe_blocks = true
+        break
+      endif
+    endfor
+  endif
+  
+  # Check if we have content to show
+  assign has_content = false
+  if has_recipe_blocks
+    assign has_content = true
+  endif
+-%}
+
+{% if has_content or section.settings.show_when_empty %}
+<section
+  id="dv-preparation-tips-{{ section.id }}"
+  class="dv-preparation-tips"
+  data-section-id="{{ section.id }}"
+  data-section-type="dv-preparation-tips"
+>
+  {% style %}
+    #dv-preparation-tips-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  {% endstyle %}
+  
+  <div class="dv-preparation-tips__container">
+    
+    {% if section.settings.heading != blank %}
+      <h2 class="dv-preparation-tips__heading">{{ section.settings.heading | escape }}</h2>
+    {% endif %}
+    
+    {% if has_recipe_blocks %}
+      <ul class="dv-preparation-tips__list">
+        {% for block in section.blocks %}
+          {% if block.type == 'preparation_recipe' %}
+            <li class="dv-preparation-tips__item" {{ block.shopify_attributes }}>
+              {% if block.settings.icon != blank %}
+                <span class="dv-preparation-tips__icon">{{ block.settings.icon | escape }}</span>
+              {% endif %}
+              {% if block.settings.recipe_text != blank %}
+                <span class="dv-preparation-tips__text">{{ block.settings.recipe_text | escape }}</span>
+              {% endif %}
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+    
+  </div>
+</section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "DV Preparation Tips",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Anwendung & Zubereitung"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_when_empty",
+      "label": "Show section even if no recipes",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "preparation_recipe",
+      "name": "Preparation Recipe",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "☕",
+          "options": [
+            {
+              "value": "☕",
+              "label": "Tea"
+            },
+            {
+              "value": "🥛",
+              "label": "Milk"
+            },
+            {
+              "value": "🍛",
+              "label": "Curry"
+            },
+            {
+              "value": "🍪",
+              "label": "Baking"
+            },
+            {
+              "value": "🥤",
+              "label": "Smoothie"
+            },
+            {
+              "value": "🥄",
+              "label": "Spoon"
+            },
+            {
+              "value": "🍰",
+              "label": "Cake"
+            },
+            {
+              "value": "🍯",
+              "label": "Honey/Yogurt"
+            }
+          ],
+          "info": "Select icon for this preparation method"
+        },
+        {
+          "type": "textarea",
+          "id": "recipe_text",
+          "label": "Recipe Text",
+          "default": "1 TL in warme Mandelmilch einrühren",
+          "info": "Detailed preparation instructions"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DV Preparation Tips"
+    }
+  ]
+}
+{% endschema %}
+

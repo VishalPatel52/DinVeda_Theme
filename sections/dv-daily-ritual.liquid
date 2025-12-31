@@ -1,0 +1,238 @@
+{% comment %}
+  DinVeda Daily Ritual Section (DV Template)
+  "Dein tägliches Ritual" - three step cards
+  Uses description markers and blocks (NO metafields)
+{% endcomment %}
+
+{%- liquid
+  # Extract and parse DV:RITUAL_STEPS
+  assign ritual_steps_content = ''
+  assign steps_array = '' | split: ','
+  
+  if product.description != blank
+    assign desc_content = product.description
+    
+    # Extract RITUAL_STEPS
+    if desc_content contains '<!-- DV:RITUAL_STEPS -->'
+      assign steps_parts = desc_content | split: '<!-- DV:RITUAL_STEPS -->'
+      if steps_parts.size > 1
+        assign steps_after = steps_parts[1]
+        assign steps_parts2 = steps_after | split: '<!-- /DV:RITUAL_STEPS -->'
+        if steps_parts2.size > 0
+          assign ritual_steps_content = steps_parts2[0] | strip
+        endif
+      endif
+    endif
+  endif
+  
+  # Parse steps: format is Step1|Heading|Text;;Step2|Heading|Text;;Step3|Heading|Text
+  if ritual_steps_content != blank
+    assign steps_raw = ritual_steps_content | strip
+    if steps_raw != blank
+      assign steps_split = steps_raw | split: ';;'
+      assign step_count = 0
+      for step_string in steps_split
+        if step_count < 3
+          assign step_trimmed = step_string | strip
+          if step_trimmed != blank
+            assign step_parts = step_trimmed | split: '|'
+            if step_parts.size >= 3
+              assign step_index = step_parts[0] | strip
+              assign step_heading = step_parts[1] | strip
+              assign step_text = step_parts[2] | strip
+              
+              if step_heading != blank and step_text != blank
+                # Store as pipe-separated string for later parsing
+                assign step_data = step_index | append: '|' | append: step_heading | append: '|' | append: step_text
+                assign steps_array = steps_array | push: step_data
+                assign step_count = step_count | plus: 1
+              endif
+            endif
+          endif
+        endif
+      endfor
+    endif
+  endif
+  
+  # Check if we have blocks (can override parsed steps)
+  assign has_step_blocks = false
+  if section.blocks.size > 0
+    for block in section.blocks
+      if block.type == 'ritual_step'
+        assign has_step_blocks = true
+        break
+      endif
+    endfor
+  endif
+  
+  # Check if we have content to show
+  assign has_content = false
+  if steps_array.size > 0 or has_step_blocks
+    assign has_content = true
+  endif
+-%}
+
+{% if has_content or section.settings.show_when_empty %}
+<section
+  id="dv-daily-ritual-{{ section.id }}"
+  class="dv-daily-ritual"
+  data-section-id="{{ section.id }}"
+  data-section-type="dv-daily-ritual"
+>
+  {% style %}
+    #dv-daily-ritual-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  {% endstyle %}
+  
+  <div class="dv-daily-ritual__container">
+    
+    {% if section.settings.heading != blank %}
+      <h2 class="dv-daily-ritual__heading">{{ section.settings.heading | escape }}</h2>
+    {% endif %}
+    
+    <div class="dv-daily-ritual__steps">
+      
+      {%- comment -%} Use blocks if available, otherwise use parsed steps {%- endcomment -%}
+      {% if has_step_blocks %}
+        {% for block in section.blocks %}
+          {% if block.type == 'ritual_step' %}
+            <div class="dv-daily-ritual__step" {{ block.shopify_attributes }}>
+              {% if block.settings.icon != blank %}
+                <div class="dv-daily-ritual__step-icon">
+                  {{ block.settings.icon | image_url: width: 48 | image_tag: alt: block.settings.heading, loading: 'lazy', width: 48, height: 48 }}
+                </div>
+              {% endif %}
+              {% if block.settings.heading != blank %}
+                <h3 class="dv-daily-ritual__step-heading">{{ block.settings.heading | escape }}</h3>
+              {% endif %}
+              {% if block.settings.text != blank %}
+                <p class="dv-daily-ritual__step-text">{{ block.settings.text | escape }}</p>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% elsif steps_array.size > 0 %}
+        {% for step_data in steps_array %}
+          {% assign step_parts = step_data | split: '|' %}
+          {% if step_parts.size >= 3 %}
+            {% assign step_heading = step_parts[1] %}
+            {% assign step_text = step_parts[2] %}
+            <div class="dv-daily-ritual__step">
+              {% if section.settings.default_icon != blank %}
+                <div class="dv-daily-ritual__step-icon">
+                  {{ section.settings.default_icon | image_url: width: 48 | image_tag: alt: step_heading, loading: 'lazy', width: 48, height: 48 }}
+                </div>
+              {% endif %}
+              <h3 class="dv-daily-ritual__step-heading">{{ step_heading | escape }}</h3>
+              <p class="dv-daily-ritual__step-text">{{ step_text | escape }}</p>
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+      
+    </div>
+    
+    {%- comment -%} Concluding Quote {%- endcomment -%}
+    {% if section.settings.concluding_quote != blank %}
+      <p class="dv-daily-ritual__quote">{{ section.settings.concluding_quote | escape }}</p>
+    {% endif %}
+    
+  </div>
+</section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "DV Daily Ritual",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Dein tägliches Ritual"
+    },
+    {
+      "type": "text",
+      "id": "concluding_quote",
+      "label": "Concluding Quote",
+      "default": "Mach es einfach. 1 TL. Warm. Ein Moment für dich."
+    },
+    {
+      "type": "image_picker",
+      "id": "default_icon",
+      "label": "Default Step Icon",
+      "info": "Used for steps parsed from DV:RITUAL_STEPS if blocks are not configured"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_when_empty",
+      "label": "Show section even if steps are empty",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ritual_step",
+      "name": "Ritual Step",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Verbinden"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Instruction Text",
+          "default": "Gib 1 TL (1-3g) des Pulvers in deine Lieblingstasse."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DV Daily Ritual"
+    }
+  ]
+}
+{% endschema %}
+

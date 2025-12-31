@@ -1,0 +1,195 @@
+{% comment %}
+  DinVeda Compliance Accordion Section (DV Template)
+  Accordion with compliance/legal information
+  Uses description markers and blocks (NO metafields)
+{% endcomment %}
+
+{%- liquid
+  # Read from metafields (priority) or section settings (fallback)
+  assign compliance_storage = product.metafields.dinveda.dv_compliance_storage
+  if compliance_storage == blank
+    assign compliance_storage = section.settings.storage_content
+  endif
+  
+  assign compliance_legal = product.metafields.dinveda.dv_compliance_legal
+  if compliance_legal == blank
+    assign compliance_legal = section.settings.legal_content
+  endif
+  
+  # Check if we have blocks (additional compliance items)
+  assign has_blocks = false
+  if section.blocks.size > 0
+    for block in section.blocks
+      if block.type == 'compliance_item'
+        assign has_blocks = true
+        break
+      endif
+    endfor
+  endif
+  
+  # Check if we have content to show
+  assign has_content = false
+  if compliance_storage != blank or compliance_legal != blank or has_blocks
+    assign has_content = true
+  endif
+-%}
+
+{% if has_content or section.settings.show_when_empty %}
+<section
+  id="dv-compliance-accordion-{{ section.id }}"
+  class="dv-compliance-accordion"
+  data-section-id="{{ section.id }}"
+  data-section-type="dv-compliance-accordion"
+>
+  {% style %}
+    #dv-compliance-accordion-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  {% endstyle %}
+  
+  <div class="dv-compliance-accordion__container">
+    
+    {% if section.settings.heading != blank %}
+      <h2 class="dv-compliance-accordion__heading">{{ section.settings.heading | escape }}</h2>
+    {% endif %}
+    
+    <div class="dv-compliance-accordion__items">
+      
+      {%- comment -%} Storage (static display) {%- endcomment -%}
+      {% if compliance_storage != blank %}
+        <div class="dv-compliance-accordion__item">
+          <h3 class="dv-compliance-accordion__item-title">{{ section.settings.storage_label | default: 'Lagerung' | escape }}</h3>
+          <div class="dv-compliance-accordion__item-content">
+            {{ compliance_storage }}
+          </div>
+        </div>
+      {% endif %}
+      
+      {%- comment -%} Legal (static display) {%- endcomment -%}
+      {% if compliance_legal != blank %}
+        <div class="dv-compliance-accordion__item">
+          <h3 class="dv-compliance-accordion__item-title">{{ section.settings.legal_label | default: 'Rechtlicher Hinweis' | escape }}</h3>
+          <div class="dv-compliance-accordion__item-content">
+            {{ compliance_legal }}
+          </div>
+        </div>
+      {% endif %}
+      
+      {%- comment -%} Additional items (blocks) {%- endcomment -%}
+      {% if has_blocks %}
+        {% for block in section.blocks %}
+          {% if block.type == 'compliance_item' %}
+            <div class="dv-compliance-accordion__item" {{ block.shopify_attributes }}>
+              <h3 class="dv-compliance-accordion__item-title">{{ block.settings.title | escape }}</h3>
+              <div class="dv-compliance-accordion__item-content">
+                {{ block.settings.content }}
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+      
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "DV Compliance Accordion",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Wichtige Hinweise"
+    },
+    {
+      "type": "text",
+      "id": "storage_label",
+      "label": "Storage Label",
+      "default": "Lagerung"
+    },
+    {
+      "type": "richtext",
+      "id": "storage_content",
+      "label": "Storage Content",
+      "info": "Used if product.metafields.dinveda.dv_compliance_storage is empty"
+    },
+    {
+      "type": "text",
+      "id": "legal_label",
+      "label": "Legal Label",
+      "default": "Rechtlicher Hinweis"
+    },
+    {
+      "type": "richtext",
+      "id": "legal_content",
+      "label": "Legal Content",
+      "info": "Used if product.metafields.dinveda.dv_compliance_legal is empty"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_when_empty",
+      "label": "Show section even if all markers are empty",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "compliance_item",
+      "name": "Compliance Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Zutaten & Allergene"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DV Compliance Accordion"
+    }
+  ]
+}
+{% endschema %}
+

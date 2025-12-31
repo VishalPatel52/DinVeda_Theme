@@ -9,66 +9,107 @@
  */
 {
   "sections": {
-    "dinveda_product_hero": {
-      "type": "dinveda-product-hero",
+    "dv_main_product": {
+      "type": "dv-main-product",
       "settings": {
-        "show_breadcrumbs": false,
-        "show_thumbnails": false,
-        "category_text": "MORGEN | AKTIVIEREN",
-        "quote_text": "Ich starte clever und klar in den Tag. Für Energie, Fokus & innere Wärme.",
-        "quote_attribution": "Fuchs",
-        "price_note": "inkl. MwSt. / 100g Dose",
-        "add_to_cart_label": "Zum Einkaufswagen hinzufügen",
-        "enable_buy_now": true,
-        "buy_now_label": "Jetzt kaufen",
-        "buy_now_primary": false,
-        "show_payment_options_link": false,
-        "payment_options_link_text": "WEITERE BEZAHLMÖGLICHKEITEN",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "show_thumbnails": true,
         "show_organic_label": true,
         "show_vegan_label": true,
-        "show_social_share": true
+        "show_quantity": true,
+        "add_to_cart_label": "IN DEN WARENKORB",
+        "enable_buy_now": true,
+        "buy_now_label": "Jetzt kaufen",
+        "show_ritual_glance": true,
+        "time_fallback": "Morgen",
+        "prep_fallback": "Warm",
+        "duration_fallback": "1-2 Min",
+        "show_social_share": true,
+        "price_note": "inkl. MwSt. / 100g Dose"
       }
     },
-    "dinveda_ritual_story": {
-      "type": "dinveda-ritual-story",
+    "dv_story_card": {
+      "type": "dv-story-card",
       "settings": {
-        "eyebrow": "DIE RITUAL-STORY"
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "show_fox_icon": true,
+        "show_disclaimer": true,
+        "disclaimer_text": "AYURVEDISCH INSPIRIERTE GENUSS-TRADITION. KEIN HEILVERSPRECHEN.",
+        "background_color": "#f3e9dc"
       }
     },
-    "dinveda_traditional_ingredients": {
-      "type": "dinveda-traditional-ingredients",
+    "dv_detail_grid": {
+      "type": "dv-detail-grid",
       "settings": {
-        "show_when_empty": true
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "left_title": "Dein Ritual im Detail",
+        "facts_title": "Zutaten & Fakten"
+      },
+      "blocks": {}
+    },
+    "dv_preparation_tips": {
+      "type": "dv-preparation-tips",
+      "settings": {
+        "heading": "Anwendung & Zubereitung",
+        "padding_top": 80,
+        "padding_bottom": 80
+      },
+      "blocks": {}
+    },
+    "dv_nutrition_table": {
+      "type": "dv-nutrition-table",
+      "settings": {
+        "heading": "Nährwertangaben (pro 100 g)",
+        "padding_top": 80,
+        "padding_bottom": 80
       }
     },
-    "dinveda_product_ingredients": {
-      "type": "dinveda-product-ingredients",
+    "dv_daily_ritual": {
+      "type": "dv-daily-ritual",
       "settings": {
-        "show_when_empty": true
-      }
+        "heading": "Dein tägliches Ritual",
+        "concluding_quote": "Mach es einfach. 1 TL. Warm. Ein Moment für dich.",
+        "padding_top": 80,
+        "padding_bottom": 80
+      },
+      "blocks": {}
     },
-    "dinveda_recipe_preparation": {
-      "type": "dinveda-recipe-preparation",
+    "dv_complete_ritual": {
+      "type": "dv-complete-ritual",
       "settings": {
-        "show_when_empty": true
-      }
-    },
-    "dinveda_complete_your_day": {
-      "type": "dinveda-complete-your-day",
-      "settings": {
-        "heading": "Vervollständige deinen Tag",
-        "subheading": "WEITERE RITUALE FÜR BALANCE & RUHE",
+        "heading": "Vervollständige dein Ritual",
+        "subheading": "Sanfte Ergänzungen für den Abend.",
         "view_all_label": "ALLE RITUALE ANSEHEN",
-        "view_all_link": "/collections/all"
-      }
+        "view_all_link": "/collections/all",
+        "button_label": "ANSEHEN",
+        "padding_top": 80,
+        "padding_bottom": 80
+      },
+      "blocks": {}
+    },
+    "dv_compliance_accordion": {
+      "type": "dv-compliance-accordion",
+      "settings": {
+        "heading": "Wichtige Hinweise",
+        "storage_label": "Lagerung",
+        "legal_label": "Rechtlicher Hinweis",
+        "padding_top": 80,
+        "padding_bottom": 80
+      },
+      "blocks": {}
     }
   },
   "order": [
-    "dinveda_product_hero",
-    "dinveda_ritual_story",
-    "dinveda_traditional_ingredients",
-    "dinveda_product_ingredients",
-    "dinveda_recipe_preparation",
-    "dinveda_complete_your_day"
+    "dv_main_product",
+    "dv_story_card",
+    "dv_detail_grid",
+    "dv_preparation_tips",
+    "dv_nutrition_table",
+    "dv_daily_ritual",
+    "dv_complete_ritual",
+    "dv_compliance_accordion"
   ]
 }

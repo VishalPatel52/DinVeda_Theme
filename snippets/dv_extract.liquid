@@ -1,0 +1,36 @@
+{% comment %}
+  DinVeda Description Marker Extractor
+  Extracts content between HTML comment markers in product.description
+  
+  Usage:
+    {% render 'dv_extract', content: product.description, key: 'SUBTITLE' %}
+  
+  Parameters:
+    - content: String to search in (usually product.description)
+    - key: Marker key without DV: prefix (e.g., 'SUBTITLE' for <!-- DV:SUBTITLE -->)
+  
+  Returns: Extracted content as string, or blank if markers not found
+{% endcomment %}
+
+{%- liquid
+  assign extracted_content = ''
+  
+  if content != blank and key != blank
+    assign open_marker = '<!-- DV:' | append: key | append: ' -->'
+    assign close_marker = '<!-- /DV:' | append: key | append: ' -->'
+    
+    if content contains open_marker and content contains close_marker
+      assign content_parts = content | split: open_marker
+      if content_parts.size > 1
+        assign after_open = content_parts[1]
+        assign content_parts2 = after_open | split: close_marker
+        if content_parts2.size > 0
+          assign extracted_content = content_parts2[0] | strip
+        endif
+      endif
+    endif
+  endif
+-%}
+
+{{ extracted_content }}
+

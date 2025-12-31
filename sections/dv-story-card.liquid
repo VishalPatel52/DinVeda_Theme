@@ -1,0 +1,203 @@
+{% comment %}
+  DinVeda Story Card Section (DV Template)
+  "Warum der Fuchs?" story section - uses description markers (NO metafields)
+{% endcomment %}
+
+{%- liquid
+  # Read from metafields (priority) or section settings (fallback)
+  assign story_title = product.metafields.dinveda.dv_story_title
+  if story_title == blank
+    assign story_title = section.settings.title
+  endif
+  
+  assign story_content = product.metafields.dinveda.dv_story_content
+  if story_content == blank
+    assign story_content = section.settings.content
+  endif
+  
+  assign traditional_bullets = product.metafields.dinveda.dv_traditional_benefits
+  
+  # Parse traditional benefits bullets (if available)
+  assign bullets_array = '' | split: ','
+  if traditional_bullets != blank
+    assign bullets_raw = traditional_bullets | newline_to_br | split: '<br />'
+    assign item_count = 0
+    for line in bullets_raw
+      if item_count < 5
+        assign trimmed_line = line | strip
+        if trimmed_line != blank
+          assign clean_line = trimmed_line | replace: '• ', '' | replace: '•', '' | replace: '- ', '' | strip
+          if clean_line != blank
+            assign bullets_array = bullets_array | push: clean_line
+            assign item_count = item_count | plus: 1
+          endif
+        endif
+      endif
+    endfor
+  endif
+  
+  # Check if we have content to show
+  assign has_content = false
+  if story_title != blank or story_content != blank or bullets_array.size > 0
+    assign has_content = true
+  endif
+-%}
+
+{% if has_content or section.settings.show_when_empty %}
+<section
+  id="dv-story-card-{{ section.id }}"
+  class="dv-story-card"
+  data-section-id="{{ section.id }}"
+  data-section-type="dv-story-card"
+>
+  {% style %}
+    #dv-story-card-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+      background-color: {{ section.settings.background_color | default: '#f3e9dc' }};
+    }
+  {% endstyle %}
+  
+  <div class="dv-story-card__container">
+    <div class="dv-story-card__content">
+      
+      {%- comment -%} Story Title with Icon {%- endcomment -%}
+      {% if story_title != blank %}
+        <h2 class="dv-story-card__title">
+          {% if section.settings.show_fox_icon and section.settings.fox_icon != blank %}
+            <img src="{{ section.settings.fox_icon | image_url: width: 40 }}" alt="" class="dv-story-card__title-icon" width="40" height="40">
+          {% endif %}
+          {{ story_title | escape }}
+        </h2>
+      {% endif %}
+      
+      {%- comment -%} Story Content {%- endcomment -%}
+      {% if story_content != blank %}
+        <div class="dv-story-card__body">
+          {{ story_content }}
+        </div>
+      {% endif %}
+
+      {%- comment -%} Traditional Benefits Bullets {%- endcomment -%}
+      {% if bullets_array.size > 0 %}
+        <div class="dv-story-card__traditional-benefits">
+          <h3 class="dv-story-card__traditional-heading">Traditionell geschätzt für …</h3>
+          <ul class="dv-story-card__bullet-list">
+            {% for bullet in bullets_array %}
+              <li>{{ bullet | escape }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+
+      {%- comment -%} Disclaimer {%- endcomment -%}
+      {% if section.settings.show_disclaimer %}
+        <p class="dv-story-card__disclaimer">
+          {{ section.settings.disclaimer_text | default: 'AYURVEDISCH INSPIRIERTE GENUSS-TRADITION. KEIN HEILVERSPRECHEN.' | escape }}
+        </p>
+      {% endif %}
+
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "DV Story Card",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Story Title",
+      "default": "Warum der Fuchs?",
+      "info": "Used if product.metafields.dinveda.dv_story_title is empty"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Story Content",
+      "info": "Used if product.metafields.dinveda.dv_story_content is empty"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_when_empty",
+      "label": "Show section even if all markers are empty",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Icon"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_fox_icon",
+      "label": "Show fox icon",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "fox_icon",
+      "label": "Fox icon image",
+      "info": "Icon to display next to story title"
+    },
+    {
+      "type": "header",
+      "content": "Disclaimer"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_disclaimer",
+      "label": "Show disclaimer",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "disclaimer_text",
+      "label": "Disclaimer text",
+      "default": "AYURVEDISCH INSPIRIERTE GENUSS-TRADITION. KEIN HEILVERSPRECHEN."
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#f3e9dc"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 80
+    }
+  ]
+}
+{% endschema %}
+

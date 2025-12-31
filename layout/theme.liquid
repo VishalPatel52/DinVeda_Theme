@@ -56,6 +56,12 @@
     <link rel="preload" href="{{ 'dinveda-product-premium.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="{{ 'dinveda-product-premium.css' | asset_url }}"></noscript>
   {%- endif -%}
+  
+  {%- comment -%} Load DV template CSS for dinveda-premium template {%- endcomment -%}
+  {%- if template.name == 'product' and template.suffix == 'dinveda-premium' -%}
+    <link rel="preload" href="{{ 'dv-pdp.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ 'dv-pdp.css' | asset_url }}"></noscript>
+  {%- endif -%}
 
   {%- comment -%} Load DinVeda homepage CSS only for homepage template {%- endcomment -%}
   {%- if template == 'index' -%}
