@@ -15,42 +15,105 @@
         "show_breadcrumbs": false,
         "show_thumbnails": false,
         "category_text": "MORGEN | AKTIVIEREN",
+        "show_quote_card": true,
         "quote_text": "Ich starte clever und klar in den Tag. Für Energie, Fokus & innere Wärme.",
         "quote_attribution": "Fuchs",
+        "show_intro": true,
         "price_note": "inkl. MwSt. / 100g Dose",
         "add_to_cart_label": "Zum Einkaufswagen hinzufügen",
+        "shipping_text": "",
         "enable_buy_now": true,
         "buy_now_label": "Jetzt kaufen",
         "buy_now_primary": false,
         "show_payment_options_link": false,
         "payment_options_link_text": "WEITERE BEZAHLMÖGLICHKEITEN",
+        "show_badges": true,
+        "padding_top": 80,
+        "padding_bottom": 80,
         "show_organic_label": true,
         "show_vegan_label": true,
-        "show_social_share": true
+        "show_social_share": true,
+        "show_ritual_glance_row": true
       }
     },
     "dinveda_ritual_story": {
       "type": "dinveda-ritual-story",
       "settings": {
-        "eyebrow": "DIE RITUAL-STORY"
+        "eyebrow": "DIE RITUAL-STORY",
+        "story_title_override": "",
+        "intro_fallback": "",
+        "show_when_empty": false,
+        "show_traditional_benefits": true,
+        "background_color": "#f3e9dc",
+        "enable_watermark": false,
+        "padding_top": 80,
+        "padding_bottom": 80
       }
     },
     "dinveda_traditional_ingredients": {
       "type": "dinveda-traditional-ingredients",
       "settings": {
-        "show_when_empty": true
+        "heading": "",
+        "icon": "grain",
+        "footnote": "",
+        "show_when_empty": true,
+        "padding_top": 80,
+        "padding_bottom": 80
       }
     },
     "dinveda_product_ingredients": {
       "type": "dinveda-product-ingredients",
+      "blocks": {
+        "ingredient_table_row_ypeqNt": {
+          "type": "ingredient_table_row",
+          "settings": {
+            "name": "FSDAF",
+            "percentage": "90",
+            "additional_info": "FASDF"
+          }
+        },
+        "ingredient_table_row_CGCCxH": {
+          "type": "ingredient_table_row",
+          "settings": {
+            "name": "",
+            "percentage": "",
+            "additional_info": ""
+          }
+        },
+        "ingredient_table_row_AMhAri": {
+          "type": "ingredient_table_row",
+          "settings": {
+            "name": "",
+            "percentage": "",
+            "additional_info": ""
+          }
+        }
+      },
+      "block_order": [
+        "ingredient_table_row_ypeqNt",
+        "ingredient_table_row_CGCCxH",
+        "ingredient_table_row_AMhAri"
+      ],
       "settings": {
-        "show_when_empty": true
+        "heading": "XCXVCYV",
+        "icon": "grain",
+        "footnote": "FDSAFAS",
+        "show_when_empty": true,
+        "padding_top": 80,
+        "padding_bottom": 80
       }
     },
     "dinveda_recipe_preparation": {
       "type": "dinveda-recipe-preparation",
       "settings": {
-        "show_when_empty": true
+        "heading": "",
+        "icon": "restaurant",
+        "intro_text": "",
+        "show_when_empty": true,
+        "show_ritual_detail_block": true,
+        "cards_per_row": 2,
+        "padding_top": 80,
+        "padding_bottom": 80
       }
     },
     "dinveda_complete_your_day": {
@@ -59,7 +122,9 @@
         "heading": "Vervollständige deinen Tag",
         "subheading": "WEITERE RITUALE FÜR BALANCE & RUHE",
         "view_all_label": "ALLE RITUALE ANSEHEN",
-        "view_all_link": "/collections/all"
+        "view_all_link": "/collections/all",
+        "button_label": "",
+        "fallback_collection": ""
       }
     }
   },
@@ -72,4 +137,3 @@
     "dinveda_complete_your_day"
   ]
 }
-

@@ -17,6 +17,9 @@
         "show_thumbnails": true,
         "show_organic_label": true,
         "show_vegan_label": true,
+        "subtitle_fallback": "",
+        "quote_fallback": "",
+        "price_note": "inkl. MwSt. / 100g Dose",
         "show_quantity": true,
         "add_to_cart_label": "IN DEN WARENKORB",
         "enable_buy_now": true,
@@ -25,81 +28,233 @@
         "time_fallback": "Morgen",
         "prep_fallback": "Warm",
         "duration_fallback": "1-2 Min",
-        "show_social_share": true,
-        "price_note": "inkl. MwSt. / 100g Dose"
+        "show_social_share": true
       }
     },
     "dv_story_card": {
       "type": "dv-story-card",
       "settings": {
-        "padding_top": 80,
-        "padding_bottom": 80,
+        "title": "Warum der Fuchs?",
+        "content": "<p>fddsafgad</p>",
+        "show_when_empty": false,
         "show_fox_icon": true,
         "show_disclaimer": true,
         "disclaimer_text": "AYURVEDISCH INSPIRIERTE GENUSS-TRADITION. KEIN HEILVERSPRECHEN.",
-        "background_color": "#f3e9dc"
+        "background_color": "#f3e9dc",
+        "padding_top": 80,
+        "padding_bottom": 80
       }
     },
     "dv_detail_grid": {
       "type": "dv-detail-grid",
-      "settings": {
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "left_title": "Dein Ritual im Detail",
-        "facts_title": "Zutaten & Fakten"
+      "blocks": {
+        "ingredient_item_LceLkz": {
+          "type": "ingredient_item",
+          "settings": {
+            "name": "Kurkuma",
+            "description": "Das 'Gold des Ayurveda'. Wärmend und erdend."
+          }
+        },
+        "certification_f3TGEA": {
+          "type": "certification",
+          "settings": {
+            "label": "BIO-Zertifiziert"
+          }
+        },
+        "ingredient_item_jUJQGk": {
+          "type": "ingredient_item",
+          "settings": {
+            "name": "Kurkuma",
+            "description": "Das 'Gold des Ayurveda'. Wärmend und erdend."
+          }
+        }
       },
-      "blocks": {}
+      "block_order": [
+        "ingredient_item_LceLkz",
+        "certification_f3TGEA",
+        "ingredient_item_jUJQGk"
+      ],
+      "settings": {
+        "left_title_fallback": "CVYVCXYVCXY",
+        "left_body_fallback": "",
+        "facts_title_fallback": "Zutaten & FaktenCXYVYXC",
+        "facts_body_fallback": "",
+        "show_when_empty": false,
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
     },
     "dv_preparation_tips": {
       "type": "dv-preparation-tips",
+      "blocks": {
+        "preparation_recipe_iaNByX": {
+          "type": "preparation_recipe",
+          "settings": {
+            "icon": "🥤",
+            "recipe_text": "1 TL in warme Mandelmilch einrühren1 TL in warme Mandelmilch einrühren1 1 TL in warme Mandelmilch einrührenTL in warme Mandelmilch einrühren"
+          }
+        },
+        "preparation_recipe_xdBLLM": {
+          "type": "preparation_recipe",
+          "settings": {
+            "icon": "☕",
+            "recipe_text": "1 TL in warme Mandelmilch einrühren"
+          }
+        },
+        "preparation_recipe_ibE7ip": {
+          "type": "preparation_recipe",
+          "settings": {
+            "icon": "☕",
+            "recipe_text": "1 TL in warme Mandelmilch einrühren"
+          }
+        }
+      },
+      "block_order": [
+        "preparation_recipe_iaNByX",
+        "preparation_recipe_xdBLLM",
+        "preparation_recipe_ibE7ip"
+      ],
       "settings": {
         "heading": "Anwendung & Zubereitung",
+        "show_when_empty": false,
         "padding_top": 80,
         "padding_bottom": 80
-      },
-      "blocks": {}
+      }
     },
     "dv_nutrition_table": {
       "type": "dv-nutrition-table",
       "settings": {
         "heading": "Nährwertangaben (pro 100 g)",
+        "nutrition_content": "<p>cxfc&lt;afSDFAFAS</p><p>FDSAFAS</p><p>FDASFDAS</p><p>DFDAS</p><p></p>",
+        "show_when_empty": false,
         "padding_top": 80,
         "padding_bottom": 80
       }
     },
     "dv_daily_ritual": {
       "type": "dv-daily-ritual",
+      "blocks": {
+        "ritual_step_e7q6LT": {
+          "type": "ritual_step",
+          "settings": {
+            "heading": "Verbinden",
+            "text": "Gib 1 TL (1-3g) des Pulvers in deine Lieblingstasse."
+          }
+        },
+        "ritual_step_V6nmQY": {
+          "type": "ritual_step",
+          "settings": {
+            "heading": "Verbinden",
+            "text": "Gib 1 TL (1-3g) des Pulvers in deine Lieblingstasse."
+          }
+        }
+      },
+      "block_order": [
+        "ritual_step_e7q6LT",
+        "ritual_step_V6nmQY"
+      ],
       "settings": {
         "heading": "Dein tägliches Ritual",
         "concluding_quote": "Mach es einfach. 1 TL. Warm. Ein Moment für dich.",
+        "show_when_empty": false,
         "padding_top": 80,
         "padding_bottom": 80
-      },
-      "blocks": {}
+      }
     },
     "dv_complete_ritual": {
       "type": "dv-complete-ritual",
+      "blocks": {
+        "product_card_3kFqAQ": {
+          "type": "product_card",
+          "settings": {
+            "product": "",
+            "title": "",
+            "label": "",
+            "benefit": "",
+            "button_label": "ANSEHEN",
+            "link": ""
+          }
+        },
+        "product_card_7R6eqF": {
+          "type": "product_card",
+          "settings": {
+            "product": "",
+            "title": "",
+            "label": "",
+            "benefit": "",
+            "button_label": "ANSEHEN",
+            "link": ""
+          }
+        },
+        "product_card_cA8Vk7": {
+          "type": "product_card",
+          "settings": {
+            "product": "",
+            "title": "",
+            "label": "",
+            "benefit": "",
+            "button_label": "ANSEHEN",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "product_card_3kFqAQ",
+        "product_card_7R6eqF",
+        "product_card_cA8Vk7"
+      ],
       "settings": {
         "heading": "Vervollständige dein Ritual",
         "subheading": "Sanfte Ergänzungen für den Abend.",
         "view_all_label": "ALLE RITUALE ANSEHEN",
         "view_all_link": "/collections/all",
         "button_label": "ANSEHEN",
+        "show_empty_message": false,
+        "empty_message": "No products available",
         "padding_top": 80,
         "padding_bottom": 80
-      },
-      "blocks": {}
+      }
     },
     "dv_compliance_accordion": {
       "type": "dv-compliance-accordion",
+      "blocks": {
+        "compliance_item_mjQjnY": {
+          "type": "compliance_item",
+          "settings": {
+            "title": "Zutaten & Allergene",
+            "content": "<p>XC&lt;YXCXY&lt;</p>"
+          }
+        },
+        "compliance_item_H8AXgc": {
+          "type": "compliance_item",
+          "settings": {
+            "title": "Zutaten & Allergene",
+            "content": ""
+          }
+        },
+        "compliance_item_cJFxia": {
+          "type": "compliance_item",
+          "settings": {
+            "title": "Zutaten & Allergene",
+            "content": ""
+          }
+        }
+      },
+      "block_order": [
+        "compliance_item_mjQjnY",
+        "compliance_item_H8AXgc",
+        "compliance_item_cJFxia"
+      ],
       "settings": {
         "heading": "Wichtige Hinweise",
         "storage_label": "Lagerung",
+        "storage_content": "",
         "legal_label": "Rechtlicher Hinweis",
+        "legal_content": "",
+        "show_when_empty": false,
         "padding_top": 80,
         "padding_bottom": 80
-      },
-      "blocks": {}
+      }
     }
   },
   "order": [
