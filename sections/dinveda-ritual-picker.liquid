@@ -114,15 +114,9 @@
                   {%- liquid
                     assign image_alt_escaped = image_alt | escape
                   -%}
-                  {% if card_link != blank %}
-                    <a href="{{ card_link }}" class="dinveda-ritual-picker__image-link">
-                  {% endif %}
                   <div class="dinveda-ritual-picker__image-wrapper">
                     {{ card_image | image_url: width: 600 | image_tag: alt: image_alt_escaped, loading: 'lazy', class: 'dinveda-ritual-picker__image' }}
                   </div>
-                  {% if card_link != blank %}
-                    </a>
-                  {% endif %}
                 {% else %}
                   <div class="dinveda-ritual-picker__image-wrapper dinveda-ritual-picker__image-wrapper--placeholder">
                     {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
@@ -137,13 +131,7 @@
                   {% endif %}
 
                   {% if block.settings.blend_name != blank %}
-                    {% if card_link != blank %}
-                      <a href="{{ card_link }}" class="dinveda-ritual-picker__title-link">
-                    {% endif %}
                     <h3 class="dinveda-ritual-picker__blend-name">{{ block.settings.blend_name | escape }}</h3>
-                    {% if card_link != blank %}
-                      </a>
-                    {% endif %}
                   {% endif %}
 
                   {% if block.settings.quote_line != blank or block.settings.descriptor != blank or block.settings.attribution_line != blank %}
@@ -239,20 +227,6 @@
     padding-right: var(--design-section-spacing-medium, 40px);
   }
   
-  .dinveda-ritual-picker__image-link {
-    display: block;
-    text-decoration: none;
-  }
-  
-  .dinveda-ritual-picker__title-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-  }
-  
-  .dinveda-ritual-picker__title-link:hover {
-    text-decoration: underline;
-  }
   
   .dinveda-ritual-picker__attribution-wrapper {
     display: flex;

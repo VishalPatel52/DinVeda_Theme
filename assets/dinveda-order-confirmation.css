@@ -79,7 +79,7 @@
 }
 
 .dinveda-order-confirmation__thank-you {
-  font-family: var(--heading-family, 'Work Sans', sans-serif);
+  font-family: var(--heading-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 3rem;
   font-weight: 700;
   line-height: 1.1;
@@ -186,7 +186,7 @@
 }
 
 .dinveda-order-confirmation__items-heading {
-  font-family: var(--heading-family, 'Work Sans', sans-serif);
+  font-family: var(--heading-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 2.25rem;
   font-weight: 500;
   line-height: 1.2;

@@ -293,7 +293,6 @@
                         min="1"
                         class="dv-main-product__quantity-input"
                         data-quantity-input
-                        readonly
                       >
                       <button type="button" class="dv-main-product__quantity-btn" data-quantity-increase>+</button>
                     </div>
@@ -588,6 +587,139 @@
             getCartQuantityForVariant(variantId, function(quantity) {
               updateQuantityDisplay(quantity);
             });
+          }
+        });
+      }
+      
+      // Handle direct input changes (when user types in the input field)
+      if (qtyInput) {
+        qtyInput.addEventListener('change', function() {
+          const variantId = getCurrentVariantId();
+          if (!variantId) return;
+          
+          var inputValue = parseInt(this.value, 10);
+          
+          // Validate: ensure minimum of 1
+          if (isNaN(inputValue) || inputValue < 1) {
+            inputValue = 1;
+            this.value = inputValue;
+          }
+          
+          // Get current cart quantity for this variant
+          getCartQuantityForVariant(variantId, function(currentQuantity) {
+            var targetQuantity = inputValue;
+            var quantityChange = targetQuantity - currentQuantity;
+            
+            if (quantityChange === 0) {
+              // No change needed, just update display
+              updateQuantityDisplay(currentQuantity);
+              return;
+            }
+            
+            if (quantityChange > 0) {
+              // Add items to cart
+              fetch('/cart/add.js', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  id: variantId,
+                  quantity: quantityChange
+                })
+              })
+              .then(function(response) {
+                return response.json();
+              })
+              .then(function(data) {
+                // Success - fetch updated cart and update display
+                getCartQuantityForVariant(variantId, function(quantity) {
+                  updateQuantityDisplay(quantity);
+                  document.dispatchEvent(new CustomEvent('cart:updated'));
+                });
+              })
+              .catch(function(error) {
+                console.error('Error adding to cart:', error);
+                // Revert to current cart quantity on error
+                updateQuantityDisplay(currentQuantity);
+              });
+            } else {
+              // Remove items from cart (quantityChange is negative)
+              var removeQuantity = Math.abs(quantityChange);
+              
+              // First get current cart item to find its key
+              fetch('/cart.js')
+                .then(function(response) {
+                  return response.json();
+                })
+                .then(function(cart) {
+                  const item = cart.items.find(function(item) {
+                    return item.variant_id === parseInt(variantId, 10);
+                  });
+                  
+                  if (!item) {
+                    // Item not in cart, reset to 1
+                    updateQuantityDisplay(1);
+                    return;
+                  }
+                  
+                  var newQuantity = item.quantity - removeQuantity;
+                  if (newQuantity < 1) {
+                    newQuantity = 1;
+                  }
+                  
+                  // Update cart quantity
+                  fetch('/cart/change.js', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      id: item.key,
+                      quantity: newQuantity
+                    })
+                  })
+                  .then(function(response) {
+                    return response.json();
+                  })
+                  .then(function(data) {
+                    // Success - update display
+                    getCartQuantityForVariant(variantId, function(quantity) {
+                      updateQuantityDisplay(quantity);
+                      document.dispatchEvent(new CustomEvent('cart:updated'));
+                    });
+                  })
+                  .catch(function(error) {
+                    console.error('Error updating cart:', error);
+                    // Revert to current cart quantity on error
+                    updateQuantityDisplay(currentQuantity);
+                  });
+                })
+                .catch(function(error) {
+                  console.error('Error fetching cart:', error);
+                  // Revert to current cart quantity on error
+                  updateQuantityDisplay(currentQuantity);
+                });
+            }
+          });
+        });
+        
+        // Prevent invalid input (allow only numbers)
+        qtyInput.addEventListener('keydown', function(e) {
+          // Allow: backspace, delete, tab, escape, enter, decimal point, and numbers
+          if ([46, 8, 9, 27, 13, 110, 190].indexOf(e.keyCode) !== -1 ||
+            // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+            (e.keyCode === 65 && e.ctrlKey === true) ||
+            (e.keyCode === 67 && e.ctrlKey === true) ||
+            (e.keyCode === 86 && e.ctrlKey === true) ||
+            (e.keyCode === 88 && e.ctrlKey === true) ||
+            // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+            return;
+          }
+          // Ensure that it is a number and stop the keypress
+          if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
           }
         });
       }

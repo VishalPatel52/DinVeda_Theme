@@ -178,7 +178,7 @@
   {%- assign design_bg = settings.design_bg_color | default: settings.background | default: '#FFF0DD' -%}
   {%- assign design_secondary_bg = settings.design_secondary_bg | default: settings.secondary_bg | default: '#FFF6EA' -%}
   {%- assign design_text = settings.design_text_color | default: settings.text_color | default: '#C17129' -%}
-  {%- assign design_accent = settings.design_accent_color | default: settings.text_color | color_darken: 15 | default: '#8B5A2B' -%}
+  {%- assign design_accent = settings.design_accent_color | default: '#8B5A2B' -%}
   
   --design-bg-color: {{ design_bg }};
   --design-secondary-bg: {{ design_secondary_bg }};

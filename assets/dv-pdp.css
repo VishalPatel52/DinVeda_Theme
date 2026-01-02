@@ -7,11 +7,14 @@
 :root {
   --dv-bg-beige: #FFF0DD;
   --dv-bg-story: #f3e9dc;
-  --dv-text-color: #5a4533;
-  --dv-text-light: rgba(90, 69, 51, 0.7);
+  --dv-text-color: #C17129;
+  --dv-text-light: rgba(193, 113, 41, 0.7);
   --dv-border-color: rgba(234, 221, 207, 0.4);
-  --dv-border-dark: rgba(90, 69, 51, 0.2);
-  --dv-accent: #b3814a;
+  --dv-border-dark: rgba(193, 113, 41, 0.2);
+  --dv-accent: #8B5A2B;
+  /* Font fallbacks: Use Helvetica Neue to match printed pouches (HNW variants) */
+  --dv-font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
+  --dv-heading-family: var(--heading-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
 }
 
 /* ============================================
@@ -76,7 +79,7 @@
   color: var(--dv-text-color);
   border: 1px solid var(--dv-border-color);
   border-radius: 20px;
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
@@ -126,7 +129,7 @@
 }
 
 .dv-main-product__subtitle {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.2em;
@@ -139,7 +142,7 @@
 }
 
 .dv-main-product__title {
-  font-family: var(--heading-family, serif);
+  font-family: var(--heading-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 42px;
   font-weight: 400;
   line-height: 1.2;
@@ -156,7 +159,7 @@
 }
 
 .dv-main-product__quote-text {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 16px;
   font-style: italic;
   line-height: 1.6;
@@ -176,7 +179,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 14px;
   color: var(--dv-text-color);
 }
@@ -201,7 +204,7 @@
 }
 
 .dv-main-product__price {
-  font-family: var(--heading-family, serif);
+  font-family: var(--heading-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 32px;
   font-weight: 700;
   color: var(--dv-text-color);
@@ -216,7 +219,7 @@
 }
 
 .dv-main-product__price-note {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 13px;
   color: var(--dv-text-light);
 }
@@ -241,7 +244,7 @@
 }
 
 .dv-main-product__variant-label {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 14px;
   font-weight: 600;
   color: var(--dv-text-color);
@@ -252,7 +255,7 @@
   padding: 12px;
   border: 1px solid var(--dv-border-dark);
   border-radius: 4px;
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 14px;
   background-color: #ffffff;
   color: var(--dv-text-color);
@@ -292,7 +295,7 @@
   color: var(--dv-text-color);
   font-size: 24px;
   font-weight: 500;
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   cursor: pointer;
   transition: background-color 0.2s;
   display: flex;
@@ -322,12 +325,12 @@
   border-left: 1px solid var(--dv-border-dark);
   border-right: 1px solid var(--dv-border-dark);
   text-align: center;
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 14px;
   font-weight: 600;
   background-color: #ffffff;
   color: var(--dv-text-color);
-  cursor: default;
+  cursor: text;
   height: 54px;
   box-sizing: border-box;
   -moz-appearance: textfield;
@@ -354,7 +357,7 @@
 }
 
 .dv-main-product__stock-status {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 14px;
   font-weight: 400;
   color: var(--dv-text-light);
@@ -368,7 +371,7 @@
   color: #ffffff;
   border: none;
   border-radius: 6px;
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 15px;
   font-weight: 700;
   text-transform: uppercase;
@@ -394,7 +397,7 @@
   color: #ffffff;
   border: none;
   border-radius: 6px;
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 15px;
   font-weight: 700;
   text-transform: uppercase;
@@ -451,7 +454,7 @@
 }
 
 .dv-main-product__ritual-glance-label {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 13px;
   font-weight: 600;
   text-transform: uppercase;
@@ -460,7 +463,7 @@
 }
 
 .dv-main-product__ritual-glance-value {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 14px;
   color: var(--dv-text-color);
 }
@@ -474,7 +477,7 @@
 }
 
 .dv-main-product__social-label {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 13px;
   font-weight: 600;
   text-transform: uppercase;
@@ -516,7 +519,7 @@
 }
 
 .dv-story-card__title {
-  font-family: var(--heading-family, serif);
+  font-family: var(--heading-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 36px;
   font-weight: 400;
   line-height: 1.3;
@@ -534,7 +537,7 @@
 }
 
 .dv-story-card__body {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 16px;
   line-height: 1.8;
   color: var(--dv-text-color);
@@ -554,7 +557,7 @@
 }
 
 .dv-story-card__traditional-heading {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 18px;
   font-weight: 700;
   color: var(--dv-text-color);
@@ -571,7 +574,7 @@
 }
 
 .dv-story-card__bullet-list li {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 16px;
   line-height: 1.6;
   color: var(--dv-text-color);
@@ -588,7 +591,7 @@
 }
 
 .dv-story-card__disclaimer {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 12px;
   line-height: 1.6;
   color: var(--dv-text-light);
@@ -630,7 +633,7 @@
 
 .dv-detail-grid__left-title,
 .dv-detail-grid__facts-title {
-  font-family: var(--heading-family, serif);
+  font-family: var(--heading-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 28px;
   font-weight: 400;
   line-height: 1.3;
@@ -639,7 +642,7 @@
 }
 
 .dv-detail-grid__left-body {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 16px;
   line-height: 1.8;
   color: var(--dv-text-color);
@@ -658,7 +661,7 @@
 }
 
 .dv-detail-grid__ingredients-content {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 16px;
   line-height: 1.8;
   color: var(--dv-text-color);
@@ -689,7 +692,7 @@
 }
 
 .dv-detail-grid__allergens-content {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 15px;
   line-height: 1.8;
   color: var(--dv-text-color);
@@ -740,7 +743,7 @@
 }
 
 .dv-detail-grid__icon-item-name {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 16px;
   font-weight: 700;
   color: var(--dv-text-color);
@@ -748,7 +751,7 @@
 }
 
 .dv-detail-grid__icon-item-desc {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 14px;
   line-height: 1.6;
   color: var(--dv-text-light);
@@ -781,7 +784,7 @@
 }
 
 .dv-detail-grid__certification-label {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 13px;
   color: var(--dv-text-color);
 }
@@ -801,7 +804,7 @@
 }
 
 .dv-daily-ritual__heading {
-  font-family: var(--heading-family, serif);
+  font-family: var(--heading-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 36px;
   font-weight: 400;
   line-height: 1.3;
@@ -850,7 +853,7 @@
 }
 
 .dv-daily-ritual__step-heading {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 18px;
   font-weight: 700;
   color: var(--dv-text-color);
@@ -859,7 +862,7 @@
 }
 
 .dv-daily-ritual__step-text {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 15px;
   line-height: 1.6;
   color: var(--dv-text-color);
@@ -868,7 +871,7 @@
 }
 
 .dv-daily-ritual__quote {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 16px;
   line-height: 1.6;
   color: var(--dv-text-light);
@@ -903,7 +906,7 @@
 }
 
 .dv-preparation-tips__heading {
-  font-family: var(--heading-family, serif);
+  font-family: var(--heading-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 32px;
   font-weight: 400;
   line-height: 1.3;
@@ -925,7 +928,7 @@
   display: flex;
   align-items: flex-start;
   gap: 16px;
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 16px;
   line-height: 1.8;
   color: var(--dv-text-color);
@@ -971,7 +974,7 @@
 }
 
 .dv-complete-ritual__title {
-  font-family: var(--heading-family, serif);
+  font-family: var(--heading-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 36px;
   font-weight: 400;
   line-height: 1.3;
@@ -980,7 +983,7 @@
 }
 
 .dv-complete-ritual__subtitle {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -989,7 +992,7 @@
 }
 
 .dv-complete-ritual__view-all {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 13px;
   font-weight: 700;
   text-transform: uppercase;
@@ -1065,7 +1068,7 @@
 }
 
 .dv-complete-ritual__label {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
@@ -1075,7 +1078,7 @@
 }
 
 .dv-complete-ritual__card-title {
-  font-family: var(--heading-family, serif);
+  font-family: var(--heading-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 22px;
   font-weight: 400;
   line-height: 1.3;
@@ -1084,7 +1087,7 @@
 }
 
 .dv-complete-ritual__benefit {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 14px;
   line-height: 1.6;
   color: var(--dv-text-light);
@@ -1097,7 +1100,7 @@
 }
 
 .dv-complete-ritual__button {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 13px;
   font-weight: 700;
   text-transform: uppercase;
@@ -1123,7 +1126,7 @@
 }
 
 .dv-compliance-accordion__heading {
-  font-family: var(--heading-family, serif);
+  font-family: var(--heading-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 32px;
   font-weight: 400;
   line-height: 1.3;
@@ -1152,7 +1155,7 @@
 }
 
 .dv-compliance-accordion__item-title {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 18px;
   font-weight: 700;
   color: var(--dv-text-color);
@@ -1160,7 +1163,7 @@
 }
 
 .dv-compliance-accordion__item-content {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 15px;
   line-height: 1.8;
   color: var(--dv-text-color);
@@ -1199,7 +1202,7 @@
 }
 
 .dv-nutrition-table__heading {
-  font-family: var(--heading-family, serif);
+  font-family: var(--heading-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 32px;
   font-weight: 400;
   line-height: 1.3;
@@ -1209,7 +1212,7 @@
 }
 
 .dv-nutrition-table__content {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 15px;
   line-height: 1.8;
   color: var(--dv-text-color);
@@ -1230,7 +1233,7 @@
 }
 
 .dv-nutrition-table__content th {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 14px;
   font-weight: 700;
   text-align: left;
@@ -1241,7 +1244,7 @@
 }
 
 .dv-nutrition-table__content td {
-  font-family: var(--main-family, sans-serif);
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 14px;
   padding: 12px 20px;
   color: var(--dv-text-color);
