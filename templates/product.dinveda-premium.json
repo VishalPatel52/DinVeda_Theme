@@ -11,6 +11,34 @@
   "sections": {
     "dv_main_product": {
       "type": "dv-main-product",
+      "blocks": {
+        "product_badge_T6eGXE": {
+          "type": "product_badge",
+          "settings": {
+            "icon_emoji": "🌿",
+            "text": "100 % Bio & vegan"
+          }
+        },
+        "product_badge_RbBGCF": {
+          "type": "product_badge",
+          "settings": {
+            "icon_emoji": "🌿",
+            "text": "100 % Bio & vegan"
+          }
+        },
+        "product_badge_CAJqj6": {
+          "type": "product_badge",
+          "settings": {
+            "icon_emoji": "🌿",
+            "text": "100 % Bio & vegan"
+          }
+        }
+      },
+      "block_order": [
+        "product_badge_T6eGXE",
+        "product_badge_RbBGCF",
+        "product_badge_CAJqj6"
+      ],
       "settings": {
         "padding_top": 0,
         "padding_bottom": 0,
