@@ -63,6 +63,18 @@
               {{ section.settings.cta_label | escape }}
             </a>
           {% endif %}
+
+          {% if section.settings.cta2_label != blank and section.settings.cta2_link != blank %}
+            <a
+              href="{{ section.settings.cta2_link }}"
+              class="dinveda-split-story__cta dinveda-split-story__cta--secondary"
+            >
+              {% if section.settings.cta2_icon != blank %}
+                <span class="material-symbols-outlined dinveda-split-story__cta-icon">{{ section.settings.cta2_icon }}</span>
+              {% endif %}
+              {{ section.settings.cta2_label | escape }}
+            </a>
+          {% endif %}
         </div>
       </div>
 
@@ -133,6 +145,24 @@
       "type": "url",
       "id": "cta_link",
       "label": "CTA button link"
+    },
+    {
+      "type": "text",
+      "id": "cta2_label",
+      "label": "Second CTA label",
+      "default": "CONTACT SUPPORT"
+    },
+    {
+      "type": "url",
+      "id": "cta2_link",
+      "label": "Second CTA link"
+    },
+    {
+      "type": "text",
+      "id": "cta2_icon",
+      "label": "Second CTA icon (Material Symbol)",
+      "default": "mail",
+      "info": "Material Symbols icon name (e.g., mail, email)"
     },
     {
       "type": "header",

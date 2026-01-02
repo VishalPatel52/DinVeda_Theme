@@ -33,6 +33,9 @@
         "body": "<p>Just as the Owl prepares silently for the night, we are carefully gathering your selected rituals. Your order is being processed in our small-batch manufactory in Germany.</p><p>You will receive a shipping confirmation email as soon as your package takes flight. In the meantime, we invite you to explore our journal for tips on establishing your daily routine.</p>",
         "cta_label": "READ THE JOURNAL →",
         "cta_link": "/blogs/journal",
+        "cta2_label": "CONTACT SUPPORT",
+        "cta2_link": "/pages/contact",
+        "cta2_icon": "mail",
         "background_mode": "philosophy_beige"
       }
     }

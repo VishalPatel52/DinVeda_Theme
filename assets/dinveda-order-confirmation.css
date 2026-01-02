@@ -105,10 +105,9 @@
   height: 3rem;
   padding: 0 2rem;
   margin-top: 1rem;
-  background-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(0.5rem);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 9999px;
+  background-color: #5a4533;
+  border: 1px solid #ffffff;
+  border-radius: 0;
   color: #ffffff;
   font-size: 1rem;
   font-weight: 700;
@@ -116,13 +115,13 @@
   letter-spacing: 0.03em;
   text-decoration: none;
   transition: all 0.2s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
 }
 
 .dinveda-order-confirmation__track-button:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: #6b5541;
   transform: translateY(-1px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Order Status Cards */
