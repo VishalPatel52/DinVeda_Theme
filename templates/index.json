@@ -125,7 +125,7 @@
             "overlay_offset_y": -56,
             "overlay_anchor": "top_left",
             "button_label": "Zu diesem Ritual",
-            "link": "shopify://products/golden-boost-bio-ayurveda-gewurzmischung-fuchs-blend-copy"
+            "link": "shopify://products/golden-boost"
           }
         },
         "ritual_tag": {
@@ -142,7 +142,7 @@
             "overlay_offset_y": -56,
             "overlay_anchor": "top_left",
             "button_label": "Zu diesem Ritual",
-            "link": "shopify://products/flow-glow-bio-ayurveda-gewurzmischung-panda-blend-copy"
+            "link": "shopify://products/flow-glow"
           }
         },
         "ritual_nachmittag": {
@@ -176,7 +176,7 @@
             "overlay_offset_y": -56,
             "overlay_anchor": "top_left",
             "button_label": "Zu diesem Ritual",
-            "link": "shopify://products/moon-rest-bio-ayurveda-abendmischung-koala-blend-copy"
+            "link": "shopify://products/moon-rest"
           }
         }
       },

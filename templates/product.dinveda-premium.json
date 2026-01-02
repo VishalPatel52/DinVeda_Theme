@@ -48,7 +48,7 @@
     "dv_detail_grid": {
       "type": "dv-detail-grid",
       "settings": {
-        "left_title": "Dein Ritual im Detail",
+        "left_title": "{{ product.metafields.custom.dv_detail_left_title.value }}",
         "left_body": "{{ product.metafields.custom.dv_detail_left_body | metafield_tag }}",
         "facts_title": "{{ product.metafields.custom.dv_facts_title.value }}",
         "ingredients_content": "{{ product.metafields.custom.dv_ingredients | metafield_tag }}",
@@ -162,7 +162,7 @@
         "product_card_3kFqAQ": {
           "type": "product_card",
           "settings": {
-            "product": "",
+            "product": "flow-glow",
             "title": "",
             "label": "",
             "benefit": "",
@@ -173,7 +173,7 @@
         "product_card_7R6eqF": {
           "type": "product_card",
           "settings": {
-            "product": "",
+            "product": "golden-boost",
             "title": "",
             "label": "",
             "benefit": "",
@@ -184,7 +184,7 @@
         "product_card_cA8Vk7": {
           "type": "product_card",
           "settings": {
-            "product": "",
+            "product": "ova-harmony",
             "title": "",
             "label": "",
             "benefit": "",
