@@ -99,14 +99,16 @@
         {% for block in section.blocks %}
           {% if block.type == 'ritual_step' %}
             <div class="dv-daily-ritual__step" {{ block.shopify_attributes }}>
-              {% if block.settings.icon != blank %}
-                <div class="dv-daily-ritual__step-icon">
-                  {{ block.settings.icon | image_url: width: 48 | image_tag: alt: block.settings.heading, loading: 'lazy', width: 48, height: 48 }}
-                </div>
-              {% endif %}
-              {% if block.settings.heading != blank %}
-                <h3 class="dv-daily-ritual__step-heading">{{ block.settings.heading | escape }}</h3>
-              {% endif %}
+              <div class="dv-daily-ritual__step-header">
+                {% if block.settings.icon != blank %}
+                  <div class="dv-daily-ritual__step-icon">
+                    {{ block.settings.icon | image_url: width: 40 | image_tag: alt: block.settings.heading, loading: 'lazy', width: 40, height: 40 }}
+                  </div>
+                {% endif %}
+                {% if block.settings.heading != blank %}
+                  <h3 class="dv-daily-ritual__step-heading">{{ block.settings.heading | escape }}</h3>
+                {% endif %}
+              </div>
               {% if block.settings.text != blank %}
                 <p class="dv-daily-ritual__step-text">{{ block.settings.text | escape }}</p>
               {% endif %}
@@ -120,12 +122,14 @@
             {% assign step_heading = step_parts[1] %}
             {% assign step_text = step_parts[2] %}
             <div class="dv-daily-ritual__step">
-              {% if section.settings.default_icon != blank %}
-                <div class="dv-daily-ritual__step-icon">
-                  {{ section.settings.default_icon | image_url: width: 48 | image_tag: alt: step_heading, loading: 'lazy', width: 48, height: 48 }}
-                </div>
-              {% endif %}
-              <h3 class="dv-daily-ritual__step-heading">{{ step_heading | escape }}</h3>
+              <div class="dv-daily-ritual__step-header">
+                {% if section.settings.default_icon != blank %}
+                  <div class="dv-daily-ritual__step-icon">
+                    {{ section.settings.default_icon | image_url: width: 40 | image_tag: alt: step_heading, loading: 'lazy', width: 40, height: 40 }}
+                  </div>
+                {% endif %}
+                <h3 class="dv-daily-ritual__step-heading">{{ step_heading | escape }}</h3>
+              </div>
               <p class="dv-daily-ritual__step-text">{{ step_text | escape }}</p>
             </div>
           {% endif %}

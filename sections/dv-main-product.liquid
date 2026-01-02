@@ -30,7 +30,7 @@
     assign subtitle = section.settings.subtitle
   endif
   
-  assign quote = product.metafields.custom.dv_quote
+  assign quote = product.metafields.custom.dinveda_dv_quote
   if quote == blank
     assign quote = section.settings.quote
   endif
@@ -277,37 +277,49 @@
             </div>
           {% endunless %}
 
-            {%- comment -%} Quantity {%- endcomment -%}
-            {% if section.settings.show_quantity %}
-              <div class="dv-main-product__quantity">
-                <label for="Quantity-{{ section.id }}" class="dv-main-product__quantity-label">Quantity</label>
-                <div class="dv-main-product__quantity-selector">
-                  <button type="button" class="dv-main-product__quantity-btn" data-quantity-decrease>-</button>
-                  <input
-                    type="number"
-                    id="Quantity-{{ section.id }}"
-                    name="quantity"
-                    value="0"
-                    min="0"
-                    class="dv-main-product__quantity-input"
-                    data-quantity-input
-                    readonly
-                  >
-                  <button type="button" class="dv-main-product__quantity-btn" data-quantity-increase>+</button>
+            {%- comment -%} Purchase Controls (Quantity + Buy Button) {%- endcomment -%}
+            <div class="dv-main-product__purchase-controls">
+              {%- comment -%} Quantity Row (Selector + Stock Status) {%- endcomment -%}
+              {% if section.settings.show_quantity %}
+                <div class="dv-main-product__quantity-row">
+                  <div class="dv-main-product__quantity">
+                    <div class="dv-main-product__quantity-selector">
+                      <button type="button" class="dv-main-product__quantity-btn" data-quantity-decrease>-</button>
+                      <input
+                        type="number"
+                        id="Quantity-{{ section.id }}"
+                        name="quantity"
+                        value="1"
+                        min="1"
+                        class="dv-main-product__quantity-input"
+                        data-quantity-input
+                        readonly
+                      >
+                      <button type="button" class="dv-main-product__quantity-btn" data-quantity-increase>+</button>
+                    </div>
+                  </div>
+                  {% if current_variant and current_variant.available %}
+                    <span class="dv-main-product__stock-status">In stock</span>
+                  {% endif %}
                 </div>
-              </div>
-            {% endif %}
+              {% endif %}
 
-            {%- comment -%} Buy Now Button {%- endcomment -%}
-            <button
-              type="button"
-              class="dv-main-product__buy-now"
-              data-buy-now
-              data-variant-id="{{ current_variant.id }}"
-              {% unless current_variant.available %}disabled{% endunless %}
-            >
-              {{ section.settings.buy_now_label | default: "Jetzt kaufen" | escape }}
-            </button>
+              {%- comment -%} Buy Now Button {%- endcomment -%}
+              <button
+                type="button"
+                class="dv-main-product__buy-now"
+                data-buy-now
+                data-variant-id="{{ current_variant.id }}"
+                {% unless current_variant.available %}disabled{% endunless %}
+              >
+                <svg class="dv-main-product__buy-now-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 3H5.5L6.5 10H13L14.5 5H5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                  <circle cx="7" cy="13" r="1" fill="currentColor"/>
+                  <circle cx="13" cy="13" r="1" fill="currentColor"/>
+                </svg>
+                <span>{{ section.settings.buy_now_label | default: "Jetzt kaufen" | escape }}</span>
+              </button>
+            </div>
 
           {% endform %}
         {% endif %}
@@ -435,15 +447,17 @@
       
       // Function to update quantity display
       function updateQuantityDisplay(quantity) {
+        // If quantity is 0 from cart, show 1 as default (empty cart means user starts with 1)
+        var displayQuantity = quantity > 0 ? quantity : 1;
         if (qtyInput) {
-          qtyInput.value = quantity;
+          qtyInput.value = displayQuantity;
         }
         // Enable/disable buttons and buy now button
         if (qtyDecrease) {
-          qtyDecrease.disabled = quantity <= 0;
+          qtyDecrease.disabled = displayQuantity <= 1;
         }
         if (buyNowBtn) {
-          buyNowBtn.disabled = quantity <= 0;
+          buyNowBtn.disabled = false;
         }
       }
       
@@ -455,8 +469,8 @@
             updateQuantityDisplay(quantity);
           });
         } else {
-          // If no variant ID yet, initialize with 0
-          updateQuantityDisplay(0);
+          // If no variant ID yet, initialize with 1
+          updateQuantityDisplay(1);
         }
       }
       
@@ -525,7 +539,7 @@
               
               if (!item || item.quantity <= 0) {
                 qtyDecrease.disabled = false;
-                updateQuantityDisplay(0);
+                updateQuantityDisplay(1);
                 return;
               }
               
@@ -657,7 +671,7 @@
       "type": "text",
       "id": "quote",
       "label": "Quote",
-      "info": "Used if product.metafields.custom.dv_quote is empty"
+      "info": "Used if product.metafields.custom.dinveda_dv_quote is empty"
     },
     {
       "type": "text",
