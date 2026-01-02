@@ -26,14 +26,14 @@
       "type": "footer",
       "settings": {
         "footer_text": "<p>Foodie is a theme for Shopify</p>",
-        "show_social": true,
-        "enable_follow_on_shop": true,
+        "show_social": false,
+        "enable_follow_on_shop": false,
         "show_policy": false,
         "footer_nav": "footer",
         "show_credit_cards": true,
         "show_copyright": true,
         "show_locale_selector": true,
-        "show_country_selector": true,
+        "show_country_selector": false,
         "show_flag": true
       }
     }
