@@ -17,18 +17,18 @@
         "show_thumbnails": true,
         "show_organic_label": true,
         "show_vegan_label": true,
-        "subtitle": "",
-        "quote": "",
+        "subtitle": "{{ product.metafields.custom.dinveda_dv_subtitle.value }}",
+        "quote": "\"Ich blühe in Leichtigkeit & Harmonie\" – sagt der Schmetterling.",
         "price_note": "inkl. MwSt. / 100g Dose",
         "show_quantity": true,
         "add_to_cart_label": "IN DEN WARENKORB",
         "enable_buy_now": true,
         "buy_now_label": "Jetzt kaufen",
-        "show_ritual_glance": true,
-        "time_fallback": "Morgen",
-        "prep_fallback": "Warm",
-        "duration_fallback": "1-2 Min",
-        "show_social_share": true
+        "show_ritual_glance": false,
+        "time_fallback": "",
+        "prep_fallback": "",
+        "duration_fallback": "",
+        "show_social_share": false
       }
     },
     "dv_story_card": {
@@ -64,8 +64,8 @@
         "preparation_recipe_iaNByX": {
           "type": "preparation_recipe",
           "settings": {
-            "icon": "🥤",
-            "recipe_text": "1 TL in warme Mandelmilch einrühren1 TL in warme Mandelmilch einrühren1 1 TL in warme Mandelmilch einrührenTL in warme Mandelmilch einrühren"
+            "icon": "☕",
+            "recipe_text": "Verbinden|1 TL Pulver mit warmem Wasser, etwas Zitrone & Honig mischen. Bereichern|½ TL in Smoothies oder Joghurt einrühren für einen Hauch von Rose & Balance. Genießen|Eine Prise über warmen Milchreis, Porridge oder Obst geben für zarten Rosenduft."
           }
         },
         "preparation_recipe_xdBLLM": {
@@ -108,6 +108,13 @@
     "dv_daily_ritual": {
       "type": "dv-daily-ritual",
       "blocks": {
+        "ritual_step_LnqpkT": {
+          "type": "ritual_step",
+          "settings": {
+            "heading": "Verbinden",
+            "text": "Gib 1 TL (1-3g) des Pulvers in deine Lieblingstasse."
+          }
+        },
         "ritual_step_e7q6LT": {
           "type": "ritual_step",
           "settings": {
@@ -124,12 +131,26 @@
         }
       },
       "block_order": [
+        "ritual_step_LnqpkT",
         "ritual_step_e7q6LT",
         "ritual_step_V6nmQY"
       ],
       "settings": {
         "heading": "Dein tägliches Ritual",
-        "concluding_quote": "Mach es einfach. 1 TL. Warm. Ein Moment für dich.",
+        "concluding_quote": "",
+        "show_when_empty": false,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "dv_compliance_accordion": {
+      "type": "dv-compliance-accordion",
+      "settings": {
+        "heading": "Wichtige Hinweise",
+        "storage_label": "Lagerung",
+        "storage_content": "",
+        "legal_label": "Rechtlicher Hinweis",
+        "legal_content": "",
         "show_when_empty": false,
         "padding_top": 0,
         "padding_bottom": 0
@@ -188,19 +209,6 @@
         "padding_top": 80,
         "padding_bottom": 80
       }
-    },
-    "dv_compliance_accordion": {
-      "type": "dv-compliance-accordion",
-      "settings": {
-        "heading": "Wichtige Hinweise",
-        "storage_label": "Lagerung",
-        "storage_content": "",
-        "legal_label": "Rechtlicher Hinweis",
-        "legal_content": "",
-        "show_when_empty": false,
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
     }
   },
   "order": [
@@ -210,7 +218,7 @@
     "dv_preparation_tips",
     "dv_nutrition_table",
     "dv_daily_ritual",
-    "dv_complete_ritual",
-    "dv_compliance_accordion"
+    "dv_compliance_accordion",
+    "dv_complete_ritual"
   ]
 }
