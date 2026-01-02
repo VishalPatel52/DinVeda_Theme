@@ -18,41 +18,34 @@
 
 <header class="dinveda-checkout-header dinveda-checkout-header-{{ section.id }}" data-section-id="{{ section.id }}">
   <div class="dinveda-checkout-header__wrapper">
-    <div class="dinveda-checkout-header__top">
-      <div class="dinveda-checkout-header__left">
-        {%- comment -%} Logo/Branding {%- endcomment -%}
-        <a href="{{ routes.root_url }}" class="dinveda-checkout-header__logo">
-          {% if section.settings.logo != blank %}
-            {{ section.settings.logo | image_url: width: 150 | image_tag: alt: shop.name, class: 'dinveda-checkout-header__logo-img' }}
-          {% else %}
-            <span class="dinveda-checkout-header__logo-text">{{ shop.name }}</span>
-          {% endif %}
-        </a>
-      </div>
-      <div class="dinveda-checkout-header__center">
-        <h1 class="dinveda-checkout-header__title">{{ 'checkout.general.title' | default: 'Checkout' | t }}</h1>
-      </div>
-      <div class="dinveda-checkout-header__right">
-        <a href="{{ back_to_cart_link }}" class="dinveda-checkout-header__back-link">
-          <span class="dinveda-checkout-header__back-icon">←</span>
-          <span class="dinveda-checkout-header__back-text">{{ 'checkout.general.back_to_cart' | default: 'Back to Cart' | t }}</span>
-        </a>
-      </div>
+    {%- comment -%} Centered Logo {%- endcomment -%}
+    <div class="dinveda-checkout-header__logo-wrapper">
+      <a href="{{ routes.root_url }}" class="dinveda-checkout-header__logo">
+        {% if section.settings.logo != blank %}
+          {{ section.settings.logo | image_url: width: 150 | image_tag: alt: shop.name, class: 'dinveda-checkout-header__logo-img' }}
+        {% else %}
+          <span class="dinveda-checkout-header__logo-text">{{ shop.name }}</span>
+        {% endif %}
+      </a>
     </div>
 
     {% if show_progress %}
+      {%- comment -%} Breadcrumb Navigation {%- endcomment -%}
       <div class="dinveda-checkout-header__progress">
         <div class="dinveda-checkout-progress">
-          <div class="dinveda-checkout-progress__step {% if current_step == 'information' %}dinveda-checkout-progress__step--active{% endif %}">
-            <span class="dinveda-checkout-progress__step-label">{{ 'checkout.progress.information' | default: 'Information' | t }}</span>
+          <a href="{{ routes.cart_url }}" class="dinveda-checkout-progress__step dinveda-checkout-progress__step--completed">
+            <span class="dinveda-checkout-progress__step-number">1</span>
+            <span class="dinveda-checkout-progress__step-label">{{ 'checkout.progress.cart' | default: 'Cart' | t }}</span>
+          </a>
+          <span class="dinveda-checkout-progress__separator">></span>
+          <div class="dinveda-checkout-progress__step dinveda-checkout-progress__step--active">
+            <span class="dinveda-checkout-progress__step-number">2</span>
+            <span class="dinveda-checkout-progress__step-label">{{ 'checkout.progress.checkout' | default: 'Checkout' | t }}</span>
           </div>
-          <div class="dinveda-checkout-progress__separator">></div>
-          <div class="dinveda-checkout-progress__step {% if current_step == 'shipping' %}dinveda-checkout-progress__step--active{% endif %}">
-            <span class="dinveda-checkout-progress__step-label">{{ 'checkout.progress.shipping' | default: 'Shipping' | t }}</span>
-          </div>
-          <div class="dinveda-checkout-progress__separator">></div>
-          <div class="dinveda-checkout-progress__step {% if current_step == 'payment' %}dinveda-checkout-progress__step--active{% endif %}">
-            <span class="dinveda-checkout-progress__step-label">{{ 'checkout.progress.payment' | default: 'Payment' | t }}</span>
+          <span class="dinveda-checkout-progress__separator">></span>
+          <div class="dinveda-checkout-progress__step dinveda-checkout-progress__step--inactive">
+            <span class="dinveda-checkout-progress__step-number">3</span>
+            <span class="dinveda-checkout-progress__step-label">{{ 'checkout.progress.confirmation' | default: 'Confirmation' | t }}</span>
           </div>
         </div>
       </div>

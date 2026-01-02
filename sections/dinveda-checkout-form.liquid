@@ -125,6 +125,19 @@
             </div>
 
             <div class="dinveda-checkout-form__field">
+              <label for="checkout_company" class="dinveda-checkout-form__label">
+                {{ 'checkout.shipping.company' | default: 'Company (optional)' | t }}
+              </label>
+              <input
+                type="text"
+                id="checkout_company"
+                name="checkout[shipping_address][company]"
+                class="dinveda-checkout-form__input"
+                autocomplete="organization"
+              >
+            </div>
+
+            <div class="dinveda-checkout-form__field">
               <label for="checkout_address1" class="dinveda-checkout-form__label">
                 {{ 'checkout.shipping.address' | default: 'Address' | t }}
                 <span class="dinveda-checkout-form__required">*</span>
@@ -271,11 +284,14 @@
               {% for item in cart.items %}
                 <div class="dinveda-checkout-summary__product">
                   <div class="dinveda-checkout-summary__product-image">
-                    {% if item.image != blank %}
-                      {{ item.image | image_url: width: 80 | image_tag: alt: item.product.title, loading: 'lazy' }}
-                    {% else %}
-                      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-                    {% endif %}
+                    <div class="dinveda-checkout-summary__product-image-wrapper">
+                      {% if item.image != blank %}
+                        {{ item.image | image_url: width: 80 | image_tag: alt: item.product.title, loading: 'lazy' }}
+                      {% else %}
+                        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                      {% endif %}
+                      <span class="dinveda-checkout-summary__product-quantity">{{ item.quantity }}</span>
+                    </div>
                   </div>
                   <div class="dinveda-checkout-summary__product-details">
                     <h3 class="dinveda-checkout-summary__product-title">{{ item.product.title }}</h3>
@@ -320,6 +336,13 @@
                 <span class="dinveda-checkout-summary__total-label">{{ 'checkout.summary.shipping' | default: 'Shipping' | t }}</span>
                 <span class="dinveda-checkout-summary__total-value">{{ 'checkout.summary.shipping_calculated' | default: '(Calculated at next step)' | t }}</span>
               </div>
+              <div class="dinveda-checkout-summary__total-row">
+                <span class="dinveda-checkout-summary__total-label">
+                  <span class="dinveda-checkout-summary__carbon-icon">🌿</span>
+                  {{ 'checkout.summary.carbon_offset' | default: 'Carbon Offset' | t }}
+                </span>
+                <span class="dinveda-checkout-summary__total-value">{{ 'checkout.summary.included' | default: 'Included' | t }}</span>
+              </div>
               <div class="dinveda-checkout-summary__total-row dinveda-checkout-summary__total-row--final">
                 <span class="dinveda-checkout-summary__total-label">{{ 'checkout.summary.total' | default: 'Total' | t }}</span>
                 <span class="dinveda-checkout-summary__total-value dinveda-checkout-summary__total-value--final">
@@ -333,15 +356,11 @@
               <div class="dinveda-checkout-summary__security">
                 <div class="dinveda-checkout-summary__security-badge">
                   <span class="dinveda-checkout-summary__security-icon">🛡️</span>
-                  <span class="dinveda-checkout-summary__security-text">{{ 'checkout.security.secure_payment' | default: 'SECURE PAYMENT' | t }}</span>
+                  <span class="dinveda-checkout-summary__security-text">{{ 'checkout.security.secure_ssl' | default: 'SECURE SSL Encrypted' | t }}</span>
                 </div>
                 <div class="dinveda-checkout-summary__security-badge">
                   <span class="dinveda-checkout-summary__security-icon">🚚</span>
-                  <span class="dinveda-checkout-summary__security-text">{{ 'checkout.security.fast_shipping' | default: 'FAST SHIPPING' | t }}</span>
-                </div>
-                <div class="dinveda-checkout-summary__security-badge">
-                  <span class="dinveda-checkout-summary__security-icon">🌿</span>
-                  <span class="dinveda-checkout-summary__security-text">{{ 'checkout.security.carbon_neutral' | default: 'CARBON NEUTRAL' | t }}</span>
+                  <span class="dinveda-checkout-summary__security-text">{{ 'checkout.security.dhl_gogreen' | default: 'DHL GOGREEN Climate Neutral' | t }}</span>
                 </div>
               </div>
             {% endif %}
