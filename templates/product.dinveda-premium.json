@@ -201,13 +201,13 @@
       "settings": {
         "heading": "Vervollständige dein Ritual",
         "subheading": "Sanfte Ergänzungen für den Abend.",
-        "view_all_label": "ALLE RITUALE ANSEHEN",
-        "view_all_link": "/collections/all",
-        "button_label": "ANSEHEN",
+        "view_all_label": "",
+        "view_all_link": "",
+        "button_label": "",
         "show_empty_message": false,
         "empty_message": "No products available",
-        "padding_top": 80,
-        "padding_bottom": 80
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     }
   },
