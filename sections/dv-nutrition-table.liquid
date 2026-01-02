@@ -1,11 +1,21 @@
 {% comment %}
   DinVeda Nutrition Table Section (DV Template)
-  Nutrition facts table - uses metafield or section setting (NO description markers)
+  Nutrition facts table - uses metafield or section setting
+  
+  Content Source:
+  - Priority: Product metafield (custom.dv_nutrition_table - "DV Nutrition Table")
+  - Fallback: Section setting in theme editor (HTML type for direct HTML input)
+  
+  IMPORTANT - Content Entry in Shopify Admin:
+  - DV Nutrition Table (custom.dv_nutrition_table): Multi-line text field - paste HTML table code directly
+  - Section setting fallback: HTML type - paste HTML table code directly
+  - Metafield takes priority - if metafield has content, section setting is ignored
 {% endcomment %}
 
 {%- liquid
   # Get nutrition content from metafield or section setting
-  assign nutrition_content_metafield = product.metafields.custom.dv_nutrition_content
+  # Uses raw filter to render HTML content from multi-line text metafield
+  assign nutrition_content_metafield = product.metafields.custom.dv_nutrition_table
   
   # Check if we have content to show
   assign has_content = false
@@ -34,9 +44,14 @@
       <h2 class="dv-nutrition-table__heading">{{ section.settings.heading | escape }}</h2>
     {% endif %}
     
+    {%- comment -%} Nutrition Table Content
+      Priority: Metafield (custom.dv_nutrition_table) - uses raw filter for multi-line text HTML
+      Fallback: Section setting (html type) - outputs raw HTML directly
+      Metafield takes priority - if metafield has content, section setting is ignored
+    {% endcomment -%}
     {% if nutrition_content_metafield != blank %}
       <div class="dv-nutrition-table__content rte">
-        {{ nutrition_content_metafield | metafield_tag }}
+        {{ nutrition_content_metafield | raw }}
       </div>
     {% elsif section.settings.nutrition_content != blank %}
       <div class="dv-nutrition-table__content rte">
@@ -66,10 +81,10 @@
       "info": "Heading for nutrition facts table"
     },
     {
-      "type": "richtext",
+      "type": "html",
       "id": "nutrition_content",
       "label": "Nutrition Table Content",
-      "info": "Paste HTML table here, or use as fallback if product.metafields.custom.dv_nutrition_content is empty"
+      "info": "Paste HTML table code here. Used as fallback if product.metafields.custom.dv_nutrition_table (DV Nutrition Table) is empty."
     },
     {
       "type": "checkbox",

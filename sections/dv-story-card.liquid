@@ -1,6 +1,18 @@
 {% comment %}
   DinVeda Story Card Section (DV Template)
-  "Warum der Fuchs?" story section - uses description markers (NO metafields)
+  Displays the product story with title, content, and optional traditional benefits.
+  
+  Content Source:
+  - Priority: Product metafields (custom.dv_story_title, custom.dv_story_content)
+  - Fallback: Section settings in theme editor
+  
+  IMPORTANT - Content Entry in Shopify Admin:
+  - custom.dv_story_title: Single line text field (plain text)
+  - custom.dv_story_content: Rich text field - MUST use the richtext editor interface
+    Do NOT paste raw HTML code into this field. Use the formatting toolbar to create
+    paragraphs, bold text, lists, etc. The richtext editor will store the content
+    in the correct format for rendering.
+  - custom.dv_traditional_benefits: Multi-line text field (plain text, one bullet per line)
 {% endcomment %}
 
 {%- liquid
@@ -10,6 +22,8 @@
     assign story_title = section.settings.title
   endif
   
+  # Read richtext metafield - must be stored as richtext type in Shopify Admin
+  # Use metafield_tag filter to properly render richtext content
   assign story_content_metafield = product.metafields.custom.dv_story_content
   
   assign traditional_bullets = product.metafields.custom.dv_traditional_benefits
@@ -68,7 +82,12 @@
         </h2>
       {% endif %}
       
-      {%- comment -%} Story Content {%- endcomment -%}
+      {%- comment -%} Story Content 
+        Uses metafield_tag filter for richtext metafields - this properly renders
+        formatted content stored in Shopify's richtext format. If HTML tags are
+        visible as text, the content was likely pasted as raw HTML instead of
+        being formatted through the richtext editor in Shopify Admin.
+      {% endcomment -%}
       {% if story_content_metafield != blank %}
         <div class="dv-story-card__body rte">
           {{ story_content_metafield | metafield_tag }}
