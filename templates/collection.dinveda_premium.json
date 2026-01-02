@@ -13,49 +13,14 @@
       "type": "dv-collection-hero",
       "settings": {
         "hero_image": "",
-        "heading": "Die Kollektion",
-        "subtitle": "Reinste Naturkraft für deine täglichen Rituale. Entdecke unsere handverlesenen Mischungen.",
+        "heading": "",
+        "subtitle": "Ayurvedische Pflanzenmischungen für dein tägliches Wohlbefinden.",
         "text_alignment": "center",
-        "show_text_overlay": true,
+        "show_text_overlay": false,
         "border_radius": 24,
         "overlay_opacity": 40,
         "container_max_width": 1400
       }
-    },
-    "trust_chips": {
-      "type": "dinveda-trust-cards",
-      "blocks": {
-        "trust_chip_1": {
-          "type": "trust_card",
-          "settings": {
-            "icon": "eco",
-            "title": "BIO Certified",
-            "text": "100% organic ingredients"
-          }
-        },
-        "trust_chip_2": {
-          "type": "trust_card",
-          "settings": {
-            "icon": "germany",
-            "title": "Made in Germany",
-            "text": "Crafted with precision"
-          }
-        },
-        "trust_chip_3": {
-          "type": "trust_card",
-          "settings": {
-            "icon": "water_drop",
-            "title": "Small Batches",
-            "text": "Maximum freshness"
-          }
-        }
-      },
-      "block_order": [
-        "trust_chip_1",
-        "trust_chip_2",
-        "trust_chip_3"
-      ],
-      "settings": {}
     },
     "toolbar": {
       "type": "dinveda-collection-toolbar",
@@ -65,8 +30,8 @@
         "show_product_count": true,
         "show_sort_dropdown": false,
         "filter_appearance": "both",
-        "count_label_format": "ZEIGE {count} VON {total} RITUALEN",
-        "category_filter_enable": true,
+        "count_label_format": "{count} PRODUKTE",
+        "category_filter_enable": false,
         "filter_prefix_label": "FILTERN NACH:",
         "category_all_label": "Alle",
         "category_morgen_label": "Morgen",
@@ -86,32 +51,32 @@
         "show_vendor": false,
         "show_price": true,
         "show_quick_add": false,
-        "show_ritual_timing": true,
-        "ritual_timing_fallback_tag": true,
-        "show_cta_button": true,
+        "show_ritual_timing": false,
+        "ritual_timing_fallback_tag": false,
+        "show_cta_button": false,
         "cta_button_label": "ZUM RITUAL",
         "card_min_height": 500
       }
     },
-    "brand_story": {
-      "type": "dinveda-split-story",
+    "support": {
+      "type": "dinveda-collection-support-card",
       "settings": {
-        "image": "",
-        "eyebrow": "OUR PHILOSOPHY",
-        "title": "Guided by Nature's Wisdom",
-        "body": "<p>We believe true wellness isn't about fixing what's broken, but aligning with the natural rhythms of life. Our blends are inspired by the wisdom of the animal kingdom. Each ritual is an invitation to pause, breathe, and reconnect with your inner nature. Not medicine, but a way of life.</p>",
-        "cta_label": "READ OUR STORY →",
-        "cta_link": "",
-        "background_mode": "design_bg"
+        "enable": true,
+        "icon_type": "svg",
+        "title": "Have questions?",
+        "body_text": "<p>We are always here to help. Contact us and we will get back to you as soon as possible!</p>",
+        "cta_label": "CONTACT SUPPORT →",
+        "cta_link": "/pages/contact",
+        "style": "two-tone",
+        "section_padding": "both"
       }
     }
   },
   "order": [
     "hero",
-    "trust_chips",
     "toolbar",
     "grid",
-    "brand_story"
+    "support"
   ]
 }
 
