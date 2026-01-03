@@ -64,10 +64,9 @@
         "trust_card_1": {
           "type": "trust_card",
           "settings": {
-            "icon": "leaf",
+            "icon": "germany",
             "title": "BIO-zertifiziert",
-            "text": "Zutaten aus kontrolliert biologischem Anbau – transparent & EU-konform.",
-            "overlay_image": "shopify://shop_images/Fox_GB.png",
+            "text": "",
             "overlay_size": 64,
             "overlay_offset_x": -8,
             "overlay_offset_y": -40,
@@ -78,9 +77,8 @@
           "type": "trust_card",
           "settings": {
             "icon": "germany",
-            "title": "Hergestellt in Deutschland",
-            "text": "Sorgfältig gemischt, geprüft und verpackt – mit Qualitätsfokus.",
-            "overlay_image": "shopify://shop_images/Flamingo_FG.png",
+            "title": "Funktionelle Ayurvedische Mischungen",
+            "text": "Hergestellt in Deutschland",
             "overlay_size": 64,
             "overlay_offset_x": -8,
             "overlay_offset_y": -40,
@@ -90,10 +88,9 @@
         "trust_card_3": {
           "type": "trust_card",
           "settings": {
-            "icon": "mortar",
-            "title": "Kleine Chargen",
+            "icon": "lotus",
+            "title": "Traditionelle Rezepte",
             "text": "Handwerklich gemischt für Frische, Aroma und gleichbleibende Qualität.",
-            "overlay_image": "shopify://shop_images/Koala_MR.png",
             "overlay_size": 64,
             "overlay_offset_x": -8,
             "overlay_offset_y": -40,
@@ -108,21 +105,62 @@
       ],
       "settings": {}
     },
+    "dinveda_trust_badges_wRggeT": {
+      "type": "dinveda-trust-badges",
+      "blocks": {
+        "trust_badge_biQAzj": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "<svg width=\"20\" height=\"20\" viewbox=\"0 0 20 20\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M10 2C10 2 4 6 4 11C4 14.3 6.7 17 10 17C13.3 17 16 14.3 16 11C16 6 10 2 10 2Z\" fill=\"currentColor\"></path>\n  <path d=\"M10 5V11M7 8H13\" stroke=\"white\" stroke-width=\"1\" stroke-linecap=\"round\"></path>\n</svg>",
+            "label": "Bio-Zutaten"
+          }
+        },
+        "trust_badge_VTViHx": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "<svg width=\"128\" height=\"128\" viewbox=\"0 0 128 128\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <ellipse cx=\"64\" cy=\"76\" rx=\"32\" ry=\"26\" fill=\"#FF8C42\"></ellipse>\n  <circle cx=\"64\" cy=\"44\" r=\"26\" fill=\"#FF8C42\"></circle>\n  <path d=\"M64 32C64 32 52 44 52 58C52 61 56 64 58 64C60 64 64 61 64 58C64 61 68 64 70 64C72 64 76 61 76 58C76 44 64 32 64 32Z\" fill=\"white\"></path>\n  <path d=\"M44 26L52 12L58 26L44 26Z\" fill=\"#FF8C42\"></path>\n  <path d=\"M70 26L78 12L84 26L70 26Z\" fill=\"#FF8C42\"></path>\n  <path d=\"M48 22L54 16L54 26L48 22Z\" fill=\"black\"></path>\n  <path d=\"M74 22L80 16L80 26L74 22Z\" fill=\"black\"></path>\n  <circle cx=\"58\" cy=\"44\" r=\"6\" fill=\"black\"></circle>\n  <circle cx=\"58\" cy=\"44\" r=\"3\" fill=\"white\"></circle>\n  <path d=\"M74 48C74 46 76 44 78 44\" stroke=\"black\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\"></path>\n  <circle cx=\"64\" cy=\"54\" r=\"3\" fill=\"black\"></circle>\n  <path d=\"M64 58L60 62L64 64L68 62\" stroke=\"black\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"></path>\n  <ellipse cx=\"90\" cy=\"70\" rx=\"20\" ry=\"12\" fill=\"#FF8C42\" transform=\"rotate(-20 90 70)\"></ellipse>\n  <path d=\"M92 64L98 54L102 64\" fill=\"white\"></path>\n  <ellipse cx=\"52\" cy=\"100\" rx=\"6\" ry=\"10\" fill=\"black\"></ellipse>\n  <ellipse cx=\"76\" cy=\"100\" rx=\"6\" ry=\"10\" fill=\"black\"></ellipse>\n</svg>",
+            "label": "Funktionelle Blends"
+          }
+        },
+        "trust_badge_DqETKd": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "<svg width=\"64\" height=\"64\" viewbox=\"0 0 64 64\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <ellipse cx=\"32\" cy=\"32\" rx=\"2.5\" ry=\"8\" fill=\"#D2691E\"></ellipse>\n  <path d=\"M32 26C32 26 19 22 16 29C13 36 16 42 22 42C26 42 29 38 32 34C35 38 38 42 42 42C48 42 51 36 48 29C45 22 32 26 32 26Z\" fill=\"#FFA500\"></path>\n  <path d=\"M32 26C32 26 45 22 48 29C51 36 48 42 42 42C38 42 35 38 32 34C29 38 26 42 22 42C16 42 13 36 16 29C19 22 32 26 32 26Z\" fill=\"#FFA500\"></path>\n  <ellipse cx=\"26\" cy=\"32\" rx=\"5\" ry=\"6\" fill=\"#FFD700\" opacity=\"0.4\"></ellipse>\n  <ellipse cx=\"38\" cy=\"32\" rx=\"5\" ry=\"6\" fill=\"#FFD700\" opacity=\"0.4\"></ellipse>\n  <path d=\"M32 34C32 34 22 35 21 42C20 48 22 54 27 54C30 54 32 51 32 46C32 51 34 54 37 54C42 54 44 48 43 42C42 35 32 34 32 34Z\" fill=\"#FFB6C1\"></path>\n  <circle cx=\"32\" cy=\"24\" r=\"3\" fill=\"#D2691E\"></circle>\n  <circle cx=\"30\" cy=\"24\" r=\"2\" fill=\"black\"></circle>\n  <circle cx=\"34\" cy=\"24\" r=\"2\" fill=\"black\"></circle>\n  <circle cx=\"27\" cy=\"26\" r=\"1.5\" fill=\"#FFB6C1\" opacity=\"0.8\"></circle>\n  <circle cx=\"37\" cy=\"26\" r=\"1.5\" fill=\"#FFB6C1\" opacity=\"0.8\"></circle>\n  <path d=\"M30 21L29 16L29 15\" stroke=\"#4A4A4A\" stroke-width=\"4\" stroke-linecap=\"round\"></path>\n  <path d=\"M34 21L35 16L35 15\" stroke=\"#4A4A4A\" stroke-width=\"4\" stroke-linecap=\"round\"></path>\n  <circle cx=\"29\" cy=\"15\" r=\"1.5\" fill=\"#4A4A4A\"></circle>\n  <circle cx=\"35\" cy=\"15\" r=\"1.5\" fill=\"#4A4A4A\"></circle>\n</svg>",
+            "label": "Traditionelle Rezepte"
+          }
+        },
+        "trust_badge_wyKUcY": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "<svg width=\"20\" height=\"20\" viewbox=\"0 0 20 20\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M10 2C5.58 2 2 5.58 2 10C2 14.42 5.58 18 10 18C14.42 18 18 14.42 18 10C18 5.58 14.42 2 10 2ZM9 14L5 10L6.41 8.59L9 11.17L13.59 6.58L15 8L9 14Z\" fill=\"currentColor\"></path></svg>",
+            "label": "Ayurvedische Gewürze"
+          }
+        }
+      },
+      "block_order": [
+        "trust_badge_biQAzj",
+        "trust_badge_VTViHx",
+        "trust_badge_DqETKd",
+        "trust_badge_wyKUcY"
+      ],
+      "name": "DinVeda Trust Badges",
+      "settings": {}
+    },
     "dinveda_ritual_picker": {
       "type": "dinveda-ritual-picker",
       "blocks": {
         "ritual_morgen": {
           "type": "ritual_card",
           "settings": {
+            "image": "shopify://shop_images/gb_front.png",
             "phase_label": "MORGEN | AKTIVIEREN",
             "blend_name": "Golden Boost",
             "quote_line": "Ich starte clever und klar in den Tag.",
             "descriptor": "Für Energie, Fokus & innere Wärme",
             "attribution_line": "— sagt der Fuchs",
-            "overlay_image": "shopify://shop_images/Fox_GB.png",
             "overlay_size": 96,
             "overlay_offset_x": -9,
-            "overlay_offset_y": -56,
+            "overlay_offset_y": -28,
             "overlay_anchor": "top_left",
             "button_label": "Zu diesem Ritual",
             "link": "shopify://products/golden-boost"
@@ -131,15 +169,15 @@
         "ritual_tag": {
           "type": "ritual_card",
           "settings": {
+            "image": "shopify://shop_images/fg_front.png",
             "phase_label": "TAG | ZENTRIEREN",
             "blend_name": "Flow & Glow",
             "quote_line": "Ich genieße Balance und Ruhe.",
             "descriptor": "Für Leichtigkeit, Balance & innere Strahlkraft",
             "attribution_line": "— sagt der Panda",
-            "overlay_image": "shopify://shop_images/Asset_2.png",
             "overlay_size": 96,
             "overlay_offset_x": -9,
-            "overlay_offset_y": -56,
+            "overlay_offset_y": -104,
             "overlay_anchor": "top_left",
             "button_label": "Zu diesem Ritual",
             "link": "shopify://products/flow-glow"
@@ -148,12 +186,12 @@
         "ritual_nachmittag": {
           "type": "ritual_card",
           "settings": {
+            "image": "shopify://shop_images/oh_front_84078904-26c0-4a6c-8e6b-e875558fdfe8.png",
             "phase_label": "BALANCE | AUSGLEICHEN",
             "blend_name": "Ova Harmony",
             "quote_line": "Ich blühe in Leichtigkeit & Harmonie.",
             "descriptor": "Für Ausgleich, Harmonie & sanfte Energie",
             "attribution_line": "— sagt der Schmetterling",
-            "overlay_image": "shopify://shop_images/Butterfly_OH.png",
             "overlay_size": 96,
             "overlay_offset_x": -9,
             "overlay_offset_y": -56,
@@ -165,12 +203,12 @@
         "ritual_abend": {
           "type": "ritual_card",
           "settings": {
+            "image": "shopify://shop_images/mr_uc1.png",
             "phase_label": "ABEND | LOSLASSEN",
             "blend_name": "Moon Rest",
             "quote_line": "Ich finde Ruhe am Abend und lasse los.",
             "descriptor": "Für Entspannung, Ruhe & erholsamen Schlaf",
             "attribution_line": "— sagt der Koala",
-            "overlay_image": "shopify://shop_images/Koala_MR.png",
             "overlay_size": 96,
             "overlay_offset_x": -9,
             "overlay_offset_y": -56,
@@ -189,7 +227,12 @@
       "settings": {
         "title": "Dein Tag in Balance",
         "subtitle": "Ayurvedische Rituale für jeden Moment deines Tages",
-        "layout": "grid_4",
+        "display_type": "grid",
+        "items_per_row": 4,
+        "mobile_items_per_row": "2",
+        "section_padding": "both",
+        "show_view_all": false,
+        "view_all_url": "",
         "background_mode": "design_bg",
         "enable_quick_add": true,
         "quick_add_button_label": "In den Warenkorb",
@@ -207,6 +250,9 @@
         "body": "<p>Wir glauben an den Rhythmus des Tages – an Momente der Aktivierung, der Zentrierung, des Ausgleichs und der Ruhe. Jede unserer Mischungen ist inspiriert von der ayurvedischen Tradition und den Tieren, die diese Qualitäten verkörpern.</p><p>Unsere Rituale sind keine medizinischen Produkte, sondern kleine tägliche Pausen für dein Wohlbefinden. Handwerklich gemischt in Deutschland, mit Zutaten aus kontrolliert biologischem Anbau.</p>",
         "cta_label": "Unsere Geschichte",
         "cta_link": "/pages/about",
+        "cta2_label": "CONTACT SUPPORT",
+        "cta2_link": "",
+        "cta2_icon": "mail",
         "background_mode": "philosophy_beige"
       }
     }
@@ -214,6 +260,7 @@
   "order": [
     "dinveda_hero",
     "dinveda_trust_cards",
+    "dinveda_trust_badges_wRggeT",
     "dinveda_ritual_picker",
     "dinveda_split_story"
   ]

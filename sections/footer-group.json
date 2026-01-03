@@ -11,6 +11,33 @@
   "name": "Footer",
   "type": "footer",
   "sections": {
+    "text_with_icons_8QpaGP": {
+      "type": "text-with-icons",
+      "blocks": {
+        "text_block_wBhcq7": {
+          "type": "text_block",
+          "settings": {
+            "media_type": "image",
+            "icon": "trophy",
+            "image": "shopify://shop_images/eu-logo.jpg",
+            "link": "",
+            "title": "",
+            "subheading": ""
+          }
+        }
+      },
+      "block_order": [
+        "text_block_wBhcq7"
+      ],
+      "name": "Text with icons",
+      "settings": {
+        "title": "",
+        "text_align": "center",
+        "size": 50,
+        "color_scheme": "1",
+        "section_padding": "none"
+      }
+    },
     "pre-footer": {
       "type": "pre-footer",
       "disabled": true,
@@ -39,6 +66,7 @@
     }
   },
   "order": [
+    "text_with_icons_8QpaGP",
     "pre-footer",
     "footer"
   ]
