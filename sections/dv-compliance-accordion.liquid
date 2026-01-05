@@ -16,7 +16,7 @@
   if allergens_in_detail_grid != blank and compliance_legal_metafield != blank
     # If allergens exist in detail grid, skip duplicate allergen text in legal content
     # This is a simple check - in practice, content managers should avoid duplication
-    assign show_legal_content = true
+    assign show_legal_content = false
   endif
   
   # Check if we have blocks (additional compliance items)
