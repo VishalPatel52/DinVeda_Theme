@@ -17,8 +17,8 @@
     assign footer_text = section.settings.text_color
   endif
   
-  assign badge_bg = section.settings.badge_bg_color | default: 'var(--design-accent-color)'
-  assign badge_text = section.settings.badge_text_color | default: '#ffffff'
+  assign badge_bg = '#ffffff'
+  assign badge_text = section.settings.badge_text_color | default: '#8b5a2b'
   assign border_color = section.settings.bottom_bar_border_color | default: 'var(--design-accent-color)'
   
   comment
@@ -53,22 +53,31 @@
         {% endif %}
 
         {% if section.settings.show_cert_badge %}
-          <div class="dv-footer__cert-badge" style="background-color: {{ badge_bg }}; border-radius: {{ section.settings.badge_border_radius }}px; padding: {{ section.settings.badge_padding }}px;">
+          <div class="dv-footer__cert-badge" style="background-color: #ffffff; border-radius: {{ section.settings.badge_border_radius }}px; padding: {{ section.settings.badge_padding }}px;">
             {% if section.settings.cert_logo != blank %}
-              <img
-                src="{{ section.settings.cert_logo | image_url: width: 120 }}"
-                alt="EU Bio Logo"
-                class="dv-footer__cert-logo"
-                style="width: {{ section.settings.cert_logo_size }}px; height: {{ section.settings.cert_logo_size }}px; max-width: {{ section.settings.cert_logo_size }}px; max-height: {{ section.settings.cert_logo_size }}px;"
-                width="{{ section.settings.cert_logo_size }}"
-                height="{{ section.settings.cert_logo_size }}"
-                loading="lazy"
-              >
-            {% else %}
-              <div class="dv-footer__cert-logo" style="background-color: rgba(255,255,255,0.2); border-radius: 4px; width: {{ section.settings.cert_logo_size }}px; height: {{ section.settings.cert_logo_size }}px; max-width: {{ section.settings.cert_logo_size }}px; max-height: {{ section.settings.cert_logo_size }}px;"></div>
+              <div class="dv-footer__cert-logo-wrapper">
+                <img
+                  src="{{ section.settings.cert_logo | image_url: width: 120 }}"
+                  alt="EU Bio Logo"
+                  class="dv-footer__cert-logo"
+                  style="width: {{ section.settings.cert_logo_size }}px; height: {{ section.settings.cert_logo_size }}px; max-width: {{ section.settings.cert_logo_size }}px; max-height: {{ section.settings.cert_logo_size }}px;"
+                  width="{{ section.settings.cert_logo_size }}"
+                  height="{{ section.settings.cert_logo_size }}"
+                  loading="lazy"
+                >
+              </div>
             {% endif %}
-            <div class="dv-footer__cert-text" style="font-size: {{ section.settings.cert_text_size }}px; color: {{ badge_text }};">
-              {{ section.settings.cert_text }}
+            <div class="dv-footer__cert-text-wrapper">
+              {% if section.settings.cert_text_line_1 != blank %}
+                <div class="dv-footer__cert-text-line" style="font-size: {{ section.settings.cert_text_size }}px; color: {{ badge_text }};">
+                  {{ section.settings.cert_text_line_1 }}
+                </div>
+              {% endif %}
+              {% if section.settings.cert_text_line_2 != blank %}
+                <div class="dv-footer__cert-text-line" style="font-size: {{ section.settings.cert_text_size }}px; color: {{ badge_text }};">
+                  {{ section.settings.cert_text_line_2 }}
+                </div>
+              {% endif %}
             </div>
           </div>
         {% endif %}
@@ -383,9 +392,15 @@
     },
     {
       "type": "text",
-      "id": "cert_text",
-      "label": "Certification text",
-      "default": "Bio-Zertifizierung: DE-ÖKO-037"
+      "id": "cert_text_line_1",
+      "label": "Certification text line 1",
+      "default": "DE-ÖKO-037"
+    },
+    {
+      "type": "text",
+      "id": "cert_text_line_2",
+      "label": "Certification text line 2",
+      "default": "Nicht-EU-Landwirtschaft"
     },
     {
       "type": "range",
@@ -422,12 +437,12 @@
     {
       "type": "range",
       "id": "badge_padding",
-      "min": 8,
-      "max": 24,
+      "min": 6,
+      "max": 20,
       "step": 2,
       "unit": "px",
       "label": "Badge padding",
-      "default": 14
+      "default": 8
     },
     {
       "type": "richtext",
