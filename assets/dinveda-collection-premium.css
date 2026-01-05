@@ -81,8 +81,18 @@
 [data-template-suffix="dinveda-premium"] .dinveda-trust-cards__grid,
 [data-template-suffix="dinveda_premium"] .dinveda-trust-cards__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
+}
+
+@media (max-width: 1023px) {
+  .template-collection .dinveda-trust-cards__grid,
+  .template-collection.dinveda-premium .dinveda-trust-cards__grid,
+  .template-collection.dinveda_premium .dinveda-trust-cards__grid,
+  [data-template-suffix="dinveda-premium"] .dinveda-trust-cards__grid,
+  [data-template-suffix="dinveda_premium"] .dinveda-trust-cards__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 767px) {

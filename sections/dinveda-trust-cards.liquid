@@ -1,5 +1,5 @@
 {% comment %}
-  DinVeda Trust Cards - 3 trust indicator cards
+  DinVeda Trust Cards - 4 trust indicator cards
   Premium trust badges with icons, titles, and descriptions
 {% endcomment %}
 
@@ -17,6 +17,200 @@
             <div class="dinveda-trust-cards__card" {{ block.shopify_attributes }}>
               <div class="dinveda-trust-cards__icon">
                 {% case block.settings.icon %}
+                  {% when 'fox' %}
+                    {% if block.settings.icon_style == 'color' %}
+                      <svg width="64" height="64" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="64" cy="76" rx="32" ry="26" fill="#FF8C42"/>
+                        <circle cx="64" cy="44" r="26" fill="#FF8C42"/>
+                        <path d="M64 32C64 32 52 44 52 58C52 61 56 64 58 64C60 64 64 61 64 58C64 61 68 64 70 64C72 64 76 61 76 58C76 44 64 32 64 32Z" fill="white"/>
+                        <path d="M44 26L52 12L58 26L44 26Z" fill="#FF8C42"/>
+                        <path d="M70 26L78 12L84 26L70 26Z" fill="#FF8C42"/>
+                        <path d="M48 22L54 16L54 26L48 22Z" fill="black"/>
+                        <path d="M74 22L80 16L80 26L74 22Z" fill="black"/>
+                        <circle cx="58" cy="44" r="6" fill="black"/>
+                        <circle cx="58" cy="44" r="3" fill="white"/>
+                        <path d="M74 48C74 46 76 44 78 44" stroke="black" stroke-width="8" stroke-linecap="round" fill="none"/>
+                        <circle cx="64" cy="54" r="3" fill="black"/>
+                        <path d="M64 58L60 62L64 64L68 62" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        <ellipse cx="90" cy="70" rx="20" ry="12" fill="#FF8C42" transform="rotate(-20 90 70)"/>
+                        <path d="M92 64L98 54L102 64" fill="white"/>
+                        <ellipse cx="52" cy="100" rx="6" ry="10" fill="black"/>
+                        <ellipse cx="76" cy="100" rx="6" ry="10" fill="black"/>
+                      </svg>
+                    {% else %}
+                      <svg width="64" height="64" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="64" cy="76" rx="32" ry="26" fill="currentColor" opacity="0.9"/>
+                        <circle cx="64" cy="44" r="26" fill="currentColor"/>
+                        <path d="M64 32C64 32 52 44 52 58C52 61 56 64 58 64C60 64 64 61 64 58C64 61 68 64 70 64C72 64 76 61 76 58C76 44 64 32 64 32Z" fill="currentColor" opacity="0.2"/>
+                        <path d="M44 26L52 12L58 26M70 26L78 12L84 26" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        <path d="M48 22L54 16L54 26M74 22L80 16L80 26" fill="currentColor" opacity="0.6"/>
+                        <circle cx="58" cy="44" r="6" fill="currentColor"/>
+                        <circle cx="58" cy="44" r="3" fill="currentColor" opacity="0.3"/>
+                        <path d="M74 48C74 46 76 44 78 44" stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none"/>
+                        <circle cx="64" cy="54" r="3" fill="currentColor"/>
+                        <path d="M64 58L60 62L64 64L68 62" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        <ellipse cx="90" cy="70" rx="20" ry="12" fill="currentColor" opacity="0.7" transform="rotate(-20 90 70)"/>
+                        <path d="M92 64L98 54L102 64" fill="currentColor" opacity="0.3"/>
+                        <ellipse cx="52" cy="100" rx="6" ry="10" fill="currentColor"/>
+                        <ellipse cx="76" cy="100" rx="6" ry="10" fill="currentColor"/>
+                      </svg>
+                    {% endif %}
+                  {% when 'flamingo' %}
+                    {% if block.settings.icon_style == 'color' %}
+                      <svg width="64" height="64" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M64 116L64 76" stroke="#FF69B4" stroke-width="12" stroke-linecap="round"/>
+                        <path d="M64 96L64 90" stroke="#FF1493" stroke-width="20" stroke-linecap="round"/>
+                        <path d="M52 102L58 90L64 76" stroke="#FF69B4" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        <circle cx="58" cy="90" r="10" fill="#FF1493"/>
+                        <ellipse cx="52" cy="64" rx="20" ry="16" fill="#FFB6C1"/>
+                        <path d="M38 64L32 70L38 74" stroke="#FF1493" stroke-width="10" stroke-linecap="round" fill="none"/>
+                        <path d="M52 58C52 44 64 32 76 32C84 32 90 36 92 42" stroke="#FF69B4" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        <ellipse cx="92" cy="38" rx="10" ry="12" fill="#FFB6C1"/>
+                        <path d="M102 38L112 42L106 46L102 38Z" fill="#FFB6C1"/>
+                        <path d="M106 42L116 46L110 48" stroke="black" stroke-width="5" stroke-linecap="round"/>
+                        <circle cx="96" cy="38" r="4" fill="#FFD700"/>
+                        <circle cx="96" cy="38" r="2" fill="black"/>
+                      </svg>
+                    {% else %}
+                      <svg width="64" height="64" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M64 116L64 76" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+                        <circle cx="64" cy="93" r="10" fill="currentColor" opacity="0.7"/>
+                        <path d="M52 102L58 90L64 76" stroke="currentColor" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        <circle cx="58" cy="90" r="10" fill="currentColor" opacity="0.7"/>
+                        <ellipse cx="52" cy="64" rx="20" ry="16" fill="currentColor" opacity="0.8"/>
+                        <path d="M38 64L32 70L38 74" stroke="currentColor" stroke-width="10" stroke-linecap="round" fill="none"/>
+                        <path d="M52 58C52 44 64 32 76 32C84 32 90 36 92 42" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        <ellipse cx="92" cy="38" rx="10" ry="12" fill="currentColor" opacity="0.8"/>
+                        <path d="M102 38L112 42" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+                        <circle cx="96" cy="38" r="4" fill="currentColor" opacity="0.5"/>
+                        <circle cx="96" cy="38" r="2" fill="currentColor"/>
+                      </svg>
+                    {% endif %}
+                  {% when 'koala' %}
+                    {% if block.settings.icon_style == 'color' %}
+                      <svg width="64" height="64" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="64" cy="84" rx="28" ry="26" fill="#808080"/>
+                        <circle cx="64" cy="44" r="26" fill="#808080"/>
+                        <ellipse cx="64" cy="84" rx="16" ry="20" fill="#F5F5DC"/>
+                        <circle cx="44" cy="38" r="12" fill="#808080"/>
+                        <circle cx="84" cy="38" r="12" fill="#808080"/>
+                        <circle cx="44" cy="38" r="8" fill="#FFB6C1"/>
+                        <circle cx="84" cy="38" r="8" fill="#FFB6C1"/>
+                        <circle cx="58" cy="48" r="5" fill="black"/>
+                        <circle cx="70" cy="48" r="5" fill="black"/>
+                        <ellipse cx="64" cy="54" rx="6" ry="5" fill="#4A4A4A"/>
+                        <circle cx="48" cy="54" r="5" fill="#FFB6C1" opacity="0.8"/>
+                        <circle cx="80" cy="54" r="5" fill="#FFB6C1" opacity="0.8"/>
+                        <path d="M64 60L56 64L64 66L72 64" stroke="#4A4A4A" stroke-width="5" stroke-linecap="round" fill="none"/>
+                        <rect x="44" y="70" width="20" height="24" rx="3" fill="#FFF8DC"/>
+                        <path d="M64 80C68 80 72 82 72 86V90C72 91 70 93 68 93" stroke="#FFF8DC" stroke-width="8" fill="none"/>
+                        <rect x="46" y="72" width="16" height="10" rx="2" fill="#8B4513"/>
+                        <path d="M54 80L58 76L62 80L58 84L54 80Z" fill="#228B22" opacity="0.7"/>
+                        <ellipse cx="52" cy="106" rx="5" ry="6" fill="#4A4A4A"/>
+                        <ellipse cx="76" cy="106" rx="5" ry="6" fill="#4A4A4A"/>
+                      </svg>
+                    {% else %}
+                      <svg width="64" height="64" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="64" cy="84" rx="28" ry="26" fill="currentColor"/>
+                        <circle cx="64" cy="44" r="26" fill="currentColor"/>
+                        <ellipse cx="64" cy="84" rx="16" ry="20" fill="currentColor" opacity="0.3"/>
+                        <circle cx="44" cy="38" r="12" fill="currentColor"/>
+                        <circle cx="84" cy="38" r="12" fill="currentColor"/>
+                        <circle cx="44" cy="38" r="8" fill="currentColor" opacity="0.4"/>
+                        <circle cx="84" cy="38" r="8" fill="currentColor" opacity="0.4"/>
+                        <circle cx="58" cy="48" r="5" fill="currentColor" opacity="0.2"/>
+                        <circle cx="70" cy="48" r="5" fill="currentColor" opacity="0.2"/>
+                        <ellipse cx="64" cy="54" rx="6" ry="5" fill="currentColor" opacity="0.5"/>
+                        <circle cx="48" cy="54" r="5" fill="currentColor" opacity="0.2"/>
+                        <circle cx="80" cy="54" r="5" fill="currentColor" opacity="0.2"/>
+                        <path d="M64 60L56 64L64 66L72 64" stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.6"/>
+                        <rect x="44" y="70" width="20" height="24" rx="3" fill="currentColor" opacity="0.3"/>
+                        <path d="M64 80C68 80 72 82 72 86V90C72 91 70 93 68 93" stroke="currentColor" stroke-width="8" fill="none" opacity="0.3"/>
+                        <rect x="46" y="72" width="16" height="10" rx="2" fill="currentColor" opacity="0.6"/>
+                        <path d="M54 80L58 76L62 80L58 84L54 80Z" fill="currentColor" opacity="0.4"/>
+                        <ellipse cx="52" cy="106" rx="5" ry="6" fill="currentColor" opacity="0.5"/>
+                        <ellipse cx="76" cy="106" rx="5" ry="6" fill="currentColor" opacity="0.5"/>
+                      </svg>
+                    {% endif %}
+                  {% when 'panda' %}
+                    {% if block.settings.icon_style == 'color' %}
+                      <svg width="64" height="64" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="64" cy="38" r="22" fill="white"/>
+                        <circle cx="48" cy="28" r="12" fill="black"/>
+                        <circle cx="80" cy="28" r="12" fill="black"/>
+                        <ellipse cx="54" cy="42" rx="8" ry="10" fill="black"/>
+                        <ellipse cx="74" cy="42" rx="8" ry="10" fill="black"/>
+                        <circle cx="54" cy="42" r="3" fill="white"/>
+                        <circle cx="74" cy="42" r="3" fill="white"/>
+                        <circle cx="56" cy="42" r="1.6" fill="black"/>
+                        <circle cx="76" cy="42" r="1.6" fill="black"/>
+                        <ellipse cx="64" cy="48" rx="4" ry="3" fill="black"/>
+                        <path d="M64 52L56 56M64 52L72 56" stroke="black" stroke-width="5" stroke-linecap="round"/>
+                        <ellipse cx="64" cy="76" rx="20" ry="22" fill="white"/>
+                        <ellipse cx="44" cy="70" rx="10" ry="16" fill="black"/>
+                        <ellipse cx="84" cy="70" rx="10" ry="16" fill="black"/>
+                        <ellipse cx="54" cy="96" rx="8" ry="12" fill="black"/>
+                        <ellipse cx="74" cy="96" rx="8" ry="12" fill="black"/>
+                      </svg>
+                    {% else %}
+                      <svg width="64" height="64" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="64" cy="38" r="22" fill="currentColor" opacity="0.2"/>
+                        <circle cx="48" cy="28" r="12" fill="currentColor"/>
+                        <circle cx="80" cy="28" r="12" fill="currentColor"/>
+                        <ellipse cx="54" cy="42" rx="8" ry="10" fill="currentColor"/>
+                        <ellipse cx="74" cy="42" rx="8" ry="10" fill="currentColor"/>
+                        <circle cx="54" cy="42" r="3" fill="currentColor" opacity="0.2"/>
+                        <circle cx="74" cy="42" r="3" fill="currentColor" opacity="0.2"/>
+                        <circle cx="56" cy="42" r="1.6" fill="currentColor"/>
+                        <circle cx="76" cy="42" r="1.6" fill="currentColor"/>
+                        <ellipse cx="64" cy="48" rx="4" ry="3" fill="currentColor"/>
+                        <path d="M64 52L56 56M64 52L72 56" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+                        <ellipse cx="64" cy="76" rx="20" ry="22" fill="currentColor" opacity="0.2"/>
+                        <ellipse cx="44" cy="70" rx="10" ry="16" fill="currentColor"/>
+                        <ellipse cx="84" cy="70" rx="10" ry="16" fill="currentColor"/>
+                        <ellipse cx="54" cy="96" rx="8" ry="12" fill="currentColor"/>
+                        <ellipse cx="74" cy="96" rx="8" ry="12" fill="currentColor"/>
+                      </svg>
+                    {% endif %}
+                  {% when 'butterfly' %}
+                    {% if block.settings.icon_style == 'color' %}
+                      <svg width="64" height="64" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="64" cy="64" rx="5" ry="16" fill="#D2691E"/>
+                        <path d="M64 52C64 52 38 44 32 58C26 72 32 84 44 84C52 84 58 76 64 68C70 76 76 84 84 84C96 84 102 72 96 58C90 44 64 52 64 52Z" fill="#FFA500"/>
+                        <path d="M64 52C64 52 90 44 96 58C102 72 96 84 84 84C76 84 70 76 64 68C58 76 52 84 44 84C32 84 26 72 32 58C38 44 64 52 64 52Z" fill="#FFA500"/>
+                        <ellipse cx="52" cy="64" rx="10" ry="12" fill="#FFD700" opacity="0.4"/>
+                        <ellipse cx="76" cy="64" rx="10" ry="12" fill="#FFD700" opacity="0.4"/>
+                        <path d="M64 68C64 68 44 70 42 84C40 96 44 108 54 108C60 108 64 102 64 92C64 102 68 108 74 108C84 108 88 96 86 84C84 70 64 68 64 68Z" fill="#FFB6C1"/>
+                        <circle cx="64" cy="48" r="6" fill="#D2691E"/>
+                        <circle cx="60" cy="48" r="4" fill="black"/>
+                        <circle cx="68" cy="48" r="4" fill="black"/>
+                        <circle cx="54" cy="52" r="3" fill="#FFB6C1" opacity="0.8"/>
+                        <circle cx="74" cy="52" r="3" fill="#FFB6C1" opacity="0.8"/>
+                        <path d="M60 42L58 32L58 30" stroke="#4A4A4A" stroke-width="8" stroke-linecap="round"/>
+                        <path d="M68 42L70 32L70 30" stroke="#4A4A4A" stroke-width="8" stroke-linecap="round"/>
+                        <circle cx="58" cy="30" r="3" fill="#4A4A4A"/>
+                        <circle cx="70" cy="30" r="3" fill="#4A4A4A"/>
+                      </svg>
+                    {% else %}
+                      <svg width="64" height="64" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="64" cy="64" rx="5" ry="16" fill="currentColor"/>
+                        <path d="M64 52C64 52 38 44 32 58C26 72 32 84 44 84C52 84 58 76 64 68C70 76 76 84 84 84C96 84 102 72 96 58C90 44 64 52 64 52Z" fill="currentColor" opacity="0.8"/>
+                        <path d="M64 52C64 52 90 44 96 58C102 72 96 84 84 84C76 84 70 76 64 68C58 76 52 84 44 84C32 84 26 72 32 58C38 44 64 52 64 52Z" fill="currentColor" opacity="0.8"/>
+                        <ellipse cx="52" cy="64" rx="10" ry="12" fill="currentColor" opacity="0.4"/>
+                        <ellipse cx="76" cy="64" rx="10" ry="12" fill="currentColor" opacity="0.4"/>
+                        <path d="M64 68C64 68 44 70 42 84C40 96 44 108 54 108C60 108 64 102 64 92C64 102 68 108 74 108C84 108 88 96 86 84C84 70 64 68 64 68Z" fill="currentColor" opacity="0.6"/>
+                        <circle cx="64" cy="48" r="6" fill="currentColor"/>
+                        <circle cx="60" cy="48" r="4" fill="currentColor" opacity="0.3"/>
+                        <circle cx="68" cy="48" r="4" fill="currentColor" opacity="0.3"/>
+                        <circle cx="60" cy="48" r="2" fill="currentColor" opacity="0.6"/>
+                        <circle cx="68" cy="48" r="2" fill="currentColor" opacity="0.6"/>
+                        <circle cx="54" cy="52" r="3" fill="currentColor" opacity="0.3"/>
+                        <circle cx="74" cy="52" r="3" fill="currentColor" opacity="0.3"/>
+                        <path d="M60 42L58 32L58 30M68 42L70 32L70 30" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+                        <circle cx="58" cy="30" r="3" fill="currentColor"/>
+                        <circle cx="70" cy="30" r="3" fill="currentColor"/>
+                      </svg>
+                    {% endif %}
                   {% when 'leaf' or 'eco' %}
                     <span class="material-symbols-outlined">eco</span>
                   {% when 'flask' or 'precision_manufacturing' %}
@@ -51,14 +245,6 @@
                 <p class="dinveda-trust-cards__text">{{ block.settings.text | escape }}</p>
               {% endif %}
             </div>
-            
-            {%- comment -%} Overlay Image (positioned outside card, relative to wrapper) {%- endcomment -%}
-            {% if block.settings.overlay_image != blank %}
-              <div class="dinveda-trust-cards__overlay dinveda-trust-cards__overlay--{{ block.settings.overlay_anchor }}"
-                   style="--ov-size: {{ block.settings.overlay_size }}px; --ov-x: {{ block.settings.overlay_offset_x }}px; --ov-y: {{ block.settings.overlay_offset_y }}px;">
-                {{ block.settings.overlay_image | image_url: width: 400 | image_tag: alt: block.settings.title | default: 'Trust card overlay', class: 'dinveda-trust-cards__overlay-img', loading: 'lazy' }}
-              </div>
-            {% endif %}
           </div>
         {% endif %}
       {% endfor %}
@@ -75,13 +261,33 @@
     {
       "type": "trust_card",
       "name": "Trust Card",
-      "limit": 3,
+      "limit": 4,
       "settings": [
         {
           "type": "select",
           "id": "icon",
           "label": "Icon",
           "options": [
+            {
+              "value": "fox",
+              "label": "Fox"
+            },
+            {
+              "value": "flamingo",
+              "label": "Flamingo"
+            },
+            {
+              "value": "koala",
+              "label": "Koala"
+            },
+            {
+              "value": "panda",
+              "label": "Panda"
+            },
+            {
+              "value": "butterfly",
+              "label": "Butterfly"
+            },
             {
               "value": "eco",
               "label": "Eco (Leaf)"
@@ -134,6 +340,23 @@
           "default": "eco"
         },
         {
+          "type": "select",
+          "id": "icon_style",
+          "label": "Icon Style (Animal Icons Only)",
+          "options": [
+            {
+              "value": "monochrome",
+              "label": "Monochrome (Theme Color)"
+            },
+            {
+              "value": "color",
+              "label": "Color"
+            }
+          ],
+          "default": "monochrome",
+          "info": "Choose color style for animal icons (does not affect other icons)"
+        },
+        {
           "type": "text",
           "id": "title",
           "label": "Title",
@@ -144,70 +367,6 @@
           "id": "text",
           "label": "Text",
           "default": "Zutaten aus kontrolliert biologischem Anbau – transparent & EU-konform."
-        },
-        {
-          "type": "header",
-          "content": "Overlay Image"
-        },
-        {
-          "type": "image_picker",
-          "id": "overlay_image",
-          "label": "Overlay image",
-          "info": "Optional subtle animal overlay (transparent background recommended)"
-        },
-        {
-          "type": "range",
-          "id": "overlay_size",
-          "label": "Overlay size",
-          "min": 40,
-          "max": 100,
-          "step": 2,
-          "unit": "px",
-          "default": 64,
-          "info": "Size of the overlay image (keep subtle)"
-        },
-        {
-          "type": "range",
-          "id": "overlay_offset_x",
-          "label": "Horizontal offset",
-          "min": -60,
-          "max": 60,
-          "step": 2,
-          "unit": "px",
-          "default": -8,
-          "info": "Move overlay left (negative) or right (positive)"
-        },
-        {
-          "type": "range",
-          "id": "overlay_offset_y",
-          "label": "Vertical offset",
-          "min": -80,
-          "max": 60,
-          "step": 2,
-          "unit": "px",
-          "default": -40,
-          "info": "Move overlay up (negative = above card) or down (positive)"
-        },
-        {
-          "type": "select",
-          "id": "overlay_anchor",
-          "label": "Overlay anchor",
-          "options": [
-            {
-              "value": "top_left",
-              "label": "Top Left"
-            },
-            {
-              "value": "top_center",
-              "label": "Top Center"
-            },
-            {
-              "value": "top_right",
-              "label": "Top Right"
-            }
-          ],
-          "default": "top_left",
-          "info": "Anchor point for overlay positioning"
         }
       ]
     }

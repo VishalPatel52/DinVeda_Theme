@@ -305,16 +305,15 @@
 
 .dinveda-trust-cards__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 32px;
   align-items: stretch;
 }
 
-/* Trust Cards - Card Wrapper for overlay positioning */
+/* Trust Cards - Card Wrapper */
 .dinveda-trust-cards__card-wrapper {
   position: relative;
   width: 100%;
-  overflow: visible; /* Allow overlay to extend outside */
 }
 
 .dinveda-trust-cards__card {
@@ -323,7 +322,7 @@
   align-items: center;
   text-align: center;
   padding: 32px 24px;
-  background-color: #ffffff;
+  background-color: var(--design-bg-color, #ffffff);
   border-radius: 16px;
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -390,42 +389,17 @@
   text-overflow: ellipsis;
 }
 
-/* Trust Cards - Overlay Image (subtle personality layer) */
-.dinveda-trust-cards__overlay {
-  position: absolute;
-  z-index: 5;
-  pointer-events: none; /* Don't block card clicks */
-  width: var(--ov-size, 64px);
-  height: var(--ov-size, 64px);
-  transform: translate(var(--ov-x, -8px), var(--ov-y, -40px));
-  transition: transform 0.3s ease;
-  opacity: 0.85; /* Subtle, not dominant */
+/* Trust Cards - Responsive Breakpoints */
+@media (max-width: 1023px) {
+  .dinveda-trust-cards__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-.dinveda-trust-cards__overlay-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-}
-
-/* Anchor Position Presets */
-.dinveda-trust-cards__overlay--top_left {
-  top: 0;
-  left: 0;
-}
-
-.dinveda-trust-cards__overlay--top_center {
-  top: 0;
-  left: 50%;
-  transform: translate(calc(-50% + var(--ov-x, -8px)), var(--ov-y, -40px));
-}
-
-.dinveda-trust-cards__overlay--top_right {
-  top: 0;
-  right: 0;
+@media (max-width: 767px) {
+  .dinveda-trust-cards__grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ============================================

@@ -45,6 +45,13 @@
   display: block;
 }
 
+.dinveda-trust-badges__icon-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
 .dinveda-trust-badges__label {
   font-size: var(--font-size-sm, calc(var(--font-size, 16px) - 2px));
   color: var(--design-text-color, var(--text-color));
@@ -74,6 +81,11 @@
     width: 24px;
     height: 24px;
   }
+  
+  .dinveda-trust-badges__icon-img {
+    max-width: 24px;
+    max-height: 24px;
+  }
 }
 
 /* Mobile: 2x2 grid (default) */
@@ -96,5 +108,10 @@
   
   .dinveda-trust-badges__label {
     font-size: var(--font-size-sm, calc(var(--font-size, 16px) - 2px));
+  }
+  
+  .dinveda-trust-badges__icon-img {
+    max-width: 20px;
+    max-height: 20px;
   }
 }
