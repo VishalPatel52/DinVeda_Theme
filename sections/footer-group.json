@@ -19,7 +19,7 @@
           "settings": {
             "media_type": "image",
             "icon": "trophy",
-            "image": "shopify://shop_images/eu-logo.jpg",
+            "image": "shopify://shop_images/bio-certificate-logo.png",
             "link": "",
             "title": "",
             "subheading": ""
@@ -49,8 +49,92 @@
         "color_scheme": "2"
       }
     },
+    "17676057402814a5c3": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_2fe3d68_AMeUzj": {
+          "type": "ai_gen_block_2fe3d68",
+          "settings": {
+            "container_width": 1400,
+            "padding_top": 80,
+            "padding_bottom": 40,
+            "background_color": "#fff0dd",
+            "text_color": "#bf8d5b",
+            "brand_name": "GreenPath",
+            "brand_name_size": 28,
+            "show_cert_badge": true,
+            "cert_logo": "shopify://shop_images/eu-logo.jpg",
+            "cert_logo_size": 50,
+            "cert_text": "Bio-Zertifizierung: DE-ÖKO-037",
+            "cert_text_size": 13,
+            "badge_bg_color": "#f0e9dd",
+            "badge_text_color": "#ffffff",
+            "badge_border_radius": 8,
+            "badge_padding": 14,
+            "description": "<p>Authentische ayurvedische Gewürzmischungen für Ihr tägliches Wohlbefinden.</p>",
+            "description_size": 14,
+            "description_opacity": 85,
+            "nav_heading": "Navigation",
+            "nav_link_1_text": "Startseite",
+            "nav_link_1_url": "",
+            "nav_link_2_text": "Unsere Geschichte",
+            "nav_link_2_url": "",
+            "nav_link_3_text": "DinVeda",
+            "nav_link_3_url": "",
+            "nav_link_4_text": "Karriere",
+            "nav_link_4_url": "",
+            "nav_link_5_text": "",
+            "nav_link_5_url": "",
+            "legal_heading": "Rechtliches",
+            "legal_link_1_text": "Impressum",
+            "legal_link_1_url": "",
+            "legal_link_2_text": "Datenschutz",
+            "legal_link_2_url": "",
+            "legal_link_3_text": "AGB",
+            "legal_link_3_url": "",
+            "legal_link_4_text": "",
+            "legal_link_4_url": "",
+            "contact_heading": "Kontakt",
+            "contact_company": "GreenPath Venture GmbH",
+            "contact_address": "Bodenseestr. 28\n81241 München\nDeutschland",
+            "contact_email": "info@greenpathventure.com",
+            "contact_phone": "",
+            "contact_tax_id": "DE455428663",
+            "column_heading_size": 16,
+            "heading_margin_bottom": 16,
+            "link_size": 14,
+            "link_spacing": 10,
+            "link_opacity": 80,
+            "link_hover_style": "underline",
+            "contact_label_size": 13,
+            "contact_value_size": 14,
+            "contact_item_spacing": 16,
+            "show_bottom_bar": true,
+            "bottom_bar_spacing": 40,
+            "bottom_bar_border_width": 1,
+            "bottom_bar_border_color": "#8b5a2b",
+            "bottom_bar_padding_top": 24,
+            "copyright_text": "© 2026 GreenPath Venture GmbH. Alle Rechte vorbehalten.",
+            "copyright_size": 13,
+            "show_social_icons": true,
+            "social_icon_size": 24,
+            "social_icon_spacing": 16,
+            "facebook_url": "",
+            "instagram_url": "",
+            "twitter_url": "",
+            "linkedin_url": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_2fe3d68_AMeUzj"
+      ],
+      "settings": {}
+    },
     "footer": {
       "type": "footer",
+      "disabled": true,
       "settings": {
         "footer_text": "<p>Foodie is a theme for Shopify</p>",
         "show_social": false,
@@ -68,6 +152,7 @@
   "order": [
     "text_with_icons_8QpaGP",
     "pre-footer",
+    "17676057402814a5c3",
     "footer"
   ]
 }

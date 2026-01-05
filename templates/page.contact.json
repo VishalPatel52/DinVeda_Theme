@@ -18,20 +18,13 @@
     },
     "main": {
       "type": "main-page",
-      "settings": {}
-    },
-    "form": {
-      "type": "contact-form",
       "settings": {
-        "title": "",
-        "width": 80,
-        "section_padding": "both"
+        "page_alignment": "a-left"
       }
     }
   },
   "order": [
     "banner",
-    "main",
-    "form"
+    "main"
   ]
 }

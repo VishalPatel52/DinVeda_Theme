@@ -30,11 +30,7 @@
           "settings": {
             "icon": "eco",
             "title": "BIO Certified",
-            "text": "100 % Bio-Zutaten",
-            "overlay_size": 64,
-            "overlay_offset_x": -8,
-            "overlay_offset_y": -40,
-            "overlay_anchor": "top_left"
+            "text": "100 % Bio-Zutaten"
           }
         },
         "trust_chip_2": {
@@ -42,11 +38,7 @@
           "settings": {
             "icon": "germany",
             "title": "Made in Germany",
-            "text": "Crafted with precision",
-            "overlay_size": 64,
-            "overlay_offset_x": -8,
-            "overlay_offset_y": -40,
-            "overlay_anchor": "top_left"
+            "text": "Crafted with precision"
           }
         },
         "trust_chip_3": {
@@ -54,11 +46,7 @@
           "settings": {
             "icon": "water_drop",
             "title": "Small Batches",
-            "text": "Maximum freshness",
-            "overlay_size": 64,
-            "overlay_offset_x": -8,
-            "overlay_offset_y": -40,
-            "overlay_anchor": "top_left"
+            "text": "Maximum freshness"
           }
         }
       },
