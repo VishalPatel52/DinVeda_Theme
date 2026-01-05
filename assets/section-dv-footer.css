@@ -1,0 +1,208 @@
+/* DV_Footer Styles - Theme Integrated */
+
+.dv-footer {
+  display: block;
+  width: 100%;
+  color: var(--design-text-color, #C17129);
+}
+
+.dv-footer__container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.dv-footer__grid {
+  display: grid;
+  grid-template-columns: 30% 20% 20% 30%;
+  gap: 40px;
+}
+
+.dv-footer__column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Branding */
+.dv-footer__brand-name {
+  font-family: var(--heading-family, inherit);
+  font-weight: var(--heading-weight, 700);
+  color: var(--design-text-color, #C17129);
+  margin: 0 0 20px;
+  line-height: 1.2;
+}
+
+.dv-footer__cert-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.dv-footer__cert-logo {
+  flex-shrink: 0;
+  object-fit: contain;
+  max-width: 100%;
+  height: auto;
+}
+
+.dv-footer__cert-text {
+  font-family: var(--main-family, inherit);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.dv-footer__description {
+  font-family: var(--main-family, inherit);
+  color: var(--design-text-color, #C17129);
+  line-height: 1.7;
+}
+
+.dv-footer__description p {
+  margin: 0 0 12px;
+}
+
+.dv-footer__description p:last-child {
+  margin-bottom: 0;
+}
+
+/* Headings */
+.dv-footer__heading {
+  font-family: var(--heading-family, inherit);
+  font-weight: var(--heading-weight, 700);
+  color: var(--design-text-color, #C17129);
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* Links */
+.dv-footer__links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.dv-footer__link {
+  font-family: var(--main-family, inherit);
+  color: var(--design-text-color, #C17129);
+  text-decoration: none;
+  transition: opacity 0.3s ease, text-decoration 0.3s ease;
+  line-height: 1.5;
+}
+
+.dv-footer__link:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* Contact */
+.dv-footer__contact-item {
+  margin-bottom: 16px;
+}
+
+.dv-footer__contact-item:last-child {
+  margin-bottom: 0;
+}
+
+.dv-footer__contact-label {
+  font-family: var(--main-family, inherit);
+  font-weight: 600;
+  color: var(--design-text-color, #C17129);
+  margin-bottom: 4px;
+  display: block;
+}
+
+.dv-footer__contact-value {
+  font-family: var(--main-family, inherit);
+  color: var(--design-text-color, #C17129);
+  line-height: 1.6;
+}
+
+.dv-footer__contact-value a {
+  color: var(--design-text-color, #C17129);
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.dv-footer__contact-value a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* Bottom Bar */
+.dv-footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.dv-footer__copyright {
+  font-family: var(--main-family, inherit);
+  color: var(--design-text-color, #C17129);
+}
+
+.dv-footer__social {
+  display: flex;
+  align-items: center;
+}
+
+.dv-footer__social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--design-text-color, #C17129);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dv-footer__social-link:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.dv-footer__social-link svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+/* Responsive - Tablet */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .dv-footer__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+
+  .dv-footer__column:first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Responsive - Mobile */
+@media screen and (max-width: 767px) {
+  .dv-footer__container {
+    padding: 0 20px;
+  }
+
+  .dv-footer__grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .dv-footer__column:first-child {
+    grid-column: 1;
+  }
+
+  .dv-footer__brand-name {
+    font-size: calc(var(--design-h2-size, 28px) * 0.85) !important;
+  }
+
+  .dv-footer__bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+

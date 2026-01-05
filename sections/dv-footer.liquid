@@ -1,0 +1,834 @@
+{% comment %} DV_Footer Assets {% endcomment %}
+<link rel="preload" href="{{ 'section-dv-footer.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{{ 'section-dv-footer.css' | asset_url }}"></noscript>
+
+{% comment %} DV_Footer Logic {% endcomment %}
+{%- liquid
+  assign section_id = section.id | replace: '_', '' | downcase
+  
+  comment
+    Theme variable integration with fallbacks
+  endcomment
+  if section.settings.use_theme_colors
+    assign footer_bg = 'var(--design-bg-color)'
+    assign footer_text = 'var(--design-text-color)'
+  else
+    assign footer_bg = section.settings.background_color
+    assign footer_text = section.settings.text_color
+  endif
+  
+  assign badge_bg = section.settings.badge_bg_color | default: 'var(--design-accent-color)'
+  assign badge_text = section.settings.badge_text_color | default: '#ffffff'
+  assign border_color = section.settings.bottom_bar_border_color | default: 'var(--design-accent-color)'
+  
+  comment
+    Use theme spacing if enabled, otherwise use custom
+  endcomment
+  if section.settings.use_theme_spacing
+    assign padding_top = 'var(--design-section-spacing-medium)'
+    assign padding_bottom = 'var(--design-section-spacing-medium)'
+  else
+    assign padding_top = section.settings.padding_top | append: 'px'
+    assign padding_bottom = section.settings.padding_bottom | append: 'px'
+  endif
+-%}
+
+{% comment %} DV_Footer Template {% endcomment %}
+<footer
+  class="dv-footer"
+  data-section-id="{{ section.id }}"
+  data-section-type="dv-footer"
+  style="background-color: {{ footer_bg }}; color: {{ footer_text }}; padding-top: {{ padding_top }}; padding-bottom: {{ padding_bottom }};"
+  {{ section.shopify_attributes }}>
+  
+  <div class="dv-footer__container" style="max-width: {{ section.settings.container_width }}px;">
+    <div class="dv-footer__grid" style="margin-bottom: {{ section.settings.bottom_bar_spacing }}px;">
+      
+      {% comment %} Column 1: Branding & Description {% endcomment %}
+      <div class="dv-footer__column">
+        {% if section.settings.brand_name != blank %}
+          <h2 class="dv-footer__brand-name" style="font-size: {{ section.settings.brand_name_size }}px;">
+            {{ section.settings.brand_name }}
+          </h2>
+        {% endif %}
+
+        {% if section.settings.show_cert_badge %}
+          <div class="dv-footer__cert-badge" style="background-color: {{ badge_bg }}; border-radius: {{ section.settings.badge_border_radius }}px; padding: {{ section.settings.badge_padding }}px;">
+            {% if section.settings.cert_logo != blank %}
+              <img
+                src="{{ section.settings.cert_logo | image_url: width: 120 }}"
+                alt="EU Bio Logo"
+                class="dv-footer__cert-logo"
+                style="width: {{ section.settings.cert_logo_size }}px; height: {{ section.settings.cert_logo_size }}px; max-width: {{ section.settings.cert_logo_size }}px; max-height: {{ section.settings.cert_logo_size }}px;"
+                width="{{ section.settings.cert_logo_size }}"
+                height="{{ section.settings.cert_logo_size }}"
+                loading="lazy"
+              >
+            {% else %}
+              <div class="dv-footer__cert-logo" style="background-color: rgba(255,255,255,0.2); border-radius: 4px; width: {{ section.settings.cert_logo_size }}px; height: {{ section.settings.cert_logo_size }}px; max-width: {{ section.settings.cert_logo_size }}px; max-height: {{ section.settings.cert_logo_size }}px;"></div>
+            {% endif %}
+            <div class="dv-footer__cert-text" style="font-size: {{ section.settings.cert_text_size }}px; color: {{ badge_text }};">
+              {{ section.settings.cert_text }}
+            </div>
+          </div>
+        {% endif %}
+
+        {% if section.settings.description != blank %}
+          <div class="dv-footer__description" style="font-size: {{ section.settings.description_size }}px; opacity: {{ section.settings.description_opacity | divided_by: 100.0 }};">
+            {{ section.settings.description }}
+          </div>
+        {% endif %}
+      </div>
+
+      {% comment %} Column 2: Navigation {% endcomment %}
+      <div class="dv-footer__column">
+        {% if section.settings.nav_heading != blank %}
+          <h3 class="dv-footer__heading" style="font-size: {{ section.settings.column_heading_size }}px; margin-bottom: {{ section.settings.heading_margin_bottom }}px;">
+            {{ section.settings.nav_heading }}
+          </h3>
+        {% endif %}
+        <ul class="dv-footer__links" style="gap: {{ section.settings.link_spacing }}px;">
+          {% if section.settings.nav_link_1_text != blank %}
+            <li>
+              <a href="{{ section.settings.nav_link_1_url }}" class="dv-footer__link" style="font-size: {{ section.settings.link_size }}px; opacity: {{ section.settings.link_opacity | divided_by: 100.0 }};">
+                {{ section.settings.nav_link_1_text }}
+              </a>
+            </li>
+          {% endif %}
+          {% if section.settings.nav_link_2_text != blank %}
+            <li>
+              <a href="{{ section.settings.nav_link_2_url }}" class="dv-footer__link" style="font-size: {{ section.settings.link_size }}px; opacity: {{ section.settings.link_opacity | divided_by: 100.0 }};">
+                {{ section.settings.nav_link_2_text }}
+              </a>
+            </li>
+          {% endif %}
+          {% if section.settings.nav_link_3_text != blank %}
+            <li>
+              <a href="{{ section.settings.nav_link_3_url }}" class="dv-footer__link" style="font-size: {{ section.settings.link_size }}px; opacity: {{ section.settings.link_opacity | divided_by: 100.0 }};">
+                {{ section.settings.nav_link_3_text }}
+              </a>
+            </li>
+          {% endif %}
+          {% if section.settings.nav_link_4_text != blank %}
+            <li>
+              <a href="{{ section.settings.nav_link_4_url }}" class="dv-footer__link" style="font-size: {{ section.settings.link_size }}px; opacity: {{ section.settings.link_opacity | divided_by: 100.0 }};">
+                {{ section.settings.nav_link_4_text }}
+              </a>
+            </li>
+          {% endif %}
+          {% if section.settings.nav_link_5_text != blank %}
+            <li>
+              <a href="{{ section.settings.nav_link_5_url }}" class="dv-footer__link" style="font-size: {{ section.settings.link_size }}px; opacity: {{ section.settings.link_opacity | divided_by: 100.0 }};">
+                {{ section.settings.nav_link_5_text }}
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+
+      {% comment %} Column 3: Legal {% endcomment %}
+      <div class="dv-footer__column">
+        {% if section.settings.legal_heading != blank %}
+          <h3 class="dv-footer__heading" style="font-size: {{ section.settings.column_heading_size }}px; margin-bottom: {{ section.settings.heading_margin_bottom }}px;">
+            {{ section.settings.legal_heading }}
+          </h3>
+        {% endif %}
+        <ul class="dv-footer__links" style="gap: {{ section.settings.link_spacing }}px;">
+          {% if section.settings.legal_link_1_text != blank %}
+            <li>
+              <a href="{{ section.settings.legal_link_1_url }}" class="dv-footer__link" style="font-size: {{ section.settings.link_size }}px; opacity: {{ section.settings.link_opacity | divided_by: 100.0 }};">
+                {{ section.settings.legal_link_1_text }}
+              </a>
+            </li>
+          {% endif %}
+          {% if section.settings.legal_link_2_text != blank %}
+            <li>
+              <a href="{{ section.settings.legal_link_2_url }}" class="dv-footer__link" style="font-size: {{ section.settings.link_size }}px; opacity: {{ section.settings.link_opacity | divided_by: 100.0 }};">
+                {{ section.settings.legal_link_2_text }}
+              </a>
+            </li>
+          {% endif %}
+          {% if section.settings.legal_link_3_text != blank %}
+            <li>
+              <a href="{{ section.settings.legal_link_3_url }}" class="dv-footer__link" style="font-size: {{ section.settings.link_size }}px; opacity: {{ section.settings.link_opacity | divided_by: 100.0 }};">
+                {{ section.settings.legal_link_3_text }}
+              </a>
+            </li>
+          {% endif %}
+          {% if section.settings.legal_link_4_text != blank %}
+            <li>
+              <a href="{{ section.settings.legal_link_4_url }}" class="dv-footer__link" style="font-size: {{ section.settings.link_size }}px; opacity: {{ section.settings.link_opacity | divided_by: 100.0 }};">
+                {{ section.settings.legal_link_4_text }}
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+
+      {% comment %} Column 4: Contact {% endcomment %}
+      <div class="dv-footer__column">
+        {% if section.settings.contact_heading != blank %}
+          <h3 class="dv-footer__heading" style="font-size: {{ section.settings.column_heading_size }}px; margin-bottom: {{ section.settings.heading_margin_bottom }}px;">
+            {{ section.settings.contact_heading }}
+          </h3>
+        {% endif %}
+
+        {% if section.settings.contact_company != blank %}
+          <div class="dv-footer__contact-item" style="margin-bottom: {{ section.settings.contact_item_spacing }}px;">
+            <span class="dv-footer__contact-label" style="font-size: {{ section.settings.contact_label_size }}px;">Unternehmen</span>
+            <div class="dv-footer__contact-value" style="font-size: {{ section.settings.contact_value_size }}px; opacity: {{ section.settings.link_opacity | divided_by: 100.0 }};">
+              {{ section.settings.contact_company }}
+            </div>
+          </div>
+        {% endif %}
+
+        {% if section.settings.contact_address != blank %}
+          <div class="dv-footer__contact-item" style="margin-bottom: {{ section.settings.contact_item_spacing }}px;">
+            <span class="dv-footer__contact-label" style="font-size: {{ section.settings.contact_label_size }}px;">Adresse</span>
+            <div class="dv-footer__contact-value" style="font-size: {{ section.settings.contact_value_size }}px; opacity: {{ section.settings.link_opacity | divided_by: 100.0 }};">
+              {{ section.settings.contact_address | newline_to_br }}
+            </div>
+          </div>
+        {% endif %}
+
+        {% if section.settings.contact_email != blank %}
+          <div class="dv-footer__contact-item" style="margin-bottom: {{ section.settings.contact_item_spacing }}px;">
+            <span class="dv-footer__contact-label" style="font-size: {{ section.settings.contact_label_size }}px;">E-Mail</span>
+            <div class="dv-footer__contact-value" style="font-size: {{ section.settings.contact_value_size }}px; opacity: {{ section.settings.link_opacity | divided_by: 100.0 }};">
+              <a href="mailto:{{ section.settings.contact_email }}" aria-label="E-Mail an {{ section.settings.contact_email }}">
+                {{ section.settings.contact_email }}
+              </a>
+            </div>
+          </div>
+        {% endif %}
+
+        {% if section.settings.contact_phone != blank %}
+          <div class="dv-footer__contact-item" style="margin-bottom: {{ section.settings.contact_item_spacing }}px;">
+            <span class="dv-footer__contact-label" style="font-size: {{ section.settings.contact_label_size }}px;">Telefon</span>
+            <div class="dv-footer__contact-value" style="font-size: {{ section.settings.contact_value_size }}px; opacity: {{ section.settings.link_opacity | divided_by: 100.0 }};">
+              <a href="tel:{{ section.settings.contact_phone | replace: ' ', '' }}" aria-label="Anrufen {{ section.settings.contact_phone }}">
+                {{ section.settings.contact_phone }}
+              </a>
+            </div>
+          </div>
+        {% endif %}
+
+        {% if section.settings.contact_tax_id != blank %}
+          <div class="dv-footer__contact-item">
+            <span class="dv-footer__contact-label" style="font-size: {{ section.settings.contact_label_size }}px;">USt-IdNr.</span>
+            <div class="dv-footer__contact-value" style="font-size: {{ section.settings.contact_value_size }}px; opacity: {{ section.settings.link_opacity | divided_by: 100.0 }};">
+              {{ section.settings.contact_tax_id }}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    {% comment %} Bottom Bar {% endcomment %}
+    {% if section.settings.show_bottom_bar %}
+      <div class="dv-footer__bottom" style="border-top: {{ section.settings.bottom_bar_border_width }}px solid {{ border_color }}; padding-top: {{ section.settings.bottom_bar_padding_top }}px;">
+        <div class="dv-footer__copyright" style="font-size: {{ section.settings.copyright_size }}px; opacity: {{ section.settings.link_opacity | divided_by: 100.0 }};">
+          {{ section.settings.copyright_text }}
+        </div>
+
+        {% if section.settings.show_social_icons %}
+          <div class="dv-footer__social" style="gap: {{ section.settings.social_icon_spacing }}px;">
+            {% if section.settings.facebook_url != blank %}
+              <a href="{{ section.settings.facebook_url }}" class="dv-footer__social-link" aria-label="Facebook" target="_blank" rel="noopener" style="width: {{ section.settings.social_icon_size }}px; height: {{ section.settings.social_icon_size }}px; opacity: {{ section.settings.link_opacity | divided_by: 100.0 }};">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </a>
+            {% endif %}
+
+            {% if section.settings.instagram_url != blank %}
+              <a href="{{ section.settings.instagram_url }}" class="dv-footer__social-link" aria-label="Instagram" target="_blank" rel="noopener" style="width: {{ section.settings.social_icon_size }}px; height: {{ section.settings.social_icon_size }}px; opacity: {{ section.settings.link_opacity | divided_by: 100.0 }};">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+              </a>
+            {% endif %}
+
+            {% if section.settings.twitter_url != blank %}
+              <a href="{{ section.settings.twitter_url }}" class="dv-footer__social-link" aria-label="Twitter" target="_blank" rel="noopener" style="width: {{ section.settings.social_icon_size }}px; height: {{ section.settings.social_icon_size }}px; opacity: {{ section.settings.link_opacity | divided_by: 100.0 }};">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                </svg>
+              </a>
+            {% endif %}
+
+            {% if section.settings.linkedin_url != blank %}
+              <a href="{{ section.settings.linkedin_url }}" class="dv-footer__social-link" aria-label="LinkedIn" target="_blank" rel="noopener" style="width: {{ section.settings.social_icon_size }}px; height: {{ section.settings.social_icon_size }}px; opacity: {{ section.settings.link_opacity | divided_by: 100.0 }};">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "DV_Footer",
+  "tag": "footer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "min": 1000,
+      "max": 1600,
+      "step": 50,
+      "unit": "px",
+      "label": "Container width",
+      "default": 1400
+    },
+    {
+      "type": "checkbox",
+      "id": "use_theme_spacing",
+      "label": "Use theme spacing",
+      "default": false,
+      "info": "When enabled, uses theme section spacing variables instead of custom padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 40,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_theme_colors",
+      "label": "Use theme colors",
+      "default": true,
+      "info": "When enabled, uses theme color variables. Custom colors below will be ignored."
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#fff0dd"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#c17129"
+    },
+    {
+      "type": "header",
+      "content": "Branding column"
+    },
+    {
+      "type": "text",
+      "id": "brand_name",
+      "label": "Brand name",
+      "default": "DinVeda"
+    },
+    {
+      "type": "range",
+      "id": "brand_name_size",
+      "min": 20,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Brand name size",
+      "default": 28
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cert_badge",
+      "label": "Show certification badge",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "cert_logo",
+      "label": "Certification logo"
+    },
+    {
+      "type": "range",
+      "id": "cert_logo_size",
+      "min": 30,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "label": "Logo size",
+      "default": 50
+    },
+    {
+      "type": "text",
+      "id": "cert_text",
+      "label": "Certification text",
+      "default": "Bio-Zertifizierung: DE-ÖKO-037"
+    },
+    {
+      "type": "range",
+      "id": "cert_text_size",
+      "min": 11,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Certification text size",
+      "default": 13
+    },
+    {
+      "type": "color",
+      "id": "badge_bg_color",
+      "label": "Badge background",
+      "default": "#8b5a2b"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "badge_border_radius",
+      "min": 4,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Badge border radius",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "badge_padding",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Badge padding",
+      "default": 14
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Authentische ayurvedische Gewürzmischungen für Ihr tägliches Wohlbefinden.</p>"
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Description size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "description_opacity",
+      "min": 60,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Description opacity",
+      "default": 85
+    },
+    {
+      "type": "header",
+      "content": "Navigation column"
+    },
+    {
+      "type": "text",
+      "id": "nav_heading",
+      "label": "Heading",
+      "default": "Navigation"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_1_text",
+      "label": "Link 1 text",
+      "default": "Startseite"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_1_url",
+      "label": "Link 1 URL"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_2_text",
+      "label": "Link 2 text",
+      "default": "Unsere Geschichte"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_2_url",
+      "label": "Link 2 URL"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_3_text",
+      "label": "Link 3 text",
+      "default": "DinVeda"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_3_url",
+      "label": "Link 3 URL"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_4_text",
+      "label": "Link 4 text",
+      "default": "Karriere"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_4_url",
+      "label": "Link 4 URL"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_5_text",
+      "label": "Link 5 text"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_5_url",
+      "label": "Link 5 URL"
+    },
+    {
+      "type": "header",
+      "content": "Legal column"
+    },
+    {
+      "type": "text",
+      "id": "legal_heading",
+      "label": "Heading",
+      "default": "Rechtliches"
+    },
+    {
+      "type": "text",
+      "id": "legal_link_1_text",
+      "label": "Link 1 text",
+      "default": "Impressum"
+    },
+    {
+      "type": "url",
+      "id": "legal_link_1_url",
+      "label": "Link 1 URL"
+    },
+    {
+      "type": "text",
+      "id": "legal_link_2_text",
+      "label": "Link 2 text",
+      "default": "Datenschutz"
+    },
+    {
+      "type": "url",
+      "id": "legal_link_2_url",
+      "label": "Link 2 URL"
+    },
+    {
+      "type": "text",
+      "id": "legal_link_3_text",
+      "label": "Link 3 text",
+      "default": "AGB"
+    },
+    {
+      "type": "url",
+      "id": "legal_link_3_url",
+      "label": "Link 3 URL"
+    },
+    {
+      "type": "text",
+      "id": "legal_link_4_text",
+      "label": "Link 4 text"
+    },
+    {
+      "type": "url",
+      "id": "legal_link_4_url",
+      "label": "Link 4 URL"
+    },
+    {
+      "type": "header",
+      "content": "Contact column"
+    },
+    {
+      "type": "text",
+      "id": "contact_heading",
+      "label": "Heading",
+      "default": "Kontakt"
+    },
+    {
+      "type": "text",
+      "id": "contact_company",
+      "label": "Company name",
+      "default": "GreenPath Venture GmbH"
+    },
+    {
+      "type": "textarea",
+      "id": "contact_address",
+      "label": "Address",
+      "default": "Gollierstraße 70\n80339 München\nDeutschland"
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Email",
+      "default": "info@greenpathventure.com"
+    },
+    {
+      "type": "text",
+      "id": "contact_phone",
+      "label": "Phone"
+    },
+    {
+      "type": "text",
+      "id": "contact_tax_id",
+      "label": "Tax ID",
+      "default": "DE455428663"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "column_heading_size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Column heading size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "heading_margin_bottom",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading margin bottom",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "link_size",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Link size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "link_spacing",
+      "min": 6,
+      "max": 16,
+      "step": 2,
+      "unit": "px",
+      "label": "Link spacing",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "link_opacity",
+      "min": 60,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Link opacity",
+      "default": 80
+    },
+    {
+      "type": "select",
+      "id": "link_hover_style",
+      "label": "Link hover style",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "underline",
+          "label": "Underline"
+        }
+      ],
+      "default": "underline"
+    },
+    {
+      "type": "range",
+      "id": "contact_label_size",
+      "min": 11,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Contact label size",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "contact_value_size",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Contact value size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "contact_item_spacing",
+      "min": 12,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Contact item spacing",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Bottom bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bottom_bar",
+      "label": "Show bottom bar",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "bottom_bar_spacing",
+      "min": 20,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Spacing above bottom bar",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "bottom_bar_border_width",
+      "min": 0,
+      "max": 3,
+      "step": 1,
+      "unit": "px",
+      "label": "Border width",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "bottom_bar_border_color",
+      "label": "Border color",
+      "default": "#8b5a2b"
+    },
+    {
+      "type": "range",
+      "id": "bottom_bar_padding_top",
+      "min": 16,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 24
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright text",
+      "default": "© 2026 GreenPath Venture GmbH. Alle Rechte vorbehalten."
+    },
+    {
+      "type": "range",
+      "id": "copyright_size",
+      "min": 11,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Copyright size",
+      "default": 13
+    },
+    {
+      "type": "header",
+      "content": "Social media"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_icons",
+      "label": "Show social icons",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "social_icon_size",
+      "min": 20,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "label": "Icon size",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "social_icon_spacing",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Icon spacing",
+      "default": 16
+    },
+    {
+      "type": "url",
+      "id": "facebook_url",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "url",
+      "id": "twitter_url",
+      "label": "Twitter URL"
+    },
+    {
+      "type": "url",
+      "id": "linkedin_url",
+      "label": "LinkedIn URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "DV_Footer"
+    }
+  ]
+}
+{% endschema %}
+
