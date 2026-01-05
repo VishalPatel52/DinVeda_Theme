@@ -37,10 +37,19 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 8px;
+  gap: 0px;
   margin-bottom: 20px;
   width: fit-content;
   max-width: 100%;
+}
+
+.dv-footer__cert-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  gap: 2px;
+  margin-top: -1px;
 }
 
 .dv-footer__cert-logo-wrapper {
@@ -55,6 +64,17 @@
   object-fit: contain;
   max-width: 100%;
   height: auto;
+  aspect-ratio: 1 / 1.5;
+  min-height: 34px;
+  min-width: 51px;
+}
+
+/* Ensure minimum size compliance on all screen sizes */
+@media screen and (max-width: 767px) {
+  .dv-footer__cert-logo {
+    min-height: 23px;
+    min-width: 35px;
+  }
 }
 
 .dv-footer__cert-text-wrapper {

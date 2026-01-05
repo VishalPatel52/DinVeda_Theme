@@ -55,14 +55,22 @@
         {% if section.settings.show_cert_badge %}
           <div class="dv-footer__cert-badge" style="background-color: #ffffff; border-radius: {{ section.settings.badge_border_radius }}px; padding: {{ section.settings.badge_padding }}px;">
             {% if section.settings.cert_logo != blank %}
+              {%- liquid
+                comment
+                  EU Regulation: Logo must maintain 1:1.5 aspect ratio (height:width)
+                  If height is cert_logo_size, width should be 1.5 times that
+                endcomment
+                assign logo_height = section.settings.cert_logo_size
+                assign logo_width = logo_height | times: 1.5 | round
+              -%}
               <div class="dv-footer__cert-logo-wrapper">
                 <img
                   src="{{ section.settings.cert_logo | image_url: width: 120 }}"
                   alt="EU Bio Logo"
                   class="dv-footer__cert-logo"
-                  style="width: {{ section.settings.cert_logo_size }}px; height: {{ section.settings.cert_logo_size }}px; max-width: {{ section.settings.cert_logo_size }}px; max-height: {{ section.settings.cert_logo_size }}px;"
-                  width="{{ section.settings.cert_logo_size }}"
-                  height="{{ section.settings.cert_logo_size }}"
+                  style="height: {{ logo_height }}px; width: {{ logo_width }}px; max-height: {{ logo_height }}px; max-width: {{ logo_width }}px;"
+                  width="{{ logo_width }}"
+                  height="{{ logo_height }}"
                   loading="lazy"
                 >
               </div>
@@ -354,6 +362,10 @@
       "content": "Branding column"
     },
     {
+      "type": "paragraph",
+      "content": "EU Organic Logo Compliance: The certification badge must comply with EU-Bio-Verordnung 848/2018. Logo minimum size: 9mm height (34px) / 13.5mm width (51px) with 1:1.5 aspect ratio. Code number (DE-ÖKO-###) and place of origin must be in same visual field as logo. Logo color should be Light Green (Pantone 376)."
+    },
+    {
       "type": "text",
       "id": "brand_name",
       "label": "Brand name",
@@ -373,7 +385,8 @@
       "type": "checkbox",
       "id": "show_cert_badge",
       "label": "Show certification badge",
-      "default": true
+      "default": true,
+      "info": "EU Regulation: Certification badge must display EU logo, control body code number (DE-ÖKO-###), and place of origin in same visual field."
     },
     {
       "type": "image_picker",
@@ -383,24 +396,27 @@
     {
       "type": "range",
       "id": "cert_logo_size",
-      "min": 30,
+      "min": 34,
       "max": 80,
-      "step": 5,
+      "step": 1,
       "unit": "px",
-      "label": "Logo size",
-      "default": 50
+      "label": "Logo size (height)",
+      "default": 50,
+      "info": "EU Regulation: Minimum 9mm height (34px) required. Logo must maintain 1:1.5 aspect ratio (height:width). For very small displays, minimum can be 6mm (23px)."
     },
     {
       "type": "text",
       "id": "cert_text_line_1",
-      "label": "Certification text line 1",
-      "default": "DE-ÖKO-037"
+      "label": "Certification text line 1 (Code number)",
+      "default": "DE-ÖKO-037",
+      "info": "EU Regulation: Must follow format DE-ÖKO-### (for Germany). Must be in same visual field as EU logo. Example: DE-ÖKO-037"
     },
     {
       "type": "text",
       "id": "cert_text_line_2",
-      "label": "Certification text line 2",
-      "default": "Nicht-EU-Landwirtschaft"
+      "label": "Certification text line 2 (Place of origin)",
+      "default": "Nicht-EU-Landwirtschaft",
+      "info": "EU Regulation: Must indicate where agricultural raw materials were produced. Must be in same visual field as EU logo. Example: Nicht-EU-Landwirtschaft"
     },
     {
       "type": "range",
@@ -410,7 +426,8 @@
       "step": 1,
       "unit": "px",
       "label": "Certification text size",
-      "default": 13
+      "default": 13,
+      "info": "EU Regulation: Code number and place of origin must be clearly visible, readable, and indelible."
     },
     {
       "type": "color",
