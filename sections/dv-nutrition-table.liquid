@@ -39,26 +39,37 @@
   {% endstyle %}
   
   <div class="dv-nutrition-table__container">
-    
-    {% if section.settings.heading != blank %}
-      <h2 class="dv-nutrition-table__heading">{{ section.settings.heading | escape }}</h2>
-    {% endif %}
-    
-    {%- comment -%} Nutrition Table Content
-      Priority: Metafield (custom.dv_nutrition_table) - uses raw filter for multi-line text HTML
-      Fallback: Section setting (html type) - outputs raw HTML directly
-      Metafield takes priority - if metafield has content, section setting is ignored
-    {% endcomment -%}
-    {% if nutrition_content_metafield != blank %}
-      <div class="dv-nutrition-table__content rte">
-        {{ nutrition_content_metafield | raw }}
+    <details class="details" id="nutrition-table-{{ section.id }}">
+      <summary class="details__summary">
+        <h3 class="details__title">{{ section.settings.accordion_title | default: "Nährwertangaben (pro 100 g)" | escape }}</h3>
+        <div class="details__icon">
+          {% render 'snip-icons',
+            wrapper: '',
+            type: 'theme',
+            icon: 'down-carrot',
+            size: '8px',
+            classes: 'details__svg vib-center',
+            fill: 'var(--accordion-color)',
+            hover: 'var(--accordion-color)' %}
+        </div>
+      </summary>
+      <div class="details__content">
+        {%- comment -%} Nutrition Table Content
+          Priority: Metafield (custom.dv_nutrition_table) - uses raw filter for multi-line text HTML
+          Fallback: Section setting (html type) - outputs raw HTML directly
+          Metafield takes priority - if metafield has content, section setting is ignored
+        {% endcomment -%}
+        {% if nutrition_content_metafield != blank %}
+          <div class="dv-nutrition-table__content rte">
+            {{ nutrition_content_metafield | raw }}
+          </div>
+        {% elsif section.settings.nutrition_content != blank %}
+          <div class="dv-nutrition-table__content rte">
+            {{ section.settings.nutrition_content }}
+          </div>
+        {% endif %}
       </div>
-    {% elsif section.settings.nutrition_content != blank %}
-      <div class="dv-nutrition-table__content rte">
-        {{ section.settings.nutrition_content }}
-      </div>
-    {% endif %}
-    
+    </details>
   </div>
 </section>
 {% endif %}
@@ -75,10 +86,16 @@
     },
     {
       "type": "text",
-      "id": "heading",
-      "label": "Heading",
+      "id": "accordion_title",
+      "label": "Accordion Title",
       "default": "Nährwertangaben (pro 100 g)",
-      "info": "Heading for nutrition facts table"
+      "info": "Title shown in accordion header"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading (deprecated)",
+      "info": "Deprecated - use accordion_title instead"
     },
     {
       "type": "html",
@@ -104,7 +121,7 @@
       "max": 120,
       "step": 8,
       "unit": "px",
-      "default": 80
+      "default": 24
     },
     {
       "type": "range",
@@ -114,7 +131,7 @@
       "max": 120,
       "step": 8,
       "unit": "px",
-      "default": 80
+      "default": 24
     }
   ],
   "presets": [

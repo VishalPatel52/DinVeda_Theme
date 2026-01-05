@@ -51,80 +51,93 @@
     class="dinveda-recipe-preparation"
     data-section-id="{{ section.id }}"
     data-section-type="dinveda-recipe-preparation"
-    data-cards-per-row="{{ section.settings.cards_per_row }}"
     style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
     {{ section.shopify_attributes }}
   >
     <div class="dinveda-recipe-preparation__container">
-      <div class="dinveda-recipe-preparation__header">
-        <span class="material-symbols-outlined dinveda-recipe-preparation__icon">{{ section.settings.icon | default: 'restaurant' }}</span>
-        <h2 class="dinveda-recipe-preparation__title">
-          {{ section.settings.heading | default: 'Anwendung & Zubereitung' | escape }}
-        </h2>
-      </div>
-
-      {% if intro_text != blank %}
-        <p class="dinveda-recipe-preparation__intro">
-          {{ intro_text | escape }}
-        </p>
-      {% endif %}
-
-      {%- comment -%} Ritual im Detail micro-block {%- endcomment -%}
-      {% if has_ritual_detail %}
-        <div class="dinveda-recipe-preparation__ritual-detail">
-          <div class="dinveda-recipe-preparation__ritual-detail-grid">
-            {% if taste_notes != blank %}
-              <div class="dinveda-recipe-preparation__ritual-detail-item">
-                <div class="dinveda-recipe-preparation__ritual-detail-label">Geschmack</div>
-                <div class="dinveda-recipe-preparation__ritual-detail-value">{{ taste_notes | escape }}</div>
-              </div>
-            {% endif %}
-            {% if pairing_ideas != blank %}
-              <div class="dinveda-recipe-preparation__ritual-detail-item">
-                <div class="dinveda-recipe-preparation__ritual-detail-label">Passt zu</div>
-                <div class="dinveda-recipe-preparation__ritual-detail-value">{{ pairing_ideas | escape | newline_to_br }}</div>
-              </div>
-            {% endif %}
-            {% if serving_suggestion != blank %}
-              <div class="dinveda-recipe-preparation__ritual-detail-item">
-                <div class="dinveda-recipe-preparation__ritual-detail-label">Portion</div>
-                <div class="dinveda-recipe-preparation__ritual-detail-value">{{ serving_suggestion | escape | newline_to_br }}</div>
-              </div>
-            {% endif %}
-            {% if frequency != blank %}
-              <div class="dinveda-recipe-preparation__ritual-detail-item">
-                <div class="dinveda-recipe-preparation__ritual-detail-label">Häufigkeit</div>
-                <div class="dinveda-recipe-preparation__ritual-detail-value">{{ frequency | escape }}</div>
-              </div>
-            {% endif %}
+      <details class="details" id="recipe-preparation-{{ section.id }}">
+        <summary class="details__summary">
+          <h3 class="details__title">{{ section.settings.accordion_title | default: "Dein tägliches Ritual" | escape }}</h3>
+          <div class="details__icon">
+            {% render 'snip-icons',
+              wrapper: '',
+              type: 'theme',
+              icon: 'down-carrot',
+              size: '8px',
+              classes: 'details__svg vib-center',
+              fill: 'var(--accordion-color)',
+              hover: 'var(--accordion-color)' %}
           </div>
-        </div>
-      {% endif %}
+        </summary>
+        <div class="details__content">
+          {% if intro_text != blank %}
+            <p class="dinveda-recipe-preparation__intro">
+              {{ intro_text | escape }}
+            </p>
+          {% endif %}
 
-      {% if has_recipe_blocks %}
-        <div class="dinveda-recipe-preparation__grid">
-          {% for block in section.blocks %}
-            {% if block.type == 'recipe_card' %}
-              <div class="dinveda-recipe-preparation__card" {{ block.shopify_attributes }}>
-                {% if block.settings.title != blank %}
-                  <h3 class="dinveda-recipe-preparation__card-title">{{ block.settings.title | escape }}</h3>
+          {%- comment -%} Ritual im Detail micro-block {%- endcomment -%}
+          {% if has_ritual_detail %}
+            <div class="dinveda-recipe-preparation__ritual-detail">
+              <div class="dinveda-recipe-preparation__ritual-detail-grid">
+                {% if taste_notes != blank %}
+                  <div class="dinveda-recipe-preparation__ritual-detail-item">
+                    <div class="dinveda-recipe-preparation__ritual-detail-label">Geschmack</div>
+                    <div class="dinveda-recipe-preparation__ritual-detail-value">{{ taste_notes | escape }}</div>
+                  </div>
                 {% endif %}
-                {% if block.settings.body != blank %}
-                  <div class="dinveda-recipe-preparation__card-body">
-                    {{ block.settings.body }}
+                {% if pairing_ideas != blank %}
+                  <div class="dinveda-recipe-preparation__ritual-detail-item">
+                    <div class="dinveda-recipe-preparation__ritual-detail-label">Passt zu</div>
+                    <div class="dinveda-recipe-preparation__ritual-detail-value">{{ pairing_ideas | escape | newline_to_br }}</div>
+                  </div>
+                {% endif %}
+                {% if serving_suggestion != blank %}
+                  <div class="dinveda-recipe-preparation__ritual-detail-item">
+                    <div class="dinveda-recipe-preparation__ritual-detail-label">Portion</div>
+                    <div class="dinveda-recipe-preparation__ritual-detail-value">{{ serving_suggestion | escape | newline_to_br }}</div>
+                  </div>
+                {% endif %}
+                {% if frequency != blank %}
+                  <div class="dinveda-recipe-preparation__ritual-detail-item">
+                    <div class="dinveda-recipe-preparation__ritual-detail-label">Häufigkeit</div>
+                    <div class="dinveda-recipe-preparation__ritual-detail-value">{{ frequency | escape }}</div>
                   </div>
                 {% endif %}
               </div>
-            {% endif %}
-          {% endfor %}
+            </div>
+          {% endif %}
+
+          {% if has_recipe_blocks %}
+            <div class="dinveda-recipe-preparation__grid">
+              {% assign recipe_count = 0 %}
+              {% for block in section.blocks %}
+                {% if block.type == 'recipe_card' %}
+                  {% if recipe_count < 3 %}
+                    <div class="dinveda-recipe-preparation__card" {{ block.shopify_attributes }}>
+                      {% if block.settings.title != blank %}
+                        <h3 class="dinveda-recipe-preparation__card-title">{{ block.settings.title | escape }}</h3>
+                      {% endif %}
+                      {% if block.settings.body != blank %}
+                        <div class="dinveda-recipe-preparation__card-body">
+                          {{ block.settings.body }}
+                        </div>
+                      {% endif %}
+                    </div>
+                    {% assign recipe_count = recipe_count | plus: 1 %}
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="dinveda-recipe-preparation__empty-state">
+              <p class="dinveda-recipe-preparation__empty-message">
+                Click "Add block" to add recipe cards. Each card should include a recipe title and instructions.
+              </p>
+            </div>
+          {% endif %}
         </div>
-      {% else %}
-        <div class="dinveda-recipe-preparation__empty-state">
-          <p class="dinveda-recipe-preparation__empty-message">
-            Click "Add block" to add recipe cards. Each card should include a recipe title and instructions.
-          </p>
-        </div>
-      {% endif %}
+      </details>
     </div>
   </section>
 {% endif %}
@@ -137,9 +150,16 @@
   "settings": [
     {
       "type": "text",
+      "id": "accordion_title",
+      "label": "Accordion Title",
+      "default": "Dein tägliches Ritual",
+      "info": "Title shown in accordion header"
+    },
+    {
+      "type": "text",
       "id": "heading",
-      "label": "Section Heading",
-      "info": "Leave blank to use default 'Anwendung & Zubereitung'"
+      "label": "Section Heading (deprecated)",
+      "info": "Deprecated - use accordion_title instead"
     },
     {
       "type": "select",
@@ -197,7 +217,7 @@
       "max": 120,
       "step": 8,
       "unit": "px",
-      "default": 40
+      "default": 24
     },
     {
       "type": "range",
@@ -207,7 +227,7 @@
       "max": 120,
       "step": 8,
       "unit": "px",
-      "default": 40
+      "default": 24
     }
   ],
   "blocks": [

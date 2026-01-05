@@ -270,6 +270,11 @@ body.product-template-dinveda-premium .product-top {
 
 /* Intro - Practical explanation with breathing room */
 .dinveda-product-hero__intro {
+  max-height: calc(1.5em * 7);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
   font-family: var(--main-family);
   font-size: var(--design-body-font-size);
   line-height: 1.7;

@@ -27,18 +27,6 @@
         "show_traditional_benefits": true
       }
     },
-    "dinveda_traditional_ingredients": {
-      "type": "dinveda-traditional-ingredients",
-      "settings": {
-        "show_when_empty": true
-      }
-    },
-    "dinveda_product_ingredients": {
-      "type": "dinveda-product-ingredients",
-      "settings": {
-        "show_when_empty": true
-      }
-    },
     "dinveda_recipe_preparation": {
       "type": "dinveda-recipe-preparation",
       "settings": {
@@ -72,17 +60,23 @@
       "settings": {
         "show_when_empty": false
       }
+    },
+    "dv_detail_grid": {
+      "type": "dv-detail-grid",
+      "settings": {
+        "padding_top": 24,
+        "padding_bottom": 24
+      }
     }
   },
   "order": [
     "dinveda_product_hero",
+    "dv_detail_grid",
     "dinveda_ritual_story",
-    "dinveda_traditional_ingredients",
-    "dinveda_product_ingredients",
-    "dv_nutrition_table",
     "dinveda_recipe_preparation",
-    "dv_eu_bio_legal",
+    "dv_nutrition_table",
     "dv_compliance_accordion",
+    "dv_eu_bio_legal",
     "dinveda_complete_your_day"
   ]
 }

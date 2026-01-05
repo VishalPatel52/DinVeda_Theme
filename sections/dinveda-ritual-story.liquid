@@ -30,12 +30,18 @@
     assign has_content = true
   endif
   
-  # Traditional benefits bullets
+  # Traditional benefits bullets - check if they duplicate hero benefits
   assign traditional_bullets = product.metafields.dinveda.ritual_bullets | default: product.metafields.dinveda.ritual_benefits
+  assign hero_benefits = product.metafields.custom.dv_traditional_benefits
   assign has_traditional_bullets = false
+  assign show_bullets = false
   if section.settings.show_traditional_benefits and traditional_bullets != blank
-    assign has_traditional_bullets = true
-    assign bullets_lines = traditional_bullets | newline_to_br | split: '<br />'
+    # Only show bullets if they don't duplicate hero benefits
+    if hero_benefits == blank or traditional_bullets != hero_benefits
+      assign show_bullets = true
+      assign has_traditional_bullets = true
+      assign bullets_lines = traditional_bullets | newline_to_br | split: '<br />'
+    endif
   endif
 -%}
 
@@ -48,6 +54,7 @@
   >
     {%- liquid
       assign watermark_image = section.settings.watermark_image
+      assign background_color = section.settings.background_color | default: '#f3e9dc'
     -%}
     {% if section.settings.enable_watermark and watermark_image != blank %}
       {% style %}
@@ -69,9 +76,6 @@
       {% endstyle %}
     {% endif %}
     
-    {%- liquid
-      assign background_color = section.settings.background_color | default: '#f3e9dc'
-    -%}
     {% style %}
       #dinveda-ritual-story-{{ section.id }} {
         padding-top: {{ section.settings.padding_top }}px;
@@ -81,49 +85,66 @@
     {% endstyle %}
     
     <div class="dinveda-ritual-story__container">
-      <div class="dinveda-ritual-story__content">
-        
-        {% if section.settings.eyebrow != blank %}
-          <p class="dinveda-ritual-story__eyebrow">{{ section.settings.eyebrow | escape }}</p>
-        {% endif %}
-
-        {%- comment -%} "Warum der {animal}?" heading {%- endcomment -%}
-        {% if story_title != blank %}
-          <h2 class="dinveda-ritual-story__title">{{ story_title | escape }}</h2>
-        {% endif %}
-        
-        {%- comment -%} Story body content {%- endcomment -%}
-        {% if story_intro != blank %}
-          <div class="dinveda-ritual-story__body">
-            {{ story_intro }}
+      <details class="details" id="ritual-story-{{ section.id }}">
+        <summary class="details__summary">
+          <h3 class="details__title">{{ section.settings.accordion_title | default: "Die Geschichte hinter dem Ritual" | escape }}</h3>
+          <div class="details__icon">
+            {% render 'snip-icons',
+              wrapper: '',
+              type: 'theme',
+              icon: 'down-carrot',
+              size: '8px',
+              classes: 'details__svg vib-center',
+              fill: 'var(--accordion-color)',
+              hover: 'var(--accordion-color)' %}
           </div>
-        {% elsif section.settings.intro_fallback != blank %}
-          <div class="dinveda-ritual-story__body">
-            {{ section.settings.intro_fallback }}
-          </div>
-        {% endif %}
+        </summary>
+        <div class="details__content">
+          <div class="dinveda-ritual-story__content">
+            
+            {% if section.settings.eyebrow != blank %}
+              <p class="dinveda-ritual-story__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+            {% endif %}
 
-        {%- comment -%} Traditional Benefits (v2 only) {%- endcomment -%}
-        {% if has_traditional_bullets %}
-          <div class="dinveda-ritual-story__traditional-benefits">
-            <h3 class="dinveda-ritual-story__traditional-heading">Traditionell geschätzt für …</h3>
-            <ul class="dinveda-ritual-story__bullet-list">
-              {% assign items_rendered = 0 %}
-              {% for line in bullets_lines %}
-                {% assign trimmed_line = line | strip %}
-                {% if trimmed_line != blank and items_rendered < 5 %}
-                  {% assign clean_line = trimmed_line | replace: '• ', '' | replace: '•', '' | replace: '- ', '' | strip %}
-                  {% if clean_line != blank %}
-                    <li>{{ clean_line | escape }}</li>
-                    {% assign items_rendered = items_rendered | plus: 1 %}
-                  {% endif %}
-                {% endif %}
-              {% endfor %}
-            </ul>
-          </div>
-        {% endif %}
+            {%- comment -%} "Warum der {animal}?" heading {%- endcomment -%}
+            {% if story_title != blank %}
+              <h2 class="dinveda-ritual-story__title">{{ story_title | escape }}</h2>
+            {% endif %}
+            
+            {%- comment -%} Story body content {%- endcomment -%}
+            {% if story_intro != blank %}
+              <div class="dinveda-ritual-story__body">
+                {{ story_intro }}
+              </div>
+            {% elsif section.settings.intro_fallback != blank %}
+              <div class="dinveda-ritual-story__body">
+                {{ section.settings.intro_fallback }}
+              </div>
+            {% endif %}
 
-      </div>
+            {%- comment -%} Traditional Benefits (only if not duplicating hero benefits) {%- endcomment -%}
+            {% if show_bullets and has_traditional_bullets %}
+              <div class="dinveda-ritual-story__traditional-benefits">
+                <h3 class="dinveda-ritual-story__traditional-heading">Traditionell geschätzt für …</h3>
+                <ul class="dinveda-ritual-story__bullet-list">
+                  {% assign items_rendered = 0 %}
+                  {% for line in bullets_lines %}
+                    {% assign trimmed_line = line | strip %}
+                    {% if trimmed_line != blank and items_rendered < 5 %}
+                      {% assign clean_line = trimmed_line | replace: '• ', '' | replace: '•', '' | replace: '- ', '' | strip %}
+                      {% if clean_line != blank %}
+                        <li>{{ clean_line | escape }}</li>
+                        {% assign items_rendered = items_rendered | plus: 1 %}
+                      {% endif %}
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+
+          </div>
+        </div>
+      </details>
     </div>
   </section>
 {% endif %}
@@ -137,6 +158,13 @@
     {
       "type": "header",
       "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "accordion_title",
+      "label": "Accordion Title",
+      "default": "Die Geschichte hinter dem Ritual",
+      "info": "Title shown in accordion header"
     },
     {
       "type": "text",
@@ -204,7 +232,7 @@
       "max": 120,
       "step": 8,
       "unit": "px",
-      "default": 40
+      "default": 24
     },
     {
       "type": "range",
@@ -214,7 +242,7 @@
       "max": 120,
       "step": 8,
       "unit": "px",
-      "default": 40
+      "default": 24
     }
   ],
   "presets": [

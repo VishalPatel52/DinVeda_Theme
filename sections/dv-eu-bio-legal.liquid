@@ -57,71 +57,84 @@
   {% endstyle %}
   
   <div class="dv-eu-bio-legal__container">
-    {% if section.settings.heading != blank %}
-      <h2 class="dv-eu-bio-legal__heading">{{ section.settings.heading | escape }}</h2>
-    {% endif %}
-    
-    <div class="dv-eu-bio-legal__content">
-      
-      {%- comment -%} Verkehrsbezeichnung {%- endcomment -%}
-      {% if verkehrsbezeichnung != blank %}
-        <div class="dv-eu-bio-legal__item">
-          <h3 class="dv-eu-bio-legal__item-label">Verkehrsbezeichnung</h3>
-          <div class="dv-eu-bio-legal__item-value">{{ verkehrsbezeichnung | escape }}</div>
+    <details class="details" id="eu-bio-legal-{{ section.id }}">
+      <summary class="details__summary">
+        <h3 class="details__title">{{ section.settings.accordion_title | default: "Rechtliche Pflichtangaben" | escape }}</h3>
+        <div class="details__icon">
+          {% render 'snip-icons',
+            wrapper: '',
+            type: 'theme',
+            icon: 'down-carrot',
+            size: '8px',
+            classes: 'details__svg vib-center',
+            fill: 'var(--accordion-color)',
+            hover: 'var(--accordion-color)' %}
         </div>
-      {% endif %}
-      
-      {%- comment -%} MHD {%- endcomment -%}
-      {% if mhd != blank %}
-        <div class="dv-eu-bio-legal__item">
-          <h3 class="dv-eu-bio-legal__item-label">Mindesthaltbarkeitsdatum</h3>
-          <div class="dv-eu-bio-legal__item-value">{{ mhd | escape }}</div>
+      </summary>
+      <div class="details__content">
+        <div class="dv-eu-bio-legal__content">
+          
+          {%- comment -%} Verkehrsbezeichnung {%- endcomment -%}
+          {% if verkehrsbezeichnung != blank %}
+            <div class="dv-eu-bio-legal__item">
+              <h3 class="dv-eu-bio-legal__item-label">Verkehrsbezeichnung</h3>
+              <div class="dv-eu-bio-legal__item-value">{{ verkehrsbezeichnung | escape }}</div>
+            </div>
+          {% endif %}
+          
+          {%- comment -%} MHD {%- endcomment -%}
+          {% if mhd != blank %}
+            <div class="dv-eu-bio-legal__item">
+              <h3 class="dv-eu-bio-legal__item-label">Mindesthaltbarkeitsdatum</h3>
+              <div class="dv-eu-bio-legal__item-value">{{ mhd | escape }}</div>
+            </div>
+          {% endif %}
+          
+          {%- comment -%} Netto Gewicht {%- endcomment -%}
+          {% if netto_gewicht != blank %}
+            <div class="dv-eu-bio-legal__item">
+              <h3 class="dv-eu-bio-legal__item-label">Nettogewicht</h3>
+              <div class="dv-eu-bio-legal__item-value">{{ netto_gewicht | escape }}</div>
+            </div>
+          {% endif %}
+          
+          {%- comment -%} Verzehrempfehlung {%- endcomment -%}
+          {% if verzehrempfehlung_metafield != blank %}
+            <div class="dv-eu-bio-legal__item">
+              <h3 class="dv-eu-bio-legal__item-label">Verzehrempfehlung</h3>
+              <div class="dv-eu-bio-legal__item-value rte">
+                {{ verzehrempfehlung_metafield | metafield_tag }}
+              </div>
+            </div>
+          {% elsif section.settings.verzehrempfehlung != blank %}
+            <div class="dv-eu-bio-legal__item">
+              <h3 class="dv-eu-bio-legal__item-label">Verzehrempfehlung</h3>
+              <div class="dv-eu-bio-legal__item-value rte">
+                {{ section.settings.verzehrempfehlung }}
+              </div>
+            </div>
+          {% endif %}
+          
+          {%- comment -%} Verantwortlicher Lebensmittelunternehmer {%- endcomment -%}
+          {% if verantwortlicher_metafield != blank %}
+            <div class="dv-eu-bio-legal__item">
+              <h3 class="dv-eu-bio-legal__item-label">Verantwortlicher Lebensmittelunternehmer</h3>
+              <div class="dv-eu-bio-legal__item-value rte">
+                {{ verantwortlicher_metafield | metafield_tag }}
+              </div>
+            </div>
+          {% elsif section.settings.verantwortlicher != blank %}
+            <div class="dv-eu-bio-legal__item">
+              <h3 class="dv-eu-bio-legal__item-label">Verantwortlicher Lebensmittelunternehmer</h3>
+              <div class="dv-eu-bio-legal__item-value rte">
+                {{ section.settings.verantwortlicher }}
+              </div>
+            </div>
+          {% endif %}
+          
         </div>
-      {% endif %}
-      
-      {%- comment -%} Netto Gewicht {%- endcomment -%}
-      {% if netto_gewicht != blank %}
-        <div class="dv-eu-bio-legal__item">
-          <h3 class="dv-eu-bio-legal__item-label">Nettogewicht</h3>
-          <div class="dv-eu-bio-legal__item-value">{{ netto_gewicht | escape }}</div>
-        </div>
-      {% endif %}
-      
-      {%- comment -%} Verzehrempfehlung {%- endcomment -%}
-      {% if verzehrempfehlung_metafield != blank %}
-        <div class="dv-eu-bio-legal__item">
-          <h3 class="dv-eu-bio-legal__item-label">Verzehrempfehlung</h3>
-          <div class="dv-eu-bio-legal__item-value rte">
-            {{ verzehrempfehlung_metafield | metafield_tag }}
-          </div>
-        </div>
-      {% elsif section.settings.verzehrempfehlung != blank %}
-        <div class="dv-eu-bio-legal__item">
-          <h3 class="dv-eu-bio-legal__item-label">Verzehrempfehlung</h3>
-          <div class="dv-eu-bio-legal__item-value rte">
-            {{ section.settings.verzehrempfehlung }}
-          </div>
-        </div>
-      {% endif %}
-      
-      {%- comment -%} Verantwortlicher Lebensmittelunternehmer {%- endcomment -%}
-      {% if verantwortlicher_metafield != blank %}
-        <div class="dv-eu-bio-legal__item">
-          <h3 class="dv-eu-bio-legal__item-label">Verantwortlicher Lebensmittelunternehmer</h3>
-          <div class="dv-eu-bio-legal__item-value rte">
-            {{ verantwortlicher_metafield | metafield_tag }}
-          </div>
-        </div>
-      {% elsif section.settings.verantwortlicher != blank %}
-        <div class="dv-eu-bio-legal__item">
-          <h3 class="dv-eu-bio-legal__item-label">Verantwortlicher Lebensmittelunternehmer</h3>
-          <div class="dv-eu-bio-legal__item-value rte">
-            {{ section.settings.verantwortlicher }}
-          </div>
-        </div>
-      {% endif %}
-      
-    </div>
+      </div>
+    </details>
   </div>
 </section>
 {% endif %}
@@ -135,6 +148,13 @@
     {
       "type": "header",
       "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "accordion_title",
+      "label": "Accordion Title",
+      "default": "Rechtliche Pflichtangaben",
+      "info": "Title shown in accordion header"
     },
     {
       "type": "text",
@@ -194,7 +214,7 @@
       "max": 120,
       "step": 8,
       "unit": "px",
-      "default": 40
+      "default": 24
     },
     {
       "type": "range",
@@ -204,7 +224,7 @@
       "max": 120,
       "step": 8,
       "unit": "px",
-      "default": 40
+      "default": 24
     }
   ],
   "presets": [
