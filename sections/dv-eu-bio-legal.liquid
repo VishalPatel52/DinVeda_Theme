@@ -1,0 +1,217 @@
+{% comment %}
+  DinVeda EU Bio Legal Compliance Section
+  Displays mandatory EU Bio legal information
+  Uses product metafields (product database) with theme editor fallbacks
+  
+  Content Source:
+  - Priority: Product metafields (custom.dv_verkehrsbezeichnung, custom.dv_mhd, etc.)
+  - Fallback: Section settings in theme editor
+  
+  IMPORTANT - Content Entry in Shopify Admin:
+  - custom.dv_verkehrsbezeichnung: Single line text field
+  - custom.dv_mhd: Single line text field
+  - custom.dv_netto_gewicht: Single line text field
+  - custom.dv_verantwortlicher: Rich text field
+  - custom.dv_verzehrempfehlung: Rich text field
+{% endcomment %}
+
+{%- liquid
+  # Read from metafields (priority) or section settings (fallback)
+  assign verkehrsbezeichnung = product.metafields.custom.dv_verkehrsbezeichnung
+  if verkehrsbezeichnung == blank
+    assign verkehrsbezeichnung = section.settings.verkehrsbezeichnung
+  endif
+  
+  assign mhd = product.metafields.custom.dv_mhd
+  if mhd == blank
+    assign mhd = section.settings.mhd
+  endif
+  
+  assign netto_gewicht = product.metafields.custom.dv_netto_gewicht
+  if netto_gewicht == blank
+    assign netto_gewicht = section.settings.netto_gewicht
+  endif
+  
+  assign verantwortlicher_metafield = product.metafields.custom.dv_verantwortlicher
+  assign verzehrempfehlung_metafield = product.metafields.custom.dv_verzehrempfehlung
+  
+  # Check if we have content to show
+  assign has_content = false
+  if verkehrsbezeichnung != blank or mhd != blank or netto_gewicht != blank or verantwortlicher_metafield != blank or section.settings.verantwortlicher != blank or verzehrempfehlung_metafield != blank or section.settings.verzehrempfehlung != blank
+    assign has_content = true
+  endif
+-%}
+
+{% if has_content or section.settings.show_when_empty %}
+<section
+  id="dv-eu-bio-legal-{{ section.id }}"
+  class="dv-eu-bio-legal"
+  data-section-id="{{ section.id }}"
+  data-section-type="dv-eu-bio-legal"
+>
+  {% style %}
+    #dv-eu-bio-legal-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  {% endstyle %}
+  
+  <div class="dv-eu-bio-legal__container">
+    {% if section.settings.heading != blank %}
+      <h2 class="dv-eu-bio-legal__heading">{{ section.settings.heading | escape }}</h2>
+    {% endif %}
+    
+    <div class="dv-eu-bio-legal__content">
+      
+      {%- comment -%} Verkehrsbezeichnung {%- endcomment -%}
+      {% if verkehrsbezeichnung != blank %}
+        <div class="dv-eu-bio-legal__item">
+          <h3 class="dv-eu-bio-legal__item-label">Verkehrsbezeichnung</h3>
+          <div class="dv-eu-bio-legal__item-value">{{ verkehrsbezeichnung | escape }}</div>
+        </div>
+      {% endif %}
+      
+      {%- comment -%} MHD {%- endcomment -%}
+      {% if mhd != blank %}
+        <div class="dv-eu-bio-legal__item">
+          <h3 class="dv-eu-bio-legal__item-label">Mindesthaltbarkeitsdatum</h3>
+          <div class="dv-eu-bio-legal__item-value">{{ mhd | escape }}</div>
+        </div>
+      {% endif %}
+      
+      {%- comment -%} Netto Gewicht {%- endcomment -%}
+      {% if netto_gewicht != blank %}
+        <div class="dv-eu-bio-legal__item">
+          <h3 class="dv-eu-bio-legal__item-label">Nettogewicht</h3>
+          <div class="dv-eu-bio-legal__item-value">{{ netto_gewicht | escape }}</div>
+        </div>
+      {% endif %}
+      
+      {%- comment -%} Verzehrempfehlung {%- endcomment -%}
+      {% if verzehrempfehlung_metafield != blank %}
+        <div class="dv-eu-bio-legal__item">
+          <h3 class="dv-eu-bio-legal__item-label">Verzehrempfehlung</h3>
+          <div class="dv-eu-bio-legal__item-value rte">
+            {{ verzehrempfehlung_metafield | metafield_tag }}
+          </div>
+        </div>
+      {% elsif section.settings.verzehrempfehlung != blank %}
+        <div class="dv-eu-bio-legal__item">
+          <h3 class="dv-eu-bio-legal__item-label">Verzehrempfehlung</h3>
+          <div class="dv-eu-bio-legal__item-value rte">
+            {{ section.settings.verzehrempfehlung }}
+          </div>
+        </div>
+      {% endif %}
+      
+      {%- comment -%} Verantwortlicher Lebensmittelunternehmer {%- endcomment -%}
+      {% if verantwortlicher_metafield != blank %}
+        <div class="dv-eu-bio-legal__item">
+          <h3 class="dv-eu-bio-legal__item-label">Verantwortlicher Lebensmittelunternehmer</h3>
+          <div class="dv-eu-bio-legal__item-value rte">
+            {{ verantwortlicher_metafield | metafield_tag }}
+          </div>
+        </div>
+      {% elsif section.settings.verantwortlicher != blank %}
+        <div class="dv-eu-bio-legal__item">
+          <h3 class="dv-eu-bio-legal__item-label">Verantwortlicher Lebensmittelunternehmer</h3>
+          <div class="dv-eu-bio-legal__item-value rte">
+            {{ section.settings.verantwortlicher }}
+          </div>
+        </div>
+      {% endif %}
+      
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "DV EU Bio Legal",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Rechtliche Angaben",
+      "info": "Optional section heading"
+    },
+    {
+      "type": "text",
+      "id": "verkehrsbezeichnung",
+      "label": "Verkehrsbezeichnung",
+      "default": "Bio-Nahrungsergänzungsmittel auf pflanzlicher Basis",
+      "info": "Product designation. Product metafield custom.dv_verkehrsbezeichnung takes priority if present."
+    },
+    {
+      "type": "text",
+      "id": "mhd",
+      "label": "Mindesthaltbarkeitsdatum (MHD)",
+      "default": "Mindestens haltbar bis: 12/2026",
+      "info": "Best before date. Product metafield custom.dv_mhd takes priority if present."
+    },
+    {
+      "type": "text",
+      "id": "netto_gewicht",
+      "label": "Nettogewicht",
+      "default": "100 g",
+      "info": "Net weight. Product metafield custom.dv_netto_gewicht takes priority if present."
+    },
+    {
+      "type": "richtext",
+      "id": "verzehrempfehlung",
+      "label": "Verzehrempfehlung",
+      "info": "Usage recommendation. Product metafield custom.dv_verzehrempfehlung takes priority if present."
+    },
+    {
+      "type": "richtext",
+      "id": "verantwortlicher",
+      "label": "Verantwortlicher Lebensmittelunternehmer",
+      "info": "Company information. Product metafield custom.dv_verantwortlicher takes priority if present."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_when_empty",
+      "label": "Show section even if all fields are empty",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "DV EU Bio Legal"
+    }
+  ]
+}
+{% endschema %}
+

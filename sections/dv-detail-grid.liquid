@@ -18,6 +18,9 @@
 {% endcomment %}
 
 {%- liquid
+  # Layout configuration
+  assign layout_mode = section.settings.layout_mode | default: 'both'
+  
   # Read from metafields (priority) or section settings (fallback)
   assign detail_left_title = product.metafields.custom.dv_detail_left_title
   if detail_left_title == blank
@@ -37,6 +40,22 @@
   
   assign allergens_notes_metafield = product.metafields.custom.dv_allergens_notes
   
+  # First ingredients list (with organic marking)
+  assign first_ingredients_metafield = product.metafields.custom.dv_first_ingredients
+  if first_ingredients_metafield == blank
+    assign first_ingredients_metafield = section.settings.first_ingredients
+  endif
+  
+  # EU Bio Logo
+  assign eu_bio_logo = product.metafields.custom.dv_eu_bio_logo
+  if eu_bio_logo == blank and section.settings.eu_bio_logo != blank
+    assign eu_bio_logo = section.settings.eu_bio_logo
+  endif
+  
+  # Control code and origin
+  assign control_code = product.metafields.custom.dv_control_code | default: section.settings.control_code
+  assign origin = product.metafields.custom.dv_origin | default: section.settings.origin
+  
   # Count icon items and certification blocks
   assign has_icon_items = false
   assign has_certifications = false
@@ -50,9 +69,23 @@
     endfor
   endif
   
+  # Determine which columns to show
+  assign show_left = false
+  assign show_right = false
+  if layout_mode == 'both' or layout_mode == 'left'
+    if detail_left_title != blank or detail_left_body_metafield != blank or section.settings.left_body != blank or has_icon_items
+      assign show_left = true
+    endif
+  endif
+  if layout_mode == 'both' or layout_mode == 'right'
+    if facts_title != blank or ingredients_content_metafield != blank or section.settings.ingredients_content != blank or allergens_notes_metafield != blank or section.settings.allergens_notes != blank or first_ingredients_metafield != blank or has_certifications or eu_bio_logo != blank
+      assign show_right = true
+    endif
+  endif
+  
   # Check if we have content to show
   assign has_content = false
-  if detail_left_title != blank or detail_left_body_metafield != blank or section.settings.left_body != blank or facts_title != blank or ingredients_content_metafield != blank or section.settings.ingredients_content != blank or allergens_notes_metafield != blank or section.settings.allergens_notes != blank or has_icon_items or has_certifications
+  if detail_left_title != blank or detail_left_body_metafield != blank or section.settings.left_body != blank or facts_title != blank or ingredients_content_metafield != blank or section.settings.ingredients_content != blank or allergens_notes_metafield != blank or section.settings.allergens_notes != blank or first_ingredients_metafield != blank or has_icon_items or has_certifications or eu_bio_logo != blank
     assign has_content = true
   endif
 -%}
@@ -63,71 +96,89 @@
   class="dv-detail-grid"
   data-section-id="{{ section.id }}"
   data-section-type="dv-detail-grid"
+  data-layout-mode="{{ layout_mode }}"
 >
   {% style %}
     #dv-detail-grid-{{ section.id }} {
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
+    
+    {% if layout_mode == 'left' %}
+      #dv-detail-grid-{{ section.id }} .dv-detail-grid__layout {
+        grid-template-columns: 1fr;
+      }
+    {% elsif layout_mode == 'right' %}
+      #dv-detail-grid-{{ section.id }} .dv-detail-grid__layout {
+        grid-template-columns: 1fr;
+      }
+    {% endif %}
   {% endstyle %}
   
   <div class="dv-detail-grid__container">
     <div class="dv-detail-grid__layout">
       
-      {%- comment -%} Left Column: Tradition in Ayurvedic Cuisine {%- endcomment -%}
-      <div class="dv-detail-grid__column dv-detail-grid__column--left">
-        {% if detail_left_title != blank %}
-          <h2 class="dv-detail-grid__left-title">
-            {{ detail_left_title | escape }}
-          </h2>
-        {% endif %}
-        
-        {%- comment -%} Left Column Body Content
-          Uses metafield_tag filter for richtext metafields - this properly renders
-          formatted content stored in Shopify's richtext format. If HTML tags are
-          visible as text, the content was likely pasted as raw HTML instead of
-          being formatted through the richtext editor in Shopify Admin.
-        {% endcomment -%}
-        {% if detail_left_body_metafield != blank %}
-          <div class="dv-detail-grid__left-body rte">
-            {{ detail_left_body_metafield | metafield_tag }}
-          </div>
-        {% elsif section.settings.left_body != blank %}
-          <div class="dv-detail-grid__left-body rte">
-            {{ section.settings.left_body }}
-          </div>
-        {% endif %}
-        
-        {%- comment -%} Icon Items (blocks) {%- endcomment -%}
-        {% if has_icon_items %}
-          <div class="dv-detail-grid__icon-items">
-            {% for block in section.blocks %}
-              {% if block.type == 'ingredient_item' %}
-                <div class="dv-detail-grid__icon-item" {{ block.shopify_attributes }}>
-                  {% if block.settings.icon != blank %}
-                    <div class="dv-detail-grid__icon-item-icon">
-                      {{ block.settings.icon | image_url: width: 40 | image_tag: alt: block.settings.name, loading: 'lazy', width: 40, height: 40 }}
-                    </div>
-                  {% endif %}
-                  {% if block.settings.name != blank %}
-                    <div class="dv-detail-grid__icon-item-name">{{ block.settings.name | escape }}</div>
-                  {% endif %}
-                  {% if block.settings.description != blank %}
-                    <div class="dv-detail-grid__icon-item-desc">{{ block.settings.description | escape }}</div>
-                  {% endif %}
-                </div>
-              {% endif %}
-            {% endfor %}
-          </div>
-        {% endif %}
-      </div>
-      
-      {%- comment -%} Right Column: Ingredients & Facts {%- endcomment -%}
+      {%- comment -%} Right Column: Ingredients & Facts (NOW FIRST) {%- endcomment -%}
+      {% if show_right %}
       <div class="dv-detail-grid__column dv-detail-grid__column--right">
         {% if facts_title != blank %}
           <h2 class="dv-detail-grid__facts-title">
             {{ facts_title | escape }}
           </h2>
+        {% endif %}
+        
+        {%- comment -%} EU Bio Logo {%- endcomment -%}
+        {% if eu_bio_logo != blank %}
+          <div class="dv-detail-grid__eu-bio-logo-wrapper">
+            {% if eu_bio_logo %}
+              {%- liquid
+                assign logo_height = section.settings.eu_bio_logo_size | default: 50
+                assign logo_width = logo_height | times: 1.5 | round
+              -%}
+              <img
+                src="{{ eu_bio_logo | image_url: width: 120 }}"
+                alt="EU Bio Logo"
+                class="dv-detail-grid__eu-bio-logo"
+                style="height: {{ logo_height }}px; width: {{ logo_width }}px; max-height: {{ logo_height }}px; max-width: {{ logo_width }}px;"
+                width="{{ logo_width }}"
+                height="{{ logo_height }}"
+                loading="lazy"
+              >
+            {% endif %}
+            {% if control_code != blank or origin != blank %}
+              <div class="dv-detail-grid__eu-bio-info">
+                {% if control_code != blank %}
+                  <div class="dv-detail-grid__control-code">{{ control_code | escape }}</div>
+                {% endif %}
+                {% if origin != blank %}
+                  <div class="dv-detail-grid__origin">{{ origin | escape }}</div>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+        
+        {%- comment -%} First Ingredients List (with organic marking) {%- endcomment -%}
+        {% if first_ingredients_metafield != blank %}
+          <div class="dv-detail-grid__first-ingredients">
+            <h3 class="dv-detail-grid__first-ingredients-title">Zutaten</h3>
+            <div class="dv-detail-grid__first-ingredients-content rte">
+              {{ first_ingredients_metafield | metafield_tag }}
+            </div>
+            <div class="dv-detail-grid__first-ingredients-footnote">
+              * aus ökologischem Landbau
+            </div>
+          </div>
+        {% elsif section.settings.first_ingredients != blank %}
+          <div class="dv-detail-grid__first-ingredients">
+            <h3 class="dv-detail-grid__first-ingredients-title">Zutaten</h3>
+            <div class="dv-detail-grid__first-ingredients-content rte">
+              {{ section.settings.first_ingredients }}
+            </div>
+            <div class="dv-detail-grid__first-ingredients-footnote">
+              * aus ökologischem Landbau
+            </div>
+          </div>
         {% endif %}
         
         {%- comment -%} Ingredients Section
@@ -186,6 +237,57 @@
           </div>
         {% endif %}
       </div>
+      {% endif %}
+      
+      {%- comment -%} Left Column: Tradition in Ayurvedic Cuisine (NOW SECOND) {%- endcomment -%}
+      {% if show_left %}
+      <div class="dv-detail-grid__column dv-detail-grid__column--left">
+        {% if detail_left_title != blank %}
+          <h2 class="dv-detail-grid__left-title">
+            {{ detail_left_title | escape }}
+          </h2>
+        {% endif %}
+        
+        {%- comment -%} Left Column Body Content
+          Uses metafield_tag filter for richtext metafields - this properly renders
+          formatted content stored in Shopify's richtext format. If HTML tags are
+          visible as text, the content was likely pasted as raw HTML instead of
+          being formatted through the richtext editor in Shopify Admin.
+        {% endcomment -%}
+        {% if detail_left_body_metafield != blank %}
+          <div class="dv-detail-grid__left-body rte">
+            {{ detail_left_body_metafield | metafield_tag }}
+          </div>
+        {% elsif section.settings.left_body != blank %}
+          <div class="dv-detail-grid__left-body rte">
+            {{ section.settings.left_body }}
+          </div>
+        {% endif %}
+        
+        {%- comment -%} Icon Items (blocks) {%- endcomment -%}
+        {% if has_icon_items %}
+          <div class="dv-detail-grid__icon-items">
+            {% for block in section.blocks %}
+              {% if block.type == 'ingredient_item' %}
+                <div class="dv-detail-grid__icon-item" {{ block.shopify_attributes }}>
+                  {% if block.settings.icon != blank %}
+                    <div class="dv-detail-grid__icon-item-icon">
+                      {{ block.settings.icon | image_url: width: 40 | image_tag: alt: block.settings.name, loading: 'lazy', width: 40, height: 40 }}
+                    </div>
+                  {% endif %}
+                  {% if block.settings.name != blank %}
+                    <div class="dv-detail-grid__icon-item-name">{{ block.settings.name | escape }}</div>
+                  {% endif %}
+                  {% if block.settings.description != blank %}
+                    <div class="dv-detail-grid__icon-item-desc">{{ block.settings.description | escape }}</div>
+                  {% endif %}
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+      {% endif %}
       
     </div>
   </div>
@@ -200,7 +302,92 @@
   "settings": [
     {
       "type": "header",
-      "content": "Left Column Content"
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout_mode",
+      "label": "Column Layout",
+      "options": [
+        {
+          "value": "both",
+          "label": "Both Columns"
+        },
+        {
+          "value": "left",
+          "label": "Left Column Only"
+        },
+        {
+          "value": "right",
+          "label": "Right Column Only"
+        }
+      ],
+      "default": "both",
+      "info": "Select which columns to display. Note: Columns are swapped - Right (Ingredients) now appears first, Left (Tradition) appears second."
+    },
+    {
+      "type": "header",
+      "content": "Right Column (Ingredients - First)"
+    },
+    {
+      "type": "text",
+      "id": "facts_title",
+      "label": "Right Column Title",
+      "default": "Zutaten & Fakten",
+      "info": "Editable title. Product metafield custom.dv_facts_title takes priority if present."
+    },
+    {
+      "type": "image_picker",
+      "id": "eu_bio_logo",
+      "label": "EU Bio Logo",
+      "info": "EU Bio logo image. Product metafield custom.dv_eu_bio_logo takes priority if present. Must comply with EU-Bio-Verordnung 848/2018 (minimum 9mm height, 1:1.5 aspect ratio)."
+    },
+    {
+      "type": "range",
+      "id": "eu_bio_logo_size",
+      "label": "EU Bio Logo Size (height)",
+      "min": 34,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 50,
+      "info": "EU Regulation: Minimum 9mm height (34px) required. Logo must maintain 1:1.5 aspect ratio."
+    },
+    {
+      "type": "text",
+      "id": "control_code",
+      "label": "Control Body Code",
+      "default": "DE-ÖKO-037",
+      "info": "Control body code number (e.g., DE-ÖKO-037). Product metafield custom.dv_control_code takes priority if present."
+    },
+    {
+      "type": "text",
+      "id": "origin",
+      "label": "Place of Origin",
+      "default": "EU-Landwirtschaft",
+      "info": "Place of origin of agricultural raw materials (e.g., EU-Landwirtschaft, Nicht-EU-Landwirtschaft). Product metafield custom.dv_origin takes priority if present."
+    },
+    {
+      "type": "richtext",
+      "id": "first_ingredients",
+      "label": "First Ingredients List (with organic marking)",
+      "info": "First ingredients list with organic marking using '*'. Add '*' after organic ingredients. Product metafield custom.dv_first_ingredients takes priority if present."
+    },
+    {
+      "type": "richtext",
+      "id": "ingredients_content",
+      "label": "Ingredients Content",
+      "info": "Editable content for ingredients list. Product metafield custom.dv_ingredients (from product database) takes priority if present."
+    },
+    {
+      "type": "richtext",
+      "id": "allergens_notes",
+      "label": "Allergens & Notes",
+      "info": "Editable content for allergens and notes. Product metafield custom.dv_allergens_notes (from product database) takes priority if present."
+    },
+    {
+      "type": "header",
+      "content": "Left Column (Tradition - Second)"
     },
     {
       "type": "text",
@@ -214,29 +401,6 @@
       "id": "left_body",
       "label": "Left Column Body",
       "info": "Editable content. Supports formatted text with bullets. Product metafield custom.dv_detail_left_body takes priority if present."
-    },
-    {
-      "type": "header",
-      "content": "Right Column Content"
-    },
-    {
-      "type": "text",
-      "id": "facts_title",
-      "label": "Right Column Title",
-      "default": "Zutaten & Fakten",
-      "info": "Editable title. Product metafield custom.dv_facts_title takes priority if present."
-    },
-    {
-      "type": "richtext",
-      "id": "ingredients_content",
-      "label": "Ingredients Content",
-      "info": "Editable content for ingredients list. Product metafield custom.dv_ingredients (from product database) takes priority if present."
-    },
-    {
-      "type": "richtext",
-      "id": "allergens_notes",
-      "label": "Allergens & Notes",
-      "info": "Editable content for allergens and notes. Product metafield custom.dv_allergens_notes (from product database) takes priority if present."
     },
     {
       "type": "checkbox",

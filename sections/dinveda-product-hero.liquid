@@ -52,6 +52,24 @@
   # Ritual auf einen Blick metafields (v2)
   assign preparation_mode = product.metafields.dinveda.preparation_mode | default: "Warm"
   assign ritual_duration = product.metafields.dinveda.ritual_duration | default: "1–2 Min"
+  
+  # Traditional benefits bullets (from DV metafields)
+  assign traditional_benefits = product.metafields.custom.dv_traditional_benefits
+  assign has_traditional_benefits = false
+  if traditional_benefits != blank
+    assign has_traditional_benefits = true
+    assign benefits_lines = traditional_benefits | newline_to_br | split: '<br />'
+  endif
+  
+  # EU Bio Logo
+  assign eu_bio_logo = product.metafields.custom.dv_eu_bio_logo
+  if eu_bio_logo == blank and section.settings.eu_bio_logo != blank
+    assign eu_bio_logo = section.settings.eu_bio_logo
+  endif
+  
+  # Control code and origin
+  assign control_code = product.metafields.custom.dv_control_code | default: section.settings.control_code
+  assign origin = product.metafields.custom.dv_origin | default: section.settings.origin
 -%}
 
 {%- comment -%} Product JSON for Product object initialization {%- endcomment -%}
@@ -182,6 +200,37 @@
           <h1 class="dinveda-product-hero__title">Product Title</h1>
         {% endif %}
 
+        {%- comment -%} EU Bio Logo {%- endcomment -%}
+        {% if section.settings.show_eu_bio_logo and eu_bio_logo != blank %}
+          <div class="dinveda-product-hero__eu-bio-logo-wrapper">
+            {% if eu_bio_logo %}
+              {%- liquid
+                assign logo_height = section.settings.eu_bio_logo_size | default: 50
+                assign logo_width = logo_height | times: 1.5 | round
+              -%}
+              <img
+                src="{{ eu_bio_logo | image_url: width: 120 }}"
+                alt="EU Bio Logo"
+                class="dinveda-product-hero__eu-bio-logo"
+                style="height: {{ logo_height }}px; width: {{ logo_width }}px; max-height: {{ logo_height }}px; max-width: {{ logo_width }}px;"
+                width="{{ logo_width }}"
+                height="{{ logo_height }}"
+                loading="lazy"
+              >
+            {% endif %}
+            {% if control_code != blank or origin != blank %}
+              <div class="dinveda-product-hero__eu-bio-info">
+                {% if control_code != blank %}
+                  <div class="dinveda-product-hero__control-code">{{ control_code | escape }}</div>
+                {% endif %}
+                {% if origin != blank %}
+                  <div class="dinveda-product-hero__origin">{{ origin | escape }}</div>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+
         {%- comment -%} Quote Card (from metafields, toggleable) {%- endcomment -%}
         {% if section.settings.show_quote_card and quote_text != blank %}
           <div class="dinveda-product-hero__quote-card">
@@ -196,6 +245,25 @@
         {% if section.settings.show_intro and intro_text != blank %}
           <div class="dinveda-product-hero__intro">
             <p>{{ intro_text | escape }}</p>
+          </div>
+        {% endif %}
+
+        {%- comment -%} Bullet Highlights (from traditional_benefits) {%- endcomment -%}
+        {% if section.settings.show_bullet_highlights and has_traditional_benefits %}
+          <div class="dinveda-product-hero__bullet-highlights">
+            <ul class="dinveda-product-hero__bullet-list">
+              {% assign items_rendered = 0 %}
+              {% for line in benefits_lines %}
+                {% assign trimmed_line = line | strip %}
+                {% if trimmed_line != blank and items_rendered < 6 %}
+                  {% assign clean_line = trimmed_line | replace: '• ', '' | replace: '•', '' | replace: '- ', '' | strip %}
+                  {% if clean_line != blank %}
+                    <li class="dinveda-product-hero__bullet-item">{{ clean_line | escape }}</li>
+                    {% assign items_rendered = items_rendered | plus: 1 %}
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+            </ul>
           </div>
         {% endif %}
 
@@ -567,6 +635,55 @@
       "info": "Uses product.metafields.dinveda.ritual_usage or first paragraph of product.description"
     },
     {
+      "type": "checkbox",
+      "id": "show_bullet_highlights",
+      "label": "Show bullet highlights",
+      "default": true,
+      "info": "Displays bullet list from product.metafields.custom.dv_traditional_benefits (one bullet per line)"
+    },
+    {
+      "type": "header",
+      "content": "EU Bio Logo"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_eu_bio_logo",
+      "label": "Show EU Bio Logo",
+      "default": true,
+      "info": "Display EU Bio logo with control code and origin. Product metafield custom.dv_eu_bio_logo takes priority if present."
+    },
+    {
+      "type": "image_picker",
+      "id": "eu_bio_logo",
+      "label": "EU Bio Logo",
+      "info": "EU Bio logo image. Product metafield custom.dv_eu_bio_logo takes priority if present. Must comply with EU-Bio-Verordnung 848/2018 (minimum 9mm height, 1:1.5 aspect ratio)."
+    },
+    {
+      "type": "range",
+      "id": "eu_bio_logo_size",
+      "label": "EU Bio Logo Size (height)",
+      "min": 34,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 50,
+      "info": "EU Regulation: Minimum 9mm height (34px) required. Logo must maintain 1:1.5 aspect ratio."
+    },
+    {
+      "type": "text",
+      "id": "control_code",
+      "label": "Control Body Code",
+      "default": "DE-ÖKO-037",
+      "info": "Control body code number (e.g., DE-ÖKO-037). Product metafield custom.dv_control_code takes priority if present."
+    },
+    {
+      "type": "text",
+      "id": "origin",
+      "label": "Place of Origin",
+      "default": "EU-Landwirtschaft",
+      "info": "Place of origin of agricultural raw materials (e.g., EU-Landwirtschaft, Nicht-EU-Landwirtschaft). Product metafield custom.dv_origin takes priority if present."
+    },
+    {
       "type": "header",
       "content": "Preis"
     },
@@ -644,7 +761,7 @@
       "max": 120,
       "step": 8,
       "unit": "px",
-      "default": 80
+      "default": 40
     },
     {
       "type": "range",
@@ -654,7 +771,7 @@
       "max": 120,
       "step": 8,
       "unit": "px",
-      "default": 80
+      "default": 40
     },
     {
       "type": "header",

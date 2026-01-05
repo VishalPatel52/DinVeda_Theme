@@ -86,9 +86,34 @@ Once these metafields are created in Shopify Admin, access them in Liquid templa
    - **Type:** Select the appropriate type (Single line text or Multi-line text)
    - **Validation:** Leave empty (no specific validations required)
 
+## EU Bio Compliance Usage
+
+### Existing Metafields Supporting EU Bio Compliance
+
+The following existing metafields are used in EU Bio compliant sections:
+
+- **`dinveda.blend_story`** - Used in `dinveda-ritual-story` section for detailed product description
+- **`dinveda.ritual_usage`** - Used in `dinveda-product-hero` for short description/intro text
+- **`dinveda.quality_note`** - Can be used for quality and production information
+
+### DV Metafields (custom.dv_*)
+
+For EU Bio compliance, the following DV metafields are also used:
+
+- **`custom.dv_traditional_benefits`** - Used in `dinveda-product-hero` for bullet highlights (parsed by newlines, one bullet per line)
+- **`custom.dv_story_content`** - Used in `dv-story-card` section for product story
+- **`custom.dv_ingredients`** - Used in `dv-detail-grid` for ingredients list
+- **`custom.dv_allergens_notes`** - Used in `dv-detail-grid` for allergen information
+- **`custom.dv_compliance_storage`** - Used in `dv-compliance-accordion` for storage instructions
+- **`custom.dv_compliance_legal`** - Used in `dv-compliance-accordion` for legal warnings
+- **`custom.dv_nutrition_table`** - Used in `dv-nutrition-table` for nutrition facts (HTML table format)
+
+See `DV_EU_BIO_METAFIELDS.md` for additional metafields required for full EU Bio compliance.
+
 ## Notes
 
 - All metafields are optional
 - Content must comply with EU/Germany regulations (no health claims)
 - Metafields are for content architecture only - theme integration comes later
+- For EU Bio compliance, additional metafields are required (see `DV_EU_BIO_METAFIELDS.md`)
 

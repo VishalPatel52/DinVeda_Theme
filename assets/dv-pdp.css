@@ -789,6 +789,107 @@
   color: var(--dv-text-color);
 }
 
+/* EU Bio Logo Styles */
+.dv-detail-grid__eu-bio-logo-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--dv-border-color);
+}
+
+.dv-detail-grid__eu-bio-logo {
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.dv-detail-grid__eu-bio-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--dv-text-color);
+}
+
+.dv-detail-grid__control-code,
+.dv-detail-grid__origin {
+  font-weight: 500;
+}
+
+/* First Ingredients List Styles */
+.dv-detail-grid__first-ingredients {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--dv-border-color);
+}
+
+.dv-detail-grid__first-ingredients-title {
+  font-family: var(--heading-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--dv-text-color);
+  margin: 0 0 16px 0;
+}
+
+.dv-detail-grid__first-ingredients-content {
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--dv-text-color);
+}
+
+.dv-detail-grid__first-ingredients-content p {
+  margin: 0 0 12px 0;
+}
+
+.dv-detail-grid__first-ingredients-content p:last-child {
+  margin-bottom: 0;
+}
+
+.dv-detail-grid__first-ingredients-content ul,
+.dv-detail-grid__first-ingredients-content ol {
+  margin: 12px 0;
+  padding-left: 24px;
+  list-style: none;
+}
+
+.dv-detail-grid__first-ingredients-content li {
+  margin-bottom: 8px;
+  position: relative;
+  padding-left: 20px;
+}
+
+.dv-detail-grid__first-ingredients-content li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--dv-accent);
+  font-weight: 700;
+}
+
+.dv-detail-grid__first-ingredients-footnote {
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--dv-text-color);
+  margin-top: 16px;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+/* Layout mode adjustments */
+.dv-detail-grid[data-layout-mode="left"] .dv-detail-grid__layout,
+.dv-detail-grid[data-layout-mode="right"] .dv-detail-grid__layout {
+  grid-template-columns: 1fr !important;
+  max-width: 800px;
+}
+
 /* ============================================
    Daily Ritual Section (Step Cards)
    ============================================ */
@@ -1188,6 +1289,99 @@
 }
 
 /* ============================================
+   EU Bio Legal Section
+   ============================================ */
+
+.dv-eu-bio-legal {
+  background-color: var(--dv-bg-beige);
+}
+
+.dv-eu-bio-legal__container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.dv-eu-bio-legal__heading {
+  font-family: var(--heading-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--dv-text-color);
+  margin: 0 0 32px 0;
+  text-align: center;
+}
+
+.dv-eu-bio-legal__content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.dv-eu-bio-legal__item {
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--dv-border-color);
+}
+
+.dv-eu-bio-legal__item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.dv-eu-bio-legal__item-label {
+  font-family: var(--heading-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--dv-text-color);
+  margin: 0 0 8px 0;
+}
+
+.dv-eu-bio-legal__item-value {
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--dv-text-color);
+}
+
+.dv-eu-bio-legal__item-value p {
+  margin: 0 0 12px 0;
+}
+
+.dv-eu-bio-legal__item-value p:last-child {
+  margin-bottom: 0;
+}
+
+.dv-eu-bio-legal__item-value ul,
+.dv-eu-bio-legal__item-value ol {
+  margin: 12px 0;
+  padding-left: 24px;
+}
+
+.dv-eu-bio-legal__item-value li {
+  margin-bottom: 8px;
+}
+
+@media (max-width: 767px) {
+  .dv-eu-bio-legal__container {
+    padding: 0 24px;
+  }
+  
+  .dv-eu-bio-legal__heading {
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+  
+  .dv-eu-bio-legal__content {
+    gap: 20px;
+  }
+  
+  .dv-eu-bio-legal__item {
+    padding-bottom: 20px;
+  }
+}
+
+/* ============================================
    Nutrition Table Section
    ============================================ */
 
@@ -1272,8 +1466,18 @@
 @media (max-width: 991px) {
   .dv-main-product__grid,
   .dv-detail-grid__layout {
-    grid-template-columns: 1fr;
-    gap: 48px;
+    grid-template-columns: 1fr !important;
+    gap: 40px;
+  }
+  
+  .dv-detail-grid__eu-bio-logo-wrapper {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+  }
+  
+  .dv-detail-grid__first-ingredients {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
   }
   
   .dv-daily-ritual__steps {

@@ -54,6 +54,24 @@
         "view_all_label": "ALLE RITUALE ANSEHEN",
         "view_all_link": "/collections/all"
       }
+    },
+    "dv_nutrition_table": {
+      "type": "dv-nutrition-table",
+      "settings": {
+        "show_when_empty": false
+      }
+    },
+    "dv_eu_bio_legal": {
+      "type": "dv-eu-bio-legal",
+      "settings": {
+        "show_when_empty": false
+      }
+    },
+    "dv_compliance_accordion": {
+      "type": "dv-compliance-accordion",
+      "settings": {
+        "show_when_empty": false
+      }
     }
   },
   "order": [
@@ -61,7 +79,10 @@
     "dinveda_ritual_story",
     "dinveda_traditional_ingredients",
     "dinveda_product_ingredients",
+    "dv_nutrition_table",
     "dinveda_recipe_preparation",
+    "dv_eu_bio_legal",
+    "dv_compliance_accordion",
     "dinveda_complete_your_day"
   ]
 }

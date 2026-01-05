@@ -31,7 +31,7 @@ body.product-template-dinveda-premium .product-top {
    ============================================ */
 
 .dinveda-product-hero {
-  padding: var(--design-section-spacing-large, 80px) 0;
+  padding: var(--design-section-spacing-large, 40px) 0;
   background-color: var(--design-bg-color, #FFF0DD);
 }
 
@@ -286,6 +286,72 @@ body.product-template-dinveda-premium .product-top {
   margin-bottom: 0;
 }
 
+/* Bullet Highlights */
+.dinveda-product-hero__bullet-highlights {
+  margin: 24px 0;
+}
+
+.dinveda-product-hero__bullet-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dinveda-product-hero__bullet-item {
+  font-family: var(--main-family);
+  font-size: var(--design-body-font-size);
+  line-height: 1.6;
+  color: var(--design-text-color, #5a4533);
+  position: relative;
+  padding-left: 24px;
+  opacity: 0.9;
+}
+
+.dinveda-product-hero__bullet-item::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--design-accent-color, #b3814a);
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+/* EU Bio Logo */
+.dinveda-product-hero__eu-bio-logo-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 20px 0 24px 0;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(234, 221, 207, 0.5);
+}
+
+.dinveda-product-hero__eu-bio-logo {
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.dinveda-product-hero__eu-bio-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: var(--main-family);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--design-text-color, #5a4533);
+}
+
+.dinveda-product-hero__control-code,
+.dinveda-product-hero__origin {
+  font-weight: 500;
+  opacity: 0.8;
+}
+
 /* Price */
 .dinveda-product-hero__price {
   display: flex;
@@ -383,7 +449,7 @@ body.product-template-dinveda-premium .product-top {
    ============================================ */
 
 .dinveda-ritual-story {
-  padding: var(--design-section-spacing-large, 80px) 0;
+  padding: var(--design-section-spacing-large, 40px) 0;
   background-color: #f3e9dc; /* Sand background - slightly darker beige */
   position: relative;
 }
@@ -1297,7 +1363,7 @@ body.template-product.product-template-dinveda-premium .product-loop.grid__wrapp
 
 @media (max-width: 767px) {
   .dinveda-product-hero {
-    padding: var(--design-section-spacing-medium, 60px) 0;
+    padding: var(--design-section-spacing-medium, 30px) 0;
   }
 
   .dinveda-product-hero__grid {
@@ -1344,5 +1410,25 @@ body.template-product.product-template-dinveda-premium .product-loop.grid__wrapp
     max-width: 100%;
   }
 
+}
+
+/* ============================================
+   Reduce spacing between consecutive sections
+   ============================================ */
+
+/* Reduce top padding when sections follow each other */
+.dinveda-product-hero + .dinveda-ritual-story,
+.dinveda-ritual-story + .dinveda-traditional-ingredients,
+.dinveda-traditional-ingredients + .dinveda-product-ingredients,
+.dinveda-product-ingredients + .dinveda-recipe-preparation,
+.dinveda-recipe-preparation + .dinveda-complete-your-day {
+  padding-top: 20px !important;
+}
+
+/* Further reduce spacing for sections with same background color */
+.dinveda-ritual-story + .dinveda-traditional-ingredients[style*="background-color"],
+.dinveda-traditional-ingredients + .dinveda-product-ingredients[style*="background-color"],
+.dinveda-product-ingredients + .dinveda-recipe-preparation[style*="background-color"] {
+  padding-top: 0 !important;
 }
 
