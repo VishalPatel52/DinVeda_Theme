@@ -65,25 +65,25 @@
         "checklist_item_Armw3B": {
           "type": "checklist_item",
           "settings": {
-            "text": "Wärmende Genussmomente"
+            "text": "Wärmende Tiefe : „Wenn es draußen kühl ist, mag ich es angenehm warm.“"
           }
         },
         "checklist_item_dnGVbU": {
           "type": "checklist_item",
           "settings": {
-            "text": "Einen bewussten Start in den Tag"
+            "text": "Einen klaren Start : „Ein ruhiger Moment am Morgen hilft mir, wach und fokussiert zu bleiben.“"
           }
         },
         "checklist_item_qYRQX4": {
           "type": "checklist_item",
           "settings": {
-            "text": "Aromatische Tiefe & goldene Würze"
+            "text": "Vielseitigen Genuss : „Mal als Getränk, mal in der Küche – ohne feste Regeln.“"
           }
         },
         "checklist_item_RGHPAD": {
           "type": "checklist_item",
           "settings": {
-            "text": "Vielseitige Verwendung im Alltag"
+            "text": "Bewusste Rituale : „Kleine Pausen, die meinen Tag in Balance halten.“"
           }
         }
       },
