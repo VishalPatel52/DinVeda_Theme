@@ -12,15 +12,31 @@
     "dv_main_product": {
       "type": "dv-main-product",
       "blocks": {
+        "product_badge_KCKMEE": {
+          "type": "product_badge",
+          "settings": {
+            "icon_emoji": "",
+            "text": "100 % Bio & vegan"
+          }
+        },
+        "product_badge_UQ4xwz": {
+          "type": "product_badge",
+          "settings": {
+            "icon_emoji": "🌿",
+            "text": "Ohne Zusatzstoffe"
+          }
+        },
         "product_badge_T6eGXE": {
           "type": "product_badge",
           "settings": {
             "icon_emoji": "🌿",
-            "text": "100 % Bio & vegan"
+            "text": "Ohne Zuckerzusatz"
           }
         }
       },
       "block_order": [
+        "product_badge_KCKMEE",
+        "product_badge_UQ4xwz",
         "product_badge_T6eGXE"
       ],
       "settings": {
@@ -30,7 +46,7 @@
         "show_organic_label": true,
         "show_vegan_label": true,
         "subtitle": "{{ product.metafields.custom.dinveda_dv_subtitle.value }}",
-        "quote": "\"Ich blühe in Leichtigkeit & Harmonie\" – sagt der Schmetterling.",
+        "quote": "„Ich starte klar und aufmerksam in den Tag.“ – sagt der Fuchs.",
         "price_note": "inkl. MwSt. / 100g Dose",
         "show_quantity": true,
         "add_to_cart_label": "IN DEN WARENKORB",
@@ -49,25 +65,25 @@
         "checklist_item_Armw3B": {
           "type": "checklist_item",
           "settings": {
-            "text": "Erdende Wärme an kalten Tagen"
+            "text": "Wärmende Genussmomente"
           }
         },
         "checklist_item_dnGVbU": {
           "type": "checklist_item",
           "settings": {
-            "text": "Erdende Wärme an kalten Tagen"
+            "text": "Einen bewussten Start in den Tag"
           }
         },
         "checklist_item_qYRQX4": {
           "type": "checklist_item",
           "settings": {
-            "text": "Erdende Wärme an kalten Tagen"
+            "text": "Aromatische Tiefe & goldene Würze"
           }
         },
         "checklist_item_RGHPAD": {
           "type": "checklist_item",
           "settings": {
-            "text": "Erdende Wärme an kalten Tagen"
+            "text": "Vielseitige Verwendung im Alltag"
           }
         }
       },
