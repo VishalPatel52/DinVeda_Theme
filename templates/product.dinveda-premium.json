@@ -37,10 +37,10 @@
         "enable_buy_now": true,
         "buy_now_label": "Jetzt kaufen",
         "show_ritual_glance": true,
-        "time_fallback": "",
-        "prep_fallback": "",
+        "time_fallback": "erweqr",
+        "prep_fallback": "rewqrq",
         "duration_fallback": "",
-        "show_social_share": false
+        "show_social_share": true
       }
     },
     "dv_story_card": {
@@ -226,8 +226,8 @@
           "type": "product_card",
           "settings": {
             "product": "flow-glow",
-            "title": "",
-            "label": "",
+            "title": "rerqwe",
+            "label": "nacht",
             "link": ""
           }
         },
