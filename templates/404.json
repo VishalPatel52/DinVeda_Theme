@@ -11,10 +11,14 @@
   "sections": {
     "banner": {
       "type": "banner-image",
-      "settings": {}
+      "settings": {
+        "full_width": true,
+        "banner_height": 400
+      }
     },
     "main": {
       "type": "main-404",
+      "name": "About Us",
       "settings": {}
     }
   },

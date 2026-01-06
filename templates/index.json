@@ -268,12 +268,12 @@
         "eyebrow": "Unsere Philosophie",
         "title": "Alte Weisheit, neu gelebt",
         "body": "<p>Wir glauben an den Rhythmus des Tages – an Momente der Aktivierung, der Zentrierung, des Ausgleichs und der Ruhe. An kleine Rituale, die den Alltag bewusster machen, ohne ihn zu verkomplizieren.</p><p>Unsere Mischungen sind inspiriert von ayurvedisch geprägten Pflanzen, Gewürzen und traditionellen Rezepturen – neu gedacht für ein modernes, europäisches Leben. Sie sind vielseitig einsetzbar: als Tee oder Getränk, ebenso wie zum Kochen, Backen oder Verfeinern von Speisen.</p><p>DinVeda Rituale sind keine medizinischen Produkte, sondern kleine tägliche Pausen für dein Wohlbefinden.<br/><br/>Handwerklich komponiert in Deutschland, mit Zutaten aus kontrolliert biologischem Anbau.</p>",
-        "cta_label": "Unsere Geschichte",
+        "cta_label": "",
         "cta_link": "/pages/about",
         "cta2_label": "CONTACT SUPPORT",
         "cta2_link": "",
         "cta2_icon": "mail",
-        "background_mode": "philosophy_beige"
+        "background_mode": "design_secondary_bg"
       }
     }
   },
