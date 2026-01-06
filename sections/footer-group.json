@@ -27,7 +27,7 @@
       "settings": {
         "container_width": 1400,
         "use_theme_spacing": false,
-        "padding_top": 80,
+        "padding_top": 40,
         "padding_bottom": 40,
         "use_theme_colors": true,
         "background_color": "#fff0dd",
