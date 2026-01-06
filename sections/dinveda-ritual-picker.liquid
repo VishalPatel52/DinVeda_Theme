@@ -364,10 +364,15 @@
   .dinveda-ritual-picker__attribution-line {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 0; /* Use margin on text instead for consistent spacing */
     flex-shrink: 1;
     min-height: 40px;
     width: 100%;
+    justify-content: center; /* Center align attribution line */
+  }
+  
+  .dinveda-ritual-picker__attribution-line .dinveda-ritual-picker__animal-name {
+    margin-left: 2px !important; /* 2px spacing between image and text */
   }
   
   .dinveda-ritual-picker__animal-image {

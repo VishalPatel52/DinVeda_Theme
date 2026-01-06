@@ -325,8 +325,9 @@
   min-height: 0; /* Allow flex shrinking */
   position: relative;
   /* Ensure content grows evenly and pushes button to bottom */
-  align-items: stretch; /* Ensure all children align */
+  align-items: center; /* Center align all children */
   justify-content: flex-start; /* Align content to start for consistent baseline */
+  text-align: center; /* Center align text content */
 }
 
 /* Phase Label - tiny uppercase tracking */
@@ -347,6 +348,8 @@
   flex-shrink: 0; /* Prevent shrinking */
   /* Ensure consistent baseline alignment */
   min-height: calc((var(--design-body-font-size) - 4px) * 1.4);
+  text-align: center; /* Center align text */
+  width: 100%;
 }
 
 /* Blend Name - accent color, medium size */
@@ -368,6 +371,8 @@
   flex-shrink: 0; /* Prevent shrinking */
   /* Add minimum height for single-line titles to ensure consistent baseline */
   min-height: calc(var(--design-h3-size) * 1.3);
+  text-align: center; /* Center align text */
+  width: 100%;
 }
 
 /* Quote Block */
@@ -381,6 +386,7 @@
   flex-direction: column;
   gap: 4px;
   width: 100%;
+  align-items: center; /* Center align content */
   /* Updated: Include attribution-wrapper height in calculation for proper alignment */
   min-height: calc(
     (var(--design-body-font-size) - 2px) * 1.5 * 2 + /* quote-line 2 lines */
@@ -410,6 +416,7 @@
   min-height: calc((var(--design-body-font-size) - 2px) * 1.5 * 2); /* 2 lines min for alignment */
   max-height: calc((var(--design-body-font-size) - 2px) * 1.5 * 2); /* 2 lines max */
   width: 100%;
+  text-align: center; /* Center align text */
 }
 
 .dinveda-ritual-picker__animal-name {
@@ -421,6 +428,7 @@
   letter-spacing: 0.02em; /* Minimal tracking */
   color: var(--design-accent-color);
   margin: 0;
+  padding: 0; /* Ensure no padding */
   opacity: 0.7; /* Muted */
   flex-shrink: 1; /* Allow shrinking to fit */
   line-height: 1.3; /* Tighter line height */
@@ -428,6 +436,10 @@
   text-overflow: ellipsis;
   white-space: nowrap; /* Prevent wrapping, truncate if needed */
   max-width: 100%;
+  /* Ensure consistent spacing - no additional margins */
+  margin-left: 2px !important; /* 2px spacing after image */
+  margin-right: 0;
+  text-align: left; /* Keep text left-aligned within the attribution line */
 }
 
 .dinveda-ritual-picker__attribution-wrapper {
@@ -439,7 +451,7 @@
   width: 100%;
   min-height: 84px; /* Consistent height: 40px image + 4px gap + 36px buttons + 4px gap */
   /* Ensure consistent alignment */
-  align-items: flex-start;
+  align-items: center; /* Center align attribution */
   justify-content: flex-start;
   /* Ensure it doesn't overflow */
   max-width: 100%;
@@ -449,7 +461,7 @@
 .dinveda-ritual-picker__attribution-line {
   display: flex;
   align-items: center;
-  gap: 4px; /* Reduced from 8px to 4px for tighter spacing */
+  gap: 0; /* Remove gap, use margin instead for consistent spacing */
   flex-shrink: 1; /* Allow shrinking to fit */
   min-height: 40px; /* Match animal image height */
   width: 100%;
@@ -459,6 +471,8 @@
   /* Ensure proper width constraints */
   min-width: 0;
   max-width: 100%;
+  /* Center align attribution line */
+  justify-content: center;
 }
 
 .dinveda-ritual-picker__attribution-line .dinveda-ritual-picker__animal-name {
@@ -469,6 +483,11 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 100%;
+  /* Use margin-left instead of gap for consistent spacing */
+  margin-left: 2px !important; /* 2px spacing after image */
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-right: 0;
 }
 
 .dinveda-ritual-picker__animal-image {
@@ -480,6 +499,12 @@
   /* Prevent image from causing overflow */
   max-width: 40px;
   max-height: 40px;
+  /* Ensure no margins or padding that could affect spacing */
+  margin: 0;
+  padding: 0;
+  display: block;
+  /* Ensure left alignment */
+  align-self: flex-start;
 }
 
 .dinveda-ritual-picker__action-buttons {
@@ -573,6 +598,7 @@
   min-height: calc((var(--design-body-font-size) - 2px) * 1.5 * 2); /* 2 lines min for alignment */
   max-height: calc((var(--design-body-font-size) - 2px) * 1.5 * 2); /* 2 lines max */
   width: 100%;
+  text-align: center; /* Center align text */
 }
 
 /* Button - visual only, not interactive */
@@ -737,7 +763,11 @@
   
   .dinveda-ritual-picker__attribution-line {
     min-height: 32px; /* Match animal image height on mobile */
-    gap: 4px; /* Reduced gap on mobile too */
+    gap: 0; /* Remove gap, use margin instead */
+  }
+  
+  .dinveda-ritual-picker__attribution-line .dinveda-ritual-picker__animal-name {
+    margin-left: 2px !important; /* 2px spacing on mobile too */
   }
   
   .dinveda-ritual-picker__attribution-wrapper {
