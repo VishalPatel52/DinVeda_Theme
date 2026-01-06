@@ -10,34 +10,19 @@
   
   assign compliance_legal_metafield = product.metafields.custom.dv_compliance_legal
   
-  # Extract storage text for duplicate detection
-  assign storage_text = ''
+  # Extract storage text for duplicate detection (use section settings for manipulation)
+  assign storage_text_for_detection = section.settings.storage_content
   if compliance_storage_metafield != blank
-    # For richtext metafields, access the value property
-    if compliance_storage_metafield.value != blank
-      assign storage_text = compliance_storage_metafield.value
-    else
-      # Fallback: try direct access
-      assign storage_text = compliance_storage_metafield
-    endif
-  endif
-  if storage_text == blank
-    assign storage_text = section.settings.storage_content
+    # For metafields, we'll render them properly for display, but use section setting for duplicate detection
+    # If section setting is empty, we can't do duplicate detection on metafield (too complex)
+    assign storage_text_for_detection = section.settings.storage_content
   endif
   
-  # Extract legal text
-  assign legal_text = ''
+  # Extract legal text for duplicate detection (use section settings for manipulation)
+  assign legal_text_for_detection = section.settings.legal_content
   if compliance_legal_metafield != blank
-    # For richtext metafields, access the value property
-    if compliance_legal_metafield.value != blank
-      assign legal_text = compliance_legal_metafield.value
-    else
-      # Fallback: try direct access
-      assign legal_text = compliance_legal_metafield
-    endif
-  endif
-  if legal_text == blank
-    assign legal_text = section.settings.legal_content
+    # For metafields, we'll render them properly for display, but use section setting for duplicate detection
+    assign legal_text_for_detection = section.settings.legal_content
   endif
   
   # Normalize storage text for duplicate detection
@@ -50,13 +35,14 @@
   assign storage_phrase_4 = 'trockenlagern'
   assign storage_phrase_5 = 'lichtgeschütztlagern'
   
-  # Remove duplicate storage instructions from legal content
-  assign legal_text_cleaned = legal_text
+  # Remove duplicate storage instructions from legal content (only works with section settings)
+  assign legal_text_cleaned = ''
   assign legal_has_storage_duplicates = false
+  assign use_cleaned_legal = false
   
-  if storage_text != blank and legal_text != blank
+  if storage_text_for_detection != blank and legal_text_for_detection != blank
     # Convert legal text to string for manipulation
-    assign legal_text_string = legal_text | strip_html | downcase
+    assign legal_text_string = legal_text_for_detection | strip_html | downcase
     
     # Check if legal content contains storage-related phrases
     if legal_text_string contains 'kühl' and legal_text_string contains 'lagern'
@@ -64,8 +50,8 @@
       
       # Remove storage-related list items from legal content
       # Split by list items and filter out storage-related ones
-      if legal_text contains '<li>'
-        assign legal_items = legal_text | split: '<li>'
+      if legal_text_for_detection contains '<li>'
+        assign legal_items = legal_text_for_detection | split: '<li>'
         assign cleaned_items = ''
         assign has_valid_items = false
         
@@ -105,8 +91,7 @@
         # Reconstruct legal content without storage items
         if has_valid_items and cleaned_items != blank
           assign legal_text_cleaned = '<ul>' | append: cleaned_items | append: '</ul>'
-        else
-          assign legal_text_cleaned = ''
+          assign use_cleaned_legal = true
         endif
       endif
     endif
@@ -130,7 +115,7 @@
   
   # Check if we have content to show
   assign has_content = false
-  if storage_text != blank or legal_text_cleaned != blank or has_blocks
+  if compliance_storage_metafield != blank or section.settings.storage_content != blank or compliance_legal_metafield != blank or section.settings.legal_content != blank or has_blocks
     assign has_content = true
   endif
 -%}
@@ -169,16 +154,18 @@
           
           {%- comment -%} Unified Storage and Legal Content (duplicates removed) {%- endcomment -%}
           {% assign has_storage = false %}
-          {% if storage_text != blank %}
+          {% if compliance_storage_metafield != blank or section.settings.storage_content != blank %}
             {% assign has_storage = true %}
           {% endif %}
           {% assign has_legal = false %}
-          {% if show_legal_content and legal_text != blank %}
-            {% assign has_legal = true %}
+          {% if show_legal_content %}
+            {% if compliance_legal_metafield != blank or section.settings.legal_content != blank %}
+              {% assign has_legal = true %}
+            {% endif %}
           {% endif %}
           {% if has_storage or has_legal %}
             <div class="dv-compliance-accordion__combined">
-              {% if storage_text != blank %}
+              {% if compliance_storage_metafield != blank or section.settings.storage_content != blank %}
                 <div class="dv-compliance-accordion__storage">
                   {% if compliance_storage_metafield != blank %}
                     {{ compliance_storage_metafield | metafield_tag }}
@@ -188,14 +175,14 @@
                 </div>
               {% endif %}
               
-              {% if show_legal_content and legal_text != blank %}
-                {% if legal_has_storage_duplicates and legal_text_cleaned != blank %}
-                  {%- comment -%} Show cleaned legal content (storage duplicates removed) {%- endcomment -%}
+              {% if show_legal_content %}
+                {% if use_cleaned_legal and legal_text_cleaned != blank and compliance_legal_metafield == blank %}
+                  {%- comment -%} Show cleaned legal content (storage duplicates removed) - only for section settings {%- endcomment -%}
                   <div class="dv-compliance-accordion__legal">
                     {{ legal_text_cleaned }}
                   </div>
                 {% else %}
-                  {%- comment -%} Show original legal content (no storage duplicates detected) {%- endcomment -%}
+                  {%- comment -%} Show original legal content (metafields always shown, or no duplicates detected) {%- endcomment -%}
                   <div class="dv-compliance-accordion__legal">
                     {% if compliance_legal_metafield != blank %}
                       {{ compliance_legal_metafield | metafield_tag }}
