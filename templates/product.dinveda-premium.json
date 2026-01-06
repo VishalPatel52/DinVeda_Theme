@@ -54,9 +54,9 @@
         "checklist_heading": "Traditionell geschätzt für …",
         "show_disclaimer": true,
         "disclaimer_text": "AYURVEDISCH INSPIRIERTE GENUSS-TRADITION. KEIN HEILVERSPRECHEN.",
-        "background_color": "#f3e9dc",
-        "padding_top": 48,
-        "padding_bottom": 48
+        "background_color": "#fdf0de",
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "dv_detail_grid": {
