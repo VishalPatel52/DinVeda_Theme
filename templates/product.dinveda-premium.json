@@ -152,6 +152,27 @@
             "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
           }
         },
+        "ingredient_item_wHFMQq": {
+          "type": "ingredient_item",
+          "settings": {
+            "name": "Schwarzer Pfeffer",
+            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+          }
+        },
+        "ingredient_item_em6cCj": {
+          "type": "ingredient_item",
+          "settings": {
+            "name": "Muskatnuss",
+            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+          }
+        },
+        "ingredient_item_gGnyBG": {
+          "type": "ingredient_item",
+          "settings": {
+            "name": "Kardamom",
+            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+          }
+        },
         "trust_badge_xE3CQ9": {
           "type": "trust_badge",
           "settings": {
@@ -178,6 +199,9 @@
         "ingredient_item_LXJQVN",
         "ingredient_item_kW3PkT",
         "ingredient_item_ckJaHV",
+        "ingredient_item_wHFMQq",
+        "ingredient_item_em6cCj",
+        "ingredient_item_gGnyBG",
         "trust_badge_xE3CQ9",
         "trust_badge_cyxEFM",
         "trust_badge_t3D3Y8"
