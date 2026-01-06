@@ -15,6 +15,11 @@
   /* Font fallbacks: Use Helvetica Neue to match printed pouches (HNW variants) */
   --dv-font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   --dv-heading-family: var(--heading-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
+  /* Spacing variables for consistent medium spacing */
+  --dv-spacing-section: 48px;
+  --dv-spacing-section-small: 24px;
+  --dv-spacing-content: 24px;
+  --dv-spacing-content-small: 16px;
 }
 
 /* ============================================
@@ -441,31 +446,44 @@
 /* Ritual Glance */
 .dv-main-product__ritual-glance {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  flex-direction: row;
+  gap: 24px;
   padding-top: 16px;
+  padding-bottom: 8px;
   border-top: 1px solid var(--dv-border-color);
+  margin-top: 24px;
 }
 
 .dv-main-product__ritual-glance-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.dv-main-product__ritual-glance-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  opacity: 0.7;
+  color: var(--dv-text-color);
 }
 
 .dv-main-product__ritual-glance-label {
   font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--dv-text-light);
+  margin-right: 4px;
 }
 
 .dv-main-product__ritual-glance-value {
   font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
-  font-size: 14px;
+  font-size: 13px;
   color: var(--dv-text-color);
+  font-weight: 500;
 }
 
 /* Social Share */
@@ -509,43 +527,106 @@
 }
 
 .dv-story-card__container {
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 40px;
 }
 
-.dv-story-card__content {
-  padding: 60px 0;
+.dv-story-card__layout {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  align-items: stretch;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 48px 40px;
+  margin: 48px auto;
+  max-width: 1100px;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .dv-story-card__layout {
+    flex-direction: row;
+    gap: 60px;
+    padding: 48px 40px;
+  }
+}
+
+.dv-story-card__accent-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background-color: rgba(193, 113, 41, 0.2);
+}
+
+.dv-story-card__left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  flex: 1.2 1 0;
+}
+
+@media (min-width: 768px) {
+  .dv-story-card__left {
+    text-align: left;
+    align-items: flex-start;
+  }
+}
+
+.dv-story-card__icon-wrapper {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0 0 16px 0;
+}
+
+.dv-story-card__icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 .dv-story-card__title {
-  font-family: var(--heading-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
-  font-size: 36px;
+  font-family: var(--heading-family, Georgia, "Times New Roman", serif);
+  font-size: 32px;
   font-weight: 400;
+  font-style: italic;
   line-height: 1.3;
   color: var(--dv-text-color);
-  margin: 0 0 32px 0;
-  display: flex;
-  align-items: center;
-  gap: 16px;
+  margin: 0;
 }
 
-.dv-story-card__title-icon {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
+.dv-story-card__right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  flex: 1 1 0;
+}
+
+@media (min-width: 768px) {
+  .dv-story-card__right {
+    width: auto;
+  }
 }
 
 .dv-story-card__body {
   font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
-  font-size: 16px;
-  line-height: 1.8;
+  font-size: 15px;
+  line-height: 1.7;
   color: var(--dv-text-color);
-  margin-bottom: 32px;
 }
 
 .dv-story-card__body p {
-  margin: 0 0 16px 0;
+  margin: 0 0 12px 0;
 }
 
 .dv-story-card__body p:last-child {
@@ -553,13 +634,15 @@
 }
 
 .dv-story-card__traditional-benefits {
-  margin: 32px 0;
+  margin: 0;
+  flex: 1;
 }
 
 .dv-story-card__traditional-heading {
-  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
+  font-family: var(--heading-family, Georgia, "Times New Roman", serif);
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 400;
+  font-style: italic;
   color: var(--dv-text-color);
   margin: 0 0 16px 0;
 }
@@ -575,28 +658,49 @@
 
 .dv-story-card__bullet-list li {
   font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.6;
   color: var(--dv-text-color);
-  padding-left: 24px;
-  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
 }
 
-.dv-story-card__bullet-list li::before {
-  content: '•';
-  position: absolute;
-  left: 8px;
-  color: var(--dv-accent);
-  font-weight: 700;
+.dv-story-card__checkmark-wrapper {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+  background-color: #FF8C00;
+  border-radius: 50%;
+  color: #ffffff;
+}
+
+.dv-story-card__checkmark {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2.5;
+}
+
+.dv-story-card__bullet-text {
+  flex: 1;
 }
 
 .dv-story-card__disclaimer {
   font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
-  font-size: 12px;
-  line-height: 1.6;
-  color: var(--dv-text-light);
-  margin: 32px 0 0 0;
-  font-style: italic;
+  font-size: 10px;
+  line-height: 1.5;
+  color: rgba(139, 94, 60, 0.5);
+  margin: 24px 0 0 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: left;
 }
 
 /* ============================================
@@ -613,13 +717,46 @@
   padding: 0 40px;
 }
 
+.dv-detail-grid__section-heading-wrapper {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.dv-detail-grid__section-heading {
+  font-family: var(--heading-family, Georgia, "Times New Roman", serif);
+  font-size: 32px;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.3;
+  color: var(--dv-text-color);
+  margin: 0;
+  position: relative;
+  display: inline-block;
+}
+
+.dv-detail-grid__section-heading::after {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 1px;
+  background-color: rgba(193, 113, 41, 0.3);
+  margin: 12px auto 0;
+}
+
 .dv-detail-grid__layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  padding: 60px 0;
+  gap: 24px;
+  padding: 0;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+@media (max-width: 991px) {
+  .dv-detail-grid__layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
 }
 
 .dv-detail-grid__column {
@@ -631,70 +768,125 @@
   overflow-wrap: break-word;
 }
 
-.dv-detail-grid__left-title,
+.dv-detail-grid__card {
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 16px;
+  padding: 32px;
+  border: 1px solid rgba(193, 113, 41, 0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.dv-detail-grid__tradition-header,
+.dv-detail-grid__facts-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.dv-detail-grid__tradition-icon,
+.dv-detail-grid__facts-icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dv-detail-grid__tradition-icon img,
+.dv-detail-grid__facts-icon img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.dv-detail-grid__tradition-title,
 .dv-detail-grid__facts-title {
-  font-family: var(--heading-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
-  font-size: 28px;
+  font-family: var(--heading-family, Georgia, "Times New Roman", serif);
+  font-size: 24px;
   font-weight: 400;
   line-height: 1.3;
   color: var(--dv-text-color);
-  margin: 0 0 16px 0;
+  margin: 0;
 }
 
-.dv-detail-grid__left-body {
+.dv-detail-grid__tradition-intro {
   font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
-  font-size: 16px;
-  line-height: 1.8;
+  font-size: 14px;
+  line-height: 1.7;
   color: var(--dv-text-color);
+  margin-bottom: 24px;
 }
 
-.dv-detail-grid__left-body p {
-  margin: 0 0 16px 0;
+.dv-detail-grid__tradition-intro p {
+  margin: 0 0 12px 0;
 }
 
-.dv-detail-grid__left-body p:last-child {
+.dv-detail-grid__tradition-intro p:last-child {
   margin-bottom: 0;
 }
 
-.dv-detail-grid__ingredients {
-  margin-bottom: 32px;
+/* ZUTATEN Section (Right Column) */
+.dv-detail-grid__zutaten-section {
+  margin-bottom: 24px;
 }
 
-.dv-detail-grid__ingredients-content {
+.dv-detail-grid__zutaten-title {
   font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
-  font-size: 16px;
-  line-height: 1.8;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(139, 94, 60, 0.6);
+  margin: 0 0 8px 0;
+}
+
+.dv-detail-grid__zutaten-content {
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
+  font-size: 14px;
+  line-height: 1.7;
   color: var(--dv-text-color);
+  font-weight: 500;
 }
 
-.dv-detail-grid__ingredients-content p {
-  margin: 0 0 16px 0;
+.dv-detail-grid__zutaten-content p {
+  margin: 0 0 12px 0;
 }
 
-.dv-detail-grid__ingredients-content p:last-child {
+.dv-detail-grid__zutaten-content p:last-child {
   margin-bottom: 0;
 }
 
-.dv-detail-grid__ingredients-content ul,
-.dv-detail-grid__ingredients-content ol {
-  margin: 16px 0;
-  padding-left: 24px;
+.dv-detail-grid__zutaten-note {
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--dv-text-color);
+  margin: 12px 0 0 0;
+  font-style: italic;
+  opacity: 0.7;
 }
 
-.dv-detail-grid__ingredients-content li {
-  margin-bottom: 8px;
+/* ALLERGENE & HINWEISE Section */
+.dv-detail-grid__allergens-section {
+  margin-bottom: 24px;
 }
 
-.dv-detail-grid__allergens {
-  margin-top: 32px;
-  padding-top: 32px;
-  border-top: 1px solid var(--dv-border-color);
+.dv-detail-grid__allergens-title {
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(139, 94, 60, 0.6);
+  margin: 0 0 8px 0;
 }
 
 .dv-detail-grid__allergens-content {
   font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
-  font-size: 15px;
-  line-height: 1.8;
+  font-size: 14px;
+  line-height: 1.7;
   color: var(--dv-text-color);
 }
 
@@ -706,182 +898,102 @@
   margin-bottom: 0;
 }
 
-.dv-detail-grid__allergens-content ul,
-.dv-detail-grid__allergens-content ol {
-  margin: 12px 0;
-  padding-left: 24px;
-}
-
-.dv-detail-grid__allergens-content li {
-  margin-bottom: 8px;
-}
-
-/* Icon Items */
-.dv-detail-grid__icon-items {
+/* Ingredient Highlights (Left Column) */
+.dv-detail-grid__ingredient-highlights {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  margin-top: 8px;
-}
-
-.dv-detail-grid__icon-item {
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-}
-
-.dv-detail-grid__icon-item-icon {
-  flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-}
-
-.dv-detail-grid__icon-item-icon img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.dv-detail-grid__icon-item-name {
-  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--dv-text-color);
-  margin-bottom: 4px;
-}
-
-.dv-detail-grid__icon-item-desc {
-  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--dv-text-light);
-}
-
-/* Certifications */
-.dv-detail-grid__certifications {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: 12px;
   margin-top: 24px;
 }
 
-.dv-detail-grid__certification {
+.dv-detail-grid__ingredient-highlight {
   display: flex;
-  align-items: center;
   gap: 12px;
+  align-items: flex-start;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  padding: 10px 12px;
+  border: 1px solid rgba(193, 113, 41, 0.05);
 }
 
-.dv-detail-grid__certification-icon {
+.dv-detail-grid__ingredient-highlight-icon {
   width: 32px;
   height: 32px;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--dv-text-color);
 }
 
-.dv-detail-grid__certification-icon img {
-  width: 100%;
-  height: 100%;
+.dv-detail-grid__ingredient-highlight-icon img {
+  width: 24px;
+  height: 24px;
   object-fit: contain;
 }
 
-.dv-detail-grid__certification-label {
-  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
-  font-size: 13px;
-  color: var(--dv-text-color);
+.dv-detail-grid__ingredient-highlight-content {
+  flex: 1;
+  min-width: 0;
 }
 
-/* EU Bio Logo Styles */
-.dv-detail-grid__eu-bio-logo-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 32px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid var(--dv-border-color);
-}
-
-.dv-detail-grid__eu-bio-logo {
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  display: block;
-}
-
-.dv-detail-grid__eu-bio-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--dv-text-color);
-}
-
-.dv-detail-grid__control-code,
-.dv-detail-grid__origin {
-  font-weight: 500;
-}
-
-/* First Ingredients List Styles */
-.dv-detail-grid__first-ingredients {
-  margin-bottom: 32px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid var(--dv-border-color);
-}
-
-.dv-detail-grid__first-ingredients-title {
-  font-family: var(--heading-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 1.3;
-  color: var(--dv-text-color);
-  margin: 0 0 16px 0;
-}
-
-.dv-detail-grid__first-ingredients-content {
-  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
-  font-size: 16px;
-  line-height: 1.8;
-  color: var(--dv-text-color);
-}
-
-.dv-detail-grid__first-ingredients-content p {
-  margin: 0 0 12px 0;
-}
-
-.dv-detail-grid__first-ingredients-content p:last-child {
-  margin-bottom: 0;
-}
-
-.dv-detail-grid__first-ingredients-content ul,
-.dv-detail-grid__first-ingredients-content ol {
-  margin: 12px 0;
-  padding-left: 24px;
-  list-style: none;
-}
-
-.dv-detail-grid__first-ingredients-content li {
-  margin-bottom: 8px;
-  position: relative;
-  padding-left: 20px;
-}
-
-.dv-detail-grid__first-ingredients-content li::before {
-  content: '•';
-  position: absolute;
-  left: 0;
-  color: var(--dv-accent);
-  font-weight: 700;
-}
-
-.dv-detail-grid__first-ingredients-footnote {
+.dv-detail-grid__ingredient-highlight-name {
   font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 14px;
-  line-height: 1.6;
+  font-weight: 700;
   color: var(--dv-text-color);
-  margin-top: 16px;
-  font-style: italic;
-  opacity: 0.8;
+  display: block;
+  margin-bottom: 4px;
 }
+
+.dv-detail-grid__ingredient-highlight-desc {
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
+  font-size: 12px;
+  line-height: 1.6;
+  color: rgba(139, 94, 60, 0.8);
+  margin: 0;
+}
+
+/* Trust Badges (Right Column Bottom) */
+.dv-detail-grid__trust-badges {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 24px;
+  padding: 20px;
+  background-color: rgba(243, 233, 220, 0.5);
+  border-radius: 12px;
+  border: 1px solid rgba(193, 113, 41, 0.05);
+}
+
+.dv-detail-grid__trust-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dv-detail-grid__trust-badge-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dv-detail-grid__trust-badge-icon img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.dv-detail-grid__trust-badge-label {
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--dv-text-color);
+}
+
 
 /* Layout mode adjustments */
 .dv-detail-grid[data-layout-mode="left"] .dv-detail-grid__layout,
@@ -905,37 +1017,44 @@
 }
 
 .dv-daily-ritual__heading {
-  font-family: var(--heading-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
-  font-size: 36px;
+  font-family: var(--heading-family, Georgia, "Times New Roman", serif);
+  font-size: 32px;
   font-weight: 400;
+  font-style: italic;
   line-height: 1.3;
   color: var(--dv-text-color);
-  margin: 0 0 48px 0;
+  margin: 0 0 24px 0;
   text-align: center;
 }
 
 .dv-daily-ritual__steps {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
-  margin-bottom: 48px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
 }
 
 .dv-daily-ritual__step {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
+  align-items: center;
+  text-align: center;
   gap: 12px;
-  padding: 32px 24px;
+  padding: 20px;
   background-color: #ffffff;
-  border-radius: 8px;
-  border: 1px solid var(--dv-border-color);
+  border-radius: 12px;
+  border: 1px solid rgba(193, 113, 41, 0.05);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.dv-daily-ritual__step:hover {
+  border-color: rgba(193, 113, 41, 0.2);
 }
 
 .dv-daily-ritual__step-header {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 12px;
   width: 100%;
@@ -945,52 +1064,54 @@
   width: 40px;
   height: 40px;
   flex-shrink: 0;
+  border-radius: 50%;
+  background-color: rgba(193, 113, 41, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--dv-text-color);
+  transition: all 0.3s ease;
+}
+
+.dv-daily-ritual__step:hover .dv-daily-ritual__step-icon {
+  background-color: var(--dv-text-color);
+  color: #ffffff;
 }
 
 .dv-daily-ritual__step-icon img {
-  width: 100%;
-  height: 100%;
+  width: 24px;
+  height: 24px;
   object-fit: contain;
 }
 
 .dv-daily-ritual__step-heading {
-  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
+  font-family: var(--heading-family, Georgia, "Times New Roman", serif);
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 400;
   color: var(--dv-text-color);
   margin: 0;
-  flex: 1;
+  width: 100%;
 }
 
 .dv-daily-ritual__step-text {
   font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.6;
-  color: var(--dv-text-color);
+  color: rgba(139, 94, 60, 0.8);
   margin: 0;
   width: 100%;
 }
 
 .dv-daily-ritual__quote {
-  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
-  font-size: 16px;
-  line-height: 1.6;
-  color: var(--dv-text-light);
-  text-align: center;
+  font-family: var(--heading-family, Georgia, "Times New Roman", serif);
+  font-size: 18px;
   font-style: italic;
-  margin: 0;
+  line-height: 1.6;
+  color: rgba(139, 94, 60, 0.9);
+  text-align: center;
+  margin: 16px 0 0 0;
 }
 
-@media screen and (max-width: 768px) {
-  .dv-daily-ritual__steps {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-  
-  .dv-daily-ritual__container {
-    padding: 0 20px;
-  }
-}
 
 /* ============================================
    Preparation Tips Section
@@ -1061,13 +1182,9 @@
 }
 
 .dv-complete-ritual__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 48px;
-  gap: 24px;
+  margin-bottom: 32px;
   border-top: 1px solid var(--dv-border-color);
-  padding-top: 48px;
+  padding-top: 32px;
 }
 
 .dv-complete-ritual__header-left {
@@ -1075,9 +1192,10 @@
 }
 
 .dv-complete-ritual__title {
-  font-family: var(--heading-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
-  font-size: 36px;
+  font-family: var(--heading-family, Georgia, "Times New Roman", serif);
+  font-size: 32px;
   font-weight: 400;
+  font-style: italic;
   line-height: 1.3;
   color: var(--dv-text-color);
   margin: 0 0 8px 0;
@@ -1086,47 +1204,32 @@
 .dv-complete-ritual__subtitle {
   font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--dv-text-light);
+  color: rgba(139, 94, 60, 0.7);
   margin: 0;
-}
-
-.dv-complete-ritual__view-all {
-  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--dv-text-color);
-  text-decoration: none;
-  border-bottom: 2px solid var(--dv-accent);
-  padding-bottom: 4px;
-  transition: color 0.2s;
-}
-
-.dv-complete-ritual__view-all:hover {
-  color: var(--dv-accent);
+  text-transform: none;
+  letter-spacing: normal;
 }
 
 .dv-complete-ritual__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
+  gap: 24px;
 }
 
 .dv-complete-ritual__card {
-  background-color: #ffffff;
-  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
   overflow: hidden;
-  border: 1px solid var(--dv-border-color);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid rgba(193, 113, 41, 0.08);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .dv-complete-ritual__card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border-color: rgba(193, 113, 41, 0.15);
 }
 
 .dv-complete-ritual__card-link {
@@ -1137,83 +1240,69 @@
 
 .dv-complete-ritual__card-inner {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
 }
 
-.dv-complete-ritual__image-wrapper {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  overflow: hidden;
-  background-color: #f5f5f5;
-}
-
-.dv-complete-ritual__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.dv-complete-ritual__placeholder {
+.dv-complete-ritual__icon-wrapper {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  background-color: rgba(243, 233, 220, 0.8);
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+}
+
+.dv-complete-ritual__icon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  display: block;
+}
+
+.dv-complete-ritual__icon-placeholder {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.5;
 }
 
 .dv-complete-ritual__content {
-  padding: 24px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 4px;
   flex: 1;
+  min-width: 0;
+}
+
+.dv-complete-ritual__card-title {
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--dv-text-color);
+  margin: 0;
 }
 
 .dv-complete-ritual__label {
   font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
-  font-size: 11px;
-  font-weight: 700;
+  font-size: 10px;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--dv-accent);
+  color: rgba(139, 94, 60, 0.6);
   margin: 0;
-}
-
-.dv-complete-ritual__card-title {
-  font-family: var(--heading-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
-  font-size: 22px;
-  font-weight: 400;
-  line-height: 1.3;
-  color: var(--dv-text-color);
-  margin: 0;
-}
-
-.dv-complete-ritual__benefit {
-  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--dv-text-light);
-  margin: 0;
-}
-
-.dv-complete-ritual__button-wrapper {
-  margin-top: auto;
-  padding-top: 16px;
-}
-
-.dv-complete-ritual__button {
-  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--dv-text-color);
-  display: inline-block;
-  padding-bottom: 4px;
-  border-bottom: 2px solid var(--dv-accent);
 }
 
 /* ============================================
-   Compliance Section (Static Display)
+   Compliance Section (Accordion)
    ============================================ */
 
 .dv-compliance-accordion {
@@ -1224,6 +1313,35 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 0 40px;
+}
+
+.dv-compliance-accordion__container .details {
+  border-bottom: 1px solid var(--dv-border-color);
+}
+
+.dv-compliance-accordion__container .details__summary {
+  cursor: pointer;
+  background-color: transparent;
+  padding: 12px 0;
+}
+
+.dv-compliance-accordion__container .details__content {
+  padding: 0 0 12px 0;
+}
+
+.dv-compliance-accordion__unified-content {
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--dv-text-color);
+}
+
+.dv-compliance-accordion__unified-content p {
+  margin: 0 0 12px 0;
+}
+
+.dv-compliance-accordion__unified-content p:last-child {
+  margin-bottom: 0;
 }
 
 .dv-compliance-accordion__heading {
@@ -1343,6 +1461,15 @@
   padding: 0 40px;
 }
 
+.dv-eu-bio-legal__container .details {
+  border-bottom: 1px solid var(--dv-border-color);
+}
+
+.dv-eu-bio-legal__container .details__summary {
+  cursor: pointer;
+  background-color: transparent;
+}
+
 .dv-eu-bio-legal__heading {
   font-family: var(--heading-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 28px;
@@ -1434,6 +1561,15 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 0 40px;
+}
+
+.dv-nutrition-table__container .details {
+  border-bottom: 1px solid var(--dv-border-color);
+}
+
+.dv-nutrition-table__container .details__summary {
+  cursor: pointer;
+  background-color: transparent;
 }
 
 .dv-nutrition-table__heading {
@@ -1529,6 +1665,15 @@
   .dv-complete-ritual__grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  
+  .dv-complete-ritual__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .dv-complete-ritual__view-all {
+    align-self: flex-start;
+  }
 }
 
 @media (max-width: 767px) {
@@ -1559,18 +1704,191 @@
     font-size: 32px;
   }
   
+  .dv-story-card__container {
+    padding: 0 24px;
+  }
+  
+  .dv-story-card__layout {
+    flex-direction: column;
+    gap: 32px;
+    padding: 32px 24px;
+    margin: 40px auto;
+  }
+  
+  .dv-story-card__left {
+    align-items: flex-start;
+    text-align: left;
+    gap: 16px;
+  }
+  
+  .dv-story-card__icon-wrapper {
+    min-width: 60px;
+    min-height: 60px;
+    max-width: 80px;
+    max-height: 80px;
+    margin: 0 0 12px 0;
+  }
+  
+  .dv-story-card__icon-wrapper img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .dv-story-card__title {
+    font-size: 28px;
+  }
+  
+  .dv-story-card__body {
+    font-size: 14px;
+  }
+  
+  .dv-story-card__traditional-heading {
+    font-size: 16px;
+    margin-bottom: 14px;
+  }
+  
+  .dv-story-card__bullet-list {
+    gap: 10px;
+  }
+  
+  .dv-story-card__bullet-list li {
+    font-size: 14px;
+  }
+  
+  .dv-story-card__checkmark-wrapper {
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+  }
+  
+  .dv-story-card__checkmark {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .dv-story-card__disclaimer {
+    text-align: left;
+    font-size: 9px;
+    margin-top: 20px;
+  }
+  
+  .dv-story-card__right {
+    width: 100%;
+  }
+  
   .dv-story-card__title,
   .dv-daily-ritual__heading,
   .dv-complete-ritual__title {
     font-size: 28px;
   }
   
-  .dv-complete-ritual__grid {
-    grid-template-columns: 1fr;
+  .dv-story-card__body,
+  .dv-detail-grid__left-body,
+  .dv-detail-grid__ingredients-content,
+  .dv-detail-grid__allergens-content {
+    font-size: 15px;
   }
   
-  .dv-detail-grid__certifications {
+  .dv-daily-ritual__heading {
+    font-size: 28px;
+    margin-bottom: 24px;
+  }
+  
+  .dv-main-product__ritual-glance {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  
+  .dv-main-product__ritual-glance-item {
+    flex: 0 1 auto;
+    min-width: calc(50% - 6px);
+  }
+  
+  .dv-main-product__ritual-glance-label {
+    font-size: 11px;
+  }
+  
+  .dv-main-product__ritual-glance-value {
+    font-size: 12px;
+  }
+  
+  .dv-daily-ritual__steps {
+    gap: 20px;
+  }
+  
+  .dv-daily-ritual__quote {
+    font-size: 14px;
+    margin-top: 16px;
+  }
+  
+  .dv-complete-ritual__grid {
     grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .dv-complete-ritual__card-inner {
+    gap: 12px;
+    padding: 14px;
+  }
+  
+  .dv-complete-ritual__icon-wrapper {
+    width: 44px;
+    height: 44px;
+  }
+  
+  .dv-complete-ritual__icon {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .dv-complete-ritual__card-title {
+    font-size: 15px;
+  }
+  
+  .dv-complete-ritual__label {
+    font-size: 9px;
+  }
+  
+  .dv-complete-ritual__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding-top: 32px;
+  }
+  
+  .dv-detail-grid__card {
+    padding: 24px;
+  }
+  
+  .dv-detail-grid__trust-badges {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 16px;
+  }
+  
+  .dv-detail-grid__layout {
+    gap: 24px;
+  }
+  
+  .dv-detail-grid__tradition-title,
+  .dv-detail-grid__facts-title {
+    font-size: 20px;
+  }
+  
+  .dv-detail-grid__tradition-icon,
+  .dv-detail-grid__facts-icon {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .dv-detail-grid__tradition-icon img,
+  .dv-detail-grid__facts-icon img {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .dv-daily-ritual__container {
+    padding: 0 24px;
   }
   
   .dv-main-product__thumbnails {
@@ -1579,6 +1897,7 @@
   }
   
   .dv-nutrition-table__container,
+  .dv-eu-bio-legal__container,
   .dv-preparation-tips__container {
     padding: 0 24px;
   }

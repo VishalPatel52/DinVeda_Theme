@@ -36,7 +36,7 @@
         "add_to_cart_label": "IN DEN WARENKORB",
         "enable_buy_now": true,
         "buy_now_label": "Jetzt kaufen",
-        "show_ritual_glance": false,
+        "show_ritual_glance": true,
         "time_fallback": "",
         "prep_fallback": "",
         "duration_fallback": "",
@@ -53,8 +53,8 @@
         "show_disclaimer": true,
         "disclaimer_text": "AYURVEDISCH INSPIRIERTE GENUSS-TRADITION. KEIN HEILVERSPRECHEN.",
         "background_color": "#f3e9dc",
-        "padding_top": 0,
-        "padding_bottom": 0
+        "padding_top": 48,
+        "padding_bottom": 48
       }
     },
     "dv_detail_grid": {
@@ -72,45 +72,8 @@
         "left_title": "{{ product.metafields.custom.dv_detail_left_title.value }}",
         "left_body": "{{ product.metafields.custom.dv_detail_left_body | metafield_tag }}",
         "show_when_empty": true,
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
-    "dv_preparation_tips": {
-      "type": "dv-preparation-tips",
-      "blocks": {
-        "preparation_recipe_iaNByX": {
-          "type": "preparation_recipe",
-          "settings": {
-            "icon": "☕",
-            "recipe_text": "Verbinden|1 TL Pulver mit warmem Wasser, etwas Zitrone & Honig mischen. Bereichern|½ TL in Smoothies oder Joghurt einrühren für einen Hauch von Rose & Balance. Genießen|Eine Prise über warmen Milchreis, Porridge oder Obst geben für zarten Rosenduft."
-          }
-        },
-        "preparation_recipe_xdBLLM": {
-          "type": "preparation_recipe",
-          "settings": {
-            "icon": "☕",
-            "recipe_text": "1 TL in warme Mandelmilch einrühren"
-          }
-        },
-        "preparation_recipe_ibE7ip": {
-          "type": "preparation_recipe",
-          "settings": {
-            "icon": "☕",
-            "recipe_text": "1 TL in warme Mandelmilch einrühren"
-          }
-        }
-      },
-      "block_order": [
-        "preparation_recipe_iaNByX",
-        "preparation_recipe_xdBLLM",
-        "preparation_recipe_ibE7ip"
-      ],
-      "settings": {
-        "heading": "Anwendung & Zubereitung",
-        "show_when_empty": false,
-        "padding_top": 0,
-        "padding_bottom": 0
+        "padding_top": 48,
+        "padding_bottom": 48
       }
     },
     "dv_nutrition_table": {
@@ -120,8 +83,8 @@
         "heading": "Nährwertangaben (pro 100 g)",
         "nutrition_content": "<p>cxfc&lt;afSDFAFAS</p><p>FDSAFAS</p><p>FDASFDAS</p><p>DFDAS</p><p></p>",
         "show_when_empty": false,
-        "padding_top": 80,
-        "padding_bottom": 80
+        "padding_top": 24,
+        "padding_bottom": 24
       }
     },
     "dv_daily_ritual": {
@@ -159,8 +122,8 @@
         "heading": "Dein tägliches Ritual",
         "concluding_quote": "",
         "show_when_empty": false,
-        "padding_top": 0,
-        "padding_bottom": 0
+        "padding_top": 48,
+        "padding_bottom": 48
       }
     },
     "dv_compliance_accordion": {
@@ -173,8 +136,8 @@
         "legal_label": "Rechtlicher Hinweis",
         "legal_content": "",
         "show_when_empty": false,
-        "padding_top": 0,
-        "padding_bottom": 0
+        "padding_top": 24,
+        "padding_bottom": 24
       }
     },
     "dv_complete_ritual": {
@@ -227,8 +190,8 @@
         "button_label": "",
         "show_empty_message": false,
         "empty_message": "No products available",
-        "padding_top": 0,
-        "padding_bottom": 0
+        "padding_top": 48,
+        "padding_bottom": 48
       }
     }
   },
@@ -236,10 +199,9 @@
     "dv_main_product",
     "dv_story_card",
     "dv_detail_grid",
-    "dv_preparation_tips",
-    "dv_nutrition_table",
     "dv_daily_ritual",
+    "dv_complete_ritual",
     "dv_compliance_accordion",
-    "dv_complete_ritual"
+    "dv_nutrition_table"
   ]
 }

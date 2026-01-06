@@ -27,11 +27,6 @@
             <p class="dv-complete-ritual__subtitle">{{ section.settings.subheading | escape }}</p>
           {% endif %}
         </div>
-        {% if section.settings.view_all_link != blank %}
-          <a href="{{ section.settings.view_all_link }}" class="dv-complete-ritual__view-all">
-            {{ section.settings.view_all_label | default: 'Alle Rituale ansehen' | escape }}
-          </a>
-        {% endif %}
       </div>
     {% endif %}
 
@@ -70,37 +65,26 @@
               {% endif %}
               
               <div class="dv-complete-ritual__card-inner">
-                
-                {%- comment -%} Image {%- endcomment -%}
-                {% if card_image != blank %}
-                  <div class="dv-complete-ritual__image-wrapper">
-                    {{ card_image | image_url: width: 400 | image_tag: alt: card_image.alt | default: card_title, loading: 'lazy', class: 'dv-complete-ritual__image' }}
-                  </div>
-                {% else %}
-                  <div class="dv-complete-ritual__image-wrapper dv-complete-ritual__placeholder">
-                    {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-                  </div>
-                {% endif %}
-
-                {%- comment -%} Content {%- endcomment -%}
-                <div class="dv-complete-ritual__content">
-                  {% if card_label != blank %}
-                    <p class="dv-complete-ritual__label">{{ card_label | escape }}</p>
+                {%- comment -%} Icon in beige square on left {%- endcomment -%}
+                <div class="dv-complete-ritual__icon-wrapper">
+                  {% if card_image != blank %}
+                    {{ card_image | image_url: width: 80 | image_tag: alt: card_image.alt | default: card_title, loading: 'lazy', class: 'dv-complete-ritual__icon' }}
+                  {% else %}
+                    <div class="dv-complete-ritual__icon-placeholder">
+                      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                    </div>
                   {% endif %}
-                  
+                </div>
+
+                {%- comment -%} Text content on right {%- endcomment -%}
+                <div class="dv-complete-ritual__content">
                   {% if card_title != blank %}
                     <h3 class="dv-complete-ritual__card-title">{{ card_title | escape }}</h3>
                   {% endif %}
                   
-                  {% if card_benefit != blank %}
-                    <p class="dv-complete-ritual__benefit">{{ card_benefit | escape }}</p>
+                  {% if card_label != blank %}
+                    <p class="dv-complete-ritual__label">{{ card_label | escape }}</p>
                   {% endif %}
-                  
-                  <div class="dv-complete-ritual__button-wrapper">
-                    <span class="dv-complete-ritual__button">
-                      {{ block.settings.button_label | default: section.settings.button_label | default: 'ANSEHEN' | escape }}
-                    </span>
-                  </div>
                 </div>
 
               </div>
@@ -215,8 +199,8 @@
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Image",
-          "info": "Optional: Override product featured image"
+          "label": "Icon Image",
+          "info": "Icon/emoji image for the card (displayed in beige square on left). If empty, uses product featured image."
         },
         {
           "type": "text",
@@ -227,20 +211,8 @@
         {
           "type": "text",
           "id": "label",
-          "label": "Label",
-          "info": "Optional label above title (e.g., 'Für die Nacht')"
-        },
-        {
-          "type": "textarea",
-          "id": "benefit",
-          "label": "Benefit Text",
-          "info": "Optional: Override product description"
-        },
-        {
-          "type": "text",
-          "id": "button_label",
-          "label": "Button Label",
-          "default": "ANSEHEN"
+          "label": "Subtitle",
+          "info": "Uppercase subtitle text below title (e.g., 'FÜR DIE NACHT', 'FÜR RUHE', 'ALLE RITUALE')"
         },
         {
           "type": "url",

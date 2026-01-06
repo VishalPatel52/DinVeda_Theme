@@ -26,11 +26,25 @@
   # Use metafield_tag filter to properly render richtext content
   assign story_content_metafield = product.metafields.custom.dv_story_content
   
-  assign traditional_bullets = product.metafields.custom.dv_traditional_benefits
+  # Icon size from settings (default 140px)
+  assign icon_size = section.settings.icon_size | default: 140
   
-  # Parse traditional benefits bullets (if available)
+  # Check for checklist items from blocks (priority) or metafields (fallback)
+  assign has_checklist_blocks = false
+  assign checklist_items_count = 0
+  if section.blocks.size > 0
+    for block in section.blocks
+      if block.type == 'checklist_item'
+        assign has_checklist_blocks = true
+        assign checklist_items_count = checklist_items_count | plus: 1
+      endif
+    endfor
+  endif
+  
+  # Fallback to metafields if no blocks
+  assign traditional_bullets = product.metafields.custom.dv_traditional_benefits
   assign bullets_array = '' | split: ','
-  if traditional_bullets != blank
+  if has_checklist_blocks == false and traditional_bullets != blank
     assign bullets_raw = traditional_bullets | newline_to_br | split: '<br />'
     assign item_count = 0
     for line in bullets_raw
@@ -49,7 +63,7 @@
   
   # Check if we have content to show
   assign has_content = false
-  if story_title != blank or story_content_metafield != blank or section.settings.content != blank or bullets_array.size > 0
+  if story_title != blank or story_content_metafield != blank or section.settings.content != blank or has_checklist_blocks or bullets_array.size > 0
     assign has_content = true
   endif
 -%}
@@ -70,52 +84,90 @@
   {% endstyle %}
   
   <div class="dv-story-card__container">
-    <div class="dv-story-card__content">
+    <div class="dv-story-card__layout">
+      {%- comment -%} Left border accent {%- endcomment -%}
+      <div class="dv-story-card__accent-line"></div>
       
-      {%- comment -%} Story Title with Icon {%- endcomment -%}
-      {% if story_title != blank %}
-        <h2 class="dv-story-card__title">
-          {% if section.settings.show_fox_icon and section.settings.fox_icon != blank %}
-            <img src="{{ section.settings.fox_icon | image_url: width: 40 }}" alt="" class="dv-story-card__title-icon" width="40" height="40">
-          {% endif %}
-          {{ story_title | escape }}
-        </h2>
-      {% endif %}
-      
-      {%- comment -%} Story Content 
-        Uses metafield_tag filter for richtext metafields - this properly renders
-        formatted content stored in Shopify's richtext format. If HTML tags are
-        visible as text, the content was likely pasted as raw HTML instead of
-        being formatted through the richtext editor in Shopify Admin.
-      {% endcomment -%}
-      {% if story_content_metafield != blank %}
-        <div class="dv-story-card__body rte">
-          {{ story_content_metafield | metafield_tag }}
-        </div>
-      {% elsif section.settings.content != blank %}
-        <div class="dv-story-card__body rte">
-          {{ section.settings.content }}
-        </div>
-      {% endif %}
+      {%- comment -%} Left Column: Icon, Title, and Body Content {%- endcomment -%}
+      <div class="dv-story-card__left">
+        {% if section.settings.show_fox_icon and section.settings.fox_icon != blank %}
+          <div class="dv-story-card__icon-wrapper" style="width: {{ icon_size }}px; height: {{ icon_size }}px;">
+            <img src="{{ section.settings.fox_icon | image_url: width: icon_size | times: 2 }}" alt="" class="dv-story-card__icon" width="{{ icon_size }}" height="{{ icon_size }}">
+          </div>
+        {% endif %}
+        {% if story_title != blank %}
+          <h2 class="dv-story-card__title">
+            {{ story_title | escape }}
+          </h2>
+        {% endif %}
+        {%- comment -%} Story Content - Moved to left column
+          Uses metafield_tag filter for richtext metafields - this properly renders
+          formatted content stored in Shopify's richtext format. If HTML tags are
+          visible as text, the content was likely pasted as raw HTML instead of
+          being formatted through the richtext editor in Shopify Admin.
+        {% endcomment -%}
+        {% if story_content_metafield != blank %}
+          <div class="dv-story-card__body rte">
+            {{ story_content_metafield | metafield_tag }}
+          </div>
+        {% elsif section.settings.content != blank %}
+          <div class="dv-story-card__body rte">
+            {{ section.settings.content }}
+          </div>
+        {% endif %}
+      </div>
 
-      {%- comment -%} Traditional Benefits Bullets {%- endcomment -%}
-      {% if bullets_array.size > 0 %}
-        <div class="dv-story-card__traditional-benefits">
-          <h3 class="dv-story-card__traditional-heading">Traditionell geschätzt für …</h3>
-          <ul class="dv-story-card__bullet-list">
-            {% for bullet in bullets_array %}
-              <li>{{ bullet | escape }}</li>
-            {% endfor %}
-          </ul>
-        </div>
-      {% endif %}
+      {%- comment -%} Right Column: Heading, Checklist, Disclaimer {%- endcomment -%}
+      <div class="dv-story-card__right">
+        {%- comment -%} Traditional Benefits Checklist 
+          Priority: Blocks from theme editor
+          Fallback: Metafields (custom.dv_traditional_benefits)
+        {% endcomment -%}
+        {% if has_checklist_blocks or bullets_array.size > 0 %}
+          <div class="dv-story-card__traditional-benefits">
+            <h3 class="dv-story-card__traditional-heading">
+              {{ section.settings.checklist_heading | default: 'Traditionell geschätzt für …' | escape }}
+            </h3>
+            <ul class="dv-story-card__bullet-list">
+              {%- comment -%} Use blocks if available {%- endcomment -%}
+              {% if has_checklist_blocks %}
+                {% for block in section.blocks %}
+                  {% if block.type == 'checklist_item' and block.settings.text != blank %}
+                    <li {{ block.shopify_attributes }}>
+                      <div class="dv-story-card__checkmark-wrapper">
+                        <svg class="dv-story-card__checkmark" width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M13.5 4L6 11.5L2.5 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </div>
+                      <span class="dv-story-card__bullet-text">{{ block.settings.text | escape }}</span>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              {%- comment -%} Fallback to metafields {%- endcomment -%}
+              {% else %}
+                {% for bullet in bullets_array %}
+                  <li>
+                    <div class="dv-story-card__checkmark-wrapper">
+                      <svg class="dv-story-card__checkmark" width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13.5 4L6 11.5L2.5 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                    <span class="dv-story-card__bullet-text">{{ bullet | escape }}</span>
+                  </li>
+                {% endfor %}
+              {% endif %}
+            </ul>
+          </div>
+        {% endif %}
 
-      {%- comment -%} Disclaimer {%- endcomment -%}
-      {% if section.settings.show_disclaimer %}
-        <p class="dv-story-card__disclaimer">
-          {{ section.settings.disclaimer_text | default: 'AYURVEDISCH INSPIRIERTE GENUSS-TRADITION. KEIN HEILVERSPRECHEN.' | escape }}
-        </p>
-      {% endif %}
+        {%- comment -%} Disclaimer {%- endcomment -%}
+        {% if section.settings.show_disclaimer %}
+          <p class="dv-story-card__disclaimer">
+            {{ section.settings.disclaimer_text | default: 'AYURVEDISCH INSPIRIERTE GENUSS-TRADITION. KEIN HEILVERSPRECHEN.' | escape }}
+          </p>
+        {% endif %}
+
+      </div>
 
     </div>
   </div>
@@ -158,18 +210,44 @@
     {
       "type": "checkbox",
       "id": "show_fox_icon",
-      "label": "Show fox icon",
+      "label": "Show animal icon",
       "default": true
     },
     {
       "type": "image_picker",
       "id": "fox_icon",
-      "label": "Fox icon image",
-      "info": "Icon to display next to story title"
+      "label": "Animal icon image",
+      "info": "Animal icon to display above story title (fox, bear, butterfly, etc.)"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size",
+      "min": 80,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 140,
+      "info": "Size of the animal icon in pixels"
     },
     {
       "type": "header",
-      "content": "Disclaimer"
+      "content": "Right Column - Checklist Section"
+    },
+    {
+      "type": "text",
+      "id": "checklist_heading",
+      "label": "Checklist Title",
+      "default": "Traditionell geschätzt für …",
+      "info": "The heading text displayed above the checklist items (e.g., 'Traditionell geschätzt für …')"
+    },
+    {
+      "type": "paragraph",
+      "content": "Checklist items are added via blocks below. Click 'Add block' and select 'Checklist Item' to add individual bullet points."
+    },
+    {
+      "type": "header",
+      "content": "Right Column - Disclaimer"
     },
     {
       "type": "checkbox",
@@ -180,8 +258,9 @@
     {
       "type": "text",
       "id": "disclaimer_text",
-      "label": "Disclaimer text",
-      "default": "AYURVEDISCH INSPIRIERTE GENUSS-TRADITION. KEIN HEILVERSPRECHEN."
+      "label": "Disclaimer Text",
+      "default": "AYURVEDISCH INSPIRIERTE GENUSS-TRADITION. KEIN HEILVERSPRECHEN.",
+      "info": "Text displayed at the bottom of the right column (shown in uppercase, smaller font)"
     },
     {
       "type": "header",
@@ -205,7 +284,7 @@
       "max": 120,
       "step": 8,
       "unit": "px",
-      "default": 80
+      "default": 48
     },
     {
       "type": "range",
@@ -215,7 +294,48 @@
       "max": 120,
       "step": 8,
       "unit": "px",
-      "default": 80
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "checklist_item",
+      "name": "Checklist Item",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Bullet Point Text",
+          "default": "Erdende Wärme an kalten Tagen",
+          "info": "Text for this individual checklist item. Each block becomes one bullet point with a checkmark."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DV Story Card",
+      "blocks": [
+        {
+          "type": "checklist_item",
+          "settings": {
+            "text": "Erdende Wärme an kalten Tagen"
+          }
+        },
+        {
+          "type": "checklist_item",
+          "settings": {
+            "text": "Einen klaren, fokussierten Start"
+          }
+        },
+        {
+          "type": "checklist_item",
+          "settings": {
+            "text": "Innere Balance und Wohlbefinden"
+          }
+        }
+      ]
     }
   ]
 }
