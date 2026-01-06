@@ -86,6 +86,7 @@
   gap: var(--space-5);
   width: 100%;
   align-items: stretch; /* Ensure all cards stretch to same height */
+  align-content: start; /* Align grid items to start for consistent top alignment */
 }
 
 .dinveda-ritual-picker__grid--grid_4 {
@@ -123,6 +124,9 @@
   border: 1px solid transparent;
   position: relative;
   overflow: visible; /* Changed from hidden to allow overlay to extend outside */
+  /* Ensure consistent alignment */
+  align-items: stretch;
+  justify-content: flex-start;
 }
 
 /* Card link wrapper - makes entire card clickable */
@@ -322,6 +326,7 @@
   position: relative;
   /* Ensure content grows evenly and pushes button to bottom */
   align-items: stretch; /* Ensure all children align */
+  justify-content: flex-start; /* Align content to start for consistent baseline */
 }
 
 /* Phase Label - tiny uppercase tracking */
@@ -340,6 +345,8 @@
   overflow: hidden;
   text-overflow: ellipsis; /* Show ellipsis if text is too long */
   flex-shrink: 0; /* Prevent shrinking */
+  /* Ensure consistent baseline alignment */
+  min-height: calc((var(--design-body-font-size) - 4px) * 1.4);
 }
 
 /* Blend Name - accent color, medium size */
@@ -359,6 +366,8 @@
   line-clamp: 2;
   -webkit-box-orient: vertical;
   flex-shrink: 0; /* Prevent shrinking */
+  /* Add minimum height for single-line titles to ensure consistent baseline */
+  min-height: calc(var(--design-h3-size) * 1.3);
 }
 
 /* Quote Block */
@@ -372,6 +381,14 @@
   flex-direction: column;
   gap: 4px;
   width: 100%;
+  /* Updated: Include attribution-wrapper height in calculation for proper alignment */
+  min-height: calc(
+    (var(--design-body-font-size) - 2px) * 1.5 * 2 + /* quote-line 2 lines */
+    var(--dv-space-quote-to-descriptor) +
+    (var(--design-body-font-size) - 2px) * 1.5 * 2 + /* descriptor 2 lines */
+    var(--dv-space-descriptor-to-attrib) +
+    84px /* attribution-wrapper min-height */
+  );
 }
 
 .dinveda-ritual-picker__quote-line {
@@ -421,21 +438,37 @@
   flex-shrink: 0;
   width: 100%;
   min-height: 84px; /* Consistent height: 40px image + 4px gap + 36px buttons + 4px gap */
+  /* Ensure consistent alignment */
+  align-items: flex-start;
+  justify-content: flex-start;
+  /* Ensure it doesn't overflow */
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .dinveda-ritual-picker__attribution-line {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px; /* Reduced from 8px to 4px for tighter spacing */
   flex-shrink: 1; /* Allow shrinking to fit */
   min-height: 40px; /* Match animal image height */
   width: 100%;
   overflow: hidden;
+  /* Ensure consistent baseline alignment */
+  align-items: center;
+  /* Ensure proper width constraints */
+  min-width: 0;
+  max-width: 100%;
 }
 
 .dinveda-ritual-picker__attribution-line .dinveda-ritual-picker__animal-name {
   flex: 1;
   min-width: 0; /* Allow text truncation */
+  /* Ensure text truncates properly */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
 }
 
 .dinveda-ritual-picker__animal-image {
@@ -444,6 +477,9 @@
   object-fit: contain;
   flex-shrink: 0;
   border-radius: 50%;
+  /* Prevent image from causing overflow */
+  max-width: 40px;
+  max-height: 40px;
 }
 
 .dinveda-ritual-picker__action-buttons {
@@ -453,6 +489,8 @@
   flex-shrink: 0;
   width: 100%;
   justify-content: flex-start;
+  /* Add minimum height to match button height for consistent alignment */
+  min-height: 36px;
 }
 
 .dinveda-ritual-picker__add-icon {
@@ -699,10 +737,22 @@
   
   .dinveda-ritual-picker__attribution-line {
     min-height: 32px; /* Match animal image height on mobile */
+    gap: 4px; /* Reduced gap on mobile too */
   }
   
   .dinveda-ritual-picker__attribution-wrapper {
     min-height: 72px; /* Consistent height on mobile: 32px image + 4px gap + 32px buttons + 4px gap */
+  }
+  
+  .dinveda-ritual-picker__quote-block {
+    /* Update mobile min-height to include attribution-wrapper */
+    min-height: calc(
+      (var(--design-body-font-size) - 2px) * 1.5 * 2 + /* quote-line 2 lines */
+      var(--dv-space-quote-to-descriptor) +
+      (var(--design-body-font-size) - 2px) * 1.5 * 2 + /* descriptor 2 lines */
+      var(--dv-space-descriptor-to-attrib) +
+      72px /* attribution-wrapper min-height on mobile */
+    );
   }
   
   .dinveda-ritual-picker__add-icon {
