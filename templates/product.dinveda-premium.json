@@ -50,6 +50,8 @@
         "content": "",
         "show_when_empty": false,
         "show_fox_icon": true,
+        "icon_size": 140,
+        "checklist_heading": "Traditionell geschätzt für …",
         "show_disclaimer": true,
         "disclaimer_text": "AYURVEDISCH INSPIRIERTE GENUSS-TRADITION. KEIN HEILVERSPRECHEN.",
         "background_color": "#f3e9dc",
@@ -59,32 +61,98 @@
     },
     "dv_detail_grid": {
       "type": "dv-detail-grid",
+      "blocks": {
+        "ingredient_item_z7UMhM": {
+          "type": "ingredient_item",
+          "settings": {
+            "name": "Kurkuma",
+            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+          }
+        },
+        "ingredient_item_rDhP79": {
+          "type": "ingredient_item",
+          "settings": {
+            "name": "Kurkuma",
+            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+          }
+        },
+        "ingredient_item_AeBR4w": {
+          "type": "ingredient_item",
+          "settings": {
+            "name": "Kurkuma",
+            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+          }
+        },
+        "ingredient_item_LXJQVN": {
+          "type": "ingredient_item",
+          "settings": {
+            "name": "Kurkuma",
+            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+          }
+        },
+        "ingredient_item_kW3PkT": {
+          "type": "ingredient_item",
+          "settings": {
+            "name": "Kurkuma",
+            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+          }
+        },
+        "trust_badge_xE3CQ9": {
+          "type": "trust_badge",
+          "settings": {
+            "label": "BIO-Zertifiziert"
+          }
+        },
+        "trust_badge_QFiiCR": {
+          "type": "trust_badge",
+          "settings": {
+            "label": "BIO-Zertifiziert"
+          }
+        },
+        "trust_badge_cyxEFM": {
+          "type": "trust_badge",
+          "settings": {
+            "label": "BIO-Zertifiziert"
+          }
+        },
+        "trust_badge_t3D3Y8": {
+          "type": "trust_badge",
+          "settings": {
+            "label": "BIO-Zertifiziert"
+          }
+        },
+        "ingredient_item_ckJaHV": {
+          "type": "ingredient_item",
+          "settings": {
+            "name": "Kurkuma",
+            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+          }
+        }
+      },
+      "block_order": [
+        "ingredient_item_z7UMhM",
+        "ingredient_item_rDhP79",
+        "ingredient_item_AeBR4w",
+        "ingredient_item_LXJQVN",
+        "ingredient_item_kW3PkT",
+        "trust_badge_xE3CQ9",
+        "trust_badge_QFiiCR",
+        "trust_badge_cyxEFM",
+        "trust_badge_t3D3Y8",
+        "ingredient_item_ckJaHV"
+      ],
       "settings": {
+        "section_heading": "Dein Ritual im Detail",
         "layout_mode": "both",
+        "tradition_title": "Tradition in der Ayurveda-Küche",
+        "tradition_body": "",
         "facts_title": "{{ product.metafields.custom.dv_facts_title.value }}",
-        "eu_bio_logo": "shopify://shop_images/EU-Okp-Logo_3x_259c6b5e-d0e6-4004-ae12-9e6a441c3e3f.png",
-        "eu_bio_logo_size": 50,
-        "control_code": "DE-ÖKO-037",
-        "origin": "EU-Landwirtschaft",
         "first_ingredients": "",
-        "ingredients_content": "{{ product.metafields.custom.dv_ingredients | metafield_tag }}",
-        "allergens_notes": "{{ product.metafields.custom.dv_allergens_notes | metafield_tag }}",
-        "left_title": "{{ product.metafields.custom.dv_detail_left_title.value }}",
-        "left_body": "{{ product.metafields.custom.dv_detail_left_body | metafield_tag }}",
+        "organic_note": "*aus kontrolliert biologischem Anbau",
+        "allergens_notes": "<p>{{ product.metafields.custom.dv_allergens_notes | metafield_tag }}</p>",
         "show_when_empty": true,
         "padding_top": 48,
         "padding_bottom": 48
-      }
-    },
-    "dv_nutrition_table": {
-      "type": "dv-nutrition-table",
-      "settings": {
-        "accordion_title": "Nährwertangaben (pro 100 g)",
-        "heading": "Nährwertangaben (pro 100 g)",
-        "nutrition_content": "<p>cxfc&lt;afSDFAFAS</p><p>FDSAFAS</p><p>FDASFDAS</p><p>DFDAS</p><p></p>",
-        "show_when_empty": false,
-        "padding_top": 24,
-        "padding_bottom": 24
       }
     },
     "dv_daily_ritual": {
@@ -120,10 +188,21 @@
       ],
       "settings": {
         "heading": "Dein tägliches Ritual",
-        "concluding_quote": "",
+        "concluding_quote": "fdsfsda",
         "show_when_empty": false,
-        "padding_top": 48,
-        "padding_bottom": 48
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "dv_nutrition_table": {
+      "type": "dv-nutrition-table",
+      "settings": {
+        "accordion_title": "Nährwertangaben (pro 100 g)",
+        "heading": "Nährwertangaben (pro 100 g)",
+        "nutrition_content": "<p>cxfc&lt;afSDFAFAS</p><p>FDSAFAS</p><p>FDASFDAS</p><p>DFDAS</p><p></p>",
+        "show_when_empty": false,
+        "padding_top": 24,
+        "padding_bottom": 24
       }
     },
     "dv_compliance_accordion": {
@@ -132,9 +211,9 @@
         "accordion_title": "Wichtige Hinweise & Lagerung",
         "heading": "Wichtige Hinweise",
         "storage_label": "Lagerung",
-        "storage_content": "",
+        "storage_content": "<p><strong>Ohne Zusätze – Rein & Natürlich</strong><br/><br/>• keine Aromen<br/><br/>• keine Füllstoffe<br/><br/>• keine Zusatzstoffe<br/><br/>• 100 % Bio & vegan<br/><br/>• in Deutschland gemischt & abgefüllt<br/><br/><br/><br/><strong>Allergenhinweis:</strong><br/><br/>Kann Spuren von Nüssen, Soja, Senf, Sesam und anderen Saaten enthalten.</p>",
         "legal_label": "Rechtlicher Hinweis",
-        "legal_content": "",
+        "legal_content": "<p><strong>Ohne Zusätze – Rein & Natürlich</strong><br/><br/>• keine Aromen<br/><br/>• keine Füllstoffe<br/><br/>• keine Zusatzstoffe<br/><br/>• 100 % Bio & vegan<br/><br/>• in Deutschland gemischt & abgefüllt<br/><br/><br/><br/><strong>Allergenhinweis:</strong><br/><br/>Kann Spuren von Nüssen, Soja, Senf, Sesam und anderen Saaten enthalten.</p>",
         "show_when_empty": false,
         "padding_top": 24,
         "padding_bottom": 24
@@ -149,8 +228,6 @@
             "product": "flow-glow",
             "title": "",
             "label": "",
-            "benefit": "",
-            "button_label": "ANSEHEN",
             "link": ""
           }
         },
@@ -160,8 +237,6 @@
             "product": "golden-boost",
             "title": "",
             "label": "",
-            "benefit": "",
-            "button_label": "ANSEHEN",
             "link": ""
           }
         },
@@ -171,8 +246,6 @@
             "product": "ova-harmony",
             "title": "",
             "label": "",
-            "benefit": "",
-            "button_label": "ANSEHEN",
             "link": ""
           }
         }
@@ -200,8 +273,8 @@
     "dv_story_card",
     "dv_detail_grid",
     "dv_daily_ritual",
-    "dv_complete_ritual",
+    "dv_nutrition_table",
     "dv_compliance_accordion",
-    "dv_nutrition_table"
+    "dv_complete_ritual"
   ]
 }
