@@ -16,8 +16,8 @@
           "type": "hero_slide",
           "settings": {
             "image": "shopify://shop_images/oh_hero_new.png",
-            "heading": "",
-            "subheading": "Entdecke ayurvedisch inspirierte Bio-Rituale – sanft eingebettet in deinen Tagesrhythmus.",
+            "heading": "Alte Weisheit für moderne Tage",
+            "subheading": "Entdecke pflanzenbasierte Bio-Rituale – sanft eingebettet in deinen Tagesrhythmus.",
             "button_label": "Finde dein tägliches Ritual",
             "button_link": ""
           }
@@ -27,7 +27,7 @@
           "settings": {
             "image": "shopify://shop_images/mr_hero_new.png",
             "heading": "Alte Weisheit für moderne Tage",
-            "subheading": "Entdecke ayurvedisch inspirierte Bio-Rituale – sanft eingebettet in deinen Tagesrhythmus.",
+            "subheading": "Entdecke pflanzenbasierte Bio-Rituale – sanft eingebettet in deinen Tagesrhythmus.",
             "button_label": "Finde dein tägliches Ritual",
             "button_link": "#dein-tag-in-balance"
           }
@@ -37,7 +37,7 @@
           "settings": {
             "image": "shopify://shop_images/gb_hero_new.png",
             "heading": "Alte Weisheit für moderne Tage",
-            "subheading": "Entdecke ayurvedisch inspirierte Bio-Rituale – sanft eingebettet in deinen Tagesrhythmus.",
+            "subheading": "Entdecke pflanzenbasierte Bio-Rituale – sanft eingebettet in deinen Tagesrhythmus.",
             "button_label": "Finde dein tägliches Ritual",
             "button_link": "#dein-tag-in-balance"
           }
@@ -47,7 +47,7 @@
           "settings": {
             "image": "shopify://shop_images/fg_hero_new.png",
             "heading": "Alte Weisheit für moderne Tage",
-            "subheading": "Entdecke ayurvedisch inspirierte Bio-Rituale – sanft eingebettet in deinen Tagesrhythmus.",
+            "subheading": "Entdecke pflanzenbasierte Bio-Rituale – sanft eingebettet in deinen Tagesrhythmus.",
             "button_label": "Finde dein tägliches Ritual",
             "button_link": "#dein-tag-in-balance"
           }
@@ -245,7 +245,7 @@
       ],
       "settings": {
         "title": "Dein Tag in Balance",
-        "subtitle": "Ayurvedische Rituale für jeden Moment deines Tages",
+        "subtitle": "Pflanzenbasierte Rituale für jeden Moment deines Tages",
         "display_type": "grid",
         "items_per_row": 4,
         "mobile_items_per_row": "2",
