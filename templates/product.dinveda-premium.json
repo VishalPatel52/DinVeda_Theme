@@ -60,11 +60,17 @@
     "dv_detail_grid": {
       "type": "dv-detail-grid",
       "settings": {
-        "left_title": "{{ product.metafields.custom.dv_detail_left_title.value }}",
-        "left_body": "{{ product.metafields.custom.dv_detail_left_body | metafield_tag }}",
+        "layout_mode": "both",
         "facts_title": "{{ product.metafields.custom.dv_facts_title.value }}",
+        "eu_bio_logo": "shopify://shop_images/EU-Okp-Logo_3x_259c6b5e-d0e6-4004-ae12-9e6a441c3e3f.png",
+        "eu_bio_logo_size": 50,
+        "control_code": "DE-ÖKO-037",
+        "origin": "EU-Landwirtschaft",
+        "first_ingredients": "",
         "ingredients_content": "{{ product.metafields.custom.dv_ingredients | metafield_tag }}",
         "allergens_notes": "{{ product.metafields.custom.dv_allergens_notes | metafield_tag }}",
+        "left_title": "{{ product.metafields.custom.dv_detail_left_title.value }}",
+        "left_body": "{{ product.metafields.custom.dv_detail_left_body | metafield_tag }}",
         "show_when_empty": true,
         "padding_top": 0,
         "padding_bottom": 0
@@ -110,6 +116,7 @@
     "dv_nutrition_table": {
       "type": "dv-nutrition-table",
       "settings": {
+        "accordion_title": "Nährwertangaben (pro 100 g)",
         "heading": "Nährwertangaben (pro 100 g)",
         "nutrition_content": "<p>cxfc&lt;afSDFAFAS</p><p>FDSAFAS</p><p>FDASFDAS</p><p>DFDAS</p><p></p>",
         "show_when_empty": false,
@@ -123,6 +130,7 @@
         "ritual_step_LnqpkT": {
           "type": "ritual_step",
           "settings": {
+            "icon": "shopify://shop_images/Koala.png",
             "heading": "Verbinden",
             "text": "Gib 1 TL (1-3g) des Pulvers in deine Lieblingstasse."
           }
@@ -158,6 +166,7 @@
     "dv_compliance_accordion": {
       "type": "dv-compliance-accordion",
       "settings": {
+        "accordion_title": "Wichtige Hinweise & Lagerung",
         "heading": "Wichtige Hinweise",
         "storage_label": "Lagerung",
         "storage_content": "",

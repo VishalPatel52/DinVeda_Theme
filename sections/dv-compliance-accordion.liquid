@@ -10,14 +10,112 @@
   
   assign compliance_legal_metafield = product.metafields.custom.dv_compliance_legal
   
-  # Check if allergens are already shown in dv-detail-grid
-  assign allergens_in_detail_grid = product.metafields.custom.dv_allergens_notes
-  assign show_legal_content = true
-  if allergens_in_detail_grid != blank and compliance_legal_metafield != blank
-    # If allergens exist in detail grid, skip duplicate allergen text in legal content
-    # This is a simple check - in practice, content managers should avoid duplication
-    assign show_legal_content = false
+  # Extract storage text for duplicate detection
+  assign storage_text = ''
+  if compliance_storage_metafield != blank
+    # For richtext metafields, access the value property
+    if compliance_storage_metafield.value != blank
+      assign storage_text = compliance_storage_metafield.value
+    else
+      # Fallback: try direct access
+      assign storage_text = compliance_storage_metafield
+    endif
   endif
+  if storage_text == blank
+    assign storage_text = section.settings.storage_content
+  endif
+  
+  # Extract legal text
+  assign legal_text = ''
+  if compliance_legal_metafield != blank
+    # For richtext metafields, access the value property
+    if compliance_legal_metafield.value != blank
+      assign legal_text = compliance_legal_metafield.value
+    else
+      # Fallback: try direct access
+      assign legal_text = compliance_legal_metafield
+    endif
+  endif
+  if legal_text == blank
+    assign legal_text = section.settings.legal_content
+  endif
+  
+  # Normalize storage text for duplicate detection
+  assign storage_normalized = storage_text | strip_html | downcase | replace: '.', '' | replace: ',', '' | replace: ' ', '' | strip
+  
+  # Common storage phrases to detect (normalized)
+  assign storage_phrase_1 = 'kühltrockenundlichtgeschütztlagern'
+  assign storage_phrase_2 = 'nachdemöffnengutverschließen'
+  assign storage_phrase_3 = 'kühllagern'
+  assign storage_phrase_4 = 'trockenlagern'
+  assign storage_phrase_5 = 'lichtgeschütztlagern'
+  
+  # Remove duplicate storage instructions from legal content
+  assign legal_text_cleaned = legal_text
+  assign legal_has_storage_duplicates = false
+  
+  if storage_text != blank and legal_text != blank
+    # Convert legal text to string for manipulation
+    assign legal_text_string = legal_text | strip_html | downcase
+    
+    # Check if legal content contains storage-related phrases
+    if legal_text_string contains 'kühl' and legal_text_string contains 'lagern'
+      assign legal_has_storage_duplicates = true
+      
+      # Remove storage-related list items from legal content
+      # Split by list items and filter out storage-related ones
+      if legal_text contains '<li>'
+        assign legal_items = legal_text | split: '<li>'
+        assign cleaned_items = ''
+        assign has_valid_items = false
+        
+        for item in legal_items
+          if item != blank and item contains '</li>'
+            # Skip the first item if it's just the opening <ul> tag
+            assign item_clean = item | split: '</li>' | first | strip
+            if item_clean != blank and item_clean != '<ul>' and item_clean != '<ul class="rte">' and item_clean != '<ul class="rte" style'
+              assign item_text = item_clean | strip_html | downcase | replace: '.', '' | replace: ',', '' | replace: ' ', '' | strip
+              assign is_storage_item = false
+              
+              # Check if this item matches storage phrases
+              if item_text contains 'kühl' and item_text contains 'lagern'
+                assign is_storage_item = true
+              endif
+              if item_text contains 'öffnen' and item_text contains 'verschließen'
+                assign is_storage_item = true
+              endif
+              if item_text contains 'trocken' and item_text contains 'lichtgeschützt' and item_text contains 'lagern'
+                assign is_storage_item = true
+              endif
+              
+              unless is_storage_item
+                # Get the full item including closing tag
+                assign full_item = item | split: '</li>' | first | append: '</li>'
+                if cleaned_items == blank
+                  assign cleaned_items = full_item
+                else
+                  assign cleaned_items = cleaned_items | append: full_item
+                endif
+                assign has_valid_items = true
+              endunless
+            endif
+          endif
+        endfor
+        
+        # Reconstruct legal content without storage items
+        if has_valid_items and cleaned_items != blank
+          assign legal_text_cleaned = '<ul>' | append: cleaned_items | append: '</ul>'
+        else
+          assign legal_text_cleaned = ''
+        endif
+      endif
+    endif
+  endif
+  
+  # Always show legal content - trust content managers to avoid duplication
+  # We remove storage duplicates automatically, but legal content may contain important
+  # warnings beyond allergens (pregnancy, age restrictions, etc.) so we always display it
+  assign show_legal_content = true
   
   # Check if we have blocks (additional compliance items)
   assign has_blocks = false
@@ -32,7 +130,7 @@
   
   # Check if we have content to show
   assign has_content = false
-  if compliance_storage_metafield != blank or section.settings.storage_content != blank or compliance_legal_metafield != blank or section.settings.legal_content != blank or has_blocks
+  if storage_text != blank or legal_text_cleaned != blank or has_blocks
     assign has_content = true
   endif
 -%}
@@ -67,42 +165,47 @@
         </div>
       </summary>
       <div class="details__content">
-        <div class="dv-compliance-accordion__items">
+        <div class="dv-compliance-accordion__unified-content rte">
           
-          {%- comment -%} Storage {%- endcomment -%}
-          {% if compliance_storage_metafield != blank %}
-            <div class="dv-compliance-accordion__item">
-              <h4 class="dv-compliance-accordion__item-title">{{ section.settings.storage_label | default: 'Lagerung' | escape }}</h4>
-              <div class="dv-compliance-accordion__item-content rte">
-                {{ compliance_storage_metafield | metafield_tag }}
-              </div>
-            </div>
-          {% elsif section.settings.storage_content != blank %}
-            <div class="dv-compliance-accordion__item">
-              <h4 class="dv-compliance-accordion__item-title">{{ section.settings.storage_label | default: 'Lagerung' | escape }}</h4>
-              <div class="dv-compliance-accordion__item-content rte">
-                {{ section.settings.storage_content }}
-              </div>
-            </div>
+          {%- comment -%} Unified Storage and Legal Content (duplicates removed) {%- endcomment -%}
+          {% assign has_storage = false %}
+          {% if storage_text != blank %}
+            {% assign has_storage = true %}
           {% endif %}
-          
-          {%- comment -%} Legal (skip if allergens already in detail grid) {%- endcomment -%}
-          {% if show_legal_content %}
-            {% if compliance_legal_metafield != blank %}
-              <div class="dv-compliance-accordion__item">
-                <h4 class="dv-compliance-accordion__item-title">{{ section.settings.legal_label | default: 'Rechtlicher Hinweis' | escape }}</h4>
-                <div class="dv-compliance-accordion__item-content rte">
-                  {{ compliance_legal_metafield | metafield_tag }}
+          {% assign has_legal = false %}
+          {% if show_legal_content and legal_text != blank %}
+            {% assign has_legal = true %}
+          {% endif %}
+          {% if has_storage or has_legal %}
+            <div class="dv-compliance-accordion__combined">
+              {% if storage_text != blank %}
+                <div class="dv-compliance-accordion__storage">
+                  {% if compliance_storage_metafield != blank %}
+                    {{ compliance_storage_metafield | metafield_tag }}
+                  {% else %}
+                    {{ section.settings.storage_content }}
+                  {% endif %}
                 </div>
-              </div>
-            {% elsif section.settings.legal_content != blank %}
-              <div class="dv-compliance-accordion__item">
-                <h4 class="dv-compliance-accordion__item-title">{{ section.settings.legal_label | default: 'Rechtlicher Hinweis' | escape }}</h4>
-                <div class="dv-compliance-accordion__item-content rte">
-                  {{ section.settings.legal_content }}
-                </div>
-              </div>
-            {% endif %}
+              {% endif %}
+              
+              {% if show_legal_content and legal_text != blank %}
+                {% if legal_has_storage_duplicates and legal_text_cleaned != blank %}
+                  {%- comment -%} Show cleaned legal content (storage duplicates removed) {%- endcomment -%}
+                  <div class="dv-compliance-accordion__legal">
+                    {{ legal_text_cleaned }}
+                  </div>
+                {% else %}
+                  {%- comment -%} Show original legal content (no storage duplicates detected) {%- endcomment -%}
+                  <div class="dv-compliance-accordion__legal">
+                    {% if compliance_legal_metafield != blank %}
+                      {{ compliance_legal_metafield | metafield_tag }}
+                    {% else %}
+                      {{ section.settings.legal_content }}
+                    {% endif %}
+                  </div>
+                {% endif %}
+              {% endif %}
+            </div>
           {% endif %}
           
           {%- comment -%} Additional items (blocks) {%- endcomment -%}
