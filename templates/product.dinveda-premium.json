@@ -36,7 +36,7 @@
         "add_to_cart_label": "IN DEN WARENKORB",
         "enable_buy_now": true,
         "buy_now_label": "Jetzt kaufen",
-        "show_ritual_glance": true,
+        "show_ritual_glance": false,
         "time_fallback": "erweqr",
         "prep_fallback": "rewqrq",
         "duration_fallback": "",
@@ -45,6 +45,38 @@
     },
     "dv_story_card": {
       "type": "dv-story-card",
+      "blocks": {
+        "checklist_item_Armw3B": {
+          "type": "checklist_item",
+          "settings": {
+            "text": "Erdende Wärme an kalten Tagen"
+          }
+        },
+        "checklist_item_dnGVbU": {
+          "type": "checklist_item",
+          "settings": {
+            "text": "Erdende Wärme an kalten Tagen"
+          }
+        },
+        "checklist_item_qYRQX4": {
+          "type": "checklist_item",
+          "settings": {
+            "text": "Erdende Wärme an kalten Tagen"
+          }
+        },
+        "checklist_item_RGHPAD": {
+          "type": "checklist_item",
+          "settings": {
+            "text": "Erdende Wärme an kalten Tagen"
+          }
+        }
+      },
+      "block_order": [
+        "checklist_item_Armw3B",
+        "checklist_item_dnGVbU",
+        "checklist_item_qYRQX4",
+        "checklist_item_RGHPAD"
+      ],
       "settings": {
         "title": "Warum der Fuchs?",
         "content": "",
@@ -149,7 +181,7 @@
         "facts_title": "{{ product.metafields.custom.dv_facts_title.value }}",
         "first_ingredients": "",
         "organic_note": "*aus kontrolliert biologischem Anbau",
-        "allergens_notes": "<p>{{ product.metafields.custom.dv_allergens_notes | metafield_tag }}</p>",
+        "allergens_notes": "{{ product.metafields.custom.dv_allergens_notes | metafield_tag }}",
         "show_when_empty": true,
         "padding_top": 48,
         "padding_bottom": 48
@@ -201,8 +233,8 @@
         "heading": "Nährwertangaben (pro 100 g)",
         "nutrition_content": "<p>cxfc&lt;afSDFAFAS</p><p>FDSAFAS</p><p>FDASFDAS</p><p>DFDAS</p><p></p>",
         "show_when_empty": false,
-        "padding_top": 24,
-        "padding_bottom": 24
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "dv_compliance_accordion": {
@@ -213,10 +245,10 @@
         "storage_label": "Lagerung",
         "storage_content": "<p><strong>Ohne Zusätze – Rein & Natürlich</strong><br/><br/>• keine Aromen<br/><br/>• keine Füllstoffe<br/><br/>• keine Zusatzstoffe<br/><br/>• 100 % Bio & vegan<br/><br/>• in Deutschland gemischt & abgefüllt<br/><br/><br/><br/><strong>Allergenhinweis:</strong><br/><br/>Kann Spuren von Nüssen, Soja, Senf, Sesam und anderen Saaten enthalten.</p>",
         "legal_label": "Rechtlicher Hinweis",
-        "legal_content": "<p><strong>Ohne Zusätze – Rein & Natürlich</strong><br/><br/>• keine Aromen<br/><br/>• keine Füllstoffe<br/><br/>• keine Zusatzstoffe<br/><br/>• 100 % Bio & vegan<br/><br/>• in Deutschland gemischt & abgefüllt<br/><br/><br/><br/><strong>Allergenhinweis:</strong><br/><br/>Kann Spuren von Nüssen, Soja, Senf, Sesam und anderen Saaten enthalten.</p>",
+        "legal_content": "",
         "show_when_empty": false,
-        "padding_top": 24,
-        "padding_bottom": 24
+        "padding_top": 16,
+        "padding_bottom": 0
       }
     },
     "dv_complete_ritual": {
