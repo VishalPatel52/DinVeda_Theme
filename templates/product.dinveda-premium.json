@@ -120,21 +120,21 @@
         "ingredient_item_rDhP79": {
           "type": "ingredient_item",
           "settings": {
-            "name": "Kurkuma",
+            "name": "Ingwer",
             "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
           }
         },
         "ingredient_item_AeBR4w": {
           "type": "ingredient_item",
           "settings": {
-            "name": "Kurkuma",
+            "name": "Maca",
             "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
           }
         },
         "ingredient_item_LXJQVN": {
           "type": "ingredient_item",
           "settings": {
-            "name": "Kurkuma",
+            "name": "Ceylon-Zimt",
             "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
           }
         },
@@ -145,13 +145,14 @@
             "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
           }
         },
-        "trust_badge_xE3CQ9": {
-          "type": "trust_badge",
+        "ingredient_item_ckJaHV": {
+          "type": "ingredient_item",
           "settings": {
-            "label": "BIO-Zertifiziert"
+            "name": "Orangenschale",
+            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
           }
         },
-        "trust_badge_QFiiCR": {
+        "trust_badge_xE3CQ9": {
           "type": "trust_badge",
           "settings": {
             "label": "BIO-Zertifiziert"
@@ -168,13 +169,6 @@
           "settings": {
             "label": "BIO-Zertifiziert"
           }
-        },
-        "ingredient_item_ckJaHV": {
-          "type": "ingredient_item",
-          "settings": {
-            "name": "Kurkuma",
-            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
-          }
         }
       },
       "block_order": [
@@ -183,11 +177,10 @@
         "ingredient_item_AeBR4w",
         "ingredient_item_LXJQVN",
         "ingredient_item_kW3PkT",
+        "ingredient_item_ckJaHV",
         "trust_badge_xE3CQ9",
-        "trust_badge_QFiiCR",
         "trust_badge_cyxEFM",
-        "trust_badge_t3D3Y8",
-        "ingredient_item_ckJaHV"
+        "trust_badge_t3D3Y8"
       ],
       "settings": {
         "section_heading": "Dein Ritual im Detail",
