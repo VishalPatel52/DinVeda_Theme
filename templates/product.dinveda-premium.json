@@ -16,28 +16,36 @@
           "type": "product_badge",
           "settings": {
             "icon_emoji": "",
-            "text": "100 % Bio & vegan"
+            "text": "100 % Bio & Vegan"
           }
         },
         "product_badge_UQ4xwz": {
           "type": "product_badge",
           "settings": {
-            "icon_emoji": "🌿",
+            "icon_emoji": "",
             "text": "Ohne Zusatzstoffe"
           }
         },
         "product_badge_T6eGXE": {
           "type": "product_badge",
           "settings": {
-            "icon_emoji": "🌿",
+            "icon_emoji": "",
             "text": "Ohne Zuckerzusatz"
+          }
+        },
+        "product_badge_VkLaQ3": {
+          "type": "product_badge",
+          "settings": {
+            "icon_emoji": "",
+            "text": "In Deutschland gemischt & abgefüllt"
           }
         }
       },
       "block_order": [
         "product_badge_KCKMEE",
         "product_badge_UQ4xwz",
-        "product_badge_T6eGXE"
+        "product_badge_T6eGXE",
+        "product_badge_VkLaQ3"
       ],
       "settings": {
         "padding_top": 0,
@@ -114,79 +122,75 @@
           "type": "ingredient_item",
           "settings": {
             "name": "Kurkuma",
-            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+            "description": "Das „Gold des Ayurveda“ – traditionell in wärmenden Gewürzmischungen für Pitta-/Kapha-Routinen geschätzt."
           }
         },
         "ingredient_item_rDhP79": {
           "type": "ingredient_item",
           "settings": {
             "name": "Ingwer",
-            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+            "description": "Die Feuerwurzel – im Ayurveda klassisch als Begleiter des Agni in Tee- und Küchenrezepturen verwendet."
           }
         },
         "ingredient_item_AeBR4w": {
           "type": "ingredient_item",
           "settings": {
             "name": "Maca",
-            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+            "description": "Anden-Power trifft Ayurveda – in ayurvedisch inspirierten Tonics und Morgenroutinen traditionell eingebunden."
           }
         },
         "ingredient_item_LXJQVN": {
           "type": "ingredient_item",
           "settings": {
             "name": "Ceylon-Zimt",
-            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
-          }
-        },
-        "ingredient_item_kW3PkT": {
-          "type": "ingredient_item",
-          "settings": {
-            "name": "Kurkuma",
-            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+            "description": "Feiner, warmer Zimt – traditionell in Kapha-orientierten Rezepturen und Chai-Mischungen genutzt."
           }
         },
         "ingredient_item_ckJaHV": {
           "type": "ingredient_item",
           "settings": {
             "name": "Orangenschale",
-            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+            "description": "Sonnige Zitrusnote – im Ayurveda traditionell in Tees und Gewürzkompositionen für Leichtigkeit geschätzt."
           }
         },
         "ingredient_item_wHFMQq": {
           "type": "ingredient_item",
           "settings": {
             "name": "Schwarzer Pfeffer",
-            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+            "description": "Der „Träger“ in Mischungen – traditionell als Yogavahi in Ayurveda-Rezepturen beschrieben."
           }
         },
         "ingredient_item_em6cCj": {
           "type": "ingredient_item",
           "settings": {
             "name": "Muskatnuss",
-            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+            "description": "Würzig & sanft – traditionell in kleinen Mengen in abendlichen Ayurveda-Rezepturen verwendet."
           }
         },
         "ingredient_item_gGnyBG": {
           "type": "ingredient_item",
           "settings": {
             "name": "Kardamom",
-            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+            "description": "Die edle Aromakapsel – im Ayurveda traditionell als ausgleichendes Gewürz in Chai und Süßspeisen beliebt."
           }
         },
         "trust_badge_xE3CQ9": {
           "type": "trust_badge",
+          "disabled": true,
           "settings": {
             "label": "BIO-Zertifiziert"
           }
         },
         "trust_badge_cyxEFM": {
           "type": "trust_badge",
+          "disabled": true,
           "settings": {
             "label": "BIO-Zertifiziert"
           }
         },
         "trust_badge_t3D3Y8": {
           "type": "trust_badge",
+          "disabled": true,
           "settings": {
             "label": "BIO-Zertifiziert"
           }
@@ -197,7 +201,6 @@
         "ingredient_item_rDhP79",
         "ingredient_item_AeBR4w",
         "ingredient_item_LXJQVN",
-        "ingredient_item_kW3PkT",
         "ingredient_item_ckJaHV",
         "ingredient_item_wHFMQq",
         "ingredient_item_em6cCj",
@@ -213,11 +216,11 @@
         "tradition_body": "",
         "facts_title": "{{ product.metafields.custom.dv_facts_title.value }}",
         "first_ingredients": "",
-        "organic_note": "*aus kontrolliert biologischem Anbau",
+        "organic_note": "100 % Bio – aus kontrolliert biologischem Anbau",
         "allergens_notes": "{{ product.metafields.custom.dv_allergens_notes | metafield_tag }}",
         "show_when_empty": true,
-        "padding_top": 48,
-        "padding_bottom": 48
+        "padding_top": 24,
+        "padding_bottom": 24
       }
     },
     "dv_daily_ritual": {
@@ -226,23 +229,25 @@
         "ritual_step_LnqpkT": {
           "type": "ritual_step",
           "settings": {
-            "icon": "shopify://shop_images/Koala.png",
-            "heading": "Verbinden",
-            "text": "Gib 1 TL (1-3g) des Pulvers in deine Lieblingstasse."
+            "icon": "shopify://shop_images/Asset_1.png",
+            "heading": "Mein Morgenmix",
+            "text": "1 TL (\u001d~3 g) Pulver mit warmem Wasser,\netwas Zitrone und Honig"
           }
         },
         "ritual_step_e7q6LT": {
           "type": "ritual_step",
           "settings": {
-            "heading": "Verbinden",
-            "text": "Gib 1 TL (1-3g) des Pulvers in deine Lieblingstasse."
+            "icon": "shopify://shop_images/Asset_1.png",
+            "heading": "Goldene Milch",
+            "text": "1 TL (\u001d~3 g) Pulver mit warmem Wasser,\netwas Zitrone und Honig"
           }
         },
         "ritual_step_V6nmQY": {
           "type": "ritual_step",
           "settings": {
-            "heading": "Verbinden",
-            "text": "Gib 1 TL (1-3g) des Pulvers in deine Lieblingstasse."
+            "icon": "shopify://shop_images/Asset_1.png",
+            "heading": "Mein Küchengeheimnis",
+            "text": "Passt zu jedem Curry oder zum\nGrillen von Gemüse und Fisch\n– verfeinert mit Kokosmilch zu einem\naromatischen Curry"
           }
         }
       },
@@ -253,7 +258,7 @@
       ],
       "settings": {
         "heading": "Dein tägliches Ritual",
-        "concluding_quote": "fdsfsda",
+        "concluding_quote": "",
         "show_when_empty": false,
         "padding_top": 0,
         "padding_bottom": 0
@@ -276,7 +281,7 @@
         "accordion_title": "Wichtige Hinweise & Lagerung",
         "heading": "Wichtige Hinweise",
         "storage_label": "Lagerung",
-        "storage_content": "<p><strong>Ohne Zusätze – Rein & Natürlich</strong><br/><br/>• keine Aromen<br/><br/>• keine Füllstoffe<br/><br/>• keine Zusatzstoffe<br/><br/>• 100 % Bio & vegan<br/><br/>• in Deutschland gemischt & abgefüllt<br/><br/><br/><br/><strong>Allergenhinweis:</strong><br/><br/>Kann Spuren von Nüssen, Soja, Senf, Sesam und anderen Saaten enthalten.</p>",
+        "storage_content": "",
         "legal_label": "Rechtlicher Hinweis",
         "legal_content": "",
         "show_when_empty": false,
@@ -291,17 +296,17 @@
           "type": "product_card",
           "settings": {
             "product": "flow-glow",
-            "title": "rerqwe",
-            "label": "nacht",
+            "title": "",
+            "label": "Tag |  ZENTRIEREN",
             "link": ""
           }
         },
         "product_card_7R6eqF": {
           "type": "product_card",
           "settings": {
-            "product": "golden-boost",
+            "product": "moon-rest",
             "title": "",
-            "label": "",
+            "label": "ABEND | LOSLASSEN",
             "link": ""
           }
         },
@@ -310,7 +315,7 @@
           "settings": {
             "product": "ova-harmony",
             "title": "",
-            "label": "",
+            "label": "BALANCE | AUSGLEICHEN",
             "link": ""
           }
         }
