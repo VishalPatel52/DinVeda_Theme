@@ -5,6 +5,18 @@
 
 {%- liquid
   assign is_design_mode = request.design_mode
+  
+  # Priority 1: Check for recipe cards from metaobject list (selected in theme editor)
+  assign recipe_cards_meta = null
+  assign has_recipe_cards_meta = false
+  if section.settings.recipe_cards
+    assign recipe_cards_meta = section.settings.recipe_cards.value
+    if recipe_cards_meta and recipe_cards_meta.size > 0
+      assign has_recipe_cards_meta = true
+    endif
+  endif
+  
+  # Priority 2: Check for recipe blocks (fallback)
   assign has_recipe_blocks = false
   if section.blocks.size > 0
     for block in section.blocks
@@ -15,21 +27,21 @@
     endfor
   endif
 
-  # Auto-generate intro text from product metafields (only if product exists)
+  # Auto-generate intro text from theme editor settings (can be connected to metafields)
   assign intro_text = section.settings.intro_text
   if intro_text == blank and product != blank
-    assign tier_name = product.metafields.dinveda.tier_name | default: product.metafields.dinveda.animal_name
+    assign tier_name = section.settings.animal_name
     assign product_name = product.title
     if tier_name != blank and product_name != blank
       assign intro_text = 'So verwendet der ' | append: tier_name | append: ' ' | append: product_name | append: ' in seinem Alltag:'
     endif
   endif
   
-  # Ritual im Detail micro-block
-  assign taste_notes = product.metafields.dinveda.taste_character
-  assign pairing_ideas = product.metafields.dinveda.pairing_ideas
-  assign serving_suggestion = product.metafields.dinveda.serving_suggestion
-  assign frequency = product.metafields.dinveda.frequency
+  # Ritual im Detail micro-block (from theme editor settings, can be connected to metafields)
+  assign taste_notes = section.settings.taste_character
+  assign pairing_ideas = section.settings.pairing_ideas
+  assign serving_suggestion = section.settings.serving_suggestion
+  assign frequency = section.settings.frequency
   
   assign has_ritual_detail = false
   if section.settings.show_ritual_detail_block
@@ -38,7 +50,7 @@
     endif
   endif
   
-  if has_recipe_blocks or section.settings.show_when_empty or is_design_mode
+  if has_recipe_cards_meta or has_recipe_blocks or section.settings.show_when_empty or is_design_mode
     assign should_show = true
   else
     assign should_show = false
@@ -89,13 +101,13 @@
                 {% if pairing_ideas != blank %}
                   <div class="dinveda-recipe-preparation__ritual-detail-item">
                     <div class="dinveda-recipe-preparation__ritual-detail-label">Passt zu</div>
-                    <div class="dinveda-recipe-preparation__ritual-detail-value">{{ pairing_ideas | escape | newline_to_br }}</div>
+                    <div class="dinveda-recipe-preparation__ritual-detail-value">{{ pairing_ideas | newline_to_br }}</div>
                   </div>
                 {% endif %}
                 {% if serving_suggestion != blank %}
                   <div class="dinveda-recipe-preparation__ritual-detail-item">
                     <div class="dinveda-recipe-preparation__ritual-detail-label">Portion</div>
-                    <div class="dinveda-recipe-preparation__ritual-detail-value">{{ serving_suggestion | escape | newline_to_br }}</div>
+                    <div class="dinveda-recipe-preparation__ritual-detail-value">{{ serving_suggestion | newline_to_br }}</div>
                   </div>
                 {% endif %}
                 {% if frequency != blank %}
@@ -108,31 +120,49 @@
             </div>
           {% endif %}
 
-          {% if has_recipe_blocks %}
+          {%- comment -%} Recipe Cards: Priority = MetaObjects, Fallback = Blocks {%- endcomment -%}
+          {% if has_recipe_cards_meta or has_recipe_blocks %}
             <div class="dinveda-recipe-preparation__grid">
-              {% assign recipe_count = 0 %}
-              {% for block in section.blocks %}
-                {% if block.type == 'recipe_card' %}
-                  {% if recipe_count < 3 %}
-                    <div class="dinveda-recipe-preparation__card" {{ block.shopify_attributes }}>
-                      {% if block.settings.title != blank %}
-                        <h3 class="dinveda-recipe-preparation__card-title">{{ block.settings.title | escape }}</h3>
-                      {% endif %}
-                      {% if block.settings.body != blank %}
-                        <div class="dinveda-recipe-preparation__card-body">
-                          {{ block.settings.body }}
-                        </div>
-                      {% endif %}
-                    </div>
-                    {% assign recipe_count = recipe_count | plus: 1 %}
+              {%- comment -%} Priority: MetaObjects from theme editor {%- endcomment -%}
+              {% if has_recipe_cards_meta %}
+                {% for recipe_card in recipe_cards_meta %}
+                  <div class="dinveda-recipe-preparation__card">
+                    {% if recipe_card.title != blank %}
+                      <h3 class="dinveda-recipe-preparation__card-title">{{ recipe_card.title | escape }}</h3>
+                    {% endif %}
+                    {% if recipe_card.body != blank %}
+                      <div class="dinveda-recipe-preparation__card-body">
+                        {{ recipe_card.body }}
+                      </div>
+                    {% endif %}
+                  </div>
+                {% endfor %}
+              {%- comment -%} Fallback: Blocks {%- endcomment -%}
+              {% elsif has_recipe_blocks %}
+                {% assign recipe_count = 0 %}
+                {% for block in section.blocks %}
+                  {% if block.type == 'recipe_card' %}
+                    {% if recipe_count < 3 %}
+                      <div class="dinveda-recipe-preparation__card" {{ block.shopify_attributes }}>
+                        {% if block.settings.title != blank %}
+                          <h3 class="dinveda-recipe-preparation__card-title">{{ block.settings.title | escape }}</h3>
+                        {% endif %}
+                        {% if block.settings.body != blank %}
+                          <div class="dinveda-recipe-preparation__card-body">
+                            {{ block.settings.body }}
+                          </div>
+                        {% endif %}
+                      </div>
+                      {% assign recipe_count = recipe_count | plus: 1 %}
+                    {% endif %}
                   {% endif %}
-                {% endif %}
-              {% endfor %}
+                {% endfor %}
+              {% endif %}
             </div>
           {% else %}
             <div class="dinveda-recipe-preparation__empty-state">
               <p class="dinveda-recipe-preparation__empty-message">
-                Click "Add block" to add recipe cards. Each card should include a recipe title and instructions.
+                Connect Recipe Cards setting above to product.metafields.custom.dv_recipe_cards (DV Recipe Cards - list of DV Recipe Card metaobjects) via dynamic source, or click "Add block" to add recipe cards.
               </p>
             </div>
           {% endif %}
@@ -177,7 +207,52 @@
       "type": "text",
       "id": "intro_text",
       "label": "Intro Text",
-      "info": "Optional intro text. Leave blank to auto-generate from product metafields (e.g., 'So verwendet der Schmetterling Ova Harmony in seinem Alltag:')"
+      "info": "Optional intro text. Leave blank to auto-generate from Animal Name setting below (e.g., 'So verwendet der {Animal} {Product Name} in seinem Alltag:')"
+    },
+    {
+      "type": "text",
+      "id": "animal_name",
+      "label": "Animal Name",
+      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_animal_name (DV Animal Name) or enter text manually. Used for intro text auto-generation."
+    },
+    {
+      "type": "header",
+      "content": "Ritual Details - Connect to Product Metafields"
+    },
+    {
+      "type": "textarea",
+      "id": "taste_character",
+      "label": "Taste Character (Geschmack)",
+      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_taste_character (DV Taste Character - Multi-line text) or enter text manually"
+    },
+    {
+      "type": "textarea",
+      "id": "pairing_ideas",
+      "label": "Pairing Ideas (Passt zu)",
+      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_pairing_ideas (DV Pairing Ideas - Multi-line text) or enter text manually"
+    },
+    {
+      "type": "textarea",
+      "id": "serving_suggestion",
+      "label": "Serving Suggestion (Portion)",
+      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_serving_suggestion (DV Serving Suggestion - Multi-line text) or enter text manually"
+    },
+    {
+      "type": "text",
+      "id": "frequency",
+      "label": "Frequency (Häufigkeit)",
+      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_frequency (DV Frequency - Single line text) or enter text manually"
+    },
+    {
+      "type": "header",
+      "content": "Recipe Cards - Connect to MetaObject List"
+    },
+    {
+      "type": "list.metaobject_reference",
+      "id": "recipe_cards",
+      "label": "Recipe Cards",
+      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_recipe_cards (DV Recipe Cards - list of DV Recipe Card metaobjects) or add blocks below as fallback",
+      "types": ["dv_recipe_card"]
     },
     {
       "type": "checkbox",
@@ -189,7 +264,7 @@
       "type": "checkbox",
       "id": "show_ritual_detail_block",
       "label": "Show Ritual im Detail block",
-      "info": "Display taste, pairing, serving, and frequency details.",
+      "info": "Display taste, pairing, serving, and frequency details from settings above (can be connected to metafields via dynamic source).",
       "default": true
     },
     {
@@ -233,19 +308,19 @@
   "blocks": [
     {
       "type": "recipe_card",
-      "name": "Recipe Card",
+      "name": "Recipe Card (Fallback)",
       "settings": [
         {
           "type": "text",
           "id": "title",
           "label": "Recipe Title",
-          "info": "Recipe title (e.g., 'Sanfter Tee- oder Drink-Moment')"
+          "info": "Recipe title (e.g., 'Sanfter Tee- oder Drink-Moment'). Used as fallback if Recipe Cards setting above is empty."
         },
         {
           "type": "richtext",
           "id": "body",
           "label": "Recipe Instructions",
-          "info": "Recipe instructions (e.g., '1 TL (~3 g) in 200 ml warme Pflanzenmilch...')"
+          "info": "Recipe instructions (e.g., '1 TL (~3 g) in 200 ml warme Pflanzenmilch...'). Used as fallback if Recipe Cards setting above is empty."
         }
       ]
     }

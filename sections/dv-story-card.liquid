@@ -16,15 +16,18 @@
 {% endcomment %}
 
 {%- liquid
-  # Read from metafields (priority) or section settings (fallback)
-  assign story_title = product.metafields.custom.dv_story_title
-  if story_title == blank
-    assign story_title = section.settings.title
+  # Read from theme editor settings (can be connected to metafields via dynamic source)
+  assign story_title = section.settings.title
+  assign animal_name = section.settings.animal_name
+  assign story_content_metafield = section.settings.content
+  
+  # Auto-generate title from animal name if story_title is empty
+  if story_title == blank and animal_name != blank
+    assign story_title = 'Warum der ' | append: animal_name | append: '?'
   endif
   
-  # Read richtext metafield - must be stored as richtext type in Shopify Admin
-  # Use metafield_tag filter to properly render richtext content
-  assign story_content_metafield = product.metafields.custom.dv_story_content
+  # Traditional benefits from settings (can be connected to metafield)
+  assign traditional_bullets = section.settings.traditional_benefits
   
   # Icon size from settings (default 140px)
   assign icon_size = section.settings.icon_size | default: 140
@@ -41,8 +44,7 @@
     endfor
   endif
   
-  # Fallback to metafields if no blocks
-  assign traditional_bullets = product.metafields.custom.dv_traditional_benefits
+  # Parse traditional benefits if no blocks and setting is provided
   assign bullets_array = '' | split: ','
   if has_checklist_blocks == false and traditional_bullets != blank
     assign bullets_raw = traditional_bullets | newline_to_br | split: '<br />'
@@ -108,11 +110,7 @@
         {% endcomment -%}
         {% if story_content_metafield != blank %}
           <div class="dv-story-card__body rte">
-            {{ story_content_metafield | metafield_tag }}
-          </div>
-        {% elsif section.settings.content != blank %}
-          <div class="dv-story-card__body rte">
-            {{ section.settings.content }}
+            {{ story_content_metafield }}
           </div>
         {% endif %}
       </div>
@@ -188,14 +186,25 @@
       "type": "text",
       "id": "title",
       "label": "Story Title",
-      "default": "Warum der Fuchs?",
-      "info": "Used if product.metafields.custom.dv_story_title is empty"
+      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_story_title (DV Story Title) or enter text manually. If empty and animal_name is set, auto-generates as 'Warum der {Animal}?'"
+    },
+    {
+      "type": "text",
+      "id": "animal_name",
+      "label": "Animal Name",
+      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_animal_name (DV Animal Name) or enter text manually. Used for auto-generating title."
     },
     {
       "type": "richtext",
       "id": "content",
       "label": "Story Content",
-      "info": "Used if product.metafields.custom.dv_story_content is empty"
+      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_story_content (DV Story Content - Rich text) or enter content manually"
+    },
+    {
+      "type": "textarea",
+      "id": "traditional_benefits",
+      "label": "Traditional Benefits (Fallback)",
+      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_traditional_benefits (DV Traditional Benefits - Multi-line text) or enter text manually. Used if checklist blocks are empty (one bullet per line)."
     },
     {
       "type": "checkbox",

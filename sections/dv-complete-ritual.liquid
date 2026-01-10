@@ -17,14 +17,19 @@
     }
   {% endstyle %}
   
+  {%- liquid
+    # Read subheading from theme editor setting (can be connected to metafield via dynamic source)
+    assign subheading_final = section.settings.subheading
+  -%}
+  
   <div class="dv-complete-ritual__container">
     
     {% if section.settings.heading != blank %}
       <div class="dv-complete-ritual__header">
         <div class="dv-complete-ritual__header-left">
           <h2 class="dv-complete-ritual__title">{{ section.settings.heading | escape }}</h2>
-          {% if section.settings.subheading != blank %}
-            <p class="dv-complete-ritual__subtitle">{{ section.settings.subheading | escape }}</p>
+          {% if subheading_final != blank %}
+            <p class="dv-complete-ritual__subtitle">{{ subheading_final | escape }}</p>
           {% endif %}
         </div>
       </div>
@@ -128,7 +133,7 @@
       "type": "text",
       "id": "subheading",
       "label": "Subheading",
-      "default": "Sanfte Ergänzungen für den Abend."
+      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_related_products_subheading (DV Related Products Subheading) or enter text manually"
     },
     {
       "type": "text",

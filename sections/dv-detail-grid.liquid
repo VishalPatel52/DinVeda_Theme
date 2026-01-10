@@ -16,31 +16,32 @@
   # Layout configuration
   assign layout_mode = section.settings.layout_mode | default: 'both'
   
-  # Left Column - Tradition
-  assign tradition_title = product.metafields.custom.dv_detail_left_title
-  if tradition_title == blank
-    assign tradition_title = section.settings.tradition_title
-  endif
+  # Left Column - Tradition (from theme editor settings, can be connected to metafields)
+  assign tradition_title = section.settings.tradition_title
+  assign tradition_body_metafield = section.settings.tradition_body
   
-  # Left column intro text
-  assign tradition_body_metafield = product.metafields.custom.dv_detail_left_body
+  # Right Column - Facts (from theme editor settings, can be connected to metafields)
+  assign facts_title = section.settings.facts_title
   
-  # Right Column - Facts
-  assign facts_title = product.metafields.custom.dv_facts_title
-  if facts_title == blank
-    assign facts_title = section.settings.facts_title
-  endif
-  
-  # First Ingredients (ZUTATEN)
-  assign first_ingredients_metafield = product.metafields.custom.dv_first_ingredients
+  # First Ingredients (ZUTATEN) (from theme editor settings, can be connected to metafields)
+  assign first_ingredients_metafield = section.settings.first_ingredients
   
   # Organic note text
   assign organic_note = section.settings.organic_note | default: '*aus kontrolliert biologischem Anbau'
   
-  # Allergens & Notes
-  assign allergens_notes_metafield = product.metafields.custom.dv_allergens_notes
+  # Allergens & Notes (from theme editor settings, can be connected to metafields)
+  assign allergens_notes_metafield = section.settings.allergens_notes
   
-  # Check for ingredient items and trust badges (blocks)
+  # Ingredient highlights from metaobject list (selected in theme editor)
+  assign ingredient_highlights_meta = null
+  assign has_ingredient_highlights_meta = false
+  if section.settings.ingredient_highlights
+    assign ingredient_highlights_meta = section.settings.ingredient_highlights.value
+    if ingredient_highlights_meta and ingredient_highlights_meta.size > 0
+      assign has_ingredient_highlights_meta = true
+    endif
+  endif
+  
   assign has_ingredient_items = false
   assign has_trust_badges = false
   if section.blocks.size > 0
@@ -57,19 +58,19 @@
   assign show_left = false
   assign show_right = false
   if layout_mode == 'both' or layout_mode == 'left'
-    if tradition_title != blank or tradition_body_metafield != blank or section.settings.tradition_body != blank or has_ingredient_items
+    if tradition_title != blank or tradition_body_metafield != blank or has_ingredient_highlights_meta or has_ingredient_items
       assign show_left = true
     endif
   endif
   if layout_mode == 'both' or layout_mode == 'right'
-    if facts_title != blank or first_ingredients_metafield != blank or allergens_notes_metafield != blank or section.settings.allergens_notes != blank or has_trust_badges
+    if facts_title != blank or first_ingredients_metafield != blank or allergens_notes_metafield != blank or has_trust_badges
       assign show_right = true
     endif
   endif
   
   # Check if we have content to show
   assign has_content = false
-  if tradition_title != blank or tradition_body_metafield != blank or section.settings.tradition_body != blank or facts_title != blank or first_ingredients_metafield != blank or allergens_notes_metafield != blank or section.settings.allergens_notes != blank or has_ingredient_items or has_trust_badges
+  if tradition_title != blank or tradition_body_metafield != blank or facts_title != blank or first_ingredients_metafield != blank or allergens_notes_metafield != blank or has_ingredient_highlights_meta or has_ingredient_items or has_trust_badges
     assign has_content = true
   endif
 -%}
@@ -130,36 +131,54 @@
           {%- comment -%} Introductory text {%- endcomment -%}
           {% if tradition_body_metafield != blank %}
             <div class="dv-detail-grid__tradition-intro rte">
-              {{ tradition_body_metafield | metafield_tag }}
-            </div>
-          {% elsif section.settings.tradition_body != blank %}
-            <div class="dv-detail-grid__tradition-intro rte">
-              {{ section.settings.tradition_body }}
+              {{ tradition_body_metafield }}
             </div>
           {% endif %}
           
-          {%- comment -%} Ingredient Items (blocks) {%- endcomment -%}
-          {% if has_ingredient_items %}
+          {%- comment -%} Ingredient Highlights (MetaObjects priority, blocks fallback) {%- endcomment -%}
+          {% if has_ingredient_highlights_meta or has_ingredient_items %}
             <div class="dv-detail-grid__ingredient-highlights">
-              {% for block in section.blocks %}
-                {% if block.type == 'ingredient_item' %}
-                  <div class="dv-detail-grid__ingredient-highlight" {{ block.shopify_attributes }}>
-                    {% if block.settings.icon != blank %}
+              {%- comment -%} Priority: MetaObjects {%- endcomment -%}
+              {% if has_ingredient_highlights_meta %}
+                {% for highlight in ingredient_highlights_meta %}
+                  <div class="dv-detail-grid__ingredient-highlight">
+                    {% if highlight.icon != blank %}
                       <div class="dv-detail-grid__ingredient-highlight-icon">
-                        {{ block.settings.icon | image_url: width: 32 | image_tag: alt: block.settings.name, loading: 'lazy', width: 32, height: 32 }}
+                        {{ highlight.icon | image_url: width: 32 | image_tag: alt: highlight.name, loading: 'lazy', width: 32, height: 32 }}
                       </div>
                     {% endif %}
                     <div class="dv-detail-grid__ingredient-highlight-content">
-                      {% if block.settings.name != blank %}
-                        <strong class="dv-detail-grid__ingredient-highlight-name">{{ block.settings.name | escape }}</strong>
+                      {% if highlight.name != blank %}
+                        <strong class="dv-detail-grid__ingredient-highlight-name">{{ highlight.name | escape }}</strong>
                       {% endif %}
-                      {% if block.settings.description != blank %}
-                        <p class="dv-detail-grid__ingredient-highlight-desc">{{ block.settings.description | escape }}</p>
+                      {% if highlight.description != blank %}
+                        <p class="dv-detail-grid__ingredient-highlight-desc">{{ highlight.description | escape }}</p>
                       {% endif %}
                     </div>
                   </div>
-                {% endif %}
-              {% endfor %}
+                {% endfor %}
+              {%- comment -%} Fallback: Blocks {%- endcomment -%}
+              {% elsif has_ingredient_items %}
+                {% for block in section.blocks %}
+                  {% if block.type == 'ingredient_item' %}
+                    <div class="dv-detail-grid__ingredient-highlight" {{ block.shopify_attributes }}>
+                      {% if block.settings.icon != blank %}
+                        <div class="dv-detail-grid__ingredient-highlight-icon">
+                          {{ block.settings.icon | image_url: width: 32 | image_tag: alt: block.settings.name, loading: 'lazy', width: 32, height: 32 }}
+                        </div>
+                      {% endif %}
+                      <div class="dv-detail-grid__ingredient-highlight-content">
+                        {% if block.settings.name != blank %}
+                          <strong class="dv-detail-grid__ingredient-highlight-name">{{ block.settings.name | escape }}</strong>
+                        {% endif %}
+                        {% if block.settings.description != blank %}
+                          <p class="dv-detail-grid__ingredient-highlight-desc">{{ block.settings.description | escape }}</p>
+                        {% endif %}
+                      </div>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
             </div>
           {% endif %}
         </div>
@@ -189,17 +208,7 @@
             <div class="dv-detail-grid__zutaten-section">
               <h3 class="dv-detail-grid__zutaten-title">Zutaten</h3>
               <div class="dv-detail-grid__zutaten-content rte">
-                {{ first_ingredients_metafield | metafield_tag }}
-              </div>
-              {% if organic_note != blank %}
-                <p class="dv-detail-grid__zutaten-note">{{ organic_note | escape }}</p>
-              {% endif %}
-            </div>
-          {% elsif section.settings.first_ingredients != blank %}
-            <div class="dv-detail-grid__zutaten-section">
-              <h3 class="dv-detail-grid__zutaten-title">Zutaten</h3>
-              <div class="dv-detail-grid__zutaten-content rte">
-                {{ section.settings.first_ingredients }}
+                {{ first_ingredients_metafield }}
               </div>
               {% if organic_note != blank %}
                 <p class="dv-detail-grid__zutaten-note">{{ organic_note | escape }}</p>
@@ -208,15 +217,11 @@
           {% endif %}
           
           {%- comment -%} ALLERGENE & HINWEISE Section {%- endcomment -%}
-          {% if allergens_notes_metafield != blank or section.settings.allergens_notes != blank %}
+          {% if allergens_notes_metafield != blank %}
             <div class="dv-detail-grid__allergens-section">
               <h3 class="dv-detail-grid__allergens-title">Allergene & Hinweise</h3>
               <div class="dv-detail-grid__allergens-content rte">
-                {% if allergens_notes_metafield != blank %}
-                  {{ allergens_notes_metafield | metafield_tag }}
-                {% elsif section.settings.allergens_notes != blank %}
-                  {{ section.settings.allergens_notes }}
-                {% endif %}
+                {{ allergens_notes_metafield }}
               </div>
             </div>
           {% endif %}
@@ -302,21 +307,24 @@
       "info": "Icon displayed next to tradition title"
     },
     {
+      "type": "header",
+      "content": "Left Column - Connect to Product Metafields"
+    },
+    {
       "type": "text",
       "id": "tradition_title",
       "label": "Tradition Title",
-      "default": "Tradition in der Ayurveda-Küche",
-      "info": "Title for left column. Product metafield custom.dv_detail_left_title takes priority if present."
+      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_detail_left_title (DV Detail Left Title) or enter text manually"
     },
     {
       "type": "richtext",
       "id": "tradition_body",
       "label": "Tradition Intro Text",
-      "info": "Introductory text below title. Product metafield custom.dv_detail_left_body takes priority if present."
+      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_detail_left_body (DV Detail Left Body - Rich text) or enter content manually"
     },
     {
       "type": "header",
-      "content": "Right Column - Facts"
+      "content": "Right Column - Connect to Product Metafields"
     },
     {
       "type": "image_picker",
@@ -329,13 +337,13 @@
       "id": "facts_title",
       "label": "Facts Title",
       "default": "Zutaten & Fakten",
-      "info": "Title for right column. Product metafield custom.dv_facts_title takes priority if present."
+      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_facts_title (DV Facts Title) or enter text manually"
     },
     {
       "type": "richtext",
       "id": "first_ingredients",
       "label": "Ingredients List",
-      "info": "Ingredients list for ZUTATEN section. Product metafield custom.dv_first_ingredients takes priority if present."
+      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_first_ingredients (DV First Ingredients - Rich text) or enter content manually"
     },
     {
       "type": "text",
@@ -348,7 +356,18 @@
       "type": "richtext",
       "id": "allergens_notes",
       "label": "Allergens & Notes",
-      "info": "Content for ALLERGENE & HINWEISE section. Product metafield custom.dv_allergens_notes takes priority if present."
+      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_allergens_notes (DV Allergens & Notes - Rich text) or enter content manually"
+    },
+    {
+      "type": "header",
+      "content": "Ingredient Highlights - Connect to MetaObject List"
+    },
+    {
+      "type": "list.metaobject_reference",
+      "id": "ingredient_highlights",
+      "label": "Ingredient Highlights",
+      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_ingredient_highlights (DV Ingredient Highlights - list of DV Ingredient Highlight metaobjects) or add blocks below as fallback",
+      "types": ["dv_ingredient_highlight"]
     },
     {
       "type": "checkbox",
@@ -384,27 +403,27 @@
   "blocks": [
     {
       "type": "ingredient_item",
-      "name": "Ingredient Item",
+      "name": "Ingredient Item (Fallback)",
       "settings": [
         {
           "type": "image_picker",
           "id": "icon",
           "label": "Ingredient Icon",
-          "info": "Icon for this ingredient (e.g., leaf, flame, lightning bolt)"
+          "info": "Icon for this ingredient (e.g., leaf, flame, lightning bolt). Used as fallback if product.metafields.custom.dv_ingredient_highlights (DV Ingredient Highlights - list of DV Ingredient Highlight metaobjects) is empty."
         },
         {
           "type": "text",
           "id": "name",
           "label": "Ingredient Name",
           "default": "Kurkuma",
-          "info": "Name of the ingredient (e.g., Kurkuma, Maca, Ingwer)"
+          "info": "Name of the ingredient (e.g., Kurkuma, Maca, Ingwer). Used as fallback if product.metafields.custom.dv_ingredient_highlights (DV Ingredient Highlights) is empty."
         },
         {
           "type": "textarea",
           "id": "description",
           "label": "Ingredient Description",
           "default": "Das \"Gold des Ayurveda\". Wärmend und erdend.",
-          "info": "Short description text for this ingredient"
+          "info": "Short description text for this ingredient. Used as fallback if product.metafields.custom.dv_ingredient_highlights (DV Ingredient Highlights) is empty."
         }
       ]
     },

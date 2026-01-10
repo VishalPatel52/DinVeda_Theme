@@ -11,98 +11,34 @@
   "sections": {
     "dv_main_product": {
       "type": "dv-main-product",
-      "blocks": {
-        "product_badge_KCKMEE": {
-          "type": "product_badge",
-          "settings": {
-            "icon_emoji": "",
-            "text": "100 % Bio & Vegan"
-          }
-        },
-        "product_badge_UQ4xwz": {
-          "type": "product_badge",
-          "settings": {
-            "icon_emoji": "",
-            "text": "Ohne Zusatzstoffe"
-          }
-        },
-        "product_badge_T6eGXE": {
-          "type": "product_badge",
-          "settings": {
-            "icon_emoji": "",
-            "text": "Ohne Zuckerzusatz"
-          }
-        },
-        "product_badge_VkLaQ3": {
-          "type": "product_badge",
-          "settings": {
-            "icon_emoji": "",
-            "text": "In Deutschland gemischt & abgefüllt"
-          }
-        }
-      },
-      "block_order": [
-        "product_badge_KCKMEE",
-        "product_badge_UQ4xwz",
-        "product_badge_T6eGXE",
-        "product_badge_VkLaQ3"
-      ],
+      "blocks": {},
+      "block_order": [],
       "settings": {
         "padding_top": 0,
         "padding_bottom": 0,
         "show_thumbnails": true,
         "show_organic_label": true,
         "show_vegan_label": true,
-        "subtitle": "{{ product.metafields.custom.dinveda_dv_subtitle.value }}",
+        "subtitle": "",
         "quote": "",
         "price_note": "inkl. MwSt. / 100g Dose",
         "show_quantity": true,
         "add_to_cart_label": "IN DEN WARENKORB",
         "enable_buy_now": true,
         "buy_now_label": "Jetzt kaufen",
-        "show_ritual_glance": false,
-        "time_fallback": "erweqr",
-        "prep_fallback": "rewqrq",
-        "duration_fallback": "",
+        "show_ritual_glance": true,
+        "time_fallback": "Morgen",
+        "prep_fallback": "Warm",
+        "duration_fallback": "1-2 Min",
         "show_social_share": true
       }
     },
     "dv_story_card": {
       "type": "dv-story-card",
-      "blocks": {
-        "checklist_item_Armw3B": {
-          "type": "checklist_item",
-          "settings": {
-            "text": "Wärmende Tiefe : „Wenn es draußen kühl ist, mag ich es angenehm warm.“"
-          }
-        },
-        "checklist_item_dnGVbU": {
-          "type": "checklist_item",
-          "settings": {
-            "text": "Einen klaren Start : „Ein ruhiger Moment am Morgen hilft mir, wach und fokussiert zu bleiben.“"
-          }
-        },
-        "checklist_item_qYRQX4": {
-          "type": "checklist_item",
-          "settings": {
-            "text": "Vielseitigen Genuss : „Mal als Getränk, mal in der Küche – ohne feste Regeln.“"
-          }
-        },
-        "checklist_item_RGHPAD": {
-          "type": "checklist_item",
-          "settings": {
-            "text": "Bewusste Rituale : „Kleine Pausen, die meinen Tag in Balance halten.“"
-          }
-        }
-      },
-      "block_order": [
-        "checklist_item_Armw3B",
-        "checklist_item_dnGVbU",
-        "checklist_item_qYRQX4",
-        "checklist_item_RGHPAD"
-      ],
+      "blocks": {},
+      "block_order": [],
       "settings": {
-        "title": "Warum der Fuchs?",
+        "title": "",
         "content": "",
         "show_when_empty": false,
         "show_fox_icon": true,
@@ -117,107 +53,17 @@
     },
     "dv_detail_grid": {
       "type": "dv-detail-grid",
-      "blocks": {
-        "ingredient_item_z7UMhM": {
-          "type": "ingredient_item",
-          "settings": {
-            "name": "Kurkuma",
-            "description": "Das „Gold des Ayurveda“ – traditionell in wärmenden Gewürzmischungen für Pitta-/Kapha-Routinen geschätzt."
-          }
-        },
-        "ingredient_item_rDhP79": {
-          "type": "ingredient_item",
-          "settings": {
-            "name": "Ingwer",
-            "description": "Die Feuerwurzel – im Ayurveda klassisch als Begleiter des Agni in Tee- und Küchenrezepturen verwendet."
-          }
-        },
-        "ingredient_item_AeBR4w": {
-          "type": "ingredient_item",
-          "settings": {
-            "name": "Maca",
-            "description": "Anden-Power trifft Ayurveda – in ayurvedisch inspirierten Tonics und Morgenroutinen traditionell eingebunden."
-          }
-        },
-        "ingredient_item_LXJQVN": {
-          "type": "ingredient_item",
-          "settings": {
-            "name": "Ceylon-Zimt",
-            "description": "Feiner, warmer Zimt – traditionell in Kapha-orientierten Rezepturen und Chai-Mischungen genutzt."
-          }
-        },
-        "ingredient_item_ckJaHV": {
-          "type": "ingredient_item",
-          "settings": {
-            "name": "Orangenschale",
-            "description": "Sonnige Zitrusnote – im Ayurveda traditionell in Tees und Gewürzkompositionen für Leichtigkeit geschätzt."
-          }
-        },
-        "ingredient_item_wHFMQq": {
-          "type": "ingredient_item",
-          "settings": {
-            "name": "Schwarzer Pfeffer",
-            "description": "Der „Träger“ in Mischungen – traditionell als Yogavahi in Ayurveda-Rezepturen beschrieben."
-          }
-        },
-        "ingredient_item_em6cCj": {
-          "type": "ingredient_item",
-          "settings": {
-            "name": "Muskatnuss",
-            "description": "Würzig & sanft – traditionell in kleinen Mengen in abendlichen Ayurveda-Rezepturen verwendet."
-          }
-        },
-        "ingredient_item_gGnyBG": {
-          "type": "ingredient_item",
-          "settings": {
-            "name": "Kardamom",
-            "description": "Die edle Aromakapsel – im Ayurveda traditionell als ausgleichendes Gewürz in Chai und Süßspeisen beliebt."
-          }
-        },
-        "trust_badge_xE3CQ9": {
-          "type": "trust_badge",
-          "disabled": true,
-          "settings": {
-            "label": "BIO-Zertifiziert"
-          }
-        },
-        "trust_badge_cyxEFM": {
-          "type": "trust_badge",
-          "disabled": true,
-          "settings": {
-            "label": "BIO-Zertifiziert"
-          }
-        },
-        "trust_badge_t3D3Y8": {
-          "type": "trust_badge",
-          "disabled": true,
-          "settings": {
-            "label": "BIO-Zertifiziert"
-          }
-        }
-      },
-      "block_order": [
-        "ingredient_item_z7UMhM",
-        "ingredient_item_rDhP79",
-        "ingredient_item_AeBR4w",
-        "ingredient_item_LXJQVN",
-        "ingredient_item_ckJaHV",
-        "ingredient_item_wHFMQq",
-        "ingredient_item_em6cCj",
-        "ingredient_item_gGnyBG",
-        "trust_badge_xE3CQ9",
-        "trust_badge_cyxEFM",
-        "trust_badge_t3D3Y8"
-      ],
+      "blocks": {},
+      "block_order": [],
       "settings": {
         "section_heading": "Dein Ritual im Detail",
         "layout_mode": "both",
-        "tradition_title": "Tradition in der Ayurveda-Küche",
+        "tradition_title": "",
         "tradition_body": "",
-        "facts_title": "{{ product.metafields.custom.dv_facts_title.value }}",
+        "facts_title": "",
         "first_ingredients": "",
         "organic_note": "100 % Bio – aus kontrolliert biologischem Anbau",
-        "allergens_notes": "{{ product.metafields.custom.dv_allergens_notes | metafield_tag }}",
+        "allergens_notes": "",
         "show_when_empty": true,
         "padding_top": 24,
         "padding_bottom": 24
@@ -225,37 +71,8 @@
     },
     "dv_daily_ritual": {
       "type": "dv-daily-ritual",
-      "blocks": {
-        "ritual_step_LnqpkT": {
-          "type": "ritual_step",
-          "settings": {
-            "icon": "shopify://shop_images/Asset_1.png",
-            "heading": "Mein Morgenmix",
-            "text": "1 TL (\u001d~3 g) Pulver mit warmem Wasser,\netwas Zitrone und Honig"
-          }
-        },
-        "ritual_step_e7q6LT": {
-          "type": "ritual_step",
-          "settings": {
-            "icon": "shopify://shop_images/Asset_1.png",
-            "heading": "Goldene Milch",
-            "text": "1 TL (\u001d~3 g) Pulver mit warmem Wasser,\netwas Zitrone und Honig"
-          }
-        },
-        "ritual_step_V6nmQY": {
-          "type": "ritual_step",
-          "settings": {
-            "icon": "shopify://shop_images/Asset_1.png",
-            "heading": "Mein Küchengeheimnis",
-            "text": "Passt zu jedem Curry oder zum\nGrillen von Gemüse und Fisch\n– verfeinert mit Kokosmilch zu einem\naromatischen Curry"
-          }
-        }
-      },
-      "block_order": [
-        "ritual_step_LnqpkT",
-        "ritual_step_e7q6LT",
-        "ritual_step_V6nmQY"
-      ],
+      "blocks": {},
+      "block_order": [],
       "settings": {
         "heading": "Dein tägliches Ritual",
         "concluding_quote": "",
@@ -269,7 +86,7 @@
       "settings": {
         "accordion_title": "Nährwertangaben (pro 100 g)",
         "heading": "Nährwertangaben (pro 100 g)",
-        "nutrition_content": "<p>cxfc&lt;afSDFAFAS</p><p>FDSAFAS</p><p>FDASFDAS</p><p>DFDAS</p><p></p>",
+        "nutrition_content": "",
         "show_when_empty": false,
         "padding_top": 0,
         "padding_bottom": 0
@@ -291,43 +108,11 @@
     },
     "dv_complete_ritual": {
       "type": "dv-complete-ritual",
-      "blocks": {
-        "product_card_3kFqAQ": {
-          "type": "product_card",
-          "settings": {
-            "product": "golden-boost",
-            "title": "",
-            "label": "Morgen",
-            "link": ""
-          }
-        },
-        "product_card_7R6eqF": {
-          "type": "product_card",
-          "settings": {
-            "product": "moon-rest",
-            "title": "",
-            "label": "ABEND | LOSLASSEN",
-            "link": ""
-          }
-        },
-        "product_card_cA8Vk7": {
-          "type": "product_card",
-          "settings": {
-            "product": "ova-harmony",
-            "title": "",
-            "label": "BALANCE | AUSGLEICHEN",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "product_card_3kFqAQ",
-        "product_card_7R6eqF",
-        "product_card_cA8Vk7"
-      ],
+      "blocks": {},
+      "block_order": [],
       "settings": {
         "heading": "Vervollständige dein Ritual",
-        "subheading": "Sanfte Ergänzungen für den Tag.",
+        "subheading": "",
         "view_all_label": "",
         "view_all_link": "",
         "button_label": "",

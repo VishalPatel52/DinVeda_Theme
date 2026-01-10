@@ -5,7 +5,17 @@
 {% endcomment %}
 
 {%- liquid
-  # Extract and parse DV:RITUAL_STEPS
+  # Priority 1: Check for ritual steps from metaobject list (selected in theme editor)
+  assign ritual_steps_meta = null
+  assign has_ritual_steps_meta = false
+  if section.settings.ritual_steps
+    assign ritual_steps_meta = section.settings.ritual_steps.value
+    if ritual_steps_meta and ritual_steps_meta.size > 0
+      assign has_ritual_steps_meta = true
+    endif
+  endif
+  
+  # Priority 2: Extract and parse DV:RITUAL_STEPS from description (fallback)
   assign ritual_steps_content = ''
   assign steps_array = '' | split: ','
   
@@ -54,7 +64,7 @@
     endif
   endif
   
-  # Check if we have blocks (can override parsed steps)
+  # Priority 3: Check if we have blocks (can override parsed steps)
   assign has_step_blocks = false
   if section.blocks.size > 0
     for block in section.blocks
@@ -67,7 +77,7 @@
   
   # Check if we have content to show
   assign has_content = false
-  if steps_array.size > 0 or has_step_blocks
+  if has_ritual_steps_meta or steps_array.size > 0 or has_step_blocks
     assign has_content = true
   endif
 -%}
@@ -94,8 +104,31 @@
     
     <div class="dv-daily-ritual__steps">
       
-      {%- comment -%} Use blocks if available, otherwise use parsed steps {%- endcomment -%}
-      {% if has_step_blocks %}
+      {%- comment -%} Priority 1: MetaObjects {%- endcomment -%}
+      {% if has_ritual_steps_meta %}
+        {% for ritual_step in ritual_steps_meta %}
+          <div class="dv-daily-ritual__step">
+            <div class="dv-daily-ritual__step-header">
+              {% if ritual_step.icon != blank %}
+                <div class="dv-daily-ritual__step-icon">
+                  {{ ritual_step.icon | image_url: width: 40 | image_tag: alt: ritual_step.heading, loading: 'lazy', width: 40, height: 40 }}
+                </div>
+              {% elsif section.settings.default_icon != blank %}
+                <div class="dv-daily-ritual__step-icon">
+                  {{ section.settings.default_icon | image_url: width: 40 | image_tag: alt: ritual_step.heading, loading: 'lazy', width: 40, height: 40 }}
+                </div>
+              {% endif %}
+              {% if ritual_step.heading != blank %}
+                <h3 class="dv-daily-ritual__step-heading">{{ ritual_step.heading | escape }}</h3>
+              {% endif %}
+            </div>
+            {% if ritual_step.text != blank %}
+              <p class="dv-daily-ritual__step-text">{{ ritual_step.text | escape }}</p>
+            {% endif %}
+          </div>
+        {% endfor %}
+      {%- comment -%} Priority 2: Blocks {%- endcomment -%}
+      {% elsif has_step_blocks %}
         {% for block in section.blocks %}
           {% if block.type == 'ritual_step' %}
             <div class="dv-daily-ritual__step" {{ block.shopify_attributes }}>
@@ -115,6 +148,7 @@
             </div>
           {% endif %}
         {% endfor %}
+      {%- comment -%} Priority 3: Parsed description markers {%- endcomment -%}
       {% elsif steps_array.size > 0 %}
         {% for step_data in steps_array %}
           {% assign step_parts = step_data | split: '|' %}
@@ -164,6 +198,17 @@
       "default": "Dein tägliches Ritual"
     },
     {
+      "type": "header",
+      "content": "Ritual Steps - Connect to MetaObject List"
+    },
+    {
+      "type": "list.metaobject_reference",
+      "id": "ritual_steps",
+      "label": "Ritual Steps",
+      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_ritual_steps (DV Ritual Steps - list of DV Ritual Step metaobjects) or add blocks below as fallback",
+      "types": ["dv_ritual_step"]
+    },
+    {
       "type": "text",
       "id": "concluding_quote",
       "label": "Concluding Quote",
@@ -173,7 +218,7 @@
       "type": "image_picker",
       "id": "default_icon",
       "label": "Default Step Icon",
-      "info": "Used for steps parsed from DV:RITUAL_STEPS if blocks are not configured"
+      "info": "Used for steps from metaobjects (if no icon) or parsed from DV:RITUAL_STEPS markers in product description if blocks/metaobjects are not configured"
     },
     {
       "type": "checkbox",
@@ -209,25 +254,28 @@
   "blocks": [
     {
       "type": "ritual_step",
-      "name": "Ritual Step",
+      "name": "Ritual Step (Fallback)",
       "limit": 3,
       "settings": [
         {
           "type": "image_picker",
           "id": "icon",
-          "label": "Icon"
+          "label": "Icon",
+          "info": "Used as fallback if product.metafields.custom.dv_ritual_steps (DV Ritual Steps - list of DV Ritual Step metaobjects) is empty."
         },
         {
           "type": "text",
           "id": "heading",
           "label": "Heading",
-          "default": "Verbinden"
+          "default": "Verbinden",
+          "info": "Used as fallback if product.metafields.custom.dv_ritual_steps (DV Ritual Steps) is empty."
         },
         {
           "type": "textarea",
           "id": "text",
           "label": "Instruction Text",
-          "default": "Gib 1 TL (1-3g) des Pulvers in deine Lieblingstasse."
+          "default": "Gib 1 TL (1-3g) des Pulvers in deine Lieblingstasse.",
+          "info": "Used as fallback if product.metafields.custom.dv_ritual_steps (DV Ritual Steps) is empty."
         }
       ]
     }

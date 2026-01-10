@@ -24,53 +24,31 @@
     assign call_to_action = 'products.product.sold_out' | t
   endif
 
-  # Read from metafields (priority) or section settings (fallback)
-  assign subtitle = product.metafields.custom.dv_subtitle
-  if subtitle == blank
-    assign subtitle = section.settings.subtitle
-  endif
+  # Read from theme editor settings (can be connected to metafields via dynamic source) or fallback values
+  assign subtitle = section.settings.subtitle
+  assign quote = section.settings.quote
+  assign animal_name = section.settings.animal_name
   
-  assign quote = product.metafields.custom.dinveda_dv_quote
-  if quote == blank
-    assign quote = section.settings.quote
-  endif
-  
-  # Parse tags for ritual attributes
-  assign ritual_time = ''
-  assign ritual_prep = ''
-  assign ritual_duration = ''
-  
-  if product.tags.size > 0
-    for tag in product.tags
-      assign tag_lower = tag | downcase
-      if tag_lower contains 'dv_time:'
-        assign tag_parts = tag | split: ':'
-        if tag_parts.size > 1
-          assign ritual_time = tag_parts[1] | strip | capitalize
-        endif
-      elsif tag_lower contains 'dv_prep:'
-        assign tag_parts = tag | split: ':'
-        if tag_parts.size > 1
-          assign ritual_prep = tag_parts[1] | strip | capitalize
-        endif
-      elsif tag_lower contains 'dv_duration:'
-        assign tag_parts = tag | split: ':'
-        if tag_parts.size > 1
-          assign ritual_duration = tag_parts[1] | strip
-        endif
-      endif
-    endfor
-  endif
-  
-  # Fallbacks for ritual attributes
+  # Read ritual attributes from theme editor settings (can be connected to metafields)
+  assign ritual_time = section.settings.ritual_timing
   if ritual_time == blank
     assign ritual_time = section.settings.time_fallback | default: 'Morgen'
   endif
+  
+  assign ritual_prep = section.settings.preparation_mode
   if ritual_prep == blank
     assign ritual_prep = section.settings.prep_fallback | default: 'Warm'
   endif
+  
+  assign ritual_duration = section.settings.ritual_duration
   if ritual_duration == blank
     assign ritual_duration = section.settings.duration_fallback | default: '1-2 Min'
+  endif
+  
+  # Trust badges from metaobject list (selected in theme editor)
+  assign trust_badges_meta = null
+  if section.settings.trust_badges
+    assign trust_badges_meta = section.settings.trust_badges.value
   endif
 -%}
 
@@ -190,22 +168,53 @@
         {%- comment -%} Quote {%- endcomment -%}
         {% if quote != blank %}
           <div class="dv-main-product__quote-card">
-            <blockquote class="dv-main-product__quote-text">{{ quote | escape }}</blockquote>
+            <blockquote class="dv-main-product__quote-text">{{ quote | newline_to_br }}</blockquote>
+            {% if animal_name != blank %}
+              <cite class="dv-main-product__quote-attribution">{{ animal_name | escape }}</cite>
+            {% endif %}
           </div>
         {% endif %}
         
-        {%- comment -%} Product Badges/Features (blocks) {%- endcomment -%}
-        {% if section.blocks.size > 0 %}
-          {% assign has_badges = false %}
-          {% for block in section.blocks %}
-            {% if block.type == 'product_badge' %}
-              {% assign has_badges = true %}
-              {% break %}
-            {% endif %}
-          {% endfor %}
+        {%- comment -%} Product Badges/Features (MetaObjects from theme editor, blocks fallback) {%- endcomment -%}
+        {%- liquid
+          assign has_trust_badges_meta = false
+          if trust_badges_meta and trust_badges_meta.size > 0
+            assign has_trust_badges_meta = true
+          endif
           
-          {% if has_badges %}
-            <div class="dv-main-product__badges">
+          assign has_badge_blocks = false
+          if section.blocks.size > 0
+            for block in section.blocks
+              if block.type == 'product_badge'
+                assign has_badge_blocks = true
+                break
+              endif
+            endfor
+          endif
+        -%}
+        
+        {% if has_trust_badges_meta or has_badge_blocks %}
+          <div class="dv-main-product__badges">
+            {%- comment -%} Priority: MetaObjects from theme editor {%- endcomment -%}
+            {% if has_trust_badges_meta %}
+              {% for trust_badge in trust_badges_meta %}
+                <div class="dv-main-product__badge">
+                  {% if trust_badge.icon_svg != blank %}
+                    <span class="dv-main-product__badge-icon">{{ trust_badge.icon_svg }}</span>
+                  {% elsif trust_badge.icon != blank %}
+                    <span class="dv-main-product__badge-icon">
+                      <img src="{{ trust_badge.icon | image_url: width: 24 }}" alt="" width="24" height="24">
+                    </span>
+                  {% elsif trust_badge.icon_material != blank %}
+                    <span class="dv-main-product__badge-icon">{{ trust_badge.icon_material | escape }}</span>
+                  {% endif %}
+                  {% if trust_badge.text != blank %}
+                    <span class="dv-main-product__badge-text">{{ trust_badge.text | escape }}</span>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            {%- comment -%} Fallback: Blocks {%- endcomment -%}
+            {% elsif has_badge_blocks %}
               {% for block in section.blocks %}
                 {% if block.type == 'product_badge' %}
                   <div class="dv-main-product__badge" {{ block.shopify_attributes }}>
@@ -218,8 +227,8 @@
                   </div>
                 {% endif %}
               {% endfor %}
-            </div>
-          {% endif %}
+            {% endif %}
+          </div>
         {% endif %}
 
         {%- comment -%} Price {%- endcomment -%}
@@ -791,19 +800,25 @@
     },
     {
       "type": "header",
-      "content": "Content"
+      "content": "Content - Connect to Product Metafields"
     },
     {
       "type": "text",
       "id": "subtitle",
       "label": "Subtitle",
-      "info": "Used if product.metafields.custom.dv_subtitle is empty"
+      "info": "Click 'Connect dynamic source' to link to a product metafield (e.g., DV Product Subtitle) or enter text manually"
     },
     {
       "type": "text",
       "id": "quote",
       "label": "Quote",
-      "info": "Used if product.metafields.custom.dinveda_dv_quote is empty"
+      "info": "Click 'Connect dynamic source' to link to a product metafield (e.g., DV Product Quote or DV Animal Quote) or enter text manually"
+    },
+    {
+      "type": "text",
+      "id": "animal_name",
+      "label": "Animal Name",
+      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_animal_name (DV Animal Name) or enter text manually. Used for quote attribution."
     },
     {
       "type": "text",
@@ -841,35 +856,68 @@
     },
     {
       "type": "header",
-      "content": "Ritual Attributes"
+      "content": "Ritual Attributes - Connect to Product Metafields"
     },
     {
       "type": "checkbox",
       "id": "show_ritual_glance",
       "label": "Show ritual glance row",
       "default": true,
-      "info": "Displays Tageszeit, Zubereitung, Dauer from product tags (dv_time:, dv_prep:, dv_duration:)"
+      "info": "Displays Tageszeit, Zubereitung, Dauer"
+    },
+    {
+      "type": "text",
+      "id": "ritual_timing",
+      "label": "Ritual Timing (Tageszeit)",
+      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_ritual_timing (DV Ritual Timing) or enter text manually"
+    },
+    {
+      "type": "text",
+      "id": "preparation_mode",
+      "label": "Preparation Mode (Zubereitung)",
+      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_preparation_mode (DV Preparation Mode) or enter text manually"
+    },
+    {
+      "type": "text",
+      "id": "ritual_duration",
+      "label": "Ritual Duration (Dauer)",
+      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_ritual_duration (DV Ritual Duration) or enter text manually"
+    },
+    {
+      "type": "header",
+      "content": "Ritual Attributes - Fallback Values"
     },
     {
       "type": "text",
       "id": "time_fallback",
       "label": "Time fallback",
       "default": "Morgen",
-      "info": "Used if dv_time: tag not found"
+      "info": "Used if Ritual Timing field above is empty"
     },
     {
       "type": "text",
       "id": "prep_fallback",
       "label": "Prep fallback",
       "default": "Warm",
-      "info": "Used if dv_prep: tag not found"
+      "info": "Used if Preparation Mode field above is empty"
     },
     {
       "type": "text",
       "id": "duration_fallback",
       "label": "Duration fallback",
       "default": "1-2 Min",
-      "info": "Used if dv_duration: tag not found"
+      "info": "Used if Ritual Duration field above is empty"
+    },
+    {
+      "type": "header",
+      "content": "Trust Badges - Connect to MetaObject List"
+    },
+    {
+      "type": "list.metaobject_reference",
+      "id": "trust_badges",
+      "label": "Trust Badges",
+      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_trust_badges (DV Trust Badges - list of DV Trust Badge metaobjects) or add blocks below as fallback",
+      "types": ["dv_trust_badge"]
     },
     {
       "type": "header",
@@ -885,7 +933,7 @@
   "blocks": [
     {
       "type": "product_badge",
-      "name": "Product Badge",
+      "name": "Product Badge (Fallback)",
       "limit": 5,
       "settings": [
         {
@@ -893,13 +941,14 @@
           "id": "icon_emoji",
           "label": "Icon Emoji",
           "default": "🌿",
-          "info": "Emoji icon (e.g., 🌿, 🌸, 🥛, 👐)"
+          "info": "Emoji icon (e.g., 🌿, 🌸, 🥛, 👐). Used as fallback if product.metafields.custom.dv_trust_badges (DV Trust Badges - list of DV Trust Badge metaobjects) is empty."
         },
         {
           "type": "text",
           "id": "text",
           "label": "Badge Text",
-          "default": "100 % Bio & vegan"
+          "default": "100 % Bio & vegan",
+          "info": "Used as fallback if product.metafields.custom.dv_trust_badges (DV Trust Badges) is empty."
         }
       ]
     }
