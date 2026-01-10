@@ -69,7 +69,7 @@
     "dv_story_card": {
       "type": "dv-story-card",
       "settings": {
-        "title": "",
+        "title": "{{ product.metafields.custom.dv_story_title.value }}",
         "animal_name": "",
         "content": "{{ product.metafields.custom.dv_story_content | metafield_tag }}",
         "traditional_benefits": "",
