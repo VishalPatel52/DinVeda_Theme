@@ -5,11 +5,11 @@
 {% endcomment %}
 
 {%- liquid
-  # Priority 1: Check for ritual steps from metaobject list (selected in theme editor)
+  # Priority 1: Check for ritual steps from metaobject list (product metafield)
   assign ritual_steps_meta = null
   assign has_ritual_steps_meta = false
-  if section.settings.ritual_steps
-    assign ritual_steps_meta = section.settings.ritual_steps.value
+  if product.metafields.custom.dv_ritual_steps
+    assign ritual_steps_meta = product.metafields.custom.dv_ritual_steps.value
     if ritual_steps_meta and ritual_steps_meta.size > 0
       assign has_ritual_steps_meta = true
     endif
@@ -199,14 +199,11 @@
     },
     {
       "type": "header",
-      "content": "Ritual Steps - Connect to MetaObject List"
+      "content": "Ritual Steps"
     },
     {
-      "type": "list.metaobject_reference",
-      "id": "ritual_steps",
-      "label": "Ritual Steps",
-      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_ritual_steps (DV Ritual Steps - list of DV Ritual Step metaobjects) or add blocks below as fallback",
-      "types": ["dv_ritual_step"]
+      "type": "paragraph",
+      "content": "Connect product.metafields.custom.dv_ritual_steps (DV Ritual Steps - list of DV Ritual Step metaobjects) via product metafields, or add blocks below as fallback"
     },
     {
       "type": "text",

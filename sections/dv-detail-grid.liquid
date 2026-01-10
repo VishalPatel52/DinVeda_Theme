@@ -32,11 +32,11 @@
   # Allergens & Notes (from theme editor settings, can be connected to metafields)
   assign allergens_notes_metafield = section.settings.allergens_notes
   
-  # Ingredient highlights from metaobject list (selected in theme editor)
+  # Ingredient highlights from metaobject list (product metafield)
   assign ingredient_highlights_meta = null
   assign has_ingredient_highlights_meta = false
-  if section.settings.ingredient_highlights
-    assign ingredient_highlights_meta = section.settings.ingredient_highlights.value
+  if product.metafields.custom.dv_ingredient_highlights
+    assign ingredient_highlights_meta = product.metafields.custom.dv_ingredient_highlights.value
     if ingredient_highlights_meta and ingredient_highlights_meta.size > 0
       assign has_ingredient_highlights_meta = true
     endif
@@ -360,14 +360,11 @@
     },
     {
       "type": "header",
-      "content": "Ingredient Highlights - Connect to MetaObject List"
+      "content": "Ingredient Highlights"
     },
     {
-      "type": "list.metaobject_reference",
-      "id": "ingredient_highlights",
-      "label": "Ingredient Highlights",
-      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_ingredient_highlights (DV Ingredient Highlights - list of DV Ingredient Highlight metaobjects) or add blocks below as fallback",
-      "types": ["dv_ingredient_highlight"]
+      "type": "paragraph",
+      "content": "Connect product.metafields.custom.dv_ingredient_highlights (DV Ingredient Highlights - list of DV Ingredient Highlight metaobjects) via product metafields, or add blocks below as fallback"
     },
     {
       "type": "checkbox",
@@ -403,7 +400,7 @@
   "blocks": [
     {
       "type": "ingredient_item",
-      "name": "Ingredient Item (Fallback)",
+      "name": "Ingredient (Fallback)",
       "settings": [
         {
           "type": "image_picker",

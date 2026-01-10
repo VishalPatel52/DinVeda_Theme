@@ -45,10 +45,10 @@
     assign ritual_duration = section.settings.duration_fallback | default: '1-2 Min'
   endif
   
-  # Trust badges from metaobject list (selected in theme editor)
+  # Trust badges from metaobject list (product metafield)
   assign trust_badges_meta = null
-  if section.settings.trust_badges
-    assign trust_badges_meta = section.settings.trust_badges.value
+  if product.metafields.custom.dv_trust_badges
+    assign trust_badges_meta = product.metafields.custom.dv_trust_badges.value
   endif
 -%}
 
@@ -910,14 +910,11 @@
     },
     {
       "type": "header",
-      "content": "Trust Badges - Connect to MetaObject List"
+      "content": "Trust Badges"
     },
     {
-      "type": "list.metaobject_reference",
-      "id": "trust_badges",
-      "label": "Trust Badges",
-      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_trust_badges (DV Trust Badges - list of DV Trust Badge metaobjects) or add blocks below as fallback",
-      "types": ["dv_trust_badge"]
+      "type": "paragraph",
+      "content": "Connect product.metafields.custom.dv_trust_badges (DV Trust Badges - list of DV Trust Badge metaobjects) via product metafields, or add blocks below as fallback"
     },
     {
       "type": "header",

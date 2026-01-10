@@ -6,11 +6,11 @@
 {%- liquid
   assign is_design_mode = request.design_mode
   
-  # Priority 1: Check for recipe cards from metaobject list (selected in theme editor)
+  # Priority 1: Check for recipe cards from metaobject list (product metafield)
   assign recipe_cards_meta = null
   assign has_recipe_cards_meta = false
-  if section.settings.recipe_cards
-    assign recipe_cards_meta = section.settings.recipe_cards.value
+  if product.metafields.custom.dv_recipe_cards
+    assign recipe_cards_meta = product.metafields.custom.dv_recipe_cards.value
     if recipe_cards_meta and recipe_cards_meta.size > 0
       assign has_recipe_cards_meta = true
     endif
@@ -162,7 +162,7 @@
           {% else %}
             <div class="dinveda-recipe-preparation__empty-state">
               <p class="dinveda-recipe-preparation__empty-message">
-                Connect Recipe Cards setting above to product.metafields.custom.dv_recipe_cards (DV Recipe Cards - list of DV Recipe Card metaobjects) via dynamic source, or click "Add block" to add recipe cards.
+                Connect product.metafields.custom.dv_recipe_cards (DV Recipe Cards - list of DV Recipe Card metaobjects) via product metafields, or click "Add block" to add recipe cards.
               </p>
             </div>
           {% endif %}
@@ -245,14 +245,11 @@
     },
     {
       "type": "header",
-      "content": "Recipe Cards - Connect to MetaObject List"
+      "content": "Recipe Cards"
     },
     {
-      "type": "list.metaobject_reference",
-      "id": "recipe_cards",
-      "label": "Recipe Cards",
-      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_recipe_cards (DV Recipe Cards - list of DV Recipe Card metaobjects) or add blocks below as fallback",
-      "types": ["dv_recipe_card"]
+      "type": "paragraph",
+      "content": "Connect product.metafields.custom.dv_recipe_cards (DV Recipe Cards - list of DV Recipe Card metaobjects) via product metafields, or add blocks below as fallback"
     },
     {
       "type": "checkbox",
