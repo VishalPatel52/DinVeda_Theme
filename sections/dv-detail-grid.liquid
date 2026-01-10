@@ -187,7 +187,7 @@
                           <strong class="dv-detail-grid__ingredient-highlight-name">{{ block_name | escape }}</strong>
                         {% endif %}
                         {% if block_description != blank %}
-                          <p class="dv-detail-grid__ingredient-highlight-desc">{{ block_description | escape }}</p>
+                          <p class="dv-detail-grid__ingredient-highlight-desc">{{ block_description | strip_html | escape }}</p>
                         {% endif %}
                       </div>
                     </div>
@@ -423,7 +423,11 @@
         },
         {
           "type": "paragraph",
-          "content": "💡 To connect this block to a DV Ingredient Highlight MetaObject: 1) Click on each field below, 2) Click 'Connect dynamic source', 3) Select the MetaObject instance, 4) Choose the corresponding field (icon → icon, name → name, description → description). Make sure to connect all three fields."
+          "content": "⚠️ IMPORTANT: Do NOT connect the block source at the block level (the blue MetaObject selector at the top). Instead, connect each field individually using 'Connect dynamic source' on each field below. This ensures all three fields (Icon, Name, Description) remain visible. If you connect the block source, unmapped fields will disappear."
+        },
+        {
+          "type": "paragraph",
+          "content": "💡 To connect fields to a MetaObject: 1) Click 'Connect dynamic source' (database icon) on each field below, 2) Select the MetaObject instance, 3) Choose the corresponding field. Connect ALL THREE fields: Icon → icon, Name → name, Description → description."
         },
         {
           "type": "image_picker",
@@ -439,11 +443,11 @@
           "info": "Name of the ingredient. Click 'Connect dynamic source' to link to metaobjects.dv_ingredient_highlight.[handle].name.value, or enter text manually. Used as fallback if product.metafields.custom.dv_ingredient_highlights is empty."
         },
         {
-          "type": "text",
+          "type": "richtext",
           "id": "description",
           "label": "Ingredient Description",
-          "default": "Das \"Gold des Ayurveda\". Wärmend und erdend.",
-          "info": "Short description text for this ingredient. Click 'Connect dynamic source' to link to metaobjects.dv_ingredient_highlight.[handle].description.value, or enter text manually. Used as fallback if product.metafields.custom.dv_ingredient_highlights is empty. ⚠️ IMPORTANT: Make sure to connect this field when mapping a MetaObject!"
+          "default": "<p>Das \"Gold des Ayurveda\". Wärmend und erdend.</p>",
+          "info": "Short description text for this ingredient (multi-line). Click 'Connect dynamic source' to link to metaobjects.dv_ingredient_highlight.[handle].description.value (MetaObject field type: Multi-line text). The 'richtext' type is compatible with MetaObject multi-line text fields and supports dynamic sources. Used as fallback if product.metafields.custom.dv_ingredient_highlights is empty. ⚠️ IMPORTANT: Make sure to connect this field when mapping a MetaObject!"
         }
       ]
     },
@@ -475,21 +479,21 @@
           "type": "ingredient_item",
           "settings": {
             "name": "Kurkuma",
-            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+            "description": "<p>Das \"Gold des Ayurveda\". Wärmend und erdend.</p>"
           }
         },
         {
           "type": "ingredient_item",
           "settings": {
             "name": "Maca",
-            "description": "Traditionell für Ausdauer und Energie."
+            "description": "<p>Traditionell für Ausdauer und Energie.</p>"
           }
         },
         {
           "type": "ingredient_item",
           "settings": {
             "name": "Ingwer",
-            "description": "Für das innere Feuer (Agni)."
+            "description": "<p>Für das innere Feuer (Agni).</p>"
           }
         }
       ]
