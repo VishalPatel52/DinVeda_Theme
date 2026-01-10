@@ -1214,6 +1214,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+  align-items: stretch;
 }
 
 .dv-complete-ritual__card {
@@ -1224,6 +1225,9 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
   transition: all 0.3s ease;
   cursor: pointer;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .dv-complete-ritual__card:hover {
@@ -1235,15 +1239,19 @@
 .dv-complete-ritual__card-link {
   text-decoration: none;
   color: inherit;
-  display: block;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
 }
 
 .dv-complete-ritual__card-inner {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: stretch;
   gap: 16px;
   padding: 16px;
+  min-height: 80px;
+  flex: 1;
 }
 
 .dv-complete-ritual__icon-wrapper {
@@ -1256,6 +1264,7 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  align-self: flex-start;
 }
 
 .dv-complete-ritual__icon {
@@ -1289,6 +1298,7 @@
   line-height: 1.4;
   color: var(--dv-text-color);
   margin: 0;
+  flex-shrink: 0;
 }
 
 .dv-complete-ritual__label {
@@ -1299,6 +1309,8 @@
   letter-spacing: 0.1em;
   color: rgba(139, 94, 60, 0.6);
   margin: 0;
+  margin-top: auto;
+  flex-shrink: 0;
 }
 
 /* ============================================
@@ -1829,6 +1841,7 @@
   .dv-complete-ritual__card-inner {
     gap: 12px;
     padding: 14px;
+    min-height: 76px;
   }
   
   .dv-complete-ritual__icon-wrapper {
