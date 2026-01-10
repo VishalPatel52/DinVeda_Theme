@@ -119,91 +119,88 @@
     "dv_detail_grid": {
       "type": "dv-detail-grid",
       "blocks": {
-        "ingredient_item_nijR67": {
-          "type": "ingredient_item",
-          "settings": {
-            "name": "Kurkuma",
-            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
-          }
-        },
-        "ingredient_item_Rr9EdL": {
-          "type": "ingredient_item",
-          "settings": {
-            "name": "Kurkuma",
-            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
-          }
-        },
-        "ingredient_item_dUKnPq": {
-          "type": "ingredient_item",
-          "settings": {
-            "name": "Kurkuma",
-            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
-          }
-        },
-        "ingredient_item_HptRmr": {
-          "type": "ingredient_item",
-          "settings": {
-            "name": "Kurkuma",
-            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
-          }
-        },
-        "ingredient_item_bKDhMz": {
-          "type": "ingredient_item",
-          "settings": {
-            "name": "Kurkuma",
-            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
-          }
-        },
-        "ingredient_item_JhfeiC": {
-          "type": "ingredient_item",
-          "settings": {
-            "name": "Kurkuma",
-            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
-          }
-        },
-        "ingredient_item_XjyVbQ": {
-          "type": "ingredient_item",
-          "settings": {
-            "name": "Kurkuma",
-            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
-          }
-        },
-        "trust_badge_4GJ6Nk": {
-          "type": "trust_badge",
-          "settings": {
-            "label": "BIO-Zertifiziert"
-          }
-        },
-        "ingredient_item_tkEL6q": {
+        "ingredient_item_De3Nej": {
           "type": "ingredient_item",
           "source": "{{ metaobjects.dv_ingredient_highlight[\"dv-ingredient-highlights\"] }}",
           "settings": {
             "icon": "{{ metaobjects.dv_ingredient_highlight[\"dv-ingredient-highlights\"].icon.value }}",
             "name": "{{ metaobjects.dv_ingredient_highlight[\"dv-ingredient-highlights\"].name.value }}",
-            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+            "description": "{{ metaobjects.dv_ingredient_highlight[\"dv-ingredient-highlights\"].description | metafield_tag }}"
           }
         },
-        "ingredient_item_fNBaHq": {
+        "ingredient_item_piDPUa": {
           "type": "ingredient_item",
           "source": "{{ metaobjects.dv_ingredient_highlight.ingwer }}",
           "settings": {
             "icon": "{{ metaobjects.dv_ingredient_highlight.ingwer.icon.value }}",
             "name": "{{ metaobjects.dv_ingredient_highlight.ingwer.name.value }}",
-            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+            "description": "<p>{{ metaobjects.dv_ingredient_highlight.ingwer.description | metafield_tag }}</p>"
+          }
+        },
+        "ingredient_item_HKQ4bg": {
+          "type": "ingredient_item",
+          "source": "{{ metaobjects.dv_ingredient_highlight.maca }}",
+          "settings": {
+            "icon": "{{ metaobjects.dv_ingredient_highlight.maca.icon.value }}",
+            "name": "{{ metaobjects.dv_ingredient_highlight.maca.name.value }}",
+            "description": "<p>{{ metaobjects.dv_ingredient_highlight.maca.description | metafield_tag }}</p>"
+          }
+        },
+        "ingredient_item_U4PiBm": {
+          "type": "ingredient_item",
+          "source": "{{ metaobjects.dv_ingredient_highlight[\"ceylon-zimt\"] }}",
+          "settings": {
+            "icon": "{{ metaobjects.dv_ingredient_highlight[\"ceylon-zimt\"].icon.value }}",
+            "name": "{{ metaobjects.dv_ingredient_highlight[\"ceylon-zimt\"].name.value }}",
+            "description": "<p>{{ metaobjects.dv_ingredient_highlight[\"ceylon-zimt\"].description | metafield_tag }}</p>"
+          }
+        },
+        "ingredient_item_773Fej": {
+          "type": "ingredient_item",
+          "source": "{{ metaobjects.dv_ingredient_highlight.orangenschale }}",
+          "settings": {
+            "icon": "{{ metaobjects.dv_ingredient_highlight.orangenschale.icon.value }}",
+            "name": "{{ metaobjects.dv_ingredient_highlight.orangenschale.name.value }}",
+            "description": "<p>{{ metaobjects.dv_ingredient_highlight.orangenschale.description | metafield_tag }}</p>"
+          }
+        },
+        "ingredient_item_gymJyz": {
+          "type": "ingredient_item",
+          "source": "{{ metaobjects.dv_ingredient_highlight[\"schwarzer-pfeffer\"] }}",
+          "settings": {
+            "icon": "{{ metaobjects.dv_ingredient_highlight[\"schwarzer-pfeffer\"].icon.value }}",
+            "name": "{{ metaobjects.dv_ingredient_highlight[\"schwarzer-pfeffer\"].name.value }}",
+            "description": "<p>{{ metaobjects.dv_ingredient_highlight[\"schwarzer-pfeffer\"].description | metafield_tag }}</p>"
+          }
+        },
+        "ingredient_item_LAjYcL": {
+          "type": "ingredient_item",
+          "source": "{{ metaobjects.dv_ingredient_highlight.muskatnuss }}",
+          "settings": {
+            "icon": "{{ metaobjects.dv_ingredient_highlight.muskatnuss.icon.value }}",
+            "name": "{{ metaobjects.dv_ingredient_highlight.muskatnuss.name.value }}",
+            "description": "<p>{{ metaobjects.dv_ingredient_highlight.muskatnuss.description | metafield_tag }}</p>"
+          }
+        },
+        "ingredient_item_dDxner": {
+          "type": "ingredient_item",
+          "source": "{{ metaobjects.dv_ingredient_highlight.kardamom }}",
+          "settings": {
+            "icon": "{{ metaobjects.dv_ingredient_highlight.kardamom.icon.value }}",
+            "name": "{{ metaobjects.dv_ingredient_highlight.kardamom.name.value }}",
+            "description": "<p>{{ metaobjects.dv_ingredient_highlight.kardamom.description | metafield_tag }}</p>"
           }
         }
       },
       "block_order": [
-        "ingredient_item_nijR67",
-        "ingredient_item_Rr9EdL",
-        "ingredient_item_dUKnPq",
-        "ingredient_item_HptRmr",
-        "ingredient_item_bKDhMz",
-        "ingredient_item_JhfeiC",
-        "ingredient_item_XjyVbQ",
-        "trust_badge_4GJ6Nk",
-        "ingredient_item_tkEL6q",
-        "ingredient_item_fNBaHq"
+        "ingredient_item_De3Nej",
+        "ingredient_item_piDPUa",
+        "ingredient_item_HKQ4bg",
+        "ingredient_item_U4PiBm",
+        "ingredient_item_773Fej",
+        "ingredient_item_gymJyz",
+        "ingredient_item_LAjYcL",
+        "ingredient_item_dDxner"
       ],
       "settings": {
         "section_heading": "",
