@@ -19,7 +19,7 @@
         "show_vegan_label": true,
         "subtitle": "{{ product.metafields.custom.dinveda_dv_subtitle.value }}",
         "quote": "",
-        "animal_name": "",
+        "animal_name": "{{ product.metafields.custom.dv_animal_name.value }}",
         "price_note": "inkl. MwSt. / 100g Dose",
         "show_quantity": true,
         "add_to_cart_label": "IN DEN WARENKORB",
