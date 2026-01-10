@@ -179,7 +179,8 @@
           "source": "{{ metaobjects.dv_ingredient_highlight[\"dv-ingredient-highlights\"] }}",
           "settings": {
             "icon": "{{ metaobjects.dv_ingredient_highlight[\"dv-ingredient-highlights\"].icon.value }}",
-            "name": "{{ metaobjects.dv_ingredient_highlight[\"dv-ingredient-highlights\"].name.value }}"
+            "name": "{{ metaobjects.dv_ingredient_highlight[\"dv-ingredient-highlights\"].name.value }}",
+            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
           }
         },
         "ingredient_item_fNBaHq": {
@@ -187,7 +188,8 @@
           "source": "{{ metaobjects.dv_ingredient_highlight.ingwer }}",
           "settings": {
             "icon": "{{ metaobjects.dv_ingredient_highlight.ingwer.icon.value }}",
-            "name": "{{ metaobjects.dv_ingredient_highlight.ingwer.name.value }}"
+            "name": "{{ metaobjects.dv_ingredient_highlight.ingwer.name.value }}",
+            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
           }
         }
       },
@@ -207,7 +209,7 @@
         "section_heading": "",
         "layout_mode": "both",
         "tradition_title": "{{ product.metafields.custom.dv_detail_left_title.value }}",
-        "tradition_body": "<p>{{ metaobjects.dv_ingredient_highlight[\"dv-ingredient-highlights\"].description | metafield_tag }}</p>",
+        "tradition_body": "{{ product.metafields.custom.dv_detail_left_body | metafield_tag }}",
         "facts_title": "{{ product.metafields.custom.dv_facts_title.value }}",
         "first_ingredients": "{{ product.metafields.custom.dv_first_ingredients | metafield_tag }}",
         "organic_note": "100 % Bio – aus kontrolliert biologischem Anbau",
