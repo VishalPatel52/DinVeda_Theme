@@ -11,8 +11,6 @@
   "sections": {
     "dv_main_product": {
       "type": "dv-main-product",
-      "blocks": {},
-      "block_order": [],
       "settings": {
         "padding_top": 0,
         "padding_bottom": 0,
@@ -35,8 +33,6 @@
     },
     "dv_story_card": {
       "type": "dv-story-card",
-      "blocks": {},
-      "block_order": [],
       "settings": {
         "title": "",
         "content": "",
@@ -53,8 +49,6 @@
     },
     "dv_detail_grid": {
       "type": "dv-detail-grid",
-      "blocks": {},
-      "block_order": [],
       "settings": {
         "section_heading": "Dein Ritual im Detail",
         "layout_mode": "both",
@@ -71,8 +65,6 @@
     },
     "dv_daily_ritual": {
       "type": "dv-daily-ritual",
-      "blocks": {},
-      "block_order": [],
       "settings": {
         "heading": "Dein tägliches Ritual",
         "concluding_quote": "",
@@ -108,8 +100,6 @@
     },
     "dv_complete_ritual": {
       "type": "dv-complete-ritual",
-      "blocks": {},
-      "block_order": [],
       "settings": {
         "heading": "Vervollständige dein Ritual",
         "subheading": "",
