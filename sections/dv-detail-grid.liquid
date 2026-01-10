@@ -161,18 +161,33 @@
               {% elsif has_ingredient_items %}
                 {% for block in section.blocks %}
                   {% if block.type == 'ingredient_item' %}
+                    {%- liquid
+                      # Get icon from block settings (can be connected to MetaObject via dynamic source)
+                      # When connected to MetaObject, this will be the MetaObject's icon field
+                      assign block_icon = block.settings.icon
+                      
+                      # Get name from block settings (can be connected to MetaObject via dynamic source)
+                      # When connected to MetaObject, this will be the MetaObject's name field
+                      assign block_name = block.settings.name
+                      
+                      # Get description from block settings (can be connected to MetaObject via dynamic source)
+                      # When connected to MetaObject, this will be the MetaObject's description field
+                      # ⚠️ IMPORTANT: When connecting this block to a DV Ingredient Highlight MetaObject,
+                      # make sure to connect ALL THREE fields: Icon, Name, and Description
+                      assign block_description = block.settings.description
+                    -%}
                     <div class="dv-detail-grid__ingredient-highlight" {{ block.shopify_attributes }}>
-                      {% if block.settings.icon != blank %}
+                      {% if block_icon != blank %}
                         <div class="dv-detail-grid__ingredient-highlight-icon">
-                          {{ block.settings.icon | image_url: width: 32 | image_tag: alt: block.settings.name, loading: 'lazy', width: 32, height: 32 }}
+                          {{ block_icon | image_url: width: 32 | image_tag: alt: block_name, loading: 'lazy', width: 32, height: 32 }}
                         </div>
                       {% endif %}
                       <div class="dv-detail-grid__ingredient-highlight-content">
-                        {% if block.settings.name != blank %}
-                          <strong class="dv-detail-grid__ingredient-highlight-name">{{ block.settings.name | escape }}</strong>
+                        {% if block_name != blank %}
+                          <strong class="dv-detail-grid__ingredient-highlight-name">{{ block_name | escape }}</strong>
                         {% endif %}
-                        {% if block.settings.description != blank %}
-                          <p class="dv-detail-grid__ingredient-highlight-desc">{{ block.settings.description | escape }}</p>
+                        {% if block_description != blank %}
+                          <p class="dv-detail-grid__ingredient-highlight-desc">{{ block_description | escape }}</p>
                         {% endif %}
                       </div>
                     </div>
@@ -403,24 +418,32 @@
       "name": "Ingredient (Fallback)",
       "settings": [
         {
+          "type": "header",
+          "content": "Connect to DV Ingredient Highlight MetaObject"
+        },
+        {
+          "type": "paragraph",
+          "content": "💡 To connect this block to a DV Ingredient Highlight MetaObject: 1) Click on each field below, 2) Click 'Connect dynamic source', 3) Select the MetaObject instance, 4) Choose the corresponding field (icon → icon, name → name, description → description). Make sure to connect all three fields."
+        },
+        {
           "type": "image_picker",
           "id": "icon",
           "label": "Ingredient Icon",
-          "info": "Icon for this ingredient (e.g., leaf, flame, lightning bolt). Used as fallback if product.metafields.custom.dv_ingredient_highlights (DV Ingredient Highlights - list of DV Ingredient Highlight metaobjects) is empty."
+          "info": "Icon for this ingredient. Click 'Connect dynamic source' to link to metaobjects.dv_ingredient_highlight.[handle].icon.value, or upload an image manually. Used as fallback if product.metafields.custom.dv_ingredient_highlights is empty."
         },
         {
           "type": "text",
           "id": "name",
           "label": "Ingredient Name",
           "default": "Kurkuma",
-          "info": "Name of the ingredient (e.g., Kurkuma, Maca, Ingwer). Used as fallback if product.metafields.custom.dv_ingredient_highlights (DV Ingredient Highlights) is empty."
+          "info": "Name of the ingredient. Click 'Connect dynamic source' to link to metaobjects.dv_ingredient_highlight.[handle].name.value, or enter text manually. Used as fallback if product.metafields.custom.dv_ingredient_highlights is empty."
         },
         {
-          "type": "textarea",
+          "type": "text",
           "id": "description",
           "label": "Ingredient Description",
           "default": "Das \"Gold des Ayurveda\". Wärmend und erdend.",
-          "info": "Short description text for this ingredient. Used as fallback if product.metafields.custom.dv_ingredient_highlights (DV Ingredient Highlights) is empty."
+          "info": "Short description text for this ingredient. Click 'Connect dynamic source' to link to metaobjects.dv_ingredient_highlight.[handle].description.value, or enter text manually. Used as fallback if product.metafields.custom.dv_ingredient_highlights is empty. ⚠️ IMPORTANT: Make sure to connect this field when mapping a MetaObject!"
         }
       ]
     },
