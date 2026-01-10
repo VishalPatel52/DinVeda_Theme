@@ -119,6 +119,55 @@
     "dv_detail_grid": {
       "type": "dv-detail-grid",
       "blocks": {
+        "ingredient_item_nijR67": {
+          "type": "ingredient_item",
+          "settings": {
+            "name": "Kurkuma",
+            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+          }
+        },
+        "ingredient_item_Rr9EdL": {
+          "type": "ingredient_item",
+          "settings": {
+            "name": "Kurkuma",
+            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+          }
+        },
+        "ingredient_item_dUKnPq": {
+          "type": "ingredient_item",
+          "settings": {
+            "name": "Kurkuma",
+            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+          }
+        },
+        "ingredient_item_HptRmr": {
+          "type": "ingredient_item",
+          "settings": {
+            "name": "Kurkuma",
+            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+          }
+        },
+        "ingredient_item_bKDhMz": {
+          "type": "ingredient_item",
+          "settings": {
+            "name": "Kurkuma",
+            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+          }
+        },
+        "ingredient_item_JhfeiC": {
+          "type": "ingredient_item",
+          "settings": {
+            "name": "Kurkuma",
+            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+          }
+        },
+        "ingredient_item_XjyVbQ": {
+          "type": "ingredient_item",
+          "settings": {
+            "name": "Kurkuma",
+            "description": "Das \"Gold des Ayurveda\". Wärmend und erdend."
+          }
+        },
         "trust_badge_4GJ6Nk": {
           "type": "trust_badge",
           "settings": {
@@ -143,6 +192,13 @@
         }
       },
       "block_order": [
+        "ingredient_item_nijR67",
+        "ingredient_item_Rr9EdL",
+        "ingredient_item_dUKnPq",
+        "ingredient_item_HptRmr",
+        "ingredient_item_bKDhMz",
+        "ingredient_item_JhfeiC",
+        "ingredient_item_XjyVbQ",
         "trust_badge_4GJ6Nk",
         "ingredient_item_tkEL6q",
         "ingredient_item_fNBaHq"
@@ -163,6 +219,34 @@
     },
     "dv_daily_ritual": {
       "type": "dv-daily-ritual",
+      "blocks": {
+        "ritual_step_UfiK4p": {
+          "type": "ritual_step",
+          "settings": {
+            "heading": "Verbinden",
+            "text": "Gib 1 TL (1-3g) des Pulvers in deine Lieblingstasse."
+          }
+        },
+        "ritual_step_cMr6GM": {
+          "type": "ritual_step",
+          "settings": {
+            "heading": "Verbinden",
+            "text": "Gib 1 TL (1-3g) des Pulvers in deine Lieblingstasse."
+          }
+        },
+        "ritual_step_YpwqpN": {
+          "type": "ritual_step",
+          "settings": {
+            "heading": "Verbinden",
+            "text": "Gib 1 TL (1-3g) des Pulvers in deine Lieblingstasse."
+          }
+        }
+      },
+      "block_order": [
+        "ritual_step_UfiK4p",
+        "ritual_step_cMr6GM",
+        "ritual_step_YpwqpN"
+      ],
       "settings": {
         "heading": "Dein tägliches Ritual",
         "concluding_quote": "",
