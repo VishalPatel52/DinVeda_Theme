@@ -9,12 +9,12 @@ This guide maps the current Golden Boost product page sections to the metafields
 
 **Settings → Metafields Mapping:**
 - `subtitle` → Connect to: `product.metafields.custom.dv_product_subtitle` (DV Product Subtitle - Single line text)
-- `quote` → Connect to: `product.metafields.custom.dv_product_quote` (DV Product Quote - Multi-line text) OR `product.metafields.custom.dv_animal_quote` (DV Animal Quote - Multi-line text)
+- `quote` → Connect to: `product.metafields.custom.dv_product_quote` (DV Product Quote - Multi-line text)
 - `animal_name` → Connect to: `product.metafields.custom.dv_animal_name` (DV Animal Name - Single line text)
 - `ritual_timing` → Connect to: `product.metafields.custom.dv_ritual_timing` (DV Ritual Timing - Single line text)
 - `preparation_mode` → Connect to: `product.metafields.custom.dv_preparation_mode` (DV Preparation Mode - Single line text)
 - `ritual_duration` → Connect to: `product.metafields.custom.dv_ritual_duration` (DV Ritual Duration - Single line text)
-- `trust_badges` (list.metaobject_reference) → Connect to: `product.metafields.custom.dv_trust_badges` (DV Trust Badges - List of DV Trust Badge metaobject)
+- `trust_badges` (MetaObject List) → ⚠️ Configure in product metafields: Products → [Product] → Metafields → "DV Trust Badges" → Select instances. Cannot use "Connect dynamic source" in theme editor. Sections automatically read from `product.metafields.custom.dv_trust_badges`. Blocks available as fallback.
 
 ### 2. DV Story Card (`sections/dv-story-card.liquid`)
 
@@ -32,12 +32,12 @@ This guide maps the current Golden Boost product page sections to the metafields
 - `facts_title` → Connect to: `product.metafields.custom.dv_facts_title` (DV Facts Title - Single line text)
 - `first_ingredients` (richtext) → Connect to: `product.metafields.custom.dv_first_ingredients` (DV First Ingredients - Rich text)
 - `allergens_notes` (richtext) → Connect to: `product.metafields.custom.dv_allergens_notes` (DV Allergens & Notes - Rich text)
-- `ingredient_highlights` (list.metaobject_reference) → Connect to: `product.metafields.custom.dv_ingredient_highlights` (DV Ingredient Highlights - List of DV Ingredient Highlight metaobject)
+- `ingredient_highlights` (MetaObject List) → ⚠️ Configure in product metafields: Products → [Product] → Metafields → "DV Ingredient Highlights" → Select instances. Cannot use "Connect dynamic source" in theme editor. Sections automatically read from `product.metafields.custom.dv_ingredient_highlights`. Blocks available as fallback.
 
 ### 4. DV Daily Ritual (`sections/dv-daily-ritual.liquid`)
 
 **Settings → Metafields Mapping:**
-- `ritual_steps` (list.metaobject_reference) → Connect to: `product.metafields.custom.dv_ritual_steps` (DV Ritual Steps - List of DV Ritual Step metaobject)
+- `ritual_steps` (MetaObject List) → ⚠️ Configure in product metafields: Products → [Product] → Metafields → "DV Ritual Steps" → Select instances. Cannot use "Connect dynamic source" in theme editor. Sections automatically read from `product.metafields.custom.dv_ritual_steps`. Blocks available as fallback.
 
 ### 5. Recipe Preparation (`sections/dinveda-recipe-preparation.liquid`)
 
@@ -47,12 +47,14 @@ This guide maps the current Golden Boost product page sections to the metafields
 - `pairing_ideas` (textarea) → Connect to: `product.metafields.custom.dv_pairing_ideas` (DV Pairing Ideas - Multi-line text)
 - `serving_suggestion` (textarea) → Connect to: `product.metafields.custom.dv_serving_suggestion` (DV Serving Suggestion - Multi-line text)
 - `frequency` → Connect to: `product.metafields.custom.dv_frequency` (DV Frequency - Single line text)
-- `recipe_cards` (list.metaobject_reference) → Connect to: `product.metafields.custom.dv_recipe_cards` (DV Recipe Cards - List of DV Recipe Card metaobject)
+- `recipe_cards` (MetaObject List) → ⚠️ Configure in product metafields: Products → [Product] → Metafields → "DV Recipe Cards" → Select instances. Cannot use "Connect dynamic source" in theme editor. Sections automatically read from `product.metafields.custom.dv_recipe_cards`. Blocks available as fallback.
 
 ### 6. DV Complete Ritual (`sections/dv-complete-ritual.liquid`)
 
 **Settings → Metafields Mapping:**
 - `subheading` → Connect to: `product.metafields.custom.dv_related_products_subheading` (DV Related Products Subheading - Single line text)
+- `related_products` (List of Product References) → ⚠️ Configure in product metafields: Products → [Product] → Metafields → "DV Related Products" → Select product instances. Cannot use "Connect dynamic source" in theme editor. Sections automatically read from `product.metafields.custom.dv_related_products`. Each product in the list automatically links to its own product detail page. Blocks available as fallback.
+- `product_category_label` (on each related product) → Configure on each related product (e.g., Moon Milk, Inner Peace, Geschenkset): Products → [Related Product] → Metafields → "DV Product Category Label" → Enter label text (e.g., "FÜR DIE NACHT", "FÜR RUHE", "ALLE RITUALE"). This label appears below the product title when shown as a related product.
 
 ## Current Golden Boost Content Reference
 
@@ -60,7 +62,7 @@ Based on the cleaned template, here's what content should be populated from meta
 
 **Hero Section:**
 - Subtitle: "MORGEN | AKTIVIEREN" → `dv_product_subtitle`
-- Quote: "Ich starte clever und klar in den Tag. Für Energie, Fokus & innere Wärme." → `dv_product_quote` or `dv_animal_quote`
+- Quote: "Ich starte clever und klar in den Tag. Für Energie, Fokus & innere Wärme." → `dv_product_quote`
 - Animal: "Fuchs" → `dv_animal_name`
 - Trust Badges: 4 badges → `dv_trust_badges` (metaobject list)
 
@@ -87,4 +89,5 @@ Based on the cleaned template, here's what content should be populated from meta
 
 **Complete Ritual:**
 - Subheading: "Sanfte Ergänzungen für den Tag." → `dv_related_products_subheading`
+- Related Products: List of related products → `dv_related_products` (List of product references). Configure per product - Golden Boost shows Flow and Glow, Moon Rest, Ova Harmony; Flow and Glow shows different products, etc.
 

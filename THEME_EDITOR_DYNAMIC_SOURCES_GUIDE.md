@@ -21,10 +21,28 @@ All product-specific content in the `dinveda-premium` template can now be connec
    - Select the appropriate metafield from the list (e.g., `product.metafields.custom.dv_product_subtitle`)
    - Save
 
-4. **For MetaObject Lists:**
-   - Find settings like "Trust Badges", "Ingredient Highlights", "Ritual Steps", "Recipe Cards"
-   - Click "Connect dynamic source"
-   - Select the metaobject list metafield (e.g., `product.metafields.custom.dv_trust_badges`)
+4. **For MetaObject Lists (Trust Badges, Ingredient Highlights, Ritual Steps, Recipe Cards):**
+   - ⚠️ **Important**: Metaobject list metafields cannot be connected via "Connect dynamic source" in theme editor
+   - These must be configured per product in the product's metafields section:
+     1. Go to **Products** → Select your product
+     2. Scroll to the **Metafields** section
+     3. Find the metaobject list metafield (e.g., "DV Trust Badges")
+     4. Select the metaobject instances you want to use
+   - The section code automatically reads from the product metafield once configured
+   - Alternatively, use blocks as a fallback option (available in theme editor)
+
+5. **For Product Reference Lists (Related Products):**
+   - ⚠️ **Important**: Product reference list metafields cannot be connected via "Connect dynamic source" in theme editor
+   - These must be configured per product in the product's metafields section:
+     1. Go to **Products** → Select your product (e.g., "Golden Boost")
+     2. Scroll to the **Metafields** section
+     3. Find the product reference list metafield (e.g., "DV Related Products")
+     4. Select the products you want to show as related products (e.g., Flow and Glow, Moon Rest, Ova Harmony)
+     5. Save
+   - Each product in the list automatically links to its own product detail page
+   - The section code automatically reads from the product metafield once configured
+   - Each product (Golden Boost, Flow and Glow, etc.) can have its own set of related products
+   - Alternatively, use blocks as a fallback option (available in theme editor)
 
 ## Section-by-Section Connection Guide
 
@@ -32,16 +50,15 @@ All product-specific content in the `dinveda-premium` template can now be connec
 
 **Settings to Connect:**
 - **Subtitle** → Connect to: `product.metafields.custom.dv_product_subtitle` (DV Product Subtitle)
-- **Quote** → Connect to: `product.metafields.custom.dv_product_quote` (DV Product Quote) OR `product.metafields.custom.dv_animal_quote` (DV Animal Quote)
+- **Quote** → Connect to: `product.metafields.custom.dv_product_quote` (DV Product Quote)
 - **Animal Name** → Connect to: `product.metafields.custom.dv_animal_name` (DV Animal Name)
 - **Ritual Timing (Tageszeit)** → Connect to: `product.metafields.custom.dv_ritual_timing` (DV Ritual Timing)
 - **Preparation Mode (Zubereitung)** → Connect to: `product.metafields.custom.dv_preparation_mode` (DV Preparation Mode)
 - **Ritual Duration (Dauer)** → Connect to: `product.metafields.custom.dv_ritual_duration` (DV Ritual Duration)
-- **Trust Badges** (MetaObject List) → Connect to: `product.metafields.custom.dv_trust_badges` (DV Trust Badges - list of DV Trust Badge)
+- **Trust Badges** (MetaObject List) → ⚠️ Configure in product metafields: Products → [Product] → Metafields → "DV Trust Badges" → Select instances. Cannot use "Connect dynamic source" for metaobject lists.
 
 **Fallback:**
-- If settings are not connected, you can enter text manually
-- Trust badges also support blocks as fallback
+- If metaobject list is not configured, you can use blocks as fallback (click "Add block" → "Product Badge (Fallback)")
 
 ### 2. DV Story Card Section
 
@@ -58,7 +75,7 @@ All product-specific content in the `dinveda-premium` template can now be connec
 **Left Column Settings:**
 - **Tradition Title** → Connect to: `product.metafields.custom.dv_detail_left_title` (DV Detail Left Title)
 - **Tradition Intro Text** (Rich text) → Connect to: `product.metafields.custom.dv_detail_left_body` (DV Detail Left Body - Rich text)
-- **Ingredient Highlights** (MetaObject List) → Connect to: `product.metafields.custom.dv_ingredient_highlights` (DV Ingredient Highlights - list of DV Ingredient Highlight)
+- **Ingredient Highlights** (MetaObject List) → ⚠️ Configure in product metafields: Products → [Product] → Metafields → "DV Ingredient Highlights" → Select instances. Cannot use "Connect dynamic source" for metaobject lists.
 
 **Right Column Settings:**
 - **Facts Title** → Connect to: `product.metafields.custom.dv_facts_title` (DV Facts Title)
@@ -70,7 +87,7 @@ All product-specific content in the `dinveda-premium` template can now be connec
 ### 4. DV Daily Ritual Section
 
 **Settings to Connect:**
-- **Ritual Steps** (MetaObject List) → Connect to: `product.metafields.custom.dv_ritual_steps` (DV Ritual Steps - list of DV Ritual Step)
+- **Ritual Steps** (MetaObject List) → ⚠️ Configure in product metafields: Products → [Product] → Metafields → "DV Ritual Steps" → Select instances. Cannot use "Connect dynamic source" for metaobject lists.
 
 **Fallback:** Blocks or description markers (DV:RITUAL_STEPS) in product description
 
@@ -82,7 +99,7 @@ All product-specific content in the `dinveda-premium` template can now be connec
 - **Pairing Ideas (Passt zu)** → Connect to: `product.metafields.custom.dv_pairing_ideas` (DV Pairing Ideas - Multi-line text)
 - **Serving Suggestion (Portion)** → Connect to: `product.metafields.custom.dv_serving_suggestion` (DV Serving Suggestion - Multi-line text)
 - **Frequency (Häufigkeit)** → Connect to: `product.metafields.custom.dv_frequency` (DV Frequency - Single line text)
-- **Recipe Cards** (MetaObject List) → Connect to: `product.metafields.custom.dv_recipe_cards` (DV Recipe Cards - list of DV Recipe Card)
+- **Recipe Cards** (MetaObject List) → ⚠️ Configure in product metafields: Products → [Product] → Metafields → "DV Recipe Cards" → Select instances. Cannot use "Connect dynamic source" for metaobject lists.
 
 **Fallback:** Recipe cards also support blocks as fallback
 
@@ -90,6 +107,10 @@ All product-specific content in the `dinveda-premium` template can now be connec
 
 **Settings to Connect:**
 - **Subheading** → Connect to: `product.metafields.custom.dv_related_products_subheading` (DV Related Products Subheading)
+- **Related Products** (List of Product References) → ⚠️ Configure in product metafields: Products → [Product] → Metafields → "DV Related Products" → Select product instances. Cannot use "Connect dynamic source" for product reference lists. Each product in the list automatically links to its own product detail page.
+- **Category Labels** (e.g., "FÜR DIE NACHT", "FÜR RUHE") → Configure on each related product: Products → [Related Product, e.g., "Moon Milk"] → Metafields → "DV Product Category Label" → Enter label text. This label appears below the product title when displayed as a related product. Each related product can have its own label.
+
+**Fallback:** Blocks can be used as fallback (click "Add block" → "Product Card (Fallback)") if metafield is not configured
 
 ## Golden Boost Content Reference
 
@@ -99,7 +120,7 @@ When setting up Golden Boost product, connect these metafields:
 - Subtitle: "MORGEN | AKTIVIEREN" → `dv_product_subtitle`
 - Quote: "Ich starte clever und klar in den Tag. Für Energie, Fokus & innere Wärme." → `dv_product_quote`
 - Animal: "Fuchs" → `dv_animal_name`
-- Trust Badges: Connect to `dv_trust_badges` metaobject list (4 badges)
+- Trust Badges: Configure `dv_trust_badges` metaobject list in product metafields (4 badges)
 
 **Story:**
 - Title: Auto-generated from animal name OR connect `dv_story_title`
@@ -123,6 +144,7 @@ When setting up Golden Boost product, connect these metafields:
 
 **Complete Ritual:**
 - Subheading: "Sanfte Ergänzungen für den Tag." → `dv_related_products_subheading`
+- Related Products: Configure `dv_related_products` (List of product references) in product metafields. For Golden Boost, select: Flow and Glow, Moon Rest, Ova Harmony (or your desired products). Each product can have its own set of related products.
 
 ## Benefits of This Approach
 
@@ -150,6 +172,13 @@ When setting up Golden Boost product, connect these metafields:
 - Ensure the metaobject definition exists in Settings → Custom data → Metaobjects
 - Check that the product metafield is of type "List of metaobject references"
 - Verify the metaobject type name matches (e.g., `dv_trust_badge`, `dv_ingredient_highlight`)
+
+**Issue: Related Products not showing**
+- Ensure the metafield is created as "List of product references" type in Settings → Custom data → Products
+- Check that products are selected in the product's metafields section (Products → [Product] → Metafields)
+- Verify that the metafield namespace is `custom` and key is `dv_related_products`
+- Ensure products are published and available (not draft or archived)
+- Check that the section is reading from `product.metafields.custom.dv_related_products.value`
 
 **Issue: Rich text not rendering correctly**
 - Ensure the metafield type in Shopify is "Rich text" (not "Multi-line text")

@@ -1,7 +1,7 @@
 {% comment %}
   DinVeda Complete Ritual Section (DV Template)
   "Vervollständige dein Ritual" - related products section
-  Based on complete-your-day but with updated heading
+  Priority: Product metafields (custom.dv_related_products) → Blocks (fallback)
 {% endcomment %}
 
 <section
@@ -18,6 +18,27 @@
   {% endstyle %}
   
   {%- liquid
+    # Priority 1: Check for related products from product metafield
+    assign related_products_meta = null
+    assign has_related_products_meta = false
+    if product.metafields.custom.dv_related_products
+      assign related_products_meta = product.metafields.custom.dv_related_products.value
+      if related_products_meta and related_products_meta.size > 0
+        assign has_related_products_meta = true
+      endif
+    endif
+    
+    # Priority 2: Check if we have blocks as fallback
+    assign has_product_blocks = false
+    if section.blocks.size > 0
+      for block in section.blocks
+        if block.type == 'product_card'
+          assign has_product_blocks = true
+          break
+        endif
+      endfor
+    endif
+    
     # Read subheading from theme editor setting (can be connected to metafield via dynamic source)
     assign subheading_final = section.settings.subheading
   -%}
@@ -35,72 +56,126 @@
       </div>
     {% endif %}
 
-    {% if section.blocks.size > 0 %}
+    {% if has_related_products_meta or has_product_blocks %}
       <div class="dv-complete-ritual__grid">
-        {% for block in section.blocks %}
-          {% if block.type == 'product_card' %}
+        
+        {%- comment -%} Priority 1: Products from metafield {%- endcomment -%}
+        {% if has_related_products_meta %}
+          {% for related_product in related_products_meta %}
             {%- liquid
-              assign card_product = block.settings.product
-              assign card_image = block.settings.image
-              assign card_link = block.settings.link
-              assign card_title = block.settings.title
-              assign card_label = block.settings.label
-              assign card_benefit = block.settings.benefit
+              assign card_product = related_product
+              assign card_image = card_product.featured_image
+              assign card_link = card_product.url
+              assign card_title = card_product.title
+              assign card_label = ''
               
-              if card_product != blank
-                assign card_link = card_product.url
-                unless card_image != blank
-                  assign card_image = card_product.featured_image
-                endunless
-                unless card_title != blank
-                  assign card_title = card_product.title
-                endunless
-                unless card_label != blank
-                  assign card_label = ''
-                endunless
-                unless card_benefit != blank
-                  assign card_benefit = card_product.description | strip_html | truncate: 80
-                endunless
+              # Get label from related product's metafield (e.g., "FÜR DIE NACHT", "FÜR RUHE", "ALLE RITUALE")
+              if card_product.metafields.custom.dv_product_category_label != blank
+                assign card_label = card_product.metafields.custom.dv_product_category_label
               endif
             -%}
             
-            <article class="dv-complete-ritual__card" {{ block.shopify_attributes }}>
-              {% if card_link != blank %}
-                <a href="{{ card_link }}" class="dv-complete-ritual__card-link">
-              {% endif %}
-              
-              <div class="dv-complete-ritual__card-inner">
-                {%- comment -%} Icon in beige square on left {%- endcomment -%}
-                <div class="dv-complete-ritual__icon-wrapper">
-                  {% if card_image != blank %}
-                    {{ card_image | image_url: width: 80 | image_tag: alt: card_image.alt | default: card_title, loading: 'lazy', class: 'dv-complete-ritual__icon' }}
-                  {% else %}
-                    <div class="dv-complete-ritual__icon-placeholder">
-                      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-                    </div>
-                  {% endif %}
+            <article class="dv-complete-ritual__card">
+              <a href="{{ card_link }}" class="dv-complete-ritual__card-link">
+                <div class="dv-complete-ritual__card-inner">
+                  {%- comment -%} Icon in beige square on left {%- endcomment -%}
+                  <div class="dv-complete-ritual__icon-wrapper">
+                    {% if card_image != blank %}
+                      {{ card_image | image_url: width: 80 | image_tag: alt: card_image.alt | default: card_title, loading: 'lazy', class: 'dv-complete-ritual__icon' }}
+                    {% else %}
+                      <div class="dv-complete-ritual__icon-placeholder">
+                        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                      </div>
+                    {% endif %}
+                  </div>
+
+                  {%- comment -%} Text content on right {%- endcomment -%}
+                  <div class="dv-complete-ritual__content">
+                    {% if card_title != blank %}
+                      <h3 class="dv-complete-ritual__card-title">{{ card_title | escape }}</h3>
+                    {% endif %}
+                    
+                    {% if card_label != blank %}
+                      <p class="dv-complete-ritual__label">{{ card_label | escape }}</p>
+                    {% endif %}
+                  </div>
                 </div>
-
-                {%- comment -%} Text content on right {%- endcomment -%}
-                <div class="dv-complete-ritual__content">
-                  {% if card_title != blank %}
-                    <h3 class="dv-complete-ritual__card-title">{{ card_title | escape }}</h3>
-                  {% endif %}
-                  
-                  {% if card_label != blank %}
-                    <p class="dv-complete-ritual__label">{{ card_label | escape }}</p>
-                  {% endif %}
-                </div>
-
-              </div>
-
-              {% if card_link != blank %}
-                </a>
-              {% endif %}
+              </a>
             </article>
 
-          {% endif %}
-        {% endfor %}
+          {% endfor %}
+        {%- comment -%} Priority 2: Products from blocks (fallback) {%- endcomment -%}
+        {% elsif has_product_blocks %}
+          {% for block in section.blocks %}
+            {% if block.type == 'product_card' %}
+              {%- liquid
+                assign card_product = block.settings.product
+                assign card_image = block.settings.image
+                assign card_link = block.settings.link
+                assign card_title = block.settings.title
+                assign card_label = block.settings.label
+                assign card_benefit = block.settings.benefit
+                
+                if card_product != blank
+                  assign card_link = card_product.url
+                  unless card_image != blank
+                    assign card_image = card_product.featured_image
+                  endunless
+                  unless card_title != blank
+                    assign card_title = card_product.title
+                  endunless
+                  unless card_label != blank
+                    # Fallback: Check product's metafield for category label
+                    if card_product.metafields.custom.dv_product_category_label != blank
+                      assign card_label = card_product.metafields.custom.dv_product_category_label
+                    else
+                      assign card_label = ''
+                    endif
+                  endunless
+                  unless card_benefit != blank
+                    assign card_benefit = card_product.description | strip_html | truncate: 80
+                  endunless
+                endif
+              -%}
+              
+              <article class="dv-complete-ritual__card" {{ block.shopify_attributes }}>
+                {% if card_link != blank %}
+                  <a href="{{ card_link }}" class="dv-complete-ritual__card-link">
+                {% endif %}
+                
+                <div class="dv-complete-ritual__card-inner">
+                  {%- comment -%} Icon in beige square on left {%- endcomment -%}
+                  <div class="dv-complete-ritual__icon-wrapper">
+                    {% if card_image != blank %}
+                      {{ card_image | image_url: width: 80 | image_tag: alt: card_image.alt | default: card_title, loading: 'lazy', class: 'dv-complete-ritual__icon' }}
+                    {% else %}
+                      <div class="dv-complete-ritual__icon-placeholder">
+                        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                      </div>
+                    {% endif %}
+                  </div>
+
+                  {%- comment -%} Text content on right {%- endcomment -%}
+                  <div class="dv-complete-ritual__content">
+                    {% if card_title != blank %}
+                      <h3 class="dv-complete-ritual__card-title">{{ card_title | escape }}</h3>
+                    {% endif %}
+                    
+                    {% if card_label != blank %}
+                      <p class="dv-complete-ritual__label">{{ card_label | escape }}</p>
+                    {% endif %}
+                  </div>
+
+                </div>
+
+                {% if card_link != blank %}
+                  </a>
+                {% endif %}
+              </article>
+
+            {% endif %}
+          {% endfor %}
+        {% endif %}
       </div>
     {% else %}
       {%- comment -%} Fallback: Show message {%- endcomment -%}
@@ -134,6 +209,14 @@
       "id": "subheading",
       "label": "Subheading",
       "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_related_products_subheading (DV Related Products Subheading) or enter text manually"
+    },
+    {
+      "type": "header",
+      "content": "Related Products"
+    },
+    {
+      "type": "paragraph",
+      "content": "⚠️ Configure per product: Go to Products → [Your Product] → Metafields → Find 'DV Related Products' → Select product instances. This section automatically reads from product.metafields.custom.dv_related_products. Each product links to its own product detail page. Category labels (e.g., 'FÜR DIE NACHT') are read from each related product's 'DV Product Category Label' metafield. Alternatively, use blocks below as fallback."
     },
     {
       "type": "text",
@@ -193,37 +276,38 @@
   "blocks": [
     {
       "type": "product_card",
-      "name": "Product Card",
+      "name": "Product Card (Fallback)",
       "limit": 6,
       "settings": [
         {
           "type": "product",
           "id": "product",
-          "label": "Product"
+          "label": "Product",
+          "info": "Used as fallback if product.metafields.custom.dv_related_products (DV Related Products) is empty."
         },
         {
           "type": "image_picker",
           "id": "image",
           "label": "Icon Image",
-          "info": "Icon/emoji image for the card (displayed in beige square on left). If empty, uses product featured image."
+          "info": "Icon/emoji image for the card (displayed in beige square on left). If empty, uses product featured image. Used as fallback if product.metafields.custom.dv_related_products is empty."
         },
         {
           "type": "text",
           "id": "title",
           "label": "Title",
-          "info": "Optional: Override product title"
+          "info": "Optional: Override product title. Used as fallback if product.metafields.custom.dv_related_products is empty."
         },
         {
           "type": "text",
           "id": "label",
           "label": "Subtitle",
-          "info": "Uppercase subtitle text below title (e.g., 'FÜR DIE NACHT', 'FÜR RUHE', 'ALLE RITUALE')"
+          "info": "Uppercase subtitle text below title (e.g., 'FÜR DIE NACHT', 'FÜR RUHE', 'ALLE RITUALE'). Used as fallback if product.metafields.custom.dv_related_products is empty."
         },
         {
           "type": "url",
           "id": "link",
           "label": "Link",
-          "info": "Optional: Override product URL"
+          "info": "Optional: Override product URL. Used as fallback if product.metafields.custom.dv_related_products is empty."
         }
       ]
     }
