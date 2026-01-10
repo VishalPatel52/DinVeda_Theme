@@ -68,6 +68,38 @@
     },
     "dv_story_card": {
       "type": "dv-story-card",
+      "blocks": {
+        "checklist_item_VbKRAN": {
+          "type": "checklist_item",
+          "settings": {
+            "text": "Erdende Wärme an kalten Tagen"
+          }
+        },
+        "checklist_item_3iW3PC": {
+          "type": "checklist_item",
+          "settings": {
+            "text": "Erdende Wärme an kalten Tagen"
+          }
+        },
+        "checklist_item_NWjM7k": {
+          "type": "checklist_item",
+          "settings": {
+            "text": "fdas"
+          }
+        },
+        "checklist_item_HQNBze": {
+          "type": "checklist_item",
+          "settings": {
+            "text": "Erdende Wärme an kalten Tagen"
+          }
+        }
+      },
+      "block_order": [
+        "checklist_item_VbKRAN",
+        "checklist_item_3iW3PC",
+        "checklist_item_NWjM7k",
+        "checklist_item_HQNBze"
+      ],
       "settings": {
         "title": "{{ product.metafields.custom.dv_story_title.value }}",
         "animal_name": "",
@@ -86,18 +118,47 @@
     },
     "dv_detail_grid": {
       "type": "dv-detail-grid",
+      "blocks": {
+        "trust_badge_4GJ6Nk": {
+          "type": "trust_badge",
+          "settings": {
+            "label": "BIO-Zertifiziert"
+          }
+        },
+        "ingredient_item_tkEL6q": {
+          "type": "ingredient_item",
+          "source": "{{ metaobjects.dv_ingredient_highlight[\"dv-ingredient-highlights\"] }}",
+          "settings": {
+            "icon": "{{ metaobjects.dv_ingredient_highlight[\"dv-ingredient-highlights\"].icon.value }}",
+            "name": "{{ metaobjects.dv_ingredient_highlight[\"dv-ingredient-highlights\"].name.value }}"
+          }
+        },
+        "ingredient_item_fNBaHq": {
+          "type": "ingredient_item",
+          "source": "{{ metaobjects.dv_ingredient_highlight.ingwer }}",
+          "settings": {
+            "icon": "{{ metaobjects.dv_ingredient_highlight.ingwer.icon.value }}",
+            "name": "{{ metaobjects.dv_ingredient_highlight.ingwer.name.value }}"
+          }
+        }
+      },
+      "block_order": [
+        "trust_badge_4GJ6Nk",
+        "ingredient_item_tkEL6q",
+        "ingredient_item_fNBaHq"
+      ],
       "settings": {
-        "section_heading": "Dein Ritual im Detail",
+        "section_heading": "",
         "layout_mode": "both",
-        "tradition_title": "",
-        "tradition_body": "",
-        "facts_title": "",
-        "first_ingredients": "",
+        "tradition_title": "{{ product.metafields.custom.dv_detail_left_title.value }}",
+        "tradition_body": "<p>{{ metaobjects.dv_ingredient_highlight[\"dv-ingredient-highlights\"].description | metafield_tag }}</p>",
+        "facts_title": "{{ product.metafields.custom.dv_facts_title.value }}",
+        "first_ingredients": "{{ product.metafields.custom.dv_first_ingredients | metafield_tag }}",
         "organic_note": "100 % Bio – aus kontrolliert biologischem Anbau",
-        "allergens_notes": "",
-        "show_when_empty": true,
-        "padding_top": 24,
-        "padding_bottom": 24
+        "allergens_notes": "{{ product.metafields.custom.dv_allergens_notes | metafield_tag }}",
+        "show_when_empty": false,
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "dv_daily_ritual": {
