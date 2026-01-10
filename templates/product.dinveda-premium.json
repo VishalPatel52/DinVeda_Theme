@@ -11,6 +11,37 @@
   "sections": {
     "dv_main_product": {
       "type": "dv-main-product",
+      "blocks": {
+        "product_badge_UzGNLX": {
+          "type": "product_badge",
+          "source": "{{ metaobjects.dv_trust_badge[\"ohne-zusatze\"] }}",
+          "settings": {
+            "icon_emoji": "{{ metaobjects.dv_trust_badge[\"ohne-zusatze\"].icon_material.value }}",
+            "text": "{{ metaobjects.dv_trust_badge[\"ohne-zusatze\"].text.value }}"
+          }
+        },
+        "product_badge_rzxECF": {
+          "type": "product_badge",
+          "source": "{{ metaobjects.dv_trust_badge[\"100-bio-vegan\"] }}",
+          "settings": {
+            "icon_emoji": "{{ metaobjects.dv_trust_badge[\"100-bio-vegan\"].icon_material.value }}",
+            "text": "{{ metaobjects.dv_trust_badge[\"100-bio-vegan\"].text.value }}"
+          }
+        },
+        "product_badge_wJTQ46": {
+          "type": "product_badge",
+          "source": "{{ metaobjects.dv_trust_badge[\"ayurvedisch-inspiriert\"] }}",
+          "settings": {
+            "icon_emoji": "{{ metaobjects.dv_trust_badge[\"ayurvedisch-inspiriert\"].icon_material.value }}",
+            "text": "{{ metaobjects.dv_trust_badge[\"ayurvedisch-inspiriert\"].text.value }}"
+          }
+        }
+      },
+      "block_order": [
+        "product_badge_UzGNLX",
+        "product_badge_rzxECF",
+        "product_badge_wJTQ46"
+      ],
       "settings": {
         "padding_top": 0,
         "padding_bottom": 0,
