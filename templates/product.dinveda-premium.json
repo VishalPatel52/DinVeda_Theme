@@ -69,7 +69,7 @@
     "dv_story_card": {
       "type": "dv-story-card",
       "settings": {
-        "title": "",
+        "title": "{{ product.metafields.custom.dinveda_dv_subtitle.value }}",
         "animal_name": "",
         "content": "",
         "traditional_benefits": "",
