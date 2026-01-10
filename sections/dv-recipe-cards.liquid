@@ -1,0 +1,211 @@
+{% comment %}
+  DinVeda Recipe Cards Section
+  "So genießt der Fuchs sein Ritual" / "VIELSEITIGE ANWENDUNG"
+  Card-based recipe cards in grid layout with icons, titles, and descriptions
+  Reads from product.metafields.custom.dv_recipe_cards (list of DV Recipe Card metaobjects)
+{% endcomment %}
+
+{%- liquid
+  assign is_design_mode = request.design_mode
+  
+  # Check for recipe cards from metaobject list (product metafield)
+  assign recipe_cards_meta = null
+  assign has_recipe_cards_meta = false
+  if product.metafields.custom.dv_recipe_cards
+    assign recipe_cards_meta = product.metafields.custom.dv_recipe_cards.value
+    if recipe_cards_meta and recipe_cards_meta.size > 0
+      assign has_recipe_cards_meta = true
+    endif
+  endif
+  
+  # Auto-generate title from animal name if title is not set
+  assign section_title = section.settings.title
+  if section_title == blank and section.settings.animal_name != blank
+    assign section_title = 'So genießt der ' | append: section.settings.animal_name | append: ' sein Ritual'
+  endif
+  
+  # Subtitle
+  assign section_subtitle = section.settings.subtitle
+  
+  # Determine if section should show
+  if has_recipe_cards_meta or section.settings.show_when_empty or is_design_mode
+    assign should_show = true
+  else
+    assign should_show = false
+  endif
+  
+  # Cards per row for grid layout
+  assign cards_per_row = section.settings.cards_per_row | default: 2
+-%}
+
+{% if should_show %}
+  <section
+    id="dv-recipe-cards-{{ section.id }}"
+    class="dv-recipe-cards"
+    data-section-id="{{ section.id }}"
+    data-section-type="dv-recipe-cards"
+    data-cards-per-row="{{ cards_per_row }}"
+    style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+    {{ section.shopify_attributes }}
+  >
+    <div class="dv-recipe-cards__container">
+      {%- comment -%} Header with Title and Subtitle {%- endcomment -%}
+      {% if section_title != blank or section_subtitle != blank %}
+        <div class="dv-recipe-cards__header">
+          {% if section_title != blank %}
+            <h2 class="dv-recipe-cards__title">{{ section_title | escape }}</h2>
+          {% endif %}
+          {% if section_subtitle != blank %}
+            <p class="dv-recipe-cards__subtitle">{{ section_subtitle | escape }}</p>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {%- comment -%} Recipe Cards Grid {%- endcomment -%}
+      {% if has_recipe_cards_meta %}
+        <div class="dv-recipe-cards__grid">
+          {% for recipe_card in recipe_cards_meta %}
+            <div class="dv-recipe-cards__card">
+              {%- comment -%} Icon (top left) {%- endcomment -%}
+              {% if recipe_card.icon != blank %}
+                <div class="dv-recipe-cards__icon-wrapper">
+                  {%- comment -%} Check if icon is a URL string or a file reference object {%- endcomment -%}
+                  {% assign icon_value = recipe_card.icon %}
+                  {% if icon_value contains 'http' or icon_value contains '//' %}
+                    {%- comment -%} Icon is a URL string (SVG or image URL) {%- endcomment -%}
+                    <img src="{{ icon_value }}" alt="" class="dv-recipe-cards__icon" loading="lazy">
+                  {% else %}
+                    {%- comment -%} Icon is a file reference (Shopify file/image object) {%- endcomment -%}
+                    {{ icon_value | image_url: width: 64 | image_tag: alt: '', loading: 'lazy', class: 'dv-recipe-cards__icon' }}
+                  {% endif %}
+                </div>
+              {% endif %}
+              
+              {%- comment -%} Card Title {%- endcomment -%}
+              {% if recipe_card.title != blank %}
+                <h3 class="dv-recipe-cards__card-title">{{ recipe_card.title | escape }}</h3>
+              {% endif %}
+              
+              {%- comment -%} Card Description (supports both 'description' and 'body' fields for backward compatibility) {%- endcomment -%}
+              {% assign card_description = recipe_card.description | default: recipe_card.body %}
+              {% if card_description != blank %}
+                <div class="dv-recipe-cards__card-description">
+                  {% if card_description contains '<' %}
+                    {{ card_description }}
+                  {% else %}
+                    {{ card_description | escape | newline_to_br }}
+                  {% endif %}
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        {%- comment -%} Empty State {%- endcomment -%}
+        <div class="dv-recipe-cards__empty-state">
+          <p class="dv-recipe-cards__empty-message">
+            Connect product.metafields.custom.dv_recipe_cards (DV Recipe Cards - list of DV Recipe Card metaobjects) via product metafields.
+          </p>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "DV Recipe Cards",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "info": "Main title (e.g., 'So genießt der Fuchs sein Ritual'). Leave blank to auto-generate from Animal Name. Click 'Connect dynamic source' to link to a product metafield."
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Section Subtitle",
+      "default": "VIELSEITIGE ANWENDUNG",
+      "info": "Subtitle shown below main title (e.g., 'VIELSEITIGE ANWENDUNG'). Click 'Connect dynamic source' to link to a product metafield."
+    },
+    {
+      "type": "text",
+      "id": "animal_name",
+      "label": "Animal Name",
+      "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_animal_name (DV Animal Name) or enter text manually. Used for auto-generating title if Title is blank."
+    },
+    {
+      "type": "header",
+      "content": "Recipe Cards"
+    },
+    {
+      "type": "paragraph",
+      "content": "⚠️ Configure per product: Go to Products → [Your Product] → Metafields → Find 'DV Recipe Cards' → Select metaobject instances. This section automatically reads from product.metafields.custom.dv_recipe_cards. Each DV Recipe Card metaobject should have: title, description (or body), and icon (file/image or URL)."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_when_empty",
+      "label": "Show section even if no recipe cards",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "cards_per_row",
+      "label": "Cards per row (desktop)",
+      "options": [
+        {
+          "value": "2",
+          "label": "2 cards"
+        },
+        {
+          "value": "3",
+          "label": "3 cards"
+        }
+      ],
+      "default": "2",
+      "info": "Number of cards per row on desktop. On tablet shows 2 cards, on mobile shows 1 card."
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "DV Recipe Cards"
+    }
+  ]
+}
+{% endschema %}
+

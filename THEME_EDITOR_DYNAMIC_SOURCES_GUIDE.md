@@ -103,6 +103,16 @@ All product-specific content in the `dinveda-premium` template can now be connec
 
 **Fallback:** Recipe cards also support blocks as fallback
 
+### 5.5 DV Recipe Cards Section (NEW - Card-based layout)
+
+**Settings to Connect:**
+- **Section Title** → Optional: Connect to metafield or leave blank to auto-generate from Animal Name (e.g., "So genießt der {animal} sein Ritual")
+- **Section Subtitle** → Optional: Connect to metafield or enter manually (e.g., "VIELSEITIGE ANWENDUNG")
+- **Animal Name** → Connect to: `product.metafields.custom.dv_animal_name` (DV Animal Name) - Used for auto-generating title if Title is blank
+- **Recipe Cards** (MetaObject List) → ⚠️ Configure in product metafields: Products → [Product] → Metafields → "DV Recipe Cards" → Select instances. Cannot use "Connect dynamic source" for metaobject lists. **Each DV Recipe Card metaobject must have: `title`, `description` (or `body`), and `icon` fields.**
+
+**Note**: This section displays recipe cards in a card-based grid layout with icons. It's separate from the Recipe Preparation section and can be added independently via Theme Editor → Sections → Add section → "DV Recipe Cards".
+
 ### 6. DV Complete Ritual Section
 
 **Settings to Connect:**
@@ -137,6 +147,9 @@ When setting up Golden Boost product, connect these metafields:
 
 **Daily Ritual:**
 - Ritual Steps: 3 steps → `dv_ritual_steps` (metaobject list)
+
+**Recipe Cards (NEW):**
+- Recipe Cards: Multiple cards → `dv_recipe_cards` (metaobject list) - **Each card must have `title`, `description` (or `body`), and `icon` fields**
 
 **Recipe Preparation:**
 - Taste, Pairing, Serving, Frequency → Respective metafields

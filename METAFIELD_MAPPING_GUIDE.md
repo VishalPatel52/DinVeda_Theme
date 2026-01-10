@@ -49,6 +49,14 @@ This guide maps the current Golden Boost product page sections to the metafields
 - `frequency` → Connect to: `product.metafields.custom.dv_frequency` (DV Frequency - Single line text)
 - `recipe_cards` (MetaObject List) → ⚠️ Configure in product metafields: Products → [Product] → Metafields → "DV Recipe Cards" → Select instances. Cannot use "Connect dynamic source" in theme editor. Sections automatically read from `product.metafields.custom.dv_recipe_cards`. Blocks available as fallback.
 
+### 5.5 DV Recipe Cards (`sections/dv-recipe-cards.liquid`) - NEW
+
+**Settings → Metafields Mapping:**
+- `title` → Optional: Connect to metafield or leave blank to auto-generate from Animal Name (e.g., "So genießt der {animal} sein Ritual")
+- `subtitle` → Optional: Connect to metafield or enter manually (e.g., "VIELSEITIGE ANWENDUNG")
+- `animal_name` → Connect to: `product.metafields.custom.dv_animal_name` (DV Animal Name - Single line text) - Used for auto-generating title if Title is blank
+- `recipe_cards` (MetaObject List) → ⚠️ Configure in product metafields: Products → [Product] → Metafields → "DV Recipe Cards" → Select instances. Cannot use "Connect dynamic source" in theme editor. Sections automatically read from `product.metafields.custom.dv_recipe_cards`. **Each DV Recipe Card metaobject must have: `title`, `description` (or `body`), and `icon` fields.**
+
 ### 6. DV Complete Ritual (`sections/dv-complete-ritual.liquid`)
 
 **Settings → Metafields Mapping:**

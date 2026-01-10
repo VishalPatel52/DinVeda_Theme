@@ -154,7 +154,27 @@ Use this checklist to track your progress. Check off items as you complete them.
 - [ ] **Story Title** → Connect to: `product.metafields.custom.dv_story_title` (optional)
 - [ ] **Animal Name** → Connect to: `product.metafields.custom.dv_animal_name`
 - [ ] **Story Content** (Rich text) → Connect to: `product.metafields.custom.dv_story_content`
-- [ ] **Traditional Benefits** → Connect to: `product.metafields.custom.dv_traditional_benefits`
+- [ ] **Traditional Benefits (Fallback)** → Connect to: `product.metafields.custom.dv_traditional_benefits`
+  - **Note**: This is only used if no checklist blocks are added (see below)
+
+#### Checklist Items (Priority Method - Add via Blocks)
+
+**⚠️ IMPORTANT**: Checklist items should be added via **blocks** in the theme editor, NOT via metafields. Blocks take priority over the Traditional Benefits metafield.
+
+**How to Add Checklist Items:**
+
+1. In the DV Story Card section, scroll down to find the **"Add block"** button
+2. Click **"Add block"** → Select **"Checklist Item"** from the list
+3. Enter text for the first checklist item (e.g., `Erdende Wärme an kalten Tagen`)
+4. Click **"Add block"** again to add more items (up to 5 total)
+5. Add additional items:
+   - [ ] **Checklist Item 1**: `Erdende Wärme an kalten Tagen`
+   - [ ] **Checklist Item 2**: `Einen klaren, fokussierten Start`
+   - [ ] **Checklist Item 3**: `Innere Balance und Wohlbefinden`
+   - [ ] **Checklist Item 4**: (Add more as needed)
+   - [ ] **Checklist Item 5**: (Add more as needed)
+
+**Note**: If you add checklist blocks, the Traditional Benefits metafield will be ignored. Blocks are the preferred method.
 
 ### DV Detail Grid Section
 

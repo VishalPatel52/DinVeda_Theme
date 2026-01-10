@@ -83,7 +83,7 @@ This document lists ALL metafields that need to be populated for Golden Boost pr
 | **DV Trust Badges** | `custom.dv_trust_badges` | DV Trust Badge | 3 instances | DV Main Product |
 | **DV Ingredient Highlights** | `custom.dv_ingredient_highlights` | DV Ingredient Highlight | As needed (e.g., 8) | DV Detail Grid |
 | **DV Ritual Steps** | `custom.dv_ritual_steps` | DV Ritual Step | 3 instances | DV Daily Ritual |
-| **DV Recipe Cards** | `custom.dv_recipe_cards` | DV Recipe Card | As needed | Recipe Preparation |
+| **DV Recipe Cards** | `custom.dv_recipe_cards` | DV Recipe Card | As needed | Recipe Preparation, DV Recipe Cards |
 
 ---
 
@@ -131,6 +131,11 @@ This document lists ALL metafields that need to be populated for Golden Boost pr
 - ✅ `dv_frequency` (Single line text)
 - ✅ `dv_recipe_cards` (List of MetaObject References)
 
+### DV Recipe Cards Section (NEW - Card-based layout)
+- ✅ `dv_animal_name` (Single line text - also used here, for auto-generating title)
+- ✅ `dv_recipe_cards` (List of MetaObject References)
+- **Note**: DV Recipe Card metaobject must include: `title`, `description` (or `body`), and `icon` fields
+
 ### DV Nutrition Table Section
 - ✅ `dv_nutrition_table` (Multi-line text - raw HTML)
 
@@ -162,6 +167,7 @@ This document lists ALL metafields that need to be populated for Golden Boost pr
 
 ### DV Recipe Card Instances (as needed)
 - Example Recipe (and others as needed)
+- **Required Fields**: Each instance must have `title`, `description` (or `body`), and `icon` (File/Image or URL)
 
 ---
 

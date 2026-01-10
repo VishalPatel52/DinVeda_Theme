@@ -91,13 +91,19 @@ Create 3 instances for the daily ritual:
 
 **Location**: Shopify Admin → Content → Metaobjects → DV Recipe Card
 
+**⚠️ IMPORTANT: DV Recipe Card Metaobject must have these fields:**
+- `title` (Single line text) - Recipe card title
+- `description` or `body` (Rich text or Multi-line text) - Recipe instructions/description
+- `icon` (File/Image reference OR Single line text for SVG URL) - **REQUIRED** - Icon displayed on the card
+
 Create recipe card instances for Golden Boost:
 
 #### Recipe Card 1: Example Recipe
 - **Title**: `Sanfter Tee- oder Drink-Moment`
-- **Instructions**: `1 TL (~3 g) in 200 ml warme Pflanzenmilch oder warmes Wasser einrühren. Optional mit etwas Honig oder Kokosöl verfeinern.`
+- **Description/Instructions**: `1 TL (~3 g) in 200 ml warme Pflanzenmilch oder warmes Wasser einrühren. Optional mit etwas Honig oder Kokosöl verfeinern.`
+- **Icon**: Upload SVG/image file or enter SVG URL (e.g., teacup icon)
 
-**Note**: Create as many recipe cards as needed for Golden Boost.
+**Note**: Create as many recipe cards as needed for Golden Boost. Each card must have an icon field populated for the new DV Recipe Cards section to display properly.
 
 ---
 
@@ -376,9 +382,21 @@ Create recipe card instances for Golden Boost:
    - **Story Title**: Click "Connect dynamic source" → Select `product.metafields.custom.dv_story_title` (optional - can auto-generate if empty)
    - **Animal Name**: Click "Connect dynamic source" → Select `product.metafields.custom.dv_animal_name`
    - **Story Content** (Rich text field): Click "Connect dynamic source" → Select `product.metafields.custom.dv_story_content`
-   - **Traditional Benefits** (fallback): Click "Connect dynamic source" → Select `product.metafields.custom.dv_traditional_benefits`
+   - **Traditional Benefits (Fallback)**: Click "Connect dynamic source" → Select `product.metafields.custom.dv_traditional_benefits`
+     - **Note**: This is only used as a fallback if no checklist blocks are added (see Step 4.2.1 below)
 
-3. Click **"Save"**
+3. **Add Checklist Items via Blocks** (Priority Method):
+   - Scroll down to the section and click **"Add block"** button
+   - Select **"Checklist Item"** from the block list
+   - Enter the text for the first checklist item (e.g., `Erdende Wärme an kalten Tagen`)
+   - Click **"Add block"** again to add more checklist items (up to 5 total)
+   - Add additional items such as:
+     - `Einen klaren, fokussierten Start`
+     - `Innere Balance und Wohlbefinden`
+     - `Wärme und Tiefe im Alltag`
+   - **Important**: Checklist blocks take priority over the Traditional Benefits metafield. If you add blocks, the metafield will be ignored.
+
+4. Click **"Save"**
 
 ### 4.3 Connect DV Detail Grid Section
 
@@ -422,6 +440,27 @@ Create recipe card instances for Golden Boost:
    - The section automatically reads from `product.metafields.custom.dv_recipe_cards`
 
 4. Click **"Save"**
+
+### 4.5.5 Connect DV Recipe Cards Section (NEW - Card-based layout)
+
+**Note**: This is a new card-based recipe section separate from the Recipe Preparation section. Add it via Theme Editor → Sections → Add section → "DV Recipe Cards".
+
+1. Click on **"DV Recipe Cards"** section (or add it if not present)
+2. Connect dynamic sources:
+   - **Section Title**: Click "Connect dynamic source" → Can be left blank to auto-generate from Animal Name, or connect to a metafield
+   - **Section Subtitle**: Click "Connect dynamic source" → Enter "VIELSEITIGE ANWENDUNG" or connect to a metafield
+   - **Animal Name**: Click "Connect dynamic source" → Select `product.metafields.custom.dv_animal_name` (used for auto-generating title like "So genießt der {animal} sein Ritual")
+
+3. **Recipe Cards**: 
+   - ⚠️ **Skip this** - Already configured in Step 3.5 (cannot use dynamic source for metaobject lists)
+   - The section automatically reads from `product.metafields.custom.dv_recipe_cards`
+   - Each DV Recipe Card metaobject must have: `title`, `description` (or `body`), and `icon` fields
+
+4. **Layout Settings**:
+   - **Cards per row**: 2 (default) or 3 for desktop
+   - Adjust padding as needed
+
+5. Click **"Save"**
 
 ### 4.6 Connect DV Nutrition Table Section
 
@@ -485,7 +524,8 @@ This syncs the dynamic source connections you made in the theme editor back to y
    - ✅ Story section shows title and content
    - ✅ Detail grid shows tradition title, body, facts, ingredients, allergens, ingredient highlights
    - ✅ Daily ritual shows 3 ritual steps
-   - ✅ Recipe preparation shows taste, pairing, serving, frequency, recipe cards
+   - ✅ Recipe preparation shows taste, pairing, serving, frequency, recipe cards (if using Recipe Preparation section)
+   - ✅ DV Recipe Cards section shows card-based layout with icons, titles, and descriptions (if using DV Recipe Cards section)
    - ✅ Complete ritual shows subheading and related products (Flow & Glow, Moon Rest, Ova Harmony)
 
 ### 6.2 Troubleshooting Checklist
@@ -511,6 +551,13 @@ This syncs the dynamic source connections you made in the theme editor back to y
 - Check: Products are selected (Flow & Glow, Moon Rest, Ova Harmony)
 - Check: Selected products are published and available
 - Check: Category labels are set on related products themselves (see Step 7)
+
+**Issue: Checklist items not showing in DV Story Card**
+- Check: Did you add "Checklist Item" blocks in the theme editor? (Priority method)
+- Check: If using blocks, verify each block has text entered
+- Check: If using metafield fallback, ensure `dv_traditional_benefits` is populated and connected via dynamic source
+- Check: Blocks take priority - if blocks exist, metafield will be ignored
+- Check: Maximum 5 checklist items are supported
 
 ---
 
