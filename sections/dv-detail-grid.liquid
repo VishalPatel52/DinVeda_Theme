@@ -226,7 +226,6 @@
           {%- comment -%} ZUTATEN Section (Vollständige Zutatenliste) {%- endcomment -%}
           {% if first_ingredients_metafield != blank %}
             <div class="dv-detail-grid__zutaten-section">
-              <h3 class="dv-detail-grid__zutaten-title">{{ section.settings.zutaten_heading | default: 'Vollständige Zutatenliste' | escape }}</h3>
               <div class="dv-detail-grid__zutaten-content rte">
                 {{ first_ingredients_metafield }}
               </div>

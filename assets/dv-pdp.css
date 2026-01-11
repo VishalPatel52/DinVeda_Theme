@@ -876,7 +876,7 @@
 
 .dv-detail-grid__zutaten-note {
   font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.6;
   color: var(--dv-text-color);
   margin: 12px 0 0 0;
@@ -934,16 +934,16 @@
   flex-direction: column;
   gap: 8px;
   align-items: flex-start;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: transparent;
   border-radius: 8px;
   padding: 16px;
-  border: 1px solid rgba(193, 113, 41, 0.05);
+  border: none;
   transition: all 0.2s ease;
 }
 
 .dv-detail-grid__ingredient-highlight:hover {
-  border-color: rgba(193, 113, 41, 0.15);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: none;
+  box-shadow: none;
 }
 
 .dv-detail-grid__ingredient-highlight-icon {

@@ -130,6 +130,7 @@
       "blocks": {
         "trust_badge_ELYNbJ": {
           "type": "trust_badge",
+          "disabled": true,
           "settings": {
             "icon": "shopify://shop_images/eu-logo.jpg",
             "label": "DE-ÖKO-037",
@@ -138,7 +139,9 @@
         },
         "trust_badge_ybmkd7": {
           "type": "trust_badge",
+          "disabled": true,
           "settings": {
+            "icon": "shopify://shop_images/show-th-ewhole-globe-and-all-countires.png",
             "label": "Nicht-EU Landwirtschaft",
             "background_color": ""
           }
