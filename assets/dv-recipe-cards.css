@@ -1,0 +1,149 @@
+/* 
+ * DinVeda Recipe Cards Section Styles
+ * "Usage Rituals" - Refined grid of recipe-style cards
+ * Editorial aesthetic: refined, practical, inspirational
+ */
+
+.dv-recipe-cards {
+  background-color: var(--dv-bg-beige, #FFF0DD);
+}
+
+.dv-recipe-cards__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* Section Heading (Centered, Italic, Editorial) */
+.dv-recipe-cards__heading {
+  font-family: var(--heading-family, Georgia, "Times New Roman", serif);
+  font-size: 42px;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.3;
+  color: var(--dv-text-color, #C17129);
+  margin: 0 auto 48px auto;
+  text-align: center;
+  max-width: 800px;
+}
+
+@media (max-width: 767px) {
+  .dv-recipe-cards__heading {
+    font-size: 32px;
+    margin-bottom: 32px;
+  }
+}
+
+/* Recipe Cards Grid (4-card grid: 2x2 desktop, 1 column mobile) */
+.dv-recipe-cards__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+@media (max-width: 767px) {
+  .dv-recipe-cards__grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* Recipe Card (White/Cream background, subtle border, refined hover effects) */
+.dv-recipe-cards__card {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(193, 113, 41, 0.1);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+  min-height: 200px;
+}
+
+.dv-recipe-cards__card:hover {
+  border-color: rgba(193, 113, 41, 0.2);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 767px) {
+  .dv-recipe-cards__card {
+    padding: 24px;
+    min-height: auto;
+  }
+}
+
+/* Card Title */
+.dv-recipe-cards__card-title {
+  font-family: var(--heading-family, Georgia, "Times New Roman", serif);
+  font-size: 24px;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.3;
+  color: var(--dv-text-color, #C17129);
+  margin: 0 0 20px 0;
+}
+
+@media (max-width: 767px) {
+  .dv-recipe-cards__card-title {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+}
+
+/* Card Content (Flex layout with justify-between for description + instruction) */
+.dv-recipe-cards__card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  gap: 16px;
+}
+
+/* Card Description (Editorial Typography) */
+.dv-recipe-cards__card-description {
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--dv-text-color, #C17129);
+  flex: 1;
+}
+
+.dv-recipe-cards__card-description p {
+  margin: 0 0 12px 0;
+}
+
+.dv-recipe-cards__card-description p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+  .dv-recipe-cards__card-description {
+    font-size: 14px;
+  }
+}
+
+/* Usage Instruction (at bottom, bold, uppercase, tracking-wider, small text, editorial) */
+.dv-recipe-cards__card-instruction {
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  line-height: 1.4;
+  color: var(--dv-text-color, #C17129);
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid rgba(193, 113, 41, 0.1);
+}
+
+@media (max-width: 767px) {
+  .dv-recipe-cards__card-instruction {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    padding-top: 12px;
+  }
+}
+

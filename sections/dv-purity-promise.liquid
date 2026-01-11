@@ -1,0 +1,280 @@
+{% comment %}
+  DinVeda Purity Promise Section (DV Template)
+  "Reinheitsversprechen" - High-impact trust block highlighting "No additives" promise
+  
+  Content Source (Hybrid Pattern):
+  - Priority: product.metafields.custom.dv_purity_promise (list of DV Purity Promise metaobjects)
+  - Fallback: Blocks in section schema (3 promise blocks)
+  
+  Each promise item requires: label, description, show_crossed_out (boolean)
+{% endcomment %}
+
+{%- liquid
+  # Read section settings (can be connected to metafields via dynamic source)
+  assign section_title = section.settings.title | default: 'Unser Reinheitsversprechen'
+  assign section_tagline = section.settings.tagline | default: 'Ohne Kompromisse. 100% Natur.'
+  assign background_color = section.settings.background_color | default: '#C17129'
+  
+  # Purity promise items from metaobject list (product metafield)
+  assign purity_promise_meta = null
+  assign has_purity_promise_meta = false
+  if product.metafields.custom.dv_purity_promise
+    assign purity_promise_meta = product.metafields.custom.dv_purity_promise.value
+    if purity_promise_meta and purity_promise_meta.size > 0
+      assign has_purity_promise_meta = true
+    endif
+  endif
+  
+  # Check for promise blocks (fallback)
+  assign has_promise_blocks = false
+  if section.blocks.size > 0
+    for block in section.blocks
+      if block.type == 'promise_item'
+        assign has_promise_blocks = true
+        break
+      endif
+    endfor
+  endif
+  
+  # Check if we have content to show
+  assign has_content = false
+  if has_purity_promise_meta or has_promise_blocks or section.settings.show_when_empty
+    assign has_content = true
+  endif
+-%}
+
+{% if has_content %}
+<section
+  id="dv-purity-promise-{{ section.id }}"
+  class="dv-purity-promise"
+  data-section-id="{{ section.id }}"
+  data-section-type="dv-purity-promise"
+>
+  {% style %}
+    #dv-purity-promise-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+      background-color: {{ background_color }};
+      color: var(--dv-bg-light, #FFF0DD);
+    }
+  {% endstyle %}
+  
+  <div class="dv-purity-promise__container">
+    {%- comment -%} Section Title (Italic, 4xl, Editorial, Centered) {%- endcomment -%}
+    {% if section_title != blank %}
+      <h2 class="dv-purity-promise__title">
+        {{ section_title | escape }}
+      </h2>
+    {% endif %}
+    
+    {%- comment -%} Tagline (Centered, Uppercase, Tracking, Minimal) {%- endcomment -%}
+    {% if section_tagline != blank %}
+      <p class="dv-purity-promise__tagline">
+        {{ section_tagline | escape }}
+      </p>
+    {% endif %}
+    
+    {%- comment -%} Promise Items (3 items in horizontal flex layout with minimalist icons) {%- endcomment -%}
+    <div class="dv-purity-promise__items">
+      {%- comment -%} Priority: MetaObjects {%- endcomment -%}
+      {% if has_purity_promise_meta %}
+        {% for promise in purity_promise_meta %}
+          {%- liquid
+            assign promise_label = promise.label.value | default: promise.label
+            assign promise_description = promise.description.value | default: promise.description
+            assign show_crossed = promise.show_crossed_out.value | default: promise.show_crossed_out | default: false
+          -%}
+          <div class="dv-purity-promise__item">
+            {%- comment -%} Label (with optional crossed-out styling) {%- endcomment -%}
+            {% if promise_label != blank %}
+              <div class="dv-purity-promise__item-label{% if show_crossed %} dv-purity-promise__item-label--crossed{% endif %}">
+                {{ promise_label | escape }}
+              </div>
+            {% endif %}
+            
+            {%- comment -%} Description {%- endcomment -%}
+            {% if promise_description != blank %}
+              <div class="dv-purity-promise__item-description">
+                {{ promise_description | escape }}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      {%- comment -%} Fallback: Blocks {%- endcomment -%}
+      {% elsif has_promise_blocks %}
+        {% for block in section.blocks %}
+          {% if block.type == 'promise_item' %}
+            {%- liquid
+              assign block_label = block.settings.label
+              assign block_description = block.settings.description
+              assign block_crossed = block.settings.show_crossed_out | default: false
+            -%}
+            <div class="dv-purity-promise__item" {{ block.shopify_attributes }}>
+              {%- comment -%} Label (with optional crossed-out styling) {%- endcomment -%}
+              {% if block_label != blank %}
+                <div class="dv-purity-promise__item-label{% if block_crossed %} dv-purity-promise__item-label--crossed{% endif %}">
+                  {{ block_label | escape }}
+                </div>
+              {% endif %}
+              
+              {%- comment -%} Description {%- endcomment -%}
+              {% if block_description != blank %}
+                <div class="dv-purity-promise__item-description">
+                  {{ block_description | escape }}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "DV Purity Promise",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Unser Reinheitsversprechen",
+      "info": "Click 'Connect dynamic source' to link to a product metafield or enter text manually. Default: 'Unser Reinheitsversprechen'"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Ohne Kompromisse. 100% Natur.",
+      "info": "Tagline displayed below title (e.g., 'Ohne Kompromisse. 100% Natur.')"
+    },
+    {
+      "type": "paragraph",
+      "content": "⚠️ Configure per product: Go to Products → [Your Product] → Metafields → Find 'DV Purity Promise' → Select metaobject instances. This section automatically reads from product.metafields.custom.dv_purity_promise (List of DV Purity Promise). Alternatively, use blocks below as fallback."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_when_empty",
+      "label": "Show section even if all markers are empty",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#C17129",
+      "info": "Warm-toned background color (default: #C17129 / primary color). You can also use theme color variables."
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "promise_item",
+      "name": "Promise Item (Fallback)",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Connect to DV Purity Promise MetaObject"
+        },
+        {
+          "type": "paragraph",
+          "content": "⚠️ IMPORTANT: Do NOT connect the block source at the block level (the blue MetaObject selector at the top). Instead, connect each field individually using 'Connect dynamic source' on each field below. This ensures all fields (Label, Description, Show Crossed Out) remain visible."
+        },
+        {
+          "type": "paragraph",
+          "content": "💡 To connect fields to a MetaObject: 1) Click 'Connect dynamic source' (database icon) on each field below, 2) Select the MetaObject instance, 3) Choose the corresponding field. Connect ALL THREE fields: Label → label, Description → description, Show Crossed Out → show_crossed_out."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Promise Label",
+          "default": "Aromen",
+          "info": "Label for this promise item (e.g., 'Aromen', 'Füllstoffe', '100% Bio'). Click 'Connect dynamic source' to link to metaobjects.dv_purity_promise.[handle].label.value, or enter text manually. Used as fallback if product.metafields.custom.dv_purity_promise is empty."
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Promise Description",
+          "default": "Keine Zusätze",
+          "info": "Description text for this promise item (e.g., 'Keine Zusätze', 'Keine Streckmittel', 'Reine Naturkraft'). Click 'Connect dynamic source' to link to metaobjects.dv_purity_promise.[handle].description.value, or enter text manually. Used as fallback if product.metafields.custom.dv_purity_promise is empty."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_crossed_out",
+          "label": "Show Crossed Out Styling",
+          "default": true,
+          "info": "Apply crossed-out styling to the label (for 'Aromen' and 'Füllstoffe'). Click 'Connect dynamic source' to link to metaobjects.dv_purity_promise.[handle].show_crossed_out.value, or set manually. Used as fallback if product.metafields.custom.dv_purity_promise is empty."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DV Purity Promise",
+      "blocks": [
+        {
+          "type": "promise_item",
+          "settings": {
+            "label": "Aromen",
+            "description": "Keine Zusätze",
+            "show_crossed_out": true
+          }
+        },
+        {
+          "type": "promise_item",
+          "settings": {
+            "label": "Füllstoffe",
+            "description": "Keine Streckmittel",
+            "show_crossed_out": true
+          }
+        },
+        {
+          "type": "promise_item",
+          "settings": {
+            "label": "100% Bio",
+            "description": "Reine Naturkraft",
+            "show_crossed_out": false
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

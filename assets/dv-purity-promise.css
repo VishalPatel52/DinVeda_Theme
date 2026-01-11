@@ -1,0 +1,154 @@
+/* 
+ * DinVeda Purity Promise Section Styles
+ * "Reinheitsversprechen" - High-impact trust block with minimalist icons
+ * Editorial aesthetic: high-impact, minimalist, trust-building, calm warm tones
+ */
+
+.dv-purity-promise {
+  background-color: var(--dv-text-color, #C17129);
+  color: var(--dv-bg-light, #FFF0DD);
+}
+
+.dv-purity-promise__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* Section Title (Italic, 4xl, Editorial, Centered) */
+.dv-purity-promise__title {
+  font-family: var(--heading-family, Georgia, "Times New Roman", serif);
+  font-size: 42px;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.3;
+  color: var(--dv-bg-light, #FFF0DD);
+  margin: 0 auto 16px auto;
+  text-align: center;
+  max-width: 800px;
+}
+
+@media (max-width: 767px) {
+  .dv-purity-promise__title {
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+}
+
+/* Tagline (Centered, Uppercase Tracking, Minimal) */
+.dv-purity-promise__tagline {
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  line-height: 1.5;
+  color: var(--dv-bg-light, #FFF0DD);
+  margin: 0 auto 48px auto;
+  text-align: center;
+  max-width: 600px;
+  opacity: 0.95;
+}
+
+@media (max-width: 767px) {
+  .dv-purity-promise__tagline {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    margin-bottom: 32px;
+  }
+}
+
+/* Promise Items (3 items in horizontal flex layout) */
+.dv-purity-promise__items {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 48px;
+  flex-wrap: wrap;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+@media (max-width: 991px) {
+  .dv-purity-promise__items {
+    gap: 32px;
+  }
+}
+
+@media (max-width: 767px) {
+  .dv-purity-promise__items {
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+  }
+}
+
+/* Promise Item */
+.dv-purity-promise__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 200px;
+  max-width: 280px;
+}
+
+@media (max-width: 767px) {
+  .dv-purity-promise__item {
+    min-width: 100%;
+    max-width: 100%;
+  }
+}
+
+/* Promise Label (with optional crossed-out styling) */
+.dv-purity-promise__item-label {
+  font-family: var(--heading-family, Georgia, "Times New Roman", serif);
+  font-size: 28px;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.3;
+  color: var(--dv-bg-light, #FFF0DD);
+  margin: 0;
+  position: relative;
+  display: inline-block;
+}
+
+@media (max-width: 767px) {
+  .dv-purity-promise__item-label {
+    font-size: 24px;
+  }
+}
+
+/* Crossed-out styling (for Aromen and Füllstoffe) */
+.dv-purity-promise__item-label--crossed::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--dv-bg-light, #FFF0DD);
+  transform: translateY(-50%) rotate(-12deg);
+  opacity: 0.9;
+}
+
+/* Promise Description */
+.dv-purity-promise__item-description {
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--dv-bg-light, #FFF0DD);
+  margin: 0;
+  opacity: 0.95;
+}
+
+@media (max-width: 767px) {
+  .dv-purity-promise__item-description {
+    font-size: 14px;
+  }
+}
+

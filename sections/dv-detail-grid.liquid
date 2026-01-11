@@ -149,10 +149,12 @@
                     {% endif %}
                     <div class="dv-detail-grid__ingredient-highlight-content">
                       {% if highlight.name != blank %}
-                        <strong class="dv-detail-grid__ingredient-highlight-name">{{ highlight.name | escape }}</strong>
+                        <strong class="dv-detail-grid__ingredient-highlight-name">{{ highlight.name.value | default: highlight.name | escape }}</strong>
                       {% endif %}
                       {% if highlight.description != blank %}
-                        <p class="dv-detail-grid__ingredient-highlight-desc">{{ highlight.description | escape }}</p>
+                        <div class="dv-detail-grid__ingredient-highlight-desc rte">
+                          {{ highlight.description.value | default: highlight.description | metafield_tag }}
+                        </div>
                       {% endif %}
                     </div>
                   </div>
@@ -218,10 +220,28 @@
             </div>
           {% endif %}
           
-          {%- comment -%} ZUTATEN Section {%- endcomment -%}
+          {%- comment -%} EU Bio Badges Section (DE-ÖKO-006, Nicht-EU Landwirtschaft) {%- endcomment -%}
+          {% if section.settings.show_eu_bio_badges %}
+            <div class="dv-detail-grid__eu-bio-badges">
+              {% if section.settings.eu_bio_code != blank %}
+                <div class="dv-detail-grid__eu-bio-badge">
+                  <span class="material-symbols-outlined">eco</span>
+                  <span class="dv-detail-grid__eu-bio-label">{{ section.settings.eu_bio_code | escape }}</span>
+                </div>
+              {% endif %}
+              {% if section.settings.eu_non_eu_label != blank %}
+                <div class="dv-detail-grid__eu-bio-badge">
+                  <span class="material-symbols-outlined">public</span>
+                  <span class="dv-detail-grid__eu-bio-label">{{ section.settings.eu_non_eu_label | escape }}</span>
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+          
+          {%- comment -%} ZUTATEN Section (Vollständige Zutatenliste) {%- endcomment -%}
           {% if first_ingredients_metafield != blank %}
             <div class="dv-detail-grid__zutaten-section">
-              <h3 class="dv-detail-grid__zutaten-title">Zutaten</h3>
+              <h3 class="dv-detail-grid__zutaten-title">{{ section.settings.zutaten_heading | default: 'Vollständige Zutatenliste' | escape }}</h3>
               <div class="dv-detail-grid__zutaten-content rte">
                 {{ first_ingredients_metafield }}
               </div>
@@ -353,6 +373,42 @@
       "label": "Facts Title",
       "default": "Zutaten & Fakten",
       "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_facts_title (DV Facts Title) or enter text manually"
+    },
+    {
+      "type": "header",
+      "content": "EU Bio Badges"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_eu_bio_badges",
+      "label": "Show EU Bio Badges",
+      "default": false,
+      "info": "Display EU Bio certification badges (DE-ÖKO-006, Nicht-EU Landwirtschaft) in right column"
+    },
+    {
+      "type": "text",
+      "id": "eu_bio_code",
+      "label": "EU Bio Code",
+      "default": "DE-ÖKO-006",
+      "info": "EU Bio certification code (e.g., 'DE-ÖKO-006')"
+    },
+    {
+      "type": "text",
+      "id": "eu_non_eu_label",
+      "label": "Non-EU Agriculture Label",
+      "default": "Nicht-EU Landwirtschaft",
+      "info": "Label for non-EU agriculture (e.g., 'Nicht-EU Landwirtschaft')"
+    },
+    {
+      "type": "header",
+      "content": "Ingredients List"
+    },
+    {
+      "type": "text",
+      "id": "zutaten_heading",
+      "label": "Ingredients Heading",
+      "default": "Vollständige Zutatenliste",
+      "info": "Heading for ingredients list (e.g., 'Vollständige Zutatenliste' or 'Zutaten')"
     },
     {
       "type": "richtext",

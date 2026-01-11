@@ -83,7 +83,9 @@ This document lists ALL metafields that need to be populated for Golden Boost pr
 | **DV Trust Badges** | `custom.dv_trust_badges` | DV Trust Badge | 3 instances | DV Main Product |
 | **DV Ingredient Highlights** | `custom.dv_ingredient_highlights` | DV Ingredient Highlight | As needed (e.g., 8) | DV Detail Grid |
 | **DV Ritual Steps** | `custom.dv_ritual_steps` | DV Ritual Step | 3 instances | DV Daily Ritual |
-| **DV Recipe Cards** | `custom.dv_recipe_cards` | DV Recipe Card | As needed | Recipe Preparation, DV Recipe Cards |
+| **DV Recipe Cards** | `custom.dv_recipe_cards` | DV Recipe Card | As needed (e.g., 4) | DV Recipe Cards (Usage Rituals) |
+| **DV Product Benefits** | `custom.dv_product_benefits` | DV Product Benefit | 3 instances | DV Product Benefits (Warum Golden Boost?) |
+| **DV Purity Promise** | `custom.dv_purity_promise` | DV Purity Promise | 3 instances | DV Purity Promise (Reinheitsversprechen) |
 
 ---
 
@@ -131,10 +133,17 @@ This document lists ALL metafields that need to be populated for Golden Boost pr
 - ✅ `dv_frequency` (Single line text)
 - ✅ `dv_recipe_cards` (List of MetaObject References)
 
-### DV Recipe Cards Section (NEW - Card-based layout)
-- ✅ `dv_animal_name` (Single line text - also used here, for auto-generating title)
-- ✅ `dv_recipe_cards` (List of MetaObject References)
-- **Note**: DV Recipe Card metaobject must include: `title`, `description` (or `body`), and `icon` fields
+### DV Product Benefits Section (NEW - Warum Golden Boost?)
+- ✅ `dv_product_benefits` (List of MetaObject References - 3 instances)
+- **Note**: DV Product Benefit metaobject must include: `icon` (Single line text - Material Symbols name), `title` (Single line text), `description` (Multi-line text)
+
+### DV Recipe Cards Section (NEW - Usage Rituals)
+- ✅ `dv_recipe_cards` (List of MetaObject References - e.g., 4 instances)
+- **Note**: DV Recipe Card metaobject must include: `title` (Single line text), `description` (or `body` - Multi-line text or Rich text), and optionally `usage_instruction` (Single line text - for bottom label)
+
+### DV Purity Promise Section (NEW - Reinheitsversprechen)
+- ✅ `dv_purity_promise` (List of MetaObject References - 3 instances)
+- **Note**: DV Purity Promise metaobject must include: `label` (Single line text - e.g., "Aromen", "Füllstoffe", "100% Bio"), `description` (Single line text - e.g., "Keine Zusätze", "Keine Streckmittel", "Reine Naturkraft"), `show_crossed_out` (Boolean - apply crossed-out styling for Aromen and Füllstoffe)
 
 ### DV Nutrition Table Section
 - ✅ `dv_nutrition_table` (Multi-line text - raw HTML)
@@ -165,9 +174,24 @@ This document lists ALL metafields that need to be populated for Golden Boost pr
 2. (Add as needed)
 3. (Add as needed)
 
-### DV Recipe Card Instances (as needed)
-- Example Recipe (and others as needed)
-- **Required Fields**: Each instance must have `title`, `description` (or `body`), and `icon` (File/Image or URL)
+### DV Recipe Card Instances (as needed, e.g., 4)
+- Golden Milk
+- Morning Mix
+- Winter Baking
+- Kitchen Ritual
+- **Required Fields**: Each instance must have `title` (Single line text), `description` (or `body` - Multi-line text or Rich text), and optionally `usage_instruction` (Single line text - e.g., "WARM TRINKEN", "ZUM BACKEN")
+
+### DV Product Benefit Instances (3 needed)
+1. "Dein Morgenritual" - icon: `wb_sunny` - description: "Starte deinen Tag mit wärmender Energie und fokussierter Klarheit."
+2. "Energie für den Tag" - icon: `breakfast_dining` - description: "Natürliche Kraft für deine täglichen Herausforderungen."
+3. "Wohlbefinden" - icon: `restaurant` - description: "Erdende Wärme für Körper und Geist."
+- **Required Fields**: Each instance must have `icon` (Single line text - Material Symbols name like "wb_sunny", "breakfast_dining", "restaurant"), `title` (Single line text), `description` (Multi-line text)
+
+### DV Purity Promise Instances (3 needed)
+1. "Aromen" - description: "Keine Zusätze" - `show_crossed_out`: true
+2. "Füllstoffe" - description: "Keine Streckmittel" - `show_crossed_out`: true
+3. "100% Bio" - description: "Reine Naturkraft" - `show_crossed_out`: false
+- **Required Fields**: Each instance must have `label` (Single line text), `description` (Single line text), `show_crossed_out` (Boolean)
 
 ---
 
@@ -177,14 +201,44 @@ This document lists ALL metafields that need to be populated for Golden Boost pr
 - **Multi-line Text Metafields**: 5 fields
 - **Rich Text Metafields**: 6 fields
 - **HTML/Multi-line Text Metafields**: 1 field
-- **MetaObject List Metafields**: 4 lists
+- **MetaObject List Metafields**: 6 lists (updated - added DV Product Benefits and DV Purity Promise)
 - **Product Reference List Metafields**: 1 list
 
-**Total Metafields to Populate**: 28 fields/lists
+**Total Metafields to Populate**: 30 fields/lists (updated)
 
 **Total MetaObject Instances to Create**: 
 - Trust Badges: 3
-- Ingredient Highlights: Variable (as needed)
+- Ingredient Highlights: Variable (as needed, e.g., 8 for 2x2 grid)
 - Ritual Steps: 3
-- Recipe Cards: Variable (as needed)
+- Recipe Cards: Variable (as needed, e.g., 4 for recipe cards grid)
+- **Product Benefits: 3** (NEW)
+- **Purity Promise: 3** (NEW)
+
+---
+
+## NEW MetaObject Definitions to Create in Shopify Admin
+
+### DV Product Benefit MetaObject
+**Type**: MetaObject  
+**Namespace**: `custom`  
+**Key**: `dv_product_benefit`  
+**Fields Required**:
+- `icon` (Single line text) - Material Symbols icon name (e.g., "wb_sunny", "breakfast_dining", "restaurant")
+- `title` (Single line text) - Benefit title (e.g., "Dein Morgenritual", "Energie für den Tag", "Wohlbefinden")
+- `description` (Multi-line text) - Benefit description text
+
+**Product Metafield**: `custom.dv_product_benefits` (List of MetaObject References - DV Product Benefit)
+
+### DV Purity Promise MetaObject
+**Type**: MetaObject  
+**Namespace**: `custom`  
+**Key**: `dv_purity_promise`  
+**Fields Required**:
+- `label` (Single line text) - Promise label (e.g., "Aromen", "Füllstoffe", "100% Bio")
+- `description` (Single line text) - Promise description (e.g., "Keine Zusätze", "Keine Streckmittel", "Reine Naturkraft")
+- `show_crossed_out` (Boolean) - Whether to apply crossed-out styling to the label (true for "Aromen" and "Füllstoffe", false for "100% Bio")
+
+**Product Metafield**: `custom.dv_purity_promise` (List of MetaObject References - DV Purity Promise)
+
+---
 

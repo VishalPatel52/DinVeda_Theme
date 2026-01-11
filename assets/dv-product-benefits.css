@@ -1,0 +1,152 @@
+/* 
+ * DinVeda Product Benefits Section Styles
+ * "Warum Golden Boost?" - Clean 3-column benefit layout with minimalist icons
+ * European editorial aesthetic: clean, minimal, sophisticated
+ */
+
+.dv-product-benefits {
+  background-color: var(--dv-bg-beige, #FFF0DD);
+}
+
+.dv-product-benefits__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* Section Title (Centered, Italic, 4xl, Editorial) */
+.dv-product-benefits__title {
+  font-family: var(--heading-family, Georgia, "Times New Roman", serif);
+  font-size: 42px;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.3;
+  color: var(--dv-text-color, #C17129);
+  margin: 0 auto 48px auto;
+  text-align: center;
+  max-width: 800px;
+}
+
+@media (max-width: 767px) {
+  .dv-product-benefits__title {
+    font-size: 32px;
+    margin-bottom: 32px;
+  }
+}
+
+/* Benefits Grid (3-column on desktop, 1 column on mobile) */
+.dv-product-benefits__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+  align-items: start;
+}
+
+@media (max-width: 991px) {
+  .dv-product-benefits__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+}
+
+@media (max-width: 767px) {
+  .dv-product-benefits__grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+/* Benefit Item */
+.dv-product-benefits__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+}
+
+/* Circular Icon Badge (white/cream background, border) */
+.dv-product-benefits__icon-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(193, 113, 41, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  flex-shrink: 0;
+}
+
+.dv-product-benefits__icon-badge .material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 36px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  color: var(--dv-text-color, #C17129);
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (max-width: 767px) {
+  .dv-product-benefits__icon-badge {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .dv-product-benefits__icon-badge .material-symbols-outlined {
+    font-size: 32px;
+  }
+}
+
+/* Benefit Item Title */
+.dv-product-benefits__item-title {
+  font-family: var(--heading-family, Georgia, "Times New Roman", serif);
+  font-size: 22px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.3;
+  color: var(--dv-text-color, #C17129);
+  margin: 0;
+  text-align: center;
+}
+
+@media (max-width: 767px) {
+  .dv-product-benefits__item-title {
+    font-size: 20px;
+  }
+}
+
+/* Benefit Item Description (Editorial Typography) */
+.dv-product-benefits__item-description {
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--dv-text-color, #C17129);
+  text-align: center;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.dv-product-benefits__item-description p {
+  margin: 0 0 12px 0;
+}
+
+.dv-product-benefits__item-description p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+  .dv-product-benefits__item-description {
+    font-size: 14px;
+    max-width: 100%;
+  }
+}
+

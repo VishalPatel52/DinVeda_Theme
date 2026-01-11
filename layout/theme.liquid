@@ -50,6 +50,11 @@
   {%- if template.name == 'product' -%}
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
   {%- endif -%}
+  
+  {%- comment -%} Load Italianno font for DinVeda story card signature (Brief vom Fuchs) {%- endcomment -%}
+  {%- if template.name == 'product' -%}
+    <link href="https://fonts.googleapis.com/css2?family=Italianno&display=swap" rel="stylesheet">
+  {%- endif -%}
 
   {%- comment -%} Load DinVeda premium product CSS for all product templates {%- endcomment -%}
   {%- if template.name == 'product' -%}
@@ -61,6 +66,12 @@
   {%- if template.name == 'product' and template.suffix == 'dinveda-premium' -%}
     <link rel="preload" href="{{ 'dv-pdp.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="{{ 'dv-pdp.css' | asset_url }}"></noscript>
+    <link rel="preload" href="{{ 'dv-product-benefits.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ 'dv-product-benefits.css' | asset_url }}"></noscript>
+    <link rel="preload" href="{{ 'dv-recipe-cards.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ 'dv-recipe-cards.css' | asset_url }}"></noscript>
+    <link rel="preload" href="{{ 'dv-purity-promise.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ 'dv-purity-promise.css' | asset_url }}"></noscript>
   {%- endif -%}
 
   {%- comment -%} Load DinVeda homepage CSS only for homepage template {%- endcomment -%}

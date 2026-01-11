@@ -1,0 +1,261 @@
+{% comment %}
+  DinVeda Product Benefits Section (DV Template)
+  "Warum Golden Boost?" - Clean 3-column benefit layout with minimalist icons
+  
+  Content Source (Hybrid Pattern):
+  - Priority: product.metafields.custom.dv_product_benefits (list of DV Product Benefit metaobjects)
+  - Fallback: Blocks in section schema (3 benefit blocks)
+  
+  Each benefit item requires: icon (Material Symbols name), title, description
+{% endcomment %}
+
+{%- liquid
+  # Read section title (can be connected to metafield via dynamic source)
+  assign section_title = section.settings.title | default: 'Warum Golden Boost?'
+  
+  # Product benefits from metaobject list (product metafield)
+  assign product_benefits_meta = null
+  assign has_product_benefits_meta = false
+  if product.metafields.custom.dv_product_benefits
+    assign product_benefits_meta = product.metafields.custom.dv_product_benefits.value
+    if product_benefits_meta and product_benefits_meta.size > 0
+      assign has_product_benefits_meta = true
+    endif
+  endif
+  
+  # Check for benefit blocks (fallback)
+  assign has_benefit_blocks = false
+  if section.blocks.size > 0
+    for block in section.blocks
+      if block.type == 'benefit_item'
+        assign has_benefit_blocks = true
+        break
+      endif
+    endfor
+  endif
+  
+  # Check if we have content to show
+  assign has_content = false
+  if has_product_benefits_meta or has_benefit_blocks or section.settings.show_when_empty
+    assign has_content = true
+  endif
+-%}
+
+{% if has_content %}
+<section
+  id="dv-product-benefits-{{ section.id }}"
+  class="dv-product-benefits"
+  data-section-id="{{ section.id }}"
+  data-section-type="dv-product-benefits"
+>
+  {% style %}
+    #dv-product-benefits-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+      background-color: var(--dv-bg-beige);
+    }
+  {% endstyle %}
+  
+  <div class="dv-product-benefits__container">
+    {%- comment -%} Section Title (Centered, Italic, Editorial) {%- endcomment -%}
+    {% if section_title != blank %}
+      <h2 class="dv-product-benefits__title">
+        {{ section_title | escape }}
+      </h2>
+    {% endif %}
+    
+    {%- comment -%} Benefits Grid (3-column on desktop, 1 column on mobile) {%- endcomment -%}
+    <div class="dv-product-benefits__grid">
+      {%- comment -%} Priority: MetaObjects {%- endcomment -%}
+      {% if has_product_benefits_meta %}
+        {% for benefit in product_benefits_meta %}
+          <div class="dv-product-benefits__item">
+            {%- comment -%} Icon in Circular Badge {%- endcomment -%}
+            {% if benefit.icon != blank %}
+              <div class="dv-product-benefits__icon-badge">
+                <span class="material-symbols-outlined">{{ benefit.icon.value | default: benefit.icon | escape }}</span>
+              </div>
+            {% endif %}
+            
+            {%- comment -%} Title {%- endcomment -%}
+            {% if benefit.title != blank %}
+              <h3 class="dv-product-benefits__item-title">
+                {{ benefit.title.value | default: benefit.title | escape }}
+              </h3>
+            {% endif %}
+            
+            {%- comment -%} Description {%- endcomment -%}
+            {% if benefit.description != blank %}
+              <div class="dv-product-benefits__item-description rte">
+                {{ benefit.description.value | default: benefit.description | metafield_tag }}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      {%- comment -%} Fallback: Blocks {%- endcomment -%}
+      {% elsif has_benefit_blocks %}
+        {% for block in section.blocks %}
+          {% if block.type == 'benefit_item' %}
+            {%- liquid
+              assign block_icon = block.settings.icon
+              assign block_title = block.settings.title
+              assign block_description = block.settings.description
+            -%}
+            <div class="dv-product-benefits__item" {{ block.shopify_attributes }}>
+              {%- comment -%} Icon in Circular Badge {%- endcomment -%}
+              {% if block_icon != blank %}
+                <div class="dv-product-benefits__icon-badge">
+                  <span class="material-symbols-outlined">{{ block_icon | escape }}</span>
+                </div>
+              {% endif %}
+              
+              {%- comment -%} Title {%- endcomment -%}
+              {% if block_title != blank %}
+                <h3 class="dv-product-benefits__item-title">
+                  {{ block_title | escape }}
+                </h3>
+              {% endif %}
+              
+              {%- comment -%} Description {%- endcomment -%}
+              {% if block_description != blank %}
+                <div class="dv-product-benefits__item-description rte">
+                  {{ block_description }}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "DV Product Benefits",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Warum Golden Boost?",
+      "info": "Click 'Connect dynamic source' to link to a product metafield or enter text manually. Default: 'Warum Golden Boost?'"
+    },
+    {
+      "type": "paragraph",
+      "content": "⚠️ Configure per product: Go to Products → [Your Product] → Metafields → Find 'DV Product Benefits' → Select metaobject instances. This section automatically reads from product.metafields.custom.dv_product_benefits (List of DV Product Benefit). Alternatively, use blocks below as fallback."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_when_empty",
+      "label": "Show section even if all markers are empty",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit_item",
+      "name": "Benefit Item (Fallback)",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Connect to DV Product Benefit MetaObject"
+        },
+        {
+          "type": "paragraph",
+          "content": "⚠️ IMPORTANT: Do NOT connect the block source at the block level (the blue MetaObject selector at the top). Instead, connect each field individually using 'Connect dynamic source' on each field below. This ensures all three fields (Icon, Title, Description) remain visible."
+        },
+        {
+          "type": "paragraph",
+          "content": "💡 To connect fields to a MetaObject: 1) Click 'Connect dynamic source' (database icon) on each field below, 2) Select the MetaObject instance, 3) Choose the corresponding field. Connect ALL THREE fields: Icon → icon, Title → title, Description → description."
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Material Symbols Icon Name",
+          "default": "wb_sunny",
+          "info": "Material Symbols icon name (e.g., 'wb_sunny', 'breakfast_dining', 'restaurant'). Click 'Connect dynamic source' to link to metaobjects.dv_product_benefit.[handle].icon.value, or enter icon name manually. Used as fallback if product.metafields.custom.dv_product_benefits is empty."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Benefit Title",
+          "default": "Dein Morgenritual",
+          "info": "Title for this benefit (e.g., 'Dein Morgenritual', 'Energie für den Tag', 'Wohlbefinden'). Click 'Connect dynamic source' to link to metaobjects.dv_product_benefit.[handle].title.value, or enter text manually."
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Benefit Description",
+          "default": "<p>Beschreibung des Nutzens...</p>",
+          "info": "Description text for this benefit. Click 'Connect dynamic source' to link to metaobjects.dv_product_benefit.[handle].description.value, or enter content manually."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DV Product Benefits",
+      "blocks": [
+        {
+          "type": "benefit_item",
+          "settings": {
+            "icon": "wb_sunny",
+            "title": "Dein Morgenritual",
+            "description": "<p>Starte deinen Tag mit wärmender Energie und fokussierter Klarheit.</p>"
+          }
+        },
+        {
+          "type": "benefit_item",
+          "settings": {
+            "icon": "breakfast_dining",
+            "title": "Energie für den Tag",
+            "description": "<p>Natürliche Kraft für deine täglichen Herausforderungen.</p>"
+          }
+        },
+        {
+          "type": "benefit_item",
+          "settings": {
+            "icon": "restaurant",
+            "title": "Wohlbefinden",
+            "description": "<p>Erdende Wärme für Körper und Geist.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

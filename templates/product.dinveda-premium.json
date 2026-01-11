@@ -68,52 +68,29 @@
     },
     "dv_story_card": {
       "type": "dv-story-card",
-      "blocks": {
-        "checklist_item_VbKRAN": {
-          "type": "checklist_item",
-          "settings": {
-            "text": "Erdende Wärme an kalten Tagen"
-          }
-        },
-        "checklist_item_3iW3PC": {
-          "type": "checklist_item",
-          "settings": {
-            "text": "Erdende Wärme an kalten Tagen"
-          }
-        },
-        "checklist_item_NWjM7k": {
-          "type": "checklist_item",
-          "settings": {
-            "text": "fdas"
-          }
-        },
-        "checklist_item_HQNBze": {
-          "type": "checklist_item",
-          "settings": {
-            "text": "Erdende Wärme an kalten Tagen"
-          }
-        }
-      },
-      "block_order": [
-        "checklist_item_VbKRAN",
-        "checklist_item_3iW3PC",
-        "checklist_item_NWjM7k",
-        "checklist_item_HQNBze"
-      ],
       "settings": {
         "title": "{{ product.metafields.custom.dv_story_title.value }}",
-        "animal_name": "",
+        "animal_name": "{{ product.metafields.custom.dv_animal_name.value }}",
         "content": "{{ product.metafields.custom.dv_story_content | metafield_tag }}",
         "traditional_benefits": "",
         "show_when_empty": false,
         "show_fox_icon": true,
         "icon_size": 140,
         "checklist_heading": "Traditionell geschätzt für …",
-        "show_disclaimer": true,
+        "show_disclaimer": false,
         "disclaimer_text": "AYURVEDISCH INSPIRIERTE GENUSS-TRADITION. KEIN HEILVERSPRECHEN.",
         "background_color": "#fdf0de",
         "padding_top": 0,
         "padding_bottom": 0
+      }
+    },
+    "dv_product_benefits": {
+      "type": "dv-product-benefits",
+      "settings": {
+        "title": "Warum Golden Boost?",
+        "show_when_empty": false,
+        "padding_top": 48,
+        "padding_bottom": 48
       }
     },
     "dv_detail_grid": {
@@ -125,7 +102,7 @@
           "settings": {
             "icon": "{{ metaobjects.dv_ingredient_highlight[\"dv-ingredient-highlights\"].icon.value }}",
             "name": "{{ metaobjects.dv_ingredient_highlight[\"dv-ingredient-highlights\"].name.value }}",
-            "description": "{{ metaobjects.dv_ingredient_highlight[\"dv-ingredient-highlights\"].description | metafield_tag }}"
+            "description": "<p>{{ metaobjects.dv_ingredient_highlight[\"dv-ingredient-highlights\"].description | metafield_tag }}</p>"
           }
         },
         "ingredient_item_piDPUa": {
@@ -211,47 +188,33 @@
         "first_ingredients": "{{ product.metafields.custom.dv_first_ingredients | metafield_tag }}",
         "organic_note": "100 % Bio – aus kontrolliert biologischem Anbau",
         "allergens_notes": "{{ product.metafields.custom.dv_allergens_notes | metafield_tag }}",
+        "show_eu_bio_badges": true,
+        "eu_bio_code": "DE-ÖKO-006",
+        "eu_non_eu_label": "Nicht-EU Landwirtschaft",
+        "zutaten_heading": "Vollständige Zutatenliste",
         "show_when_empty": false,
         "padding_top": 0,
         "padding_bottom": 0
       }
     },
-    "dv_daily_ritual": {
-      "type": "dv-daily-ritual",
-      "blocks": {
-        "ritual_step_UfiK4p": {
-          "type": "ritual_step",
-          "settings": {
-            "heading": "Verbinden",
-            "text": "Gib 1 TL (1-3g) des Pulvers in deine Lieblingstasse."
-          }
-        },
-        "ritual_step_cMr6GM": {
-          "type": "ritual_step",
-          "settings": {
-            "heading": "Verbinden",
-            "text": "Gib 1 TL (1-3g) des Pulvers in deine Lieblingstasse."
-          }
-        },
-        "ritual_step_YpwqpN": {
-          "type": "ritual_step",
-          "settings": {
-            "heading": "Verbinden",
-            "text": "Gib 1 TL (1-3g) des Pulvers in deine Lieblingstasse."
-          }
-        }
-      },
-      "block_order": [
-        "ritual_step_UfiK4p",
-        "ritual_step_cMr6GM",
-        "ritual_step_YpwqpN"
-      ],
+    "dv_recipe_cards": {
+      "type": "dv-recipe-cards",
       "settings": {
         "heading": "Dein tägliches Ritual",
-        "concluding_quote": "",
         "show_when_empty": false,
-        "padding_top": 0,
-        "padding_bottom": 0
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "dv_purity_promise": {
+      "type": "dv-purity-promise",
+      "settings": {
+        "title": "Unser Reinheitsversprechen",
+        "tagline": "Ohne Kompromisse. 100% Natur.",
+        "show_when_empty": false,
+        "background_color": "#C17129",
+        "padding_top": 64,
+        "padding_bottom": 64
       }
     },
     "dv_nutrition_table": {
@@ -292,15 +255,34 @@
         "padding_top": 48,
         "padding_bottom": 0
       }
+    },
+    "rich_text_meiiUX": {
+      "type": "rich-text",
+      "disabled": true,
+      "name": "Rich text",
+      "settings": {
+        "title": "Welcome",
+        "rich_text": "{{ product.description }}",
+        "page": "",
+        "heading_size": 40,
+        "text_size": 20,
+        "alignment": "a-center",
+        "content_width": 60,
+        "section_padding": "both",
+        "color_scheme": "1"
+      }
     }
   },
   "order": [
     "dv_main_product",
     "dv_story_card",
+    "dv_product_benefits",
     "dv_detail_grid",
-    "dv_daily_ritual",
+    "dv_recipe_cards",
+    "dv_purity_promise",
     "dv_nutrition_table",
     "dv_compliance_accordion",
-    "dv_complete_ritual"
+    "dv_complete_ritual",
+    "rich_text_meiiUX"
   ]
 }

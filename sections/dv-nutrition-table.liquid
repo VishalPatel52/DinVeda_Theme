@@ -43,14 +43,7 @@
       <summary class="details__summary">
         <h3 class="details__title">{{ section.settings.accordion_title | default: "Nährwertangaben (pro 100 g)" | escape }}</h3>
         <div class="details__icon">
-          {% render 'snip-icons',
-            wrapper: '',
-            type: 'theme',
-            icon: 'down-carrot',
-            size: '8px',
-            classes: 'details__svg vib-center',
-            fill: 'var(--accordion-color)',
-            hover: 'var(--accordion-color)' %}
+          <span class="material-symbols-outlined">expand_more</span>
         </div>
       </summary>
       <div class="details__content">

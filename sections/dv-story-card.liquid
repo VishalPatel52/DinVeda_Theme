@@ -87,85 +87,83 @@
   
   <div class="dv-story-card__container">
     <div class="dv-story-card__layout">
-      {%- comment -%} Left border accent {%- endcomment -%}
-      <div class="dv-story-card__accent-line"></div>
-      
-      {%- comment -%} Left Column: Icon, Title, and Body Content {%- endcomment -%}
-      <div class="dv-story-card__left">
-        {% if section.settings.show_fox_icon and section.settings.fox_icon != blank %}
-          <div class="dv-story-card__icon-wrapper" style="width: {{ icon_size }}px; height: {{ icon_size }}px;">
-            <img src="{{ section.settings.fox_icon | image_url: width: icon_size | times: 2 }}" alt="" class="dv-story-card__icon" width="{{ icon_size }}" height="{{ icon_size }}">
-          </div>
-        {% endif %}
-        {% if story_title != blank %}
-          <h2 class="dv-story-card__title">
-            {{ story_title | escape }}
-          </h2>
-        {% endif %}
-        {%- comment -%} Story Content - Moved to left column
-          Uses metafield_tag filter for richtext metafields - this properly renders
-          formatted content stored in Shopify's richtext format. If HTML tags are
-          visible as text, the content was likely pasted as raw HTML instead of
-          being formatted through the richtext editor in Shopify Admin.
-        {% endcomment -%}
-        {% if story_content_metafield != blank %}
-          <div class="dv-story-card__body rte">
-            {{ story_content_metafield }}
-          </div>
-        {% endif %}
-      </div>
+      {%- comment -%} Centered Icon (Editorial Focal Point) {%- endcomment -%}
+      {% if section.settings.show_fox_icon and section.settings.fox_icon != blank %}
+        <div class="dv-story-card__icon-wrapper" style="width: {{ icon_size }}px; height: {{ icon_size }}px;">
+          <img src="{{ section.settings.fox_icon | image_url: width: icon_size | times: 2 }}" alt="" class="dv-story-card__icon" width="{{ icon_size }}" height="{{ icon_size }}">
+        </div>
+      {% endif %}
 
-      {%- comment -%} Right Column: Heading, Checklist, Disclaimer {%- endcomment -%}
-      <div class="dv-story-card__right">
-        {%- comment -%} Traditional Benefits Checklist 
-          Priority: Blocks from theme editor
-          Fallback: Metafields (custom.dv_traditional_benefits)
-        {% endcomment -%}
-        {% if has_checklist_blocks or bullets_array.size > 0 %}
-          <div class="dv-story-card__traditional-benefits">
-            <h3 class="dv-story-card__traditional-heading">
-              {{ section.settings.checklist_heading | default: 'Traditionell geschätzt für …' | escape }}
-            </h3>
-            <ul class="dv-story-card__bullet-list">
-              {%- comment -%} Use blocks if available {%- endcomment -%}
-              {% if has_checklist_blocks %}
-                {% for block in section.blocks %}
-                  {% if block.type == 'checklist_item' and block.settings.text != blank %}
-                    <li {{ block.shopify_attributes }}>
-                      <div class="dv-story-card__checkmark-wrapper">
-                        <svg class="dv-story-card__checkmark" width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M13.5 4L6 11.5L2.5 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                      </div>
-                      <span class="dv-story-card__bullet-text">{{ block.settings.text | escape }}</span>
-                    </li>
-                  {% endif %}
-                {% endfor %}
-              {%- comment -%} Fallback to metafields {%- endcomment -%}
-              {% else %}
-                {% for bullet in bullets_array %}
-                  <li>
+      {%- comment -%} Centered Title (Italic, Editorial) {%- endcomment -%}
+      {% if story_title != blank %}
+        <h2 class="dv-story-card__title">
+          {{ story_title | escape }}
+        </h2>
+      {% endif %}
+
+      {%- comment -%} Story Content - Personal Letter Format (Brief vom Fuchs)
+        Uses metafield_tag filter for richtext metafields - this properly renders
+        formatted content stored in Shopify's richtext format. If HTML tags are
+        visible as text, the content was likely pasted as raw HTML instead of
+        being formatted through the richtext editor in Shopify Admin.
+      {% endcomment -%}
+      {% if story_content_metafield != blank %}
+        <div class="dv-story-card__body rte">
+          {{ story_content_metafield }}
+        </div>
+      {% endif %}
+
+      {%- comment -%} Handwritten-style Signature (at bottom for emotional resonance) {%- endcomment -%}
+      {% if animal_name != blank %}
+        <div class="dv-story-card__signature">
+          {{ animal_name | escape }}
+        </div>
+      {% endif %}
+
+      {%- comment -%} Traditional Benefits Checklist (optional, below signature) {%- endcomment -%}
+      {% if has_checklist_blocks or bullets_array.size > 0 %}
+        <div class="dv-story-card__traditional-benefits">
+          <h3 class="dv-story-card__traditional-heading">
+            {{ section.settings.checklist_heading | default: 'Traditionell geschätzt für …' | escape }}
+          </h3>
+          <ul class="dv-story-card__bullet-list">
+            {%- comment -%} Use blocks if available {%- endcomment -%}
+            {% if has_checklist_blocks %}
+              {% for block in section.blocks %}
+                {% if block.type == 'checklist_item' and block.settings.text != blank %}
+                  <li {{ block.shopify_attributes }}>
                     <div class="dv-story-card__checkmark-wrapper">
                       <svg class="dv-story-card__checkmark" width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M13.5 4L6 11.5L2.5 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg>
                     </div>
-                    <span class="dv-story-card__bullet-text">{{ bullet | escape }}</span>
+                    <span class="dv-story-card__bullet-text">{{ block.settings.text | escape }}</span>
                   </li>
-                {% endfor %}
-              {% endif %}
-            </ul>
-          </div>
-        {% endif %}
+                {% endif %}
+              {% endfor %}
+            {%- comment -%} Fallback to metafields {%- endcomment -%}
+            {% else %}
+              {% for bullet in bullets_array %}
+                <li>
+                  <div class="dv-story-card__checkmark-wrapper">
+                    <svg class="dv-story-card__checkmark" width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M13.5 4L6 11.5L2.5 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <span class="dv-story-card__bullet-text">{{ bullet | escape }}</span>
+                </li>
+              {% endfor %}
+            {% endif %}
+          </ul>
+        </div>
+      {% endif %}
 
-        {%- comment -%} Disclaimer {%- endcomment -%}
-        {% if section.settings.show_disclaimer %}
-          <p class="dv-story-card__disclaimer">
-            {{ section.settings.disclaimer_text | default: 'AYURVEDISCH INSPIRIERTE GENUSS-TRADITION. KEIN HEILVERSPRECHEN.' | escape }}
-          </p>
-        {% endif %}
-
-      </div>
+      {%- comment -%} Disclaimer {%- endcomment -%}
+      {% if section.settings.show_disclaimer %}
+        <p class="dv-story-card__disclaimer">
+          {{ section.settings.disclaimer_text | default: 'AYURVEDISCH INSPIRIERTE GENUSS-TRADITION. KEIN HEILVERSPRECHEN.' | escape }}
+        </p>
+      {% endif %}
 
     </div>
   </div>
