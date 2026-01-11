@@ -99,13 +99,16 @@
         "trust_badge_ELYNbJ": {
           "type": "trust_badge",
           "settings": {
-            "label": "DE-ÖKO-037"
+            "icon": "shopify://shop_images/eu-logo.jpg",
+            "label": "DE-ÖKO-037",
+            "background_color": ""
           }
         },
         "trust_badge_ybmkd7": {
           "type": "trust_badge",
           "settings": {
-            "label": "Nicht-EU Landwirtschaft"
+            "label": "Nicht-EU Landwirtschaft",
+            "background_color": ""
           }
         },
         "ingredient_item_De3Nej": {
@@ -146,6 +149,7 @@
         },
         "ingredient_item_773Fej": {
           "type": "ingredient_item",
+          "disabled": true,
           "source": "{{ metaobjects.dv_ingredient_highlight.orangenschale }}",
           "settings": {
             "icon": "{{ metaobjects.dv_ingredient_highlight.orangenschale.icon.value }}",
@@ -155,6 +159,7 @@
         },
         "ingredient_item_gymJyz": {
           "type": "ingredient_item",
+          "disabled": true,
           "source": "{{ metaobjects.dv_ingredient_highlight[\"schwarzer-pfeffer\"] }}",
           "settings": {
             "icon": "{{ metaobjects.dv_ingredient_highlight[\"schwarzer-pfeffer\"].icon.value }}",
@@ -164,6 +169,7 @@
         },
         "ingredient_item_LAjYcL": {
           "type": "ingredient_item",
+          "disabled": true,
           "source": "{{ metaobjects.dv_ingredient_highlight.muskatnuss }}",
           "settings": {
             "icon": "{{ metaobjects.dv_ingredient_highlight.muskatnuss.icon.value }}",
@@ -173,6 +179,7 @@
         },
         "ingredient_item_dDxner": {
           "type": "ingredient_item",
+          "disabled": true,
           "source": "{{ metaobjects.dv_ingredient_highlight.kardamom }}",
           "settings": {
             "icon": "{{ metaobjects.dv_ingredient_highlight.kardamom.icon.value }}",
@@ -202,13 +209,16 @@
         "show_eu_bio_badges": false,
         "eu_bio_code": "DE-ÖKO-037",
         "eu_non_eu_label": "Nicht-EU Landwirtschaft",
+        "eu_bio_badges_bg_color": "#F3E9DC",
         "zutaten_heading": "",
         "first_ingredients": "{{ product.metafields.custom.dv_first_ingredients | metafield_tag }}",
         "organic_note": "100 % Bio – aus kontrolliert biologischem Anbau",
         "allergens_notes": "",
         "show_when_empty": false,
         "padding_top": 0,
-        "padding_bottom": 0
+        "padding_bottom": 0,
+        "background_color": "",
+        "trust_badges_bg_color": "#F3E9DC"
       }
     },
     "dv_recipe_cards": {
