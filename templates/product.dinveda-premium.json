@@ -96,6 +96,18 @@
     "dv_detail_grid": {
       "type": "dv-detail-grid",
       "blocks": {
+        "trust_badge_ELYNbJ": {
+          "type": "trust_badge",
+          "settings": {
+            "label": "DE-ÖKO-037"
+          }
+        },
+        "trust_badge_ybmkd7": {
+          "type": "trust_badge",
+          "settings": {
+            "label": "Nicht-EU Landwirtschaft"
+          }
+        },
         "ingredient_item_De3Nej": {
           "type": "ingredient_item",
           "source": "{{ metaobjects.dv_ingredient_highlight[\"dv-ingredient-highlights\"] }}",
@@ -170,6 +182,8 @@
         }
       },
       "block_order": [
+        "trust_badge_ELYNbJ",
+        "trust_badge_ybmkd7",
         "ingredient_item_De3Nej",
         "ingredient_item_piDPUa",
         "ingredient_item_HKQ4bg",
@@ -182,13 +196,13 @@
       "settings": {
         "section_heading": "",
         "layout_mode": "both",
-        "tradition_title": "{{ product.metafields.custom.dv_detail_left_title.value }}",
+        "tradition_title": "",
         "tradition_body": "{{ product.metafields.custom.dv_detail_left_body | metafield_tag }}",
         "facts_title": "{{ product.metafields.custom.dv_facts_title.value }}",
-        "show_eu_bio_badges": true,
-        "eu_bio_code": "DE-ÖKO-006",
+        "show_eu_bio_badges": false,
+        "eu_bio_code": "DE-ÖKO-037",
         "eu_non_eu_label": "Nicht-EU Landwirtschaft",
-        "zutaten_heading": "{{ product.metafields.custom.dv_facts_title.value }}",
+        "zutaten_heading": "",
         "first_ingredients": "{{ product.metafields.custom.dv_first_ingredients | metafield_tag }}",
         "organic_note": "100 % Bio – aus kontrolliert biologischem Anbau",
         "allergens_notes": "",

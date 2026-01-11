@@ -987,21 +987,25 @@
   margin: 0;
 }
 
-/* EU Bio Badges (Right Column - above ingredients) */
+/* EU Bio Badges (Right Column - below ingredients, side by side) */
 .dv-detail-grid__eu-bio-badges {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 32px;
-  padding: 20px;
-  background-color: rgba(243, 233, 220, 0.5);
-  border-radius: 12px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-top: 24px;
+  padding: 16px 20px;
+  border-radius: 8px;
   border: 1px solid rgba(193, 113, 41, 0.1);
 }
 
 @media (max-width: 767px) {
   .dv-detail-grid__eu-bio-badges {
-    margin-bottom: 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    margin-top: 20px;
     padding: 16px;
   }
 }
@@ -1009,7 +1013,15 @@
 .dv-detail-grid__eu-bio-badge {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  flex: 1;
+}
+
+@media (max-width: 767px) {
+  .dv-detail-grid__eu-bio-badge {
+    width: 100%;
+    flex: none;
+  }
 }
 
 .dv-detail-grid__eu-bio-badge .material-symbols-outlined {
@@ -1063,6 +1075,9 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: opacity 0.2s ease;
 }
 
 .dv-detail-grid__trust-badge-icon {
