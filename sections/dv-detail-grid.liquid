@@ -87,6 +87,9 @@
     #dv-detail-grid-{{ section.id }} {
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
+      {% if section.settings.background_color != blank %}
+        background: {{ section.settings.background_color }};
+      {% endif %}
     }
     
     {% if layout_mode == 'left' %}
@@ -220,9 +223,22 @@
             </div>
           {% endif %}
           
-          {%- comment -%} EU Bio Badges Section (DE-ÖKO-006, Nicht-EU Landwirtschaft) {%- endcomment -%}
+          {%- comment -%} ZUTATEN Section (Vollständige Zutatenliste) {%- endcomment -%}
+          {% if first_ingredients_metafield != blank %}
+            <div class="dv-detail-grid__zutaten-section">
+              <h3 class="dv-detail-grid__zutaten-title">{{ section.settings.zutaten_heading | default: 'Vollständige Zutatenliste' | escape }}</h3>
+              <div class="dv-detail-grid__zutaten-content rte">
+                {{ first_ingredients_metafield }}
+              </div>
+              {% if organic_note != blank %}
+                <p class="dv-detail-grid__zutaten-note">{{ organic_note | escape }}</p>
+              {% endif %}
+            </div>
+          {% endif %}
+          
+          {%- comment -%} EU Bio Badges Section (DE-ÖKO-006, Nicht-EU Landwirtschaft) - Below ingredients {%- endcomment -%}
           {% if section.settings.show_eu_bio_badges %}
-            <div class="dv-detail-grid__eu-bio-badges">
+            <div class="dv-detail-grid__eu-bio-badges" style="{% if section.settings.eu_bio_badges_bg_color != blank %}background: {{ section.settings.eu_bio_badges_bg_color }};{% else %}background-color: rgba(243, 233, 220, 0.5);{% endif %}">
               {% if section.settings.eu_bio_code != blank %}
                 <div class="dv-detail-grid__eu-bio-badge">
                   <span class="material-symbols-outlined">eco</span>
@@ -234,19 +250,6 @@
                   <span class="material-symbols-outlined">public</span>
                   <span class="dv-detail-grid__eu-bio-label">{{ section.settings.eu_non_eu_label | escape }}</span>
                 </div>
-              {% endif %}
-            </div>
-          {% endif %}
-          
-          {%- comment -%} ZUTATEN Section (Vollständige Zutatenliste) {%- endcomment -%}
-          {% if first_ingredients_metafield != blank %}
-            <div class="dv-detail-grid__zutaten-section">
-              <h3 class="dv-detail-grid__zutaten-title">{{ section.settings.zutaten_heading | default: 'Vollständige Zutatenliste' | escape }}</h3>
-              <div class="dv-detail-grid__zutaten-content rte">
-                {{ first_ingredients_metafield }}
-              </div>
-              {% if organic_note != blank %}
-                <p class="dv-detail-grid__zutaten-note">{{ organic_note | escape }}</p>
               {% endif %}
             </div>
           {% endif %}
@@ -400,6 +403,13 @@
       "info": "Label for non-EU agriculture (e.g., 'Nicht-EU Landwirtschaft')"
     },
     {
+      "type": "color_background",
+      "id": "eu_bio_badges_bg_color",
+      "label": "EU Bio Badges Background Color",
+      "default": "#F3E9DC",
+      "info": "Background color for the EU Bio badges container (supports rgba/transparency)"
+    },
+    {
       "type": "header",
       "content": "Ingredients List"
     },
@@ -466,7 +476,17 @@
       "step": 8,
       "unit": "px",
       "default": 48
-    }
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color_background",
+      "id": "background_color",
+      "label": "Section Background Color",
+      "info": "Background color for the entire section (supports rgba/transparency)"
+    },
   ],
   "blocks": [
     {
