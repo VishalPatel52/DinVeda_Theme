@@ -266,7 +266,7 @@
           
           {%- comment -%} Trust Badges (in box at bottom) {%- endcomment -%}
           {% if has_trust_badges %}
-            <div class="dv-detail-grid__trust-badges" style="{% if section.settings.trust_badges_bg_color != blank %}background: {{ section.settings.trust_badges_bg_color }};{% else %}background-color: rgba(243, 233, 220, 0.5);{% endif %}">
+            <div class="dv-detail-grid__trust-badges" style="{% if section.settings.trust_badges_bg_color != blank %}background: {{ section.settings.trust_badges_bg_color }};{% endif %}">
               {% for block in section.blocks %}
                 {% if block.type == 'trust_badge' %}
                   <div class="dv-detail-grid__trust-badge" style="{% if block.settings.background_color != blank %}background: {{ block.settings.background_color }};{% endif %}" {{ block.shopify_attributes }}>
@@ -491,8 +491,7 @@
       "type": "color_background",
       "id": "trust_badges_bg_color",
       "label": "Trust Badges Container Background Color",
-      "default": "#F3E9DC",
-      "info": "Background color for the trust badges container (supports rgba/transparency)"
+      "info": "Background color for the trust badges container (supports rgba/transparency). Leave empty for transparent."
     }
   ],
   "blocks": [

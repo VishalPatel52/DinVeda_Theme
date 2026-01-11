@@ -1066,9 +1066,7 @@
   gap: 12px;
   margin-top: 24px;
   padding: 20px;
-  background-color: rgba(243, 233, 220, 0.5);
-  border-radius: 12px;
-  border: 1px solid rgba(193, 113, 41, 0.05);
+  background-color: transparent;
 }
 
 .dv-detail-grid__trust-badge {
