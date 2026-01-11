@@ -87,9 +87,6 @@
     #dv-detail-grid-{{ section.id }} {
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
-      {% if section.settings.background_color != blank %}
-        background: {{ section.settings.background_color }};
-      {% endif %}
     }
     
     {% if layout_mode == 'left' %}
@@ -223,22 +220,9 @@
             </div>
           {% endif %}
           
-          {%- comment -%} ZUTATEN Section (Vollständige Zutatenliste) {%- endcomment -%}
-          {% if first_ingredients_metafield != blank %}
-            <div class="dv-detail-grid__zutaten-section">
-              <h3 class="dv-detail-grid__zutaten-title">{{ section.settings.zutaten_heading | default: 'Vollständige Zutatenliste' | escape }}</h3>
-              <div class="dv-detail-grid__zutaten-content rte">
-                {{ first_ingredients_metafield }}
-              </div>
-              {% if organic_note != blank %}
-                <p class="dv-detail-grid__zutaten-note">{{ organic_note | escape }}</p>
-              {% endif %}
-            </div>
-          {% endif %}
-          
-          {%- comment -%} EU Bio Badges Section (DE-ÖKO-006, Nicht-EU Landwirtschaft) - Below ingredients {%- endcomment -%}
+          {%- comment -%} EU Bio Badges Section (DE-ÖKO-006, Nicht-EU Landwirtschaft) {%- endcomment -%}
           {% if section.settings.show_eu_bio_badges %}
-            <div class="dv-detail-grid__eu-bio-badges" style="{% if section.settings.eu_bio_badges_bg_color != blank %}background: {{ section.settings.eu_bio_badges_bg_color }};{% else %}background-color: rgba(243, 233, 220, 0.5);{% endif %}">
+            <div class="dv-detail-grid__eu-bio-badges">
               {% if section.settings.eu_bio_code != blank %}
                 <div class="dv-detail-grid__eu-bio-badge">
                   <span class="material-symbols-outlined">eco</span>
@@ -250,6 +234,19 @@
                   <span class="material-symbols-outlined">public</span>
                   <span class="dv-detail-grid__eu-bio-label">{{ section.settings.eu_non_eu_label | escape }}</span>
                 </div>
+              {% endif %}
+            </div>
+          {% endif %}
+          
+          {%- comment -%} ZUTATEN Section (Vollständige Zutatenliste) {%- endcomment -%}
+          {% if first_ingredients_metafield != blank %}
+            <div class="dv-detail-grid__zutaten-section">
+              <h3 class="dv-detail-grid__zutaten-title">{{ section.settings.zutaten_heading | default: 'Vollständige Zutatenliste' | escape }}</h3>
+              <div class="dv-detail-grid__zutaten-content rte">
+                {{ first_ingredients_metafield }}
+              </div>
+              {% if organic_note != blank %}
+                <p class="dv-detail-grid__zutaten-note">{{ organic_note | escape }}</p>
               {% endif %}
             </div>
           {% endif %}
@@ -266,10 +263,10 @@
           
           {%- comment -%} Trust Badges (in box at bottom) {%- endcomment -%}
           {% if has_trust_badges %}
-            <div class="dv-detail-grid__trust-badges" style="{% if section.settings.trust_badges_bg_color != blank %}background: {{ section.settings.trust_badges_bg_color }};{% else %}background-color: rgba(243, 233, 220, 0.5);{% endif %}">
+            <div class="dv-detail-grid__trust-badges">
               {% for block in section.blocks %}
                 {% if block.type == 'trust_badge' %}
-                  <div class="dv-detail-grid__trust-badge" style="{% if block.settings.background_color != blank %}background: {{ block.settings.background_color }};{% endif %}" {{ block.shopify_attributes }}>
+                  <div class="dv-detail-grid__trust-badge" {{ block.shopify_attributes }}>
                     {% if block.settings.icon != blank %}
                       <div class="dv-detail-grid__trust-badge-icon">
                         {{ block.settings.icon | image_url: width: 24 | image_tag: alt: block.settings.label, loading: 'lazy', width: 24, height: 24 }}
@@ -403,13 +400,6 @@
       "info": "Label for non-EU agriculture (e.g., 'Nicht-EU Landwirtschaft')"
     },
     {
-      "type": "color_background",
-      "id": "eu_bio_badges_bg_color",
-      "label": "EU Bio Badges Background Color",
-      "default": "#F3E9DC",
-      "info": "Background color for the EU Bio badges container (supports rgba/transparency)"
-    },
-    {
       "type": "header",
       "content": "Ingredients List"
     },
@@ -476,23 +466,6 @@
       "step": 8,
       "unit": "px",
       "default": 48
-    },
-    {
-      "type": "header",
-      "content": "Colors"
-    },
-    {
-      "type": "color_background",
-      "id": "background_color",
-      "label": "Section Background Color",
-      "info": "Background color for the entire section (supports rgba/transparency)"
-    },
-    {
-      "type": "color_background",
-      "id": "trust_badges_bg_color",
-      "label": "Trust Badges Container Background Color",
-      "default": "#F3E9DC",
-      "info": "Background color for the trust badges container (supports rgba/transparency)"
     }
   ],
   "blocks": [
@@ -550,12 +523,6 @@
           "label": "Badge Label",
           "default": "BIO-Zertifiziert",
           "info": "Text label for trust badge"
-        },
-        {
-          "type": "color_background",
-          "id": "background_color",
-          "label": "Background Color",
-          "info": "Background color for this individual trust badge (supports rgba/transparency)"
         }
       ]
     }
