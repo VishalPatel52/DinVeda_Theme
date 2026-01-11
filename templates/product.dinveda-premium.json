@@ -90,26 +90,29 @@
       "blocks": {
         "benefit_item_DGTkkq": {
           "type": "benefit_item",
+          "source": "{{ metaobjects.dv_product_benefits[\"flow-glow-leichtigkeit-nach-dem-essen\"] }}",
           "settings": {
-            "icon": "wb_sunny",
-            "title": "Dein Morgenritual",
-            "description": "<p>Beschreibung des Nutzens...</p>"
+            "icon": "{{ metaobjects.dv_product_benefits[\"flow-glow-leichtigkeit-nach-dem-essen\"].icon.value }}",
+            "title": "{{ metaobjects.dv_product_benefits[\"flow-glow-leichtigkeit-nach-dem-essen\"].title.value }}",
+            "description": "{{ metaobjects.dv_product_benefits[\"flow-glow-leichtigkeit-nach-dem-essen\"].description | metafield_tag }}"
           }
         },
         "benefit_item_WWPEhj": {
           "type": "benefit_item",
+          "source": "{{ metaobjects.dv_product_benefits[\"golden-boost-energie-fur-den-tag\"] }}",
           "settings": {
-            "icon": "wb_sunny",
-            "title": "Dein Morgenritual",
-            "description": "<p>Beschreibung des Nutzens...</p>"
+            "icon": "{{ metaobjects.dv_product_benefits[\"golden-boost-energie-fur-den-tag\"].icon.value }}",
+            "title": "{{ metaobjects.dv_product_benefits[\"golden-boost-energie-fur-den-tag\"].title.value }}",
+            "description": "<p>{{ metaobjects.dv_product_benefits[\"golden-boost-energie-fur-den-tag\"].description | metafield_tag }}</p>"
           }
         },
         "benefit_item_Q7qHYB": {
           "type": "benefit_item",
+          "source": "{{ metaobjects.dv_product_benefits[\"golden-boost-wohlbefinden-balance\"] }}",
           "settings": {
-            "icon": "wb_sunny",
-            "title": "Dein Morgenritual",
-            "description": "<p>Beschreibung des Nutzens...</p>"
+            "icon": "{{ metaobjects.dv_product_benefits[\"golden-boost-wohlbefinden-balance\"].icon.value }}",
+            "title": "{{ metaobjects.dv_product_benefits[\"golden-boost-wohlbefinden-balance\"].title.value }}",
+            "description": "<p>{{ metaobjects.dv_product_benefits[\"golden-boost-wohlbefinden-balance\"].description | metafield_tag }}</p>"
           }
         }
       },
@@ -119,7 +122,7 @@
         "benefit_item_Q7qHYB"
       ],
       "settings": {
-        "title": "Warum Golden Boost?",
+        "title": "",
         "show_when_empty": false,
         "padding_top": 48,
         "padding_bottom": 48
