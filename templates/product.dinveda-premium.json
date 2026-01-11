@@ -247,14 +247,54 @@
         "organic_note": "100 % Bio – aus kontrolliert biologischem Anbau",
         "allergens_notes": "",
         "show_when_empty": false,
-        "padding_top": 0,
-        "padding_bottom": 0,
+        "padding_top": 24,
+        "padding_bottom": 24,
         "background_color": "",
         "trust_badges_bg_color": "#F3E9DC"
       }
     },
     "dv_recipe_cards": {
       "type": "dv-recipe-cards",
+      "blocks": {
+        "recipe_card_TatzQx": {
+          "type": "recipe_card",
+          "source": "{{ metaobjects.dv_recipe_card.morgenmix }}",
+          "settings": {
+            "title": "{{ metaobjects.dv_recipe_card.morgenmix.title.value }}",
+            "description": "{{ metaobjects.dv_recipe_card.morgenmix.body | metafield_tag }}"
+          }
+        },
+        "recipe_card_9UCCk9": {
+          "type": "recipe_card",
+          "source": "{{ metaobjects.dv_recipe_card[\"golden-milk-ritual\"] }}",
+          "settings": {
+            "title": "{{ metaobjects.dv_recipe_card[\"golden-milk-ritual\"].title.value }}",
+            "description": "{{ metaobjects.dv_recipe_card[\"golden-milk-ritual\"].body | metafield_tag }}"
+          }
+        },
+        "recipe_card_CBHk9L": {
+          "type": "recipe_card",
+          "source": "{{ metaobjects.dv_recipe_card[\"backen-besonders-in-der-winterzeit\"] }}",
+          "settings": {
+            "title": "{{ metaobjects.dv_recipe_card[\"backen-besonders-in-der-winterzeit\"].title.value }}",
+            "description": "{{ metaobjects.dv_recipe_card[\"backen-besonders-in-der-winterzeit\"].body | metafield_tag }}"
+          }
+        },
+        "recipe_card_YM7GdD": {
+          "type": "recipe_card",
+          "source": "{{ metaobjects.dv_recipe_card[\"fur-die-kuche\"] }}",
+          "settings": {
+            "title": "{{ metaobjects.dv_recipe_card[\"fur-die-kuche\"].title.value }}",
+            "description": "{{ metaobjects.dv_recipe_card[\"fur-die-kuche\"].body | metafield_tag }}"
+          }
+        }
+      },
+      "block_order": [
+        "recipe_card_TatzQx",
+        "recipe_card_9UCCk9",
+        "recipe_card_CBHk9L",
+        "recipe_card_YM7GdD"
+      ],
       "settings": {
         "heading": "Dein tägliches Ritual",
         "show_when_empty": false,
