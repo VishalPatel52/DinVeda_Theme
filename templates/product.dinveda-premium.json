@@ -312,17 +312,6 @@
         "padding_bottom": 32
       }
     },
-    "dv_purity_promise": {
-      "type": "dv-purity-promise",
-      "settings": {
-        "title": "Unser Reinheitsversprechen",
-        "tagline": "Ohne Kompromisse. 100% Natur.",
-        "show_when_empty": false,
-        "background_color": "#c17129",
-        "padding_top": 64,
-        "padding_bottom": 64
-      }
-    },
     "dv_nutrition_table": {
       "type": "dv-nutrition-table",
       "settings": {
@@ -344,8 +333,50 @@
         "legal_label": "Rechtlicher Hinweis",
         "legal_content": "",
         "show_when_empty": false,
-        "padding_top": 16,
-        "padding_bottom": 0
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "dv_purity_promise": {
+      "type": "dv-purity-promise",
+      "blocks": {
+        "promise_item_gV8DXQ": {
+          "type": "promise_item",
+          "settings": {
+            "label": "Aromen",
+            "description": "Keine Zusätze",
+            "show_crossed_out": true
+          }
+        },
+        "promise_item_GDanbG": {
+          "type": "promise_item",
+          "settings": {
+            "label": "Aromen",
+            "description": "Keine Zusätze",
+            "show_crossed_out": true
+          }
+        },
+        "promise_item_pBxQpC": {
+          "type": "promise_item",
+          "settings": {
+            "label": "Aromen",
+            "description": "Keine Zusätze",
+            "show_crossed_out": true
+          }
+        }
+      },
+      "block_order": [
+        "promise_item_gV8DXQ",
+        "promise_item_GDanbG",
+        "promise_item_pBxQpC"
+      ],
+      "settings": {
+        "title": "Unser Reinheitsversprechen",
+        "tagline": "Ohne Kompromisse. 100% Natur.",
+        "show_when_empty": false,
+        "background_color": "#c17129",
+        "padding_top": 64,
+        "padding_bottom": 56
       }
     },
     "dv_complete_ritual": {
@@ -385,9 +416,9 @@
     "dv_product_benefits",
     "dv_detail_grid",
     "dv_recipe_cards",
-    "dv_purity_promise",
     "dv_nutrition_table",
     "dv_compliance_accordion",
+    "dv_purity_promise",
     "dv_complete_ritual",
     "rich_text_meiiUX"
   ]

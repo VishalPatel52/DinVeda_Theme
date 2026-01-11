@@ -6,7 +6,7 @@
   - Priority: product.metafields.custom.dv_recipe_cards (list of DV Recipe Card metaobjects)
   - Fallback: Blocks in section schema (4 recipe card blocks)
   
-  Each recipe card requires: title, description, usage_instruction
+  Each recipe card requires: icon (Material Symbols name), title, body
 {% endcomment %}
 
 {%- liquid
@@ -70,6 +70,12 @@
       {% if has_recipe_cards_meta %}
         {% for recipe_card in recipe_cards_meta %}
           <div class="dv-recipe-cards__card">
+            {%- comment -%} Card Icon {%- endcomment -%}
+            {% if recipe_card.icon != blank %}
+              <div class="dv-recipe-cards__card-icon">
+                <span class="material-symbols-outlined">{{ recipe_card.icon.value | default: recipe_card.icon | escape }}</span>
+              </div>
+            {% endif %}
             {%- comment -%} Card Title {%- endcomment -%}
             {% if recipe_card.title != blank %}
               <h3 class="dv-recipe-cards__card-title">
@@ -79,30 +85,72 @@
             
             {%- comment -%} Card Description (flex layout with usage instruction) {%- endcomment -%}
             <div class="dv-recipe-cards__card-content">
-              {% if recipe_card.description != blank or recipe_card.body != blank %}
-                {%- liquid
-                  assign card_description = recipe_card.description.value | default: recipe_card.description | default: recipe_card.body.value | default: recipe_card.body
-                  if card_description != blank
-                    assign card_description_parsed = card_description
-                    # Try to extract usage instruction from description if separate field doesn't exist
-                    if recipe_card.usage_instruction == blank and recipe_card.usage_instruction.value == blank
-                      # Check if description contains usage instruction pattern
-                      if card_description contains '||'
-                        assign desc_parts = card_description | split: '||'
-                        assign card_description_parsed = desc_parts[0]
-                        if desc_parts.size > 1
-                          assign usage_instruction_extracted = desc_parts[1] | strip
-                        endif
+              {%- liquid
+                # Determine which metafield to use (body is primary, description is fallback)
+                assign has_body = false
+                assign has_description = false
+                if recipe_card.body != blank
+                  assign has_body = true
+                elsif recipe_card.description != blank
+                  assign has_description = true
+                endif
+                
+                # Check if we need to parse (extract usage instruction from body/description)
+                assign needs_parsing = false
+                assign usage_instruction_extracted = blank
+                if recipe_card.usage_instruction == blank and recipe_card.usage_instruction.value == blank
+                  if has_body and recipe_card.body.value != blank
+                    if recipe_card.body.value contains '||'
+                      assign needs_parsing = true
+                      assign desc_parts = recipe_card.body.value | split: '||'
+                      if desc_parts.size > 1
+                        assign usage_instruction_extracted = desc_parts[1] | strip
+                      endif
+                    endif
+                  elsif has_description and recipe_card.description.value != blank
+                    if recipe_card.description.value contains '||'
+                      assign needs_parsing = true
+                      assign desc_parts = recipe_card.description.value | split: '||'
+                      if desc_parts.size > 1
+                        assign usage_instruction_extracted = desc_parts[1] | strip
                       endif
                     endif
                   endif
-                -%}
-                
-                {% if card_description_parsed != blank %}
-                  <div class="dv-recipe-cards__card-description rte">
-                    {{ card_description_parsed | metafield_tag }}
-                  </div>
-                {% endif %}
+                endif
+              -%}
+              
+              {% if has_body or has_description %}
+                <div class="dv-recipe-cards__card-description rte">
+                  {% if needs_parsing %}
+                    {%- comment -%} Output parsed HTML string directly (rich text already outputs HTML) {%- endcomment -%}
+                    {% if has_body %}
+                      {% assign desc_parts = recipe_card.body.value | split: '||' %}
+                      {{ desc_parts[0] }}
+                    {% elsif has_description %}
+                      {% assign desc_parts = recipe_card.description.value | split: '||' %}
+                      {{ desc_parts[0] }}
+                    {% endif %}
+                  {% else %}
+                    {%- comment -%} Use metafield_tag on original metafield drop (not .value) {%- endcomment -%}
+                    {% if has_body %}
+                      {{ recipe_card.body | metafield_tag }}
+                    {% elsif has_description %}
+                      {{ recipe_card.description | metafield_tag }}
+                    {% endif %}
+                  {% endif %}
+                </div>
+              {% endif %}
+              {%- comment -%} Usage Instruction (at bottom, uppercase, bold) {%- endcomment -%}
+              {%- liquid
+                assign usage_instruction = recipe_card.usage_instruction.value | default: recipe_card.usage_instruction
+                if usage_instruction == blank and usage_instruction_extracted != blank
+                  assign usage_instruction = usage_instruction_extracted
+                endif
+              -%}
+              {% if usage_instruction != blank %}
+                <div class="dv-recipe-cards__card-instruction">
+                  {{ usage_instruction | upcase | escape }}
+                </div>
               {% endif %}
             </div>
           </div>
@@ -112,10 +160,18 @@
         {% for block in section.blocks %}
           {% if block.type == 'recipe_card' %}
             {%- liquid
+              assign block_icon = block.settings.icon
               assign block_title = block.settings.title
               assign block_description = block.settings.description
+              assign block_usage_instruction = block.settings.usage_instruction
             -%}
             <div class="dv-recipe-cards__card" {{ block.shopify_attributes }}>
+              {%- comment -%} Card Icon {%- endcomment -%}
+              {% if block_icon != blank %}
+                <div class="dv-recipe-cards__card-icon">
+                  <span class="material-symbols-outlined">{{ block_icon | escape }}</span>
+                </div>
+              {% endif %}
               {%- comment -%} Card Title {%- endcomment -%}
               {% if block_title != blank %}
                 <h3 class="dv-recipe-cards__card-title">
@@ -128,6 +184,12 @@
                 {% if block_description != blank %}
                   <div class="dv-recipe-cards__card-description rte">
                     {{ block_description }}
+                  </div>
+                {% endif %}
+                {%- comment -%} Usage Instruction (at bottom, uppercase, bold) {%- endcomment -%}
+                {% if block_usage_instruction != blank %}
+                  <div class="dv-recipe-cards__card-instruction">
+                    {{ block_usage_instruction | upcase | escape }}
                   </div>
                 {% endif %}
               </div>
@@ -208,7 +270,14 @@
         },
         {
           "type": "paragraph",
-          "content": "💡 To connect fields to a MetaObject: 1) Click 'Connect dynamic source' (database icon) on each field below, 2) Select the MetaObject instance, 3) Choose the corresponding field. Connect ALL THREE fields: Title → title, Description → description (or body), Usage Instruction → usage_instruction."
+          "content": "💡 To connect fields to a MetaObject: 1) Click 'Connect dynamic source' (database icon) on each field below, 2) Select the MetaObject instance, 3) Choose the corresponding field. Connect ALL FOUR fields: Icon → icon, Title → title, Description → description (or body), Usage Instruction → usage_instruction."
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Material Symbols Icon Name",
+          "default": "coffee",
+          "info": "Material Symbols icon name (e.g., 'coffee', 'cooking', 'local_drink', 'nightlight_round'). Click 'Connect dynamic source' to link to metaobjects.dv_recipe_card.[handle].icon.value, or enter icon name manually. Used as fallback if product.metafields.custom.dv_recipe_cards is empty."
         },
         {
           "type": "text",
@@ -241,6 +310,7 @@
         {
           "type": "recipe_card",
           "settings": {
+            "icon": "coffee",
             "title": "Golden Milk",
             "description": "<p>Kombiniere das Pulver mit warmer Pflanzenmilch und etwas Honig für ein wärmendes Abendritual.</p>",
             "usage_instruction": "WARM TRINKEN"
@@ -249,6 +319,7 @@
         {
           "type": "recipe_card",
           "settings": {
+            "icon": "local_drink",
             "title": "Morning Mix",
             "description": "<p>Mische das Pulver in dein Müsli oder Smoothie für einen energiegeladenen Start in den Tag.</p>",
             "usage_instruction": "IM MÜSLI"
@@ -257,6 +328,7 @@
         {
           "type": "recipe_card",
           "settings": {
+            "icon": "bakery_dining",
             "title": "Winter Baking",
             "description": "<p>Verwende das Pulver als Gewürz in deinem Lieblings-Weihnachtsgebäck für erdende Wärme.</p>",
             "usage_instruction": "ZUM BACKEN"
@@ -265,6 +337,7 @@
         {
           "type": "recipe_card",
           "settings": {
+            "icon": "cooking",
             "title": "Kitchen Ritual",
             "description": "<p>Integriere das Pulver in deine tägliche Küchenroutine als Gewürzmischung für herzhafte Gerichte.</p>",
             "usage_instruction": "IN DER KÜCHE"
