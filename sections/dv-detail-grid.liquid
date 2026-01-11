@@ -238,7 +238,7 @@
           
           {%- comment -%} EU Bio Badges Section (DE-ÖKO-006, Nicht-EU Landwirtschaft) - Below ingredients {%- endcomment -%}
           {% if section.settings.show_eu_bio_badges %}
-            <div class="dv-detail-grid__eu-bio-badges" style="{% if section.settings.eu_bio_badges_bg_color != blank %}background: {{ section.settings.eu_bio_badges_bg_color }};{% else %}background-color: rgba(243, 233, 220, 0.5);{% endif %}">
+            <div class="dv-detail-grid__eu-bio-badges" style="{% if section.settings.eu_bio_badges_bg_color != blank %}background: {{ section.settings.eu_bio_badges_bg_color }};{% endif %}">
               {% if section.settings.eu_bio_code != blank %}
                 <div class="dv-detail-grid__eu-bio-badge">
                   <span class="material-symbols-outlined">eco</span>
@@ -406,8 +406,7 @@
       "type": "color_background",
       "id": "eu_bio_badges_bg_color",
       "label": "EU Bio Badges Background Color",
-      "default": "#F3E9DC",
-      "info": "Background color for the EU Bio badges container (supports rgba/transparency)"
+      "info": "Background color for the EU Bio badges container (supports rgba/transparency). Leave empty for transparent."
     },
     {
       "type": "header",
@@ -486,7 +485,7 @@
       "id": "background_color",
       "label": "Section Background Color",
       "info": "Background color for the entire section (supports rgba/transparency)"
-    },
+    }
   ],
   "blocks": [
     {
