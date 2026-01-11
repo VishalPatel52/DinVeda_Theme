@@ -87,6 +87,37 @@
     },
     "dv_product_benefits": {
       "type": "dv-product-benefits",
+      "blocks": {
+        "benefit_item_DGTkkq": {
+          "type": "benefit_item",
+          "settings": {
+            "icon": "wb_sunny",
+            "title": "Dein Morgenritual",
+            "description": "<p>Beschreibung des Nutzens...</p>"
+          }
+        },
+        "benefit_item_WWPEhj": {
+          "type": "benefit_item",
+          "settings": {
+            "icon": "wb_sunny",
+            "title": "Dein Morgenritual",
+            "description": "<p>Beschreibung des Nutzens...</p>"
+          }
+        },
+        "benefit_item_Q7qHYB": {
+          "type": "benefit_item",
+          "settings": {
+            "icon": "wb_sunny",
+            "title": "Dein Morgenritual",
+            "description": "<p>Beschreibung des Nutzens...</p>"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_item_DGTkkq",
+        "benefit_item_WWPEhj",
+        "benefit_item_Q7qHYB"
+      ],
       "settings": {
         "title": "Warum Golden Boost?",
         "show_when_empty": false,
