@@ -185,13 +185,13 @@
         "tradition_title": "{{ product.metafields.custom.dv_detail_left_title.value }}",
         "tradition_body": "{{ product.metafields.custom.dv_detail_left_body | metafield_tag }}",
         "facts_title": "{{ product.metafields.custom.dv_facts_title.value }}",
-        "first_ingredients": "{{ product.metafields.custom.dv_first_ingredients | metafield_tag }}",
-        "organic_note": "100 % Bio – aus kontrolliert biologischem Anbau",
-        "allergens_notes": "{{ product.metafields.custom.dv_allergens_notes | metafield_tag }}",
         "show_eu_bio_badges": true,
         "eu_bio_code": "DE-ÖKO-006",
         "eu_non_eu_label": "Nicht-EU Landwirtschaft",
-        "zutaten_heading": "Vollständige Zutatenliste",
+        "zutaten_heading": "{{ product.metafields.custom.dv_facts_title.value }}",
+        "first_ingredients": "{{ product.metafields.custom.dv_first_ingredients | metafield_tag }}",
+        "organic_note": "100 % Bio – aus kontrolliert biologischem Anbau",
+        "allergens_notes": "",
         "show_when_empty": false,
         "padding_top": 0,
         "padding_bottom": 0
@@ -212,7 +212,7 @@
         "title": "Unser Reinheitsversprechen",
         "tagline": "Ohne Kompromisse. 100% Natur.",
         "show_when_empty": false,
-        "background_color": "#C17129",
+        "background_color": "#c17129",
         "padding_top": 64,
         "padding_bottom": 64
       }
