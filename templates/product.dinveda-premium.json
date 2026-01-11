@@ -75,6 +75,7 @@
         "traditional_benefits": "",
         "show_when_empty": false,
         "show_fox_icon": true,
+        "fox_icon": "shopify://shop_images/Asset_1.png",
         "icon_size": 140,
         "checklist_heading": "Traditionell geschätzt für …",
         "show_disclaimer": false,
