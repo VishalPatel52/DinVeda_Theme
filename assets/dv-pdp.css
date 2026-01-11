@@ -549,7 +549,7 @@
   margin: 48px auto;
   max-width: 900px;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 @media (min-width: 768px) {
@@ -558,13 +558,16 @@
   }
 }
 
-/* Centered Icon (Editorial Focal Point) */
+/* Centered Icon (Editorial Focal Point) - Overlays top border */
 .dv-story-card__icon-wrapper {
-  flex-shrink: 0;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 0 32px 0;
 }
 
 .dv-story-card__icon {
@@ -1969,11 +1972,15 @@
   }
   
   .dv-story-card__icon-wrapper {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
     min-width: 80px;
     min-height: 80px;
     max-width: 120px;
     max-height: 120px;
-    margin: 0 0 24px 0;
   }
   
   .dv-story-card__icon-wrapper img {
