@@ -620,7 +620,7 @@
   line-height: 1.2;
   color: var(--dv-text-color);
   margin: 32px auto 0 auto;
-  text-align: right; /* Signature right-aligned like a real signature */
+  text-align: center; /* Signature centered to match design */
   max-width: 700px;
   width: 100%;
   opacity: 0.9;
