@@ -64,7 +64,7 @@
       </h2>
     {% endif %}
     
-    {%- comment -%} Recipe Cards Grid (4-card grid: 2x2 desktop, 1 column mobile) {%- endcomment -%}
+    {%- comment -%} Recipe Cards Grid (4-card horizontal row on desktop, responsive on smaller screens) {%- endcomment -%}
     <div class="dv-recipe-cards__grid">
       {%- comment -%} Priority: MetaObjects {%- endcomment -%}
       {% if has_recipe_cards_meta %}
@@ -104,16 +104,6 @@
                   </div>
                 {% endif %}
               {% endif %}
-              
-              {%- comment -%} Usage Instruction (at bottom, bold, uppercase, editorial) {%- endcomment -%}
-              {%- liquid
-                assign usage_instruction = recipe_card.usage_instruction.value | default: recipe_card.usage_instruction | default: ''
-              -%}
-              {% if usage_instruction != blank %}
-                <div class="dv-recipe-cards__card-instruction">
-                  {{ usage_instruction | escape }}
-                </div>
-              {% endif %}
             </div>
           </div>
         {% endfor %}
@@ -124,7 +114,6 @@
             {%- liquid
               assign block_title = block.settings.title
               assign block_description = block.settings.description
-              assign block_usage = block.settings.usage_instruction
             -%}
             <div class="dv-recipe-cards__card" {{ block.shopify_attributes }}>
               {%- comment -%} Card Title {%- endcomment -%}
@@ -139,13 +128,6 @@
                 {% if block_description != blank %}
                   <div class="dv-recipe-cards__card-description rte">
                     {{ block_description }}
-                  </div>
-                {% endif %}
-                
-                {%- comment -%} Usage Instruction (at bottom, bold, uppercase, editorial) {%- endcomment -%}
-                {% if block_usage != blank %}
-                  <div class="dv-recipe-cards__card-instruction">
-                    {{ block_usage | escape }}
                   </div>
                 {% endif %}
               </div>

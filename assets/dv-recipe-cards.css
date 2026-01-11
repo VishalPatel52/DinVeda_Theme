@@ -34,12 +34,19 @@
   }
 }
 
-/* Recipe Cards Grid (4-card grid: 2x2 desktop, 1 column mobile) */
+/* Recipe Cards Grid (4-card horizontal row on desktop, 1 column mobile) */
 .dv-recipe-cards__grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
   align-items: stretch;
+}
+
+@media (max-width: 1024px) {
+  .dv-recipe-cards__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
 }
 
 @media (max-width: 767px) {

@@ -261,7 +261,8 @@
           "source": "{{ metaobjects.dv_recipe_card.morgenmix }}",
           "settings": {
             "title": "{{ metaobjects.dv_recipe_card.morgenmix.title.value }}",
-            "description": "{{ metaobjects.dv_recipe_card.morgenmix.body | metafield_tag }}"
+            "description": "{{ metaobjects.dv_recipe_card.morgenmix.body | metafield_tag }}",
+            "usage_instruction": "WARM TRINKEN"
           }
         },
         "recipe_card_9UCCk9": {
@@ -269,7 +270,8 @@
           "source": "{{ metaobjects.dv_recipe_card[\"golden-milk-ritual\"] }}",
           "settings": {
             "title": "{{ metaobjects.dv_recipe_card[\"golden-milk-ritual\"].title.value }}",
-            "description": "{{ metaobjects.dv_recipe_card[\"golden-milk-ritual\"].body | metafield_tag }}"
+            "description": "{{ metaobjects.dv_recipe_card[\"golden-milk-ritual\"].body | metafield_tag }}",
+            "usage_instruction": "WARM TRINKEN"
           }
         },
         "recipe_card_CBHk9L": {
@@ -277,7 +279,8 @@
           "source": "{{ metaobjects.dv_recipe_card[\"backen-besonders-in-der-winterzeit\"] }}",
           "settings": {
             "title": "{{ metaobjects.dv_recipe_card[\"backen-besonders-in-der-winterzeit\"].title.value }}",
-            "description": "{{ metaobjects.dv_recipe_card[\"backen-besonders-in-der-winterzeit\"].body | metafield_tag }}"
+            "description": "{{ metaobjects.dv_recipe_card[\"backen-besonders-in-der-winterzeit\"].body | metafield_tag }}",
+            "usage_instruction": "WARM TRINKEN"
           }
         },
         "recipe_card_YM7GdD": {
@@ -285,7 +288,8 @@
           "source": "{{ metaobjects.dv_recipe_card[\"fur-die-kuche\"] }}",
           "settings": {
             "title": "{{ metaobjects.dv_recipe_card[\"fur-die-kuche\"].title.value }}",
-            "description": "{{ metaobjects.dv_recipe_card[\"fur-die-kuche\"].body | metafield_tag }}"
+            "description": "{{ metaobjects.dv_recipe_card[\"fur-die-kuche\"].body | metafield_tag }}",
+            "usage_instruction": "WARM TRINKEN"
           }
         }
       },
@@ -296,10 +300,10 @@
         "recipe_card_YM7GdD"
       ],
       "settings": {
-        "heading": "Dein tägliches Ritual",
+        "heading": "{{ product.metafields.custom.dv_recipe_cards_section_heading.value }}",
         "show_when_empty": false,
-        "padding_top": 48,
-        "padding_bottom": 48
+        "padding_top": 32,
+        "padding_bottom": 32
       }
     },
     "dv_purity_promise": {
