@@ -32,6 +32,14 @@
   # Icon size from settings (default 140px)
   assign icon_size = section.settings.icon_size | default: 140
   
+  # Animal image: Priority from product metafield, fallback to section setting
+  assign animal_image = null
+  if product and product.metafields.custom.dv_animal_image and product.metafields.custom.dv_animal_image.value
+    assign animal_image = product.metafields.custom.dv_animal_image.value
+  elsif section.settings.fox_icon != blank
+    assign animal_image = section.settings.fox_icon
+  endif
+  
   # Check for checklist items from blocks (priority) or metafields (fallback)
   assign has_checklist_blocks = false
   assign checklist_items_count = 0
@@ -88,9 +96,9 @@
   <div class="dv-story-card__container">
     <div class="dv-story-card__layout">
       {%- comment -%} Centered Icon (Editorial Focal Point) {%- endcomment -%}
-      {% if section.settings.show_fox_icon and section.settings.fox_icon != blank %}
+      {% if section.settings.show_fox_icon and animal_image != blank %}
         <div class="dv-story-card__icon-wrapper" style="width: {{ icon_size }}px; height: {{ icon_size }}px;">
-          <img src="{{ section.settings.fox_icon | image_url: width: icon_size | times: 2 }}" alt="" class="dv-story-card__icon" width="{{ icon_size }}" height="{{ icon_size }}">
+          <img src="{{ animal_image | image_url: width: icon_size | times: 2 }}" alt="" class="dv-story-card__icon" width="{{ icon_size }}" height="{{ icon_size }}">
         </div>
       {% endif %}
 
@@ -224,7 +232,7 @@
       "type": "image_picker",
       "id": "fox_icon",
       "label": "Animal icon image",
-      "info": "Animal icon to display above story title (fox, bear, butterfly, etc.)"
+      "info": "Fallback animal icon image (used if product.metafields.custom.dv_animal_image is not set). For blend-specific images, set the 'DV Animal Image' metafield on each product instead."
     },
     {
       "type": "range",

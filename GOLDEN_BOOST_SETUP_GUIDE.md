@@ -175,6 +175,12 @@ Create recipe card instances for Golden Boost:
   ```
 - **Used in**: Story section checklist (fallback)
 
+#### DV Animal Image
+- **Type**: File reference (Image)
+- **Value**: Upload the animal icon/image for this blend (e.g., fox for Golden Boost, panda for Flow & Glow, koala for Moon Rest, butterfly for Ova Harmony)
+- **Note**: This image is displayed in the DV Story Card section above the story title. Each product should have its own blend-specific animal image.
+- **Used in**: DV Story Card section (animal icon above title)
+
 ### 3.3 DV Detail Grid Section Metafields
 
 #### DV Detail Left Title
@@ -385,7 +391,13 @@ Create recipe card instances for Golden Boost:
    - **Traditional Benefits (Fallback)**: Click "Connect dynamic source" → Select `product.metafields.custom.dv_traditional_benefits`
      - **Note**: This is only used as a fallback if no checklist blocks are added (see Step 4.2.1 below)
 
-3. **Add Checklist Items via Blocks** (Priority Method):
+3. **Animal Image**: 
+   - ⚠️ **Skip this in theme editor** - Already configured in Step 3.2 (cannot use dynamic source for file references)
+   - Go to Products → [Your Product] → Metafields → Find "DV Animal Image" → Upload the animal icon/image
+   - The section automatically reads from `product.metafields.custom.dv_animal_image`
+   - Each product should have its own blend-specific animal image (fox, panda, koala, butterfly, etc.)
+
+4. **Add Checklist Items via Blocks** (Priority Method):
    - Scroll down to the section and click **"Add block"** button
    - Select **"Checklist Item"** from the block list
    - Enter the text for the first checklist item (e.g., `Erdende Wärme an kalten Tagen`)

@@ -24,6 +24,12 @@ This guide maps the current Golden Boost product page sections to the metafields
 - `content` (richtext) → Connect to: `product.metafields.custom.dv_story_content` (DV Story Content - Rich text)
 - `traditional_benefits` (textarea) → Connect to: `product.metafields.custom.dv_traditional_benefits` (DV Traditional Benefits - Multi-line text) - Used if checklist blocks are empty
 
+**Animal Image:**
+- ⚠️ **Animal icon image**: Configure per product in product metafields (not via dynamic source)
+- Go to Products → [Your Product] → Metafields → Find "DV Animal Image" → Upload image
+- This section automatically reads from `product.metafields.custom.dv_animal_image` (File reference)
+- Fallback: Section setting `fox_icon` is used if product metafield is empty
+
 ### 3. DV Detail Grid (`sections/dv-detail-grid.liquid`)
 
 **Settings → Metafields Mapping:**

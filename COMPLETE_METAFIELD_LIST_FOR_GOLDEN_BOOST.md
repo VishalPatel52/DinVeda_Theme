@@ -76,6 +76,14 @@ This document lists ALL metafields that need to be populated for Golden Boost pr
 
 ---
 
+## File/Image Metafields (File Reference)
+
+| Metafield Name | Namespace & Key | Value (Example) | Used In Section |
+|---------------|----------------|-----------------|----------------|
+| **DV Animal Image** | `custom.dv_animal_image` | Upload animal icon/image (fox, panda, koala, butterfly, etc.) | DV Story Card |
+
+---
+
 ## MetaObject List Metafields (List of MetaObject References)
 
 | Metafield Name | Namespace & Key | MetaObject Type | Quantity Needed | Used In Section |
@@ -111,6 +119,7 @@ This document lists ALL metafields that need to be populated for Golden Boost pr
 ### DV Story Card Section
 - ✅ `dv_story_title` (Multi-line text - optional)
 - ✅ `dv_animal_name` (Single line text - also used here)
+- ✅ `dv_animal_image` (File reference - Image)
 - ✅ `dv_story_content` (Rich text)
 - ✅ `dv_traditional_benefits` (Multi-line text - fallback)
 
