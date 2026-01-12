@@ -50,13 +50,6 @@
   if product.metafields.custom.dv_trust_badges
     assign trust_badges_meta = product.metafields.custom.dv_trust_badges.value
   endif
-  
-  # Purity Promise badge settings
-  assign enable_purity_promise = section.settings.enable_purity_promise_badge | default: false
-  assign purity_bg_color = section.settings.purity_promise_background_color | default: '#C17129'
-  assign badge_1_crossed = section.settings.purity_promise_badge_1_crossed | default: false
-  assign badge_2_crossed = section.settings.purity_promise_badge_2_crossed | default: false
-  assign badge_3_crossed = section.settings.purity_promise_badge_3_crossed | default: false
 -%}
 
 {%- comment -%} Product JSON for Product object initialization {%- endcomment -%}
@@ -235,45 +228,6 @@
                 {% endif %}
               {% endfor %}
             {% endif %}
-          </div>
-        {% endif %}
-
-        {%- comment -%} Purity Promise Badge (compact horizontal layout) {%- endcomment -%}
-        {% if enable_purity_promise and has_trust_badges_meta and trust_badges_meta.size > 0 %}
-          {%- liquid
-            assign purity_badges_to_show = trust_badges_meta | limit: 3
-          -%}
-          <div class="dv-main-product__purity-promise-badge" style="background-color: {{ purity_bg_color }};">
-            <div class="dv-main-product__purity-promise-items">
-              {% for trust_badge in purity_badges_to_show %}
-                {%- liquid
-                  assign badge_index = forloop.index
-                  assign is_crossed = false
-                  if badge_index == 1 and badge_1_crossed
-                    assign is_crossed = true
-                  elsif badge_index == 2 and badge_2_crossed
-                    assign is_crossed = true
-                  elsif badge_index == 3 and badge_3_crossed
-                    assign is_crossed = true
-                  endif
-                  
-                  assign badge_label = trust_badge.text
-                  assign badge_description = trust_badge.description
-                -%}
-                <div class="dv-main-product__purity-promise-item">
-                  {% if badge_label != blank %}
-                    <div class="dv-main-product__purity-promise-label{% if is_crossed %} dv-main-product__purity-promise-label--crossed{% endif %}">
-                      {{ badge_label | escape }}
-                    </div>
-                  {% endif %}
-                  {% if badge_description != blank %}
-                    <div class="dv-main-product__purity-promise-description">
-                      {{ badge_description | escape }}
-                    </div>
-                  {% endif %}
-                </div>
-              {% endfor %}
-            </div>
           </div>
         {% endif %}
 
@@ -961,45 +915,6 @@
     {
       "type": "paragraph",
       "content": "⚠️ Configure per product: Go to Products → [Your Product] → Metafields → Find 'DV Trust Badges' → Select metaobject instances. This section automatically reads from product.metafields.custom.dv_trust_badges. Alternatively, use blocks below as fallback."
-    },
-    {
-      "type": "header",
-      "content": "Purity Promise Badge"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_purity_promise_badge",
-      "label": "Enable Purity Promise Badge",
-      "default": false,
-      "info": "Display trust badges in a compact Purity Promise style format with warm brown background"
-    },
-    {
-      "type": "color",
-      "id": "purity_promise_background_color",
-      "label": "Purity Promise Background Color",
-      "default": "#C17129",
-      "info": "Background color for the Purity Promise badge (default: warm brown)"
-    },
-    {
-      "type": "checkbox",
-      "id": "purity_promise_badge_1_crossed",
-      "label": "Cross out first badge",
-      "default": false,
-      "info": "Apply strike-through styling to the first trust badge label"
-    },
-    {
-      "type": "checkbox",
-      "id": "purity_promise_badge_2_crossed",
-      "label": "Cross out second badge",
-      "default": false,
-      "info": "Apply strike-through styling to the second trust badge label"
-    },
-    {
-      "type": "checkbox",
-      "id": "purity_promise_badge_3_crossed",
-      "label": "Cross out third badge",
-      "default": false,
-      "info": "Apply strike-through styling to the third trust badge label"
     },
     {
       "type": "header",
