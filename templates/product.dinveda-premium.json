@@ -266,6 +266,7 @@
           "type": "recipe_card",
           "source": "{{ metaobjects.dv_recipe_card.morgenmix }}",
           "settings": {
+            "icon": "coffee",
             "title": "{{ metaobjects.dv_recipe_card.morgenmix.title.value }}",
             "description": "{{ metaobjects.dv_recipe_card.morgenmix.body | metafield_tag }}",
             "usage_instruction": "WARM TRINKEN"
@@ -275,6 +276,7 @@
           "type": "recipe_card",
           "source": "{{ metaobjects.dv_recipe_card[\"golden-milk-ritual\"] }}",
           "settings": {
+            "icon": "coffee",
             "title": "{{ metaobjects.dv_recipe_card[\"golden-milk-ritual\"].title.value }}",
             "description": "{{ metaobjects.dv_recipe_card[\"golden-milk-ritual\"].body | metafield_tag }}",
             "usage_instruction": "WARM TRINKEN"
@@ -284,6 +286,7 @@
           "type": "recipe_card",
           "source": "{{ metaobjects.dv_recipe_card[\"backen-besonders-in-der-winterzeit\"] }}",
           "settings": {
+            "icon": "coffee",
             "title": "{{ metaobjects.dv_recipe_card[\"backen-besonders-in-der-winterzeit\"].title.value }}",
             "description": "{{ metaobjects.dv_recipe_card[\"backen-besonders-in-der-winterzeit\"].body | metafield_tag }}",
             "usage_instruction": "WARM TRINKEN"
@@ -293,6 +296,7 @@
           "type": "recipe_card",
           "source": "{{ metaobjects.dv_recipe_card[\"fur-die-kuche\"] }}",
           "settings": {
+            "icon": "coffee",
             "title": "{{ metaobjects.dv_recipe_card[\"fur-die-kuche\"].title.value }}",
             "description": "{{ metaobjects.dv_recipe_card[\"fur-die-kuche\"].body | metafield_tag }}",
             "usage_instruction": "WARM TRINKEN"
@@ -353,7 +357,7 @@
           "settings": {
             "label": "Aromen",
             "description": "Keine Zusätze",
-            "show_crossed_out": true
+            "show_crossed_out": false
           }
         },
         "promise_item_pBxQpC": {
