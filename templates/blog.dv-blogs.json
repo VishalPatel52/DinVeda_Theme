@@ -1,0 +1,90 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "banner-image",
+      "settings": {
+        "full_width": true,
+        "banner_height": 400
+      }
+    },
+    "main": {
+      "type": "main-blog",
+      "settings": {
+        "text": "",
+        "items_per_page": 20,
+        "items_per_row": 3,
+        "text_align": "center",
+        "show_date": true,
+        "show_author": true,
+        "show_tags": false,
+        "show_comments": false
+      }
+    },
+    "1768853255e3077278": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_76e386b_Krhyid": {
+          "type": "ai_gen_block_76e386b",
+          "settings": {
+            "title_font": "playfair_display_n4",
+            "body_font": "playfair_display_n4",
+            "metadata_font": "sans_serif_n4",
+            "title_size": 42,
+            "body_size": 18,
+            "category": "RITUAL-WISSEN",
+            "title": "Die Kunst des achtsamen Teetrinkens",
+            "show_metadata": true,
+            "author": "DINVEDA Team",
+            "date": "19. Januar 2026",
+            "read_time": "5 Min Lesezeit",
+            "intro_text": "<p>In der Hektik des modernen Lebens vergessen wir oft, innezuhalten und den Moment zu genießen. Eine Tasse Tee kann mehr sein als nur ein Getränk – sie kann ein Ritual der Achtsamkeit werden.</p>",
+            "show_image_1": true,
+            "image_1_layout": "inset",
+            "image_1_caption": "",
+            "body_text_1": "<p>Die ayurvedische Tradition lehrt uns, dass jede Handlung mit Bewusstsein ausgeführt werden sollte. Beim Teetrinken beginnt dies bereits mit der Auswahl der Kräuter und Gewürze.</p>",
+            "show_ritual_tip": true,
+            "ritual_tip_heading": "Ein kleiner Tipp vom Fuchs",
+            "ritual_tip_content": "<p>Nimm dir jeden Morgen fünf Minuten Zeit, um deinen Tee in Stille zu genießen. Spüre die Wärme der Tasse in deinen Händen und atme den Duft bewusst ein.</p>",
+            "body_text_2": "<p>Diese kleinen Momente der Achtsamkeit können transformierend wirken und uns helfen, den Tag mit mehr Ruhe und Klarheit zu beginnen.</p>",
+            "show_image_2": false,
+            "image_2_layout": "full",
+            "image_2_caption": "",
+            "body_text_3": "",
+            "show_related": true,
+            "related_title": "Das könnte dich auch interessieren",
+            "related_article_1": "",
+            "related_category_1": "RITUAL-WISSEN",
+            "related_article_2": "",
+            "related_category_2": "AYURVEDA",
+            "related_article_3": "",
+            "related_category_3": "WELLNESS",
+            "show_newsletter": true,
+            "newsletter_title": "Tritt unserem Kreis bei",
+            "newsletter_placeholder": "Deine E-Mail-Adresse",
+            "newsletter_button": "Anmelden",
+            "newsletter_success": "Willkommen im Kreis! Wir freuen uns, dich dabei zu haben."
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_76e386b_Krhyid"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "banner",
+    "main",
+    "1768853255e3077278"
+  ]
+}

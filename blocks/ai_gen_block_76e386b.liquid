@@ -1,0 +1,955 @@
+{% doc %}
+  @prompt
+    CONTEXT: You are a senior UI/UX designer building a premium, ritual-based Ayurvedic wellness blog for DINVEDA. The aesthetic is "European Editorial Magazine" – calm, slow-living, and deeply intentional.
+    
+    GLOBAL STYLING RULES:
+    
+    Background Color: Always #FFF0DD (Warm Pastel Beige).
+    Text & UI Color: Always #C17129 (Warm Brown).
+    Finish: Matte, zero drop-shadows, zero heavy borders.
+    Typography Hierarchy:
+    Titles: 42px Serif (Playfair Display or Tenor Sans), 1.2 line-height.
+    Subheaders: 28px Serif.
+    Body Text: 18px Serif, 1.7 line-height for a spacious feel.
+    Metadata (Date/Author): 12px Sans-Serif, Uppercase, 0.1em letter-spacing.
+    PAGE STRUCTURE & SECTIONS:
+    
+    Centered Blog Hero:
+    
+    A large, full-width high-resolution lifestyle image.
+    Below the image, a centered Category label (e.g., "RITUAL-WISSEN") in 12px Sans-Serif.
+    Centered main Title in 42px Serif.
+    Subtle metadata line (Author | Date | 5 Min Read) in 14px Sans-Serif.
+    The Narrative Body:
+    
+    Max-Width: The text column must be narrow (max 720px) for premium readability.
+    Use a large drop-cap (4 line height) for the very first letter of the post.
+    Intersparse text with full-bleed or inset editorial images using minimalist Sans-Serif captions underneath.
+    "Ritual-Tipp" Callout Block:
+    
+    Create a dedicated block mid-post with a white (#FFFFFF) background and 8px rounded corners.
+    Include a small animal icon (e.g., a fox) and the heading "Ein kleiner Tipp vom Fuchs."
+    Style the tip content in 16px Serif.
+    "Das könnte dich auch interessieren" (Related Content):
+    
+    A clean 3-column grid at the bottom of the page.
+    Each card should have a small image, a 12px category tag, and a 20px Serif title.
+    No "Read More" buttons; the entire card/title should be the link.
+    Newsletter Opt-in Circle:
+    
+    A simple, centered section before the footer.
+    Headline: "Tritt unserem Kreis bei" (32px Serif).
+    A single, thin border-bottom line for the email input field. No boxy buttons.
+    EXPLICITLY AVOID:
+    
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-blog-article-{{ ai_gen_id }} {
+    display: block;
+    background-color: #FFF0DD;
+    width: 100%;
+  }
+
+  .ai-blog-hero-{{ ai_gen_id }} {
+    width: 100%;
+    margin-bottom: 60px;
+  }
+
+  .ai-blog-hero-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .ai-blog-hero-image-{{ ai_gen_id }} img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .ai-blog-hero-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    background-color: #F8F3ED;
+    aspect-ratio: 16 / 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-blog-hero-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 600px;
+    max-height: 400px;
+  }
+
+  .ai-blog-hero-meta-{{ ai_gen_id }} {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .ai-blog-category-{{ ai_gen_id }} {
+    font-family: {{ block.settings.metadata_font.family }}, sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #C17129;
+    margin-bottom: 20px;
+  }
+
+  .ai-blog-title-{{ ai_gen_id }} {
+    font-family: {{ block.settings.title_font.family }}, serif;
+    font-size: {{ block.settings.title_size }}px;
+    line-height: 1.2;
+    color: #C17129;
+    margin: 0 auto 24px;
+    max-width: 900px;
+    padding: 0 20px;
+  }
+
+  .ai-blog-metadata-{{ ai_gen_id }} {
+    font-family: {{ block.settings.metadata_font.family }}, sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #C17129;
+    opacity: 0.7;
+  }
+
+  .ai-blog-body-{{ ai_gen_id }} {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+
+  .ai-blog-body-{{ ai_gen_id }} p {
+    font-family: {{ block.settings.body_font.family }}, serif;
+    font-size: {{ block.settings.body_size }}px;
+    line-height: 1.7;
+    color: #C17129;
+    margin-bottom: 28px;
+  }
+
+  .ai-blog-body-{{ ai_gen_id }} p:first-of-type::first-letter {
+    font-size: calc({{ block.settings.body_size }}px * 4);
+    line-height: 1;
+    float: left;
+    margin-right: 12px;
+    margin-top: 8px;
+    font-family: {{ block.settings.title_font.family }}, serif;
+    color: #C17129;
+  }
+
+  .ai-blog-image-full-{{ ai_gen_id }} {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    margin-top: 60px;
+    margin-bottom: 60px;
+  }
+
+  .ai-blog-image-full-{{ ai_gen_id }} img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .ai-blog-image-inset-{{ ai_gen_id }} {
+    margin: 60px 0;
+  }
+
+  .ai-blog-image-inset-{{ ai_gen_id }} img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .ai-blog-image-caption-{{ ai_gen_id }} {
+    font-family: {{ block.settings.metadata_font.family }}, sans-serif;
+    font-size: 12px;
+    color: #C17129;
+    opacity: 0.6;
+    margin-top: 12px;
+    text-align: center;
+  }
+
+  .ai-blog-ritual-tip-{{ ai_gen_id }} {
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    padding: 32px;
+    margin: 60px 0;
+  }
+
+  .ai-blog-ritual-header-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .ai-blog-ritual-icon-{{ ai_gen_id }} {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+  }
+
+  .ai-blog-ritual-icon-{{ ai_gen_id }} img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .ai-blog-ritual-heading-{{ ai_gen_id }} {
+    font-family: {{ block.settings.body_font.family }}, serif;
+    font-size: 18px;
+    color: #C17129;
+    margin: 0;
+  }
+
+  .ai-blog-ritual-content-{{ ai_gen_id }} {
+    font-family: {{ block.settings.body_font.family }}, serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #C17129;
+  }
+
+  .ai-blog-related-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 20px;
+  }
+
+  .ai-blog-related-title-{{ ai_gen_id }} {
+    font-family: {{ block.settings.title_font.family }}, serif;
+    font-size: 32px;
+    color: #C17129;
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .ai-blog-related-grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  .ai-blog-related-card-{{ ai_gen_id }} {
+    text-decoration: none;
+    display: block;
+  }
+
+  .ai-blog-related-image-{{ ai_gen_id }} {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+
+  .ai-blog-related-image-{{ ai_gen_id }} img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .ai-blog-related-card-{{ ai_gen_id }}:hover .ai-blog-related-image-{{ ai_gen_id }} img {
+    transform: scale(1.02);
+  }
+
+  .ai-blog-related-category-{{ ai_gen_id }} {
+    font-family: {{ block.settings.metadata_font.family }}, sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #C17129;
+    opacity: 0.7;
+    margin-bottom: 8px;
+  }
+
+  .ai-blog-related-card-title-{{ ai_gen_id }} {
+    font-family: {{ block.settings.title_font.family }}, serif;
+    font-size: 20px;
+    line-height: 1.3;
+    color: #C17129;
+    margin: 0;
+  }
+
+  .ai-blog-newsletter-{{ ai_gen_id }} {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 80px 20px;
+    text-align: center;
+  }
+
+  .ai-blog-newsletter-title-{{ ai_gen_id }} {
+    font-family: {{ block.settings.title_font.family }}, serif;
+    font-size: 32px;
+    color: #C17129;
+    margin-bottom: 32px;
+  }
+
+  .ai-blog-newsletter-form-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .ai-blog-newsletter-input-{{ ai_gen_id }} {
+    font-family: {{ block.settings.body_font.family }}, serif;
+    font-size: 16px;
+    color: #C17129;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #C17129;
+    padding: 12px 0;
+    text-align: center;
+  }
+
+  .ai-blog-newsletter-input-{{ ai_gen_id }}::placeholder {
+    color: #C17129;
+    opacity: 0.5;
+  }
+
+  .ai-blog-newsletter-input-{{ ai_gen_id }}:focus {
+    outline: none;
+    border-bottom-color: #C17129;
+  }
+
+  .ai-blog-newsletter-button-{{ ai_gen_id }} {
+    font-family: {{ block.settings.metadata_font.family }}, sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #FFF0DD;
+    background-color: #C17129;
+    border: none;
+    padding: 16px 32px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .ai-blog-newsletter-button-{{ ai_gen_id }}:hover {
+    background-color: #A45B20;
+  }
+
+  .ai-blog-newsletter-success-{{ ai_gen_id }} {
+    font-family: {{ block.settings.body_font.family }}, serif;
+    font-size: 16px;
+    color: #5A7057;
+    margin-top: 16px;
+  }
+
+  .ai-blog-newsletter-error-{{ ai_gen_id }} {
+    font-family: {{ block.settings.body_font.family }}, serif;
+    font-size: 16px;
+    color: #C17129;
+    margin-top: 16px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .ai-blog-title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.title_size }}px * 0.7);
+    }
+
+    .ai-blog-body-{{ ai_gen_id }} p {
+      font-size: calc({{ block.settings.body_size }}px * 0.9);
+    }
+
+    .ai-blog-related-grid-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .ai-blog-ritual-tip-{{ ai_gen_id }} {
+      padding: 24px;
+    }
+  }
+{% endstyle %}
+
+<ai-blog-article-{{ ai_gen_id }} class="ai-blog-article-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-blog-hero-{{ ai_gen_id }}">
+    {% if block.settings.hero_image %}
+      <div class="ai-blog-hero-image-{{ ai_gen_id }}">
+        <img
+          src="{{ block.settings.hero_image | image_url: width: 2000 }}"
+          alt="{{ block.settings.hero_image.alt | escape }}"
+          loading="lazy"
+          width="{{ block.settings.hero_image.width }}"
+          height="{{ block.settings.hero_image.height }}"
+        >
+      </div>
+    {% else %}
+      <div class="ai-blog-hero-placeholder-{{ ai_gen_id }}">
+        {{ 'hero-apparel-1' | placeholder_svg_tag }}
+      </div>
+    {% endif %}
+
+    <div class="ai-blog-hero-meta-{{ ai_gen_id }}">
+      {% if block.settings.category != blank %}
+        <div class="ai-blog-category-{{ ai_gen_id }}">{{ block.settings.category }}</div>
+      {% endif %}
+
+      {% if block.settings.title != blank %}
+        <h1 class="ai-blog-title-{{ ai_gen_id }}">{{ block.settings.title }}</h1>
+      {% endif %}
+
+      {% if block.settings.show_metadata %}
+        <div class="ai-blog-metadata-{{ ai_gen_id }}">
+          {% if block.settings.author != blank %}{{ block.settings.author }}{% endif %}
+          {% if block.settings.author != blank and block.settings.date != blank %} | {% endif %}
+          {% if block.settings.date != blank %}{{ block.settings.date }}{% endif %}
+          {% if block.settings.read_time != blank %} | {{ block.settings.read_time }}{% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="ai-blog-body-{{ ai_gen_id }}">
+    {% if block.settings.intro_text != blank %}
+      {{ block.settings.intro_text }}
+    {% endif %}
+
+    {% if block.settings.show_image_1 and block.settings.image_1 %}
+      {% if block.settings.image_1_layout == 'full' %}
+        <div class="ai-blog-image-full-{{ ai_gen_id }}">
+          <img
+            src="{{ block.settings.image_1 | image_url: width: 2000 }}"
+            alt="{{ block.settings.image_1.alt | escape }}"
+            loading="lazy"
+            width="{{ block.settings.image_1.width }}"
+            height="{{ block.settings.image_1.height }}"
+          >
+          {% if block.settings.image_1_caption != blank %}
+            <div class="ai-blog-image-caption-{{ ai_gen_id }}">{{ block.settings.image_1_caption }}</div>
+          {% endif %}
+        </div>
+      {% else %}
+        <div class="ai-blog-image-inset-{{ ai_gen_id }}">
+          <img
+            src="{{ block.settings.image_1 | image_url: width: 1200 }}"
+            alt="{{ block.settings.image_1.alt | escape }}"
+            loading="lazy"
+            width="{{ block.settings.image_1.width }}"
+            height="{{ block.settings.image_1.height }}"
+          >
+          {% if block.settings.image_1_caption != blank %}
+            <div class="ai-blog-image-caption-{{ ai_gen_id }}">{{ block.settings.image_1_caption }}</div>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endif %}
+
+    {% if block.settings.body_text_1 != blank %}
+      {{ block.settings.body_text_1 }}
+    {% endif %}
+
+    {% if block.settings.show_ritual_tip %}
+      <div class="ai-blog-ritual-tip-{{ ai_gen_id }}">
+        <div class="ai-blog-ritual-header-{{ ai_gen_id }}">
+          {% if block.settings.ritual_icon %}
+            <div class="ai-blog-ritual-icon-{{ ai_gen_id }}">
+              <img
+                src="{{ block.settings.ritual_icon | image_url: width: 64 }}"
+                alt="Ritual tip icon"
+                loading="lazy"
+              >
+            </div>
+          {% endif %}
+          <h3 class="ai-blog-ritual-heading-{{ ai_gen_id }}">{{ block.settings.ritual_tip_heading }}</h3>
+        </div>
+        {% if block.settings.ritual_tip_content != blank %}
+          <div class="ai-blog-ritual-content-{{ ai_gen_id }}">
+            {{ block.settings.ritual_tip_content }}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if block.settings.body_text_2 != blank %}
+      {{ block.settings.body_text_2 }}
+    {% endif %}
+
+    {% if block.settings.show_image_2 and block.settings.image_2 %}
+      {% if block.settings.image_2_layout == 'full' %}
+        <div class="ai-blog-image-full-{{ ai_gen_id }}">
+          <img
+            src="{{ block.settings.image_2 | image_url: width: 2000 }}"
+            alt="{{ block.settings.image_2.alt | escape }}"
+            loading="lazy"
+            width="{{ block.settings.image_2.width }}"
+            height="{{ block.settings.image_2.height }}"
+          >
+          {% if block.settings.image_2_caption != blank %}
+            <div class="ai-blog-image-caption-{{ ai_gen_id }}">{{ block.settings.image_2_caption }}</div>
+          {% endif %}
+        </div>
+      {% else %}
+        <div class="ai-blog-image-inset-{{ ai_gen_id }}">
+          <img
+            src="{{ block.settings.image_2 | image_url: width: 1200 }}"
+            alt="{{ block.settings.image_2.alt | escape }}"
+            loading="lazy"
+            width="{{ block.settings.image_2.width }}"
+            height="{{ block.settings.image_2.height }}"
+          >
+          {% if block.settings.image_2_caption != blank %}
+            <div class="ai-blog-image-caption-{{ ai_gen_id }}">{{ block.settings.image_2_caption }}</div>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endif %}
+
+    {% if block.settings.body_text_3 != blank %}
+      {{ block.settings.body_text_3 }}
+    {% endif %}
+  </div>
+
+  {% if block.settings.show_related %}
+    <div class="ai-blog-related-{{ ai_gen_id }}">
+      <h2 class="ai-blog-related-title-{{ ai_gen_id }}">{{ block.settings.related_title }}</h2>
+      <div class="ai-blog-related-grid-{{ ai_gen_id }}">
+        {% if block.settings.related_article_1 %}
+          <a href="{{ block.settings.related_article_1.url }}" class="ai-blog-related-card-{{ ai_gen_id }}">
+            <div class="ai-blog-related-image-{{ ai_gen_id }}">
+              {% if block.settings.related_article_1.image %}
+                <img
+                  src="{{ block.settings.related_article_1.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.related_article_1.image.alt | escape }}"
+                  loading="lazy"
+                >
+              {% else %}
+                {{ 'image' | placeholder_svg_tag }}
+              {% endif %}
+            </div>
+            {% if block.settings.related_category_1 != blank %}
+              <div class="ai-blog-related-category-{{ ai_gen_id }}">{{ block.settings.related_category_1 }}</div>
+            {% endif %}
+            <h3 class="ai-blog-related-card-title-{{ ai_gen_id }}">{{ block.settings.related_article_1.title }}</h3>
+          </a>
+        {% endif %}
+
+        {% if block.settings.related_article_2 %}
+          <a href="{{ block.settings.related_article_2.url }}" class="ai-blog-related-card-{{ ai_gen_id }}">
+            <div class="ai-blog-related-image-{{ ai_gen_id }}">
+              {% if block.settings.related_article_2.image %}
+                <img
+                  src="{{ block.settings.related_article_2.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.related_article_2.image.alt | escape }}"
+                  loading="lazy"
+                >
+              {% else %}
+                {{ 'image' | placeholder_svg_tag }}
+              {% endif %}
+            </div>
+            {% if block.settings.related_category_2 != blank %}
+              <div class="ai-blog-related-category-{{ ai_gen_id }}">{{ block.settings.related_category_2 }}</div>
+            {% endif %}
+            <h3 class="ai-blog-related-card-title-{{ ai_gen_id }}">{{ block.settings.related_article_2.title }}</h3>
+          </a>
+        {% endif %}
+
+        {% if block.settings.related_article_3 %}
+          <a href="{{ block.settings.related_article_3.url }}" class="ai-blog-related-card-{{ ai_gen_id }}">
+            <div class="ai-blog-related-image-{{ ai_gen_id }}">
+              {% if block.settings.related_article_3.image %}
+                <img
+                  src="{{ block.settings.related_article_3.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.related_article_3.image.alt | escape }}"
+                  loading="lazy"
+                >
+              {% else %}
+                {{ 'image' | placeholder_svg_tag }}
+              {% endif %}
+            </div>
+            {% if block.settings.related_category_3 != blank %}
+              <div class="ai-blog-related-category-{{ ai_gen_id }}">{{ block.settings.related_category_3 }}</div>
+            {% endif %}
+            <h3 class="ai-blog-related-card-title-{{ ai_gen_id }}">{{ block.settings.related_article_3.title }}</h3>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if block.settings.show_newsletter %}
+    <div class="ai-blog-newsletter-{{ ai_gen_id }}">
+      <h2 class="ai-blog-newsletter-title-{{ ai_gen_id }}">{{ block.settings.newsletter_title }}</h2>
+      {%- form 'customer' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="ai-blog-newsletter-form-{{ ai_gen_id }}">
+          <input
+            type="email"
+            name="contact[email]"
+            class="ai-blog-newsletter-input-{{ ai_gen_id }}"
+            value="{{ form.email }}"
+            aria-required="true"
+            autocorrect="off"
+            autocapitalize="off"
+            autocomplete="email"
+            {% if form.errors %}
+              aria-invalid="true"
+              aria-describedby="ai-newsletter-error-{{ ai_gen_id }}"
+            {% endif %}
+            {% if form.posted_successfully? %}
+              aria-describedby="ai-newsletter-success-{{ ai_gen_id }}"
+            {% endif %}
+            placeholder="{{ block.settings.newsletter_placeholder }}"
+            required
+          >
+          <button type="submit" class="ai-blog-newsletter-button-{{ ai_gen_id }}">
+            {{ block.settings.newsletter_button }}
+          </button>
+        </div>
+        {%- if form.errors -%}
+          <div id="ai-newsletter-error-{{ ai_gen_id }}" class="ai-blog-newsletter-error-{{ ai_gen_id }}">
+            {{ form.errors.messages.email }}
+          </div>
+        {%- endif -%}
+        {%- if form.posted_successfully? -%}
+          <div id="ai-newsletter-success-{{ ai_gen_id }}" class="ai-blog-newsletter-success-{{ ai_gen_id }}">
+            {{ block.settings.newsletter_success }}
+          </div>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+  {% endif %}
+</ai-blog-article-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class AiBlogArticle{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.setupSmoothScroll();
+      }
+
+      setupSmoothScroll() {
+        const links = this.querySelectorAll('a[href^="#"]');
+        links.forEach(link => {
+          link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href');
+            if (href !== '#') {
+              const target = document.querySelector(href);
+              if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth' });
+              }
+            }
+          });
+        });
+      }
+    }
+
+    customElements.define('ai-blog-article-{{ ai_gen_id }}', AiBlogArticle{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Editorial blog article",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "title_font",
+      "label": "Title font",
+      "default": "playfair_display_n4"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Body font",
+      "default": "playfair_display_n4"
+    },
+    {
+      "type": "font_picker",
+      "id": "metadata_font",
+      "label": "Metadata font",
+      "default": "sans_serif_n4"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 28,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Title size",
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Body size",
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "Hero section"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image"
+    },
+    {
+      "type": "text",
+      "id": "category",
+      "label": "Category",
+      "default": "RITUAL-WISSEN"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Article title",
+      "default": "Die Kunst des achtsamen Teetrinkens"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_metadata",
+      "label": "Show metadata",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "author",
+      "label": "Author name",
+      "default": "DINVEDA Team"
+    },
+    {
+      "type": "text",
+      "id": "date",
+      "label": "Publication date",
+      "default": "19. Januar 2026"
+    },
+    {
+      "type": "text",
+      "id": "read_time",
+      "label": "Read time",
+      "default": "5 Min Lesezeit"
+    },
+    {
+      "type": "header",
+      "content": "Article content"
+    },
+    {
+      "type": "richtext",
+      "id": "intro_text",
+      "label": "Introduction text",
+      "default": "<p>In der Hektik des modernen Lebens vergessen wir oft, innezuhalten und den Moment zu genießen. Eine Tasse Tee kann mehr sein als nur ein Getränk – sie kann ein Ritual der Achtsamkeit werden.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image_1",
+      "label": "Show first image",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "First image"
+    },
+    {
+      "type": "select",
+      "id": "image_1_layout",
+      "label": "First image layout",
+      "options": [
+        {
+          "value": "full",
+          "label": "Full bleed"
+        },
+        {
+          "value": "inset",
+          "label": "Inset"
+        }
+      ],
+      "default": "inset"
+    },
+    {
+      "type": "text",
+      "id": "image_1_caption",
+      "label": "First image caption"
+    },
+    {
+      "type": "richtext",
+      "id": "body_text_1",
+      "label": "Body text section 1",
+      "default": "<p>Die ayurvedische Tradition lehrt uns, dass jede Handlung mit Bewusstsein ausgeführt werden sollte. Beim Teetrinken beginnt dies bereits mit der Auswahl der Kräuter und Gewürze.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Ritual tip callout"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_ritual_tip",
+      "label": "Show ritual tip",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "ritual_icon",
+      "label": "Ritual icon"
+    },
+    {
+      "type": "text",
+      "id": "ritual_tip_heading",
+      "label": "Ritual tip heading",
+      "default": "Ein kleiner Tipp vom Fuchs"
+    },
+    {
+      "type": "richtext",
+      "id": "ritual_tip_content",
+      "label": "Ritual tip content",
+      "default": "<p>Nimm dir jeden Morgen fünf Minuten Zeit, um deinen Tee in Stille zu genießen. Spüre die Wärme der Tasse in deinen Händen und atme den Duft bewusst ein.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "body_text_2",
+      "label": "Body text section 2",
+      "default": "<p>Diese kleinen Momente der Achtsamkeit können transformierend wirken und uns helfen, den Tag mit mehr Ruhe und Klarheit zu beginnen.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image_2",
+      "label": "Show second image",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Second image"
+    },
+    {
+      "type": "select",
+      "id": "image_2_layout",
+      "label": "Second image layout",
+      "options": [
+        {
+          "value": "full",
+          "label": "Full bleed"
+        },
+        {
+          "value": "inset",
+          "label": "Inset"
+        }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "text",
+      "id": "image_2_caption",
+      "label": "Second image caption"
+    },
+    {
+      "type": "richtext",
+      "id": "body_text_3",
+      "label": "Body text section 3"
+    },
+    {
+      "type": "header",
+      "content": "Related articles"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_related",
+      "label": "Show related articles",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "related_title",
+      "label": "Related section title",
+      "default": "Das könnte dich auch interessieren"
+    },
+    {
+      "type": "article",
+      "id": "related_article_1",
+      "label": "Related article 1"
+    },
+    {
+      "type": "text",
+      "id": "related_category_1",
+      "label": "Category 1",
+      "default": "RITUAL-WISSEN"
+    },
+    {
+      "type": "article",
+      "id": "related_article_2",
+      "label": "Related article 2"
+    },
+    {
+      "type": "text",
+      "id": "related_category_2",
+      "label": "Category 2",
+      "default": "AYURVEDA"
+    },
+    {
+      "type": "article",
+      "id": "related_article_3",
+      "label": "Related article 3"
+    },
+    {
+      "type": "text",
+      "id": "related_category_3",
+      "label": "Category 3",
+      "default": "WELLNESS"
+    },
+    {
+      "type": "header",
+      "content": "Newsletter signup"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "Show newsletter signup",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "newsletter_title",
+      "label": "Newsletter title",
+      "default": "Tritt unserem Kreis bei"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_placeholder",
+      "label": "Email placeholder",
+      "default": "Deine E-Mail-Adresse"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_button",
+      "label": "Button text",
+      "default": "Anmelden"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_success",
+      "label": "Success message",
+      "default": "Willkommen im Kreis! Wir freuen uns, dich dabei zu haben."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Editorial blog article"
+    }
+  ]
+}
+{% endschema %}
