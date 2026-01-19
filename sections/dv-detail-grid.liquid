@@ -138,7 +138,7 @@
             </div>
           {% endif %}
           
-          {%- comment -%} Ingredient Highlights (MetaObjects priority, blocks fallback) {%- endcomment -%}
+          {%- comment -%} Ingredient Highlights: Priority = product.metafields.custom.dv_ingredient_highlights (per-product), Fallback = theme editor blocks (global) {%- endcomment -%}
           {% if has_ingredient_highlights_meta or has_ingredient_items %}
             <div class="dv-detail-grid__ingredient-highlights">
               {%- comment -%} Priority: MetaObjects {%- endcomment -%}
@@ -444,7 +444,7 @@
     },
     {
       "type": "paragraph",
-      "content": "⚠️ Configure per product: Go to Products → [Your Product] → Metafields → Find 'DV Ingredient Highlights' → Select metaobject instances. This section automatically reads from product.metafields.custom.dv_ingredient_highlights. Alternatively, use blocks below as fallback."
+      "content": "⚠️ PER-PRODUCT CONFIGURATION (Recommended): Go to Products → [Your Product] → Metafields → Find 'DV Ingredient Highlights' → Select metaobject instances. This section automatically reads from product.metafields.custom.dv_ingredient_highlights (List of DV Ingredient Highlight metaobjects). The product metafield takes PRIORITY - if configured, it will override any blocks set in the theme editor below. Blocks are only used as fallback when the product metafield is empty."
     },
     {
       "type": "checkbox",
