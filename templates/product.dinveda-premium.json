@@ -12,6 +12,13 @@
     "dv_main_product": {
       "type": "dv-main-product",
       "blocks": {
+        "product_badge_7M67Tc": {
+          "type": "product_badge",
+          "settings": {
+            "icon_emoji": "🌿",
+            "text": "100 % Bio & vegan"
+          }
+        },
         "product_badge_UzGNLX": {
           "type": "product_badge",
           "source": "{{ metaobjects.dv_trust_badge[\"ohne-zusatze\"] }}",
@@ -38,6 +45,7 @@
         }
       },
       "block_order": [
+        "product_badge_7M67Tc",
         "product_badge_UzGNLX",
         "product_badge_rzxECF",
         "product_badge_wJTQ46"
@@ -63,6 +71,11 @@
         "time_fallback": "",
         "prep_fallback": "",
         "duration_fallback": "",
+        "enable_purity_promise_badge": false,
+        "purity_promise_background_color": "#c17129",
+        "purity_promise_badge_1_crossed": false,
+        "purity_promise_badge_2_crossed": false,
+        "purity_promise_badge_3_crossed": false,
         "show_social_share": true
       }
     },
@@ -74,8 +87,8 @@
         "content": "{{ product.metafields.custom.dv_story_content | metafield_tag }}",
         "traditional_benefits": "",
         "show_when_empty": false,
-        "show_fox_icon": false,
-        "fox_icon": "shopify://shop_images/Fuchs_Face.jpg",
+        "show_fox_icon": true,
+        "fox_icon": "shopify://shop_images/ChatGPT_Image_Jan_12_2026_08_34_22_PM.png",
         "icon_size": 140,
         "checklist_heading": "Traditionell geschätzt für …",
         "show_disclaimer": false,
