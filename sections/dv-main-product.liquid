@@ -401,7 +401,7 @@
           <div class="dv-main-product__social-share">
             <span class="dv-main-product__social-label">TEILEN</span>
             <div class="dv-main-product__social-icons">
-              {% if section.settings.instagram_url != blank %}
+              {% if section.settings.show_instagram and section.settings.instagram_url != blank %}
                 <a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener" class="dv-main-product__social-icon" aria-label="Visit Instagram">
                   <svg width="20" height="20" viewBox="0 0 19.9 20" fill="currentColor">
                     <path d="M10,4.8c-2.8,0-5.1,2.3-5.1,5.1S7.2,15,10,15s5.1-2.3,5.1-5.1S12.8,4.8,10,4.8z M10,13.2c-1.8,0-3.3-1.5-3.3-3.3
@@ -416,7 +416,7 @@
                   </svg>
                 </a>
               {% endif %}
-              {% if section.settings.youtube_url != blank %}
+              {% if section.settings.show_youtube and section.settings.youtube_url != blank %}
                 <a href="{{ section.settings.youtube_url }}" target="_blank" rel="noopener" class="dv-main-product__social-icon" aria-label="Visit YouTube">
                   <svg width="20" height="20" viewBox="0 0 28.5 20" fill="currentColor">
                     <path d="M28,3.3c-0.3-1.3-1.3-2.1-2.4-2.4C23.3,0,14.3,0,14.3,0s-8.8,0-11,0.6C2,1,1,1.9,0.7,3.1C0,5.4,0,9.9,0,9.9s0,4.7,0.7,6.8
@@ -1055,10 +1055,22 @@
       "default": true
     },
     {
+      "type": "checkbox",
+      "id": "show_instagram",
+      "label": "Show Instagram icon",
+      "default": true
+    },
+    {
       "type": "text",
       "id": "instagram_url",
       "label": "Instagram URL",
       "info": "Enter your Instagram profile URL (e.g., https://instagram.com/yourbrand)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_youtube",
+      "label": "Show YouTube icon",
+      "default": true
     },
     {
       "type": "text",

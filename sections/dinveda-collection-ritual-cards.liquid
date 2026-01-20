@@ -189,10 +189,9 @@
                     <div class="dinveda-ritual-picker__button-wrapper">
                       {%- comment -%} Quick Add to Cart Button {%- endcomment -%}
                       {% if section.settings.enable_quick_add and product_available %}
-                        {% form 'product', product, id: 'quick-add-form-' | append: product.id, class: 'dinveda-ritual-picker__quick-add-form', data-product-id: product.id %}
-                          <input type="hidden" name="id" value="{{ current_variant.id }}">
+                        <div id="quick-add-form-{{ product.id }}" class="dinveda-ritual-picker__quick-add-form" data-product-id="{{ product.id }}">
                           <button
-                            type="submit"
+                            type="button"
                             class="dinveda-ritual-picker__quick-add-button button{% if section.settings.quick_add_button_style == 'primary' %} btn-primary{% else %} btn-outline{% endif %}"
                             data-quick-add
                             data-variant-id="{{ current_variant.id }}"
@@ -215,14 +214,7 @@
                           <div class="dinveda-ritual-picker__quick-add-message dinveda-ritual-picker__quick-add-error" style="display: none;">
                             {{ 'cart.general.cart_error' | t | default: 'Error adding to cart' }}
                           </div>
-                        {% endform %}
-                      {% endif %}
-                      
-                      {%- comment -%} View Product Button {%- endcomment -%}
-                      {% if button_label != blank %}
-                        <a href="{{ card_link }}" class="dinveda-ritual-picker__button button btn-outline">
-                          {{ button_label | escape }}
-                        </a>
+                        </div>
                       {% endif %}
                     </div>
 
@@ -404,15 +396,15 @@
   cartConfig = JSON.parse(cartConfig.innerHTML || '{}');
   
   quickAddButtons.forEach(function(button) {
-    var form = button.closest('form');
-    if (!form) return;
+    var formWrapper = button.closest('.dinveda-ritual-picker__quick-add-form');
+    if (!formWrapper) return;
     
     var card = button.closest('[data-product-id]');
     var isSingleVariant = card && card.dataset.singleVariant === 'true';
     var redirectToProduct = button.hasAttribute('data-redirect-to-product');
     var variantId = button.dataset.variantId;
     
-    form.addEventListener('submit', function(e) {
+    button.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
       
@@ -425,14 +417,18 @@
         return false;
       }
       
+      if (button.disabled) {
+        return false;
+      }
+      
       // Disable button and show loading
       button.disabled = true;
       button.classList.add('loading');
       
       var addText = button.querySelector('[data-add-to-cart-text]');
       var loadingText = button.querySelector('.dinveda-ritual-picker__quick-add-loading');
-      var successMsg = card.querySelector('.dinveda-ritual-picker__quick-add-success');
-      var errorMsg = card.querySelector('.dinveda-ritual-picker__quick-add-error');
+      var successMsg = formWrapper.querySelector('.dinveda-ritual-picker__quick-add-success');
+      var errorMsg = formWrapper.querySelector('.dinveda-ritual-picker__quick-add-error');
       
       // Hide previous messages
       if (successMsg) successMsg.style.display = 'none';
@@ -450,6 +446,9 @@
         })
       })
       .then(function(response) {
+        if (!response.ok) {
+          return response.json().then(function(err) { throw err; });
+        }
         return response.json();
       })
       .then(function(data) {
@@ -472,6 +471,11 @@
           WAU.ThemeCart.getCart().then(function(cart) {
             if (typeof WAU !== 'undefined' && WAU.AjaxCart && WAU.AjaxCart.updateView) {
               WAU.AjaxCart.updateView(cartConfig, cart);
+            }
+            if (typeof WAU !== 'undefined' && WAU.AjaxCart && WAU.AjaxCart.showDrawer) {
+              if (cartConfig.cart_action === 'drawer') {
+                WAU.AjaxCart.showDrawer(cartConfig);
+              }
             }
           });
         }
