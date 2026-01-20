@@ -1,0 +1,578 @@
+{% comment %}
+  DinVeda Elegant Product Grid - Matches homepage ritual card design exactly
+  Uses same structure as dinveda-ritual-picker but with products from collection
+  Features: 4 columns, same design, "add to basket" button instead of plus icon
+{% endcomment %}
+
+{% comment %} Ritual Picker Assets {% endcomment %}
+<link rel="preload" href="{{ 'section-featured-collection.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{{ 'section-featured-collection.css' | asset_url }}"></noscript>
+<link rel="preload" href="{{ 'component-product-grid.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{{ 'component-product-grid.css' | asset_url }}"></noscript>
+<link rel="preload" href="{{ 'section-dinveda-ritual-picker.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{{ 'section-dinveda-ritual-picker.css' | asset_url }}"></noscript>
+
+{%- liquid
+  assign page_limit = section.settings.items_per_page | default: 12
+  assign items_per_row = 4
+  assign grid_width = 'span-3 auto'
+  assign mobile_per_row = 'sm-span-6'
+  
+  assign has_padding = settings.product_grid_padding
+  assign has_dropshadow = settings.product_grid_dropshadow
+  
+  if has_padding
+    assign item_padding = 'sm-px0 sm-py0 px6 py6'
+  else
+    assign item_padding = 'sm-px0 sm-py0 px0 py0'
+  endif
+  
+  assign empty_collection = true
+  if collection.products.size > 0
+    assign empty_collection = false
+  endif
+-%}
+
+<section
+  id="dinveda-elegant-product-grid-{{ section.id }}"
+  class="section-featured-collection dinveda-ritual-picker dinveda-ritual-picker-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="dinveda-ritual-picker"
+>
+  <div class="grid__wrapper relative section-featured-collection__wrapper--grid">
+    {% paginate collection.products by page_limit %}
+      {%- if collection.products.size >= 1 -%}
+        <div class="featured-collection__wrapper--loop dinveda-ritual-picker__wrapper--loop span-12">
+          <div class="grid__wrapper edge cg6 rg6">
+            {% for product in collection.products limit: page_limit %}
+                {%- liquid
+                  # Product variant info
+                  assign current_variant = product.selected_or_first_available_variant
+                  assign is_single_variant = false
+                  if product.variants.size == 1
+                    assign is_single_variant = true
+                  endif
+                  assign product_available = current_variant.available
+                  
+                  # Map product metafields to card content (matching ritual picker)
+                  # Phase label: ritual_timing with tag fallback
+                  assign phase_label = product.metafields.dinveda.ritual_timing
+                  if phase_label == blank
+                    if product.tags contains 'Morgen'
+                      assign phase_label = 'MORGEN | AKTIVIEREN'
+                    elsif product.tags contains 'Tag'
+                      assign phase_label = 'TAG | ZENTRIEREN'
+                    elsif product.tags contains 'Abend'
+                      assign phase_label = 'ABEND | LOSLASSEN'
+                    elsif product.tags contains 'Balance'
+                      assign phase_label = 'BALANCE | AUSGLEICHEN'
+                    endif
+                  else
+                    assign phase_label = phase_label | upcase
+                  endif
+                  
+                  # Blend name: product title
+                  assign blend_name = product.title
+                  
+                  # Quote line: animal_quote or ritual_tagline
+                  assign quote_line = product.metafields.dinveda.animal_quote
+                  if quote_line == blank
+                    assign quote_line = product.metafields.dinveda.ritual_tagline
+                  endif
+                  
+                  # Descriptor: first line of ritual_usage or product description
+                  assign descriptor = ''
+                  assign ritual_usage = product.metafields.dinveda.ritual_usage
+                  if ritual_usage != blank
+                    assign desc_stripped = ritual_usage | strip_html
+                    assign desc_first_line = desc_stripped | split: '.' | first | split: '!' | first | split: '?' | first
+                    if desc_first_line.size > 80
+                      assign descriptor = desc_first_line | truncate: 80, '...'
+                    else
+                      assign descriptor = desc_first_line
+                    endif
+                  elsif product.description != blank
+                    assign desc_stripped = product.description | strip_html
+                    assign desc_first_line = desc_stripped | split: '.' | first | split: '!' | first | split: '?' | first
+                    if desc_first_line.size > 80
+                      assign descriptor = desc_first_line | truncate: 80, '...'
+                    else
+                      assign descriptor = desc_first_line
+                    endif
+                  endif
+                  
+                  # Attribution: animal_name formatted as "— sagt der {animal}"
+                  assign animal_name = product.metafields.dinveda.animal_name
+                  assign attribution_line = ''
+                  if animal_name != blank
+                    assign attribution_line = '— sagt der ' | append: animal_name
+                  endif
+                  
+                  # Animal overlay image
+                  assign animal_image = null
+                  if product.metafields.custom.dv_animal_image
+                    assign metafield_file = product.metafields.custom.dv_animal_image.value
+                    if metafield_file and metafield_file != blank
+                      assign animal_image = metafield_file
+                    endif
+                  endif
+                  
+                  # Product image
+                  assign card_image = product.featured_image
+                  assign image_alt = product.featured_image.alt | default: product.title
+                  assign card_link = product.url
+                -%}
+                
+                <article 
+                  class="dinveda-ritual-picker__card product-loop__item dropshadow--{{ has_dropshadow }} padding--{{ has_padding }} {{ mobile_per_row }} {{ grid_width }} relative dinveda-ritual-picker__card--has-link"
+                  data-product-id="{{ product.id }}"
+                  data-product-handle="{{ product.handle }}"
+                  data-single-variant="{{ is_single_variant }}"
+                  data-variant-id="{{ current_variant.id }}"
+                >
+                  <a href="{{ card_link }}" class="dinveda-ritual-picker__card-link" aria-label="{{ blend_name | escape }}">
+                    
+                    <div class="dinveda-ritual-picker__card-inner">
+                      
+                      {%- comment -%} Image {%- endcomment -%}
+                      {% if card_image != blank %}
+                        <div class="dinveda-ritual-picker__image-wrapper">
+                          {{ card_image | image_url: width: 600 | image_tag: alt: image_alt, loading: 'lazy', class: 'dinveda-ritual-picker__image' }}
+                        </div>
+                      {% else %}
+                        <div class="dinveda-ritual-picker__image-wrapper dinveda-ritual-picker__image-wrapper--placeholder">
+                          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                        </div>
+                      {% endif %}
+
+                      {%- comment -%} Content {%- endcomment -%}
+                      <div class="dinveda-ritual-picker__content">
+                        
+                        {% if phase_label != blank %}
+                          <p class="dinveda-ritual-picker__phase-label">{{ phase_label | escape }}</p>
+                        {% endif %}
+
+                        {% if blend_name != blank %}
+                          <h3 class="dinveda-ritual-picker__blend-name">{{ blend_name | escape }}</h3>
+                        {% endif %}
+
+                        {%- comment -%} Price Display (Collection page only) {%- endcomment -%}
+                        <div class="dinveda-ritual-picker__price">
+                          <span class="dinveda-ritual-picker__price-main">{{ current_variant.price | money }}</span>
+                          {% if current_variant.compare_at_price > current_variant.price %}
+                            <span class="dinveda-ritual-picker__price-compare">{{ current_variant.compare_at_price | money }}</span>
+                          {% endif %}
+                          {% if current_variant.unit_price %}
+                            <span class="dinveda-ritual-picker__price-unit">{{ current_variant.unit_price | money }} / {{ current_variant.unit_price_measurement.reference_value }}{{ current_variant.unit_price_measurement.reference_unit }}</span>
+                          {% endif %}
+                        </div>
+
+                        {% if quote_line != blank or descriptor != blank or attribution_line != blank %}
+                          <div class="dinveda-ritual-picker__quote-block">
+                            {% if quote_line != blank %}
+                              <p class="dinveda-ritual-picker__quote-line">{{ quote_line | escape }}</p>
+                            {% endif %}
+                            {% if descriptor != blank %}
+                              <p class="dinveda-ritual-picker__descriptor">{{ descriptor | escape }}</p>
+                            {% endif %}
+                            {% if attribution_line != blank %}
+                              <div class="dinveda-ritual-picker__attribution-wrapper">
+                                <div class="dinveda-ritual-picker__attribution-line">
+                                  {% if animal_image != blank %}
+                                    <img src="{{ animal_image | image_url: width: 40 }}" alt="{{ attribution_line | escape }}" class="dinveda-ritual-picker__animal-image">
+                                  {% endif %}
+                                  <p class="dinveda-ritual-picker__animal-name">{{ attribution_line | escape }}</p>
+                                </div>
+                              </div>
+                            {% endif %}
+                          </div>
+                        {% endif %}
+
+                      </div>
+
+                    </div>
+                  </a>
+                  
+                  {%- comment -%} Add to Basket Button (replaces plus icon) {%- endcomment -%}
+                  {% if section.settings.enable_quick_add and product_available %}
+                    <button 
+                      class="dinveda-ritual-picker__add-to-basket-btn no-js-hidden"
+                      type="button"
+                      name="button"
+                      aria-label="Add to cart"
+                      data-variant-id="{{ current_variant.id }}"
+                      data-product-id="{{ product.id }}"
+                      data-product-handle="{{ product.handle }}"
+                      {% unless product_available %}disabled{% endunless %}
+                      {% if is_single_variant == false and section.settings.multi_variant_behavior == 'redirect' %}data-redirect-to-product{% endif %}
+                    >
+                      <span class="dinveda-ritual-picker__add-to-basket-text" data-add-to-cart-text>
+                        {{ section.settings.quick_add_button_label | default: 'In den Warenkorb' }}
+                      </span>
+                      <span class="dinveda-ritual-picker__add-to-basket-loading" style="display: none;">
+                        {{ 'products.product.adding' | t | default: 'Adding...' }}
+                      </span>
+                    </button>
+                  {% endif %}
+                  
+                  {%- comment -%} Animal Overlay (positioned outside card-inner, relative to card) {%- endcomment -%}
+                  {% if animal_image != blank %}
+                    <div class="dinveda-ritual-picker__overlay dinveda-ritual-picker__overlay--top_left"
+                         style="--ov-size: 96px; --ov-x: -9px; --ov-y: -56px;">
+                      {{ animal_image | image_url: width: 400 | image_tag: alt: attribution_line | default: blend_name, class: 'dinveda-ritual-picker__overlay-img', loading: 'lazy' }}
+                    </div>
+                  {% endif %}
+                </article>
+            {% endfor %}
+          </div>
+        </div>
+      {% else %}
+        <div class="dinveda-ritual-picker__empty span-12">
+          <p>{{ 'collections.general.no_matches' | t | default: 'No products found' }}</p>
+        </div>
+      {% endif %}
+    {% endpaginate %}
+  </div>
+</section>
+
+<script>
+(function() {
+  'use strict';
+  
+  function initQuickAdd() {
+    var section = document.querySelector('#dinveda-elegant-product-grid-{{ section.id }}');
+    if (!section) {
+      console.log('Elegant product grid section not found');
+      return;
+    }
+    
+    var quickAddButtons = section.querySelectorAll('.dinveda-ritual-picker__add-to-basket-btn');
+    console.log('Found quick add buttons:', quickAddButtons.length);
+    
+    if (quickAddButtons.length === 0) return;
+    
+    var cartConfig = document.getElementById('cart-config');
+    if (cartConfig) {
+      cartConfig = JSON.parse(cartConfig.innerHTML || '{}');
+    }
+    
+    // Handle quick add buttons
+    quickAddButtons.forEach(function(button) {
+      var variantId = button.getAttribute('data-variant-id');
+      
+      console.log('Setting up button with variant ID:', variantId);
+      
+      if (!variantId) {
+        console.log('No variant ID found for button');
+        return;
+      }
+      
+      // Handle button click
+      button.addEventListener('click', function(e) {
+        console.log('Button clicked!');
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        
+        // Check if should redirect to product page (multi-variant)
+        if (button.hasAttribute('data-redirect-to-product')) {
+          var productHandle = button.getAttribute('data-product-handle');
+          if (productHandle) {
+            window.location.href = '/products/' + productHandle;
+          }
+          return false;
+        }
+        
+        if (button.disabled) {
+          console.log('Button is disabled');
+          return;
+        }
+        
+        console.log('Adding variant to cart:', variantId);
+        
+        var loadingText = button.querySelector('.dinveda-ritual-picker__add-to-basket-loading');
+        var addText = button.querySelector('.dinveda-ritual-picker__add-to-basket-text');
+        
+        // Add loading state
+        button.disabled = true;
+        button.classList.add('loading-quickshop');
+        if (loadingText) loadingText.style.display = 'inline';
+        if (addText) addText.style.display = 'none';
+        
+        // Add to cart using Shopify API
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: variantId,
+            quantity: 1
+          })
+        })
+        .then(function(response) {
+          if (!response.ok) {
+            return response.json().then(function(err) { throw err; });
+          }
+          return response.json();
+        })
+        .then(function(data) {
+          console.log('Product added to cart:', data);
+          
+          // Remove loading state
+          button.disabled = false;
+          button.classList.remove('loading-quickshop');
+          button.classList.add('js-quick-adding');
+          if (loadingText) loadingText.style.display = 'none';
+          if (addText) addText.style.display = 'inline';
+          
+          // Trigger cart update event
+          document.dispatchEvent(new CustomEvent('cart:updated'));
+          
+          // Update cart view and show drawer
+          if (typeof WAU !== 'undefined' && WAU.ThemeCart && WAU.ThemeCart.getCart) {
+            WAU.ThemeCart.getCart().then(function(cart) {
+              if (typeof WAU !== 'undefined' && WAU.AjaxCart) {
+                if (WAU.AjaxCart.updateView) {
+                  WAU.AjaxCart.updateView(cartConfig || {}, cart);
+                }
+                
+                // Show cart drawer if configured
+                if (cartConfig && cartConfig.cart_action === 'drawer' && cartConfig.cart_added_event === 'go_to_active_cart' && WAU.AjaxCart.showDrawer) {
+                  WAU.AjaxCart.showDrawer(cartConfig);
+                } else if (cartConfig && cartConfig.cart_action === 'drawer' && WAU.AjaxCart.showDrawer) {
+                  // Also show drawer if cart_action is drawer (fallback)
+                  WAU.AjaxCart.showDrawer(cartConfig || {});
+                } else if (WAU.AjaxCart.showDrawer) {
+                  // Show drawer by default if available
+                  WAU.AjaxCart.showDrawer(cartConfig || {});
+                }
+              }
+            });
+          }
+          
+          // Reset button state after a delay
+          setTimeout(function() {
+            button.classList.remove('js-quick-adding');
+          }, 2000);
+        })
+        .catch(function(error) {
+          console.error('Error adding to cart:', error);
+          button.disabled = false;
+          button.classList.remove('loading-quickshop');
+          button.classList.remove('js-quick-adding');
+          if (loadingText) loadingText.style.display = 'none';
+          if (addText) addText.style.display = 'inline';
+          alert('Error adding product to cart: ' + (error.message || 'Please try again.'));
+        });
+      });
+    });
+  }
+  
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initQuickAdd);
+  } else {
+    // DOM already ready
+    initQuickAdd();
+  }
+})();
+</script>
+
+{% style %}
+  #dinveda-elegant-product-grid-{{ section.id }} {
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    background-color: var(--design-bg-color, #FFF0DD);
+  }
+
+  /* Add to Basket Button Styling (replaces plus icon) */
+  #dinveda-elegant-product-grid-{{ section.id }} .dinveda-ritual-picker__add-to-basket-btn {
+    display: block;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    background: var(--design-text-color, #C17129);
+    color: #ffffff;
+    width: auto;
+    min-width: 120px;
+    height: 44px;
+    line-height: 42px;
+    padding: 0 1rem;
+    margin-bottom: 0;
+    border: none;
+    border-radius: 4px;
+    font-family: var(--main-family);
+    font-size: calc(var(--design-body-font-size) - 2px);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  #dinveda-elegant-product-grid-{{ section.id }} .dinveda-ritual-picker__add-to-basket-btn:hover:not(:disabled) {
+    background: var(--design-text-color, #C17129);
+    opacity: 0.9;
+  }
+
+  #dinveda-elegant-product-grid-{{ section.id }} .dinveda-ritual-picker__add-to-basket-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  #dinveda-elegant-product-grid-{{ section.id }} .dinveda-ritual-picker__add-to-basket-btn.loading-quickshop {
+    opacity: 0.7;
+    cursor: wait;
+  }
+
+  #dinveda-elegant-product-grid-{{ section.id }} .dinveda-ritual-picker__add-to-basket-btn .dinveda-ritual-picker__add-to-basket-loading {
+    display: none;
+  }
+
+  #dinveda-elegant-product-grid-{{ section.id }} .dinveda-ritual-picker__add-to-basket-btn.loading-quickshop .dinveda-ritual-picker__add-to-basket-text {
+    display: none;
+  }
+
+  #dinveda-elegant-product-grid-{{ section.id }} .dinveda-ritual-picker__add-to-basket-btn.loading-quickshop .dinveda-ritual-picker__add-to-basket-loading {
+    display: inline;
+  }
+
+  #dinveda-elegant-product-grid-{{ section.id }} .dinveda-ritual-picker__add-to-basket-btn.js-quick-adding {
+    background: #28a745;
+  }
+
+  #dinveda-elegant-product-grid-{{ section.id }} .dinveda-ritual-picker__add-to-basket-text {
+    white-space: nowrap;
+    display: inline-block;
+  }
+
+  /* Price Display - Matches ritual card spacing */
+  #dinveda-elegant-product-grid-{{ section.id }} .dinveda-ritual-picker__price {
+    margin: var(--dv-space-title-to-quote) 0;
+    margin-bottom: calc(var(--dv-space-title-to-quote) * 0.75);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    flex-shrink: 0;
+    width: 100%;
+  }
+
+  #dinveda-elegant-product-grid-{{ section.id }} .dinveda-ritual-picker__price-main {
+    font-family: var(--heading-family);
+    font-size: var(--design-h3-size);
+    font-weight: var(--heading-weight);
+    color: var(--design-text-color, #C17129);
+    line-height: 1.2;
+  }
+
+  #dinveda-elegant-product-grid-{{ section.id }} .dinveda-ritual-picker__price-compare {
+    font-family: var(--main-family);
+    font-size: calc(var(--design-body-font-size) - 2px);
+    color: var(--text-color);
+    text-decoration: line-through;
+    opacity: 0.6;
+  }
+
+  #dinveda-elegant-product-grid-{{ section.id }} .dinveda-ritual-picker__price-unit {
+    font-family: var(--main-family);
+    font-size: calc(var(--design-body-font-size) - 4px);
+    color: var(--text-color);
+    opacity: 0.6;
+  }
+
+  #dinveda-elegant-product-grid-{{ section.id }} .dinveda-ritual-picker__empty {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--text-color);
+  }
+
+  @media (max-width: 767px) {
+    #dinveda-elegant-product-grid-{{ section.id }} .dinveda-ritual-picker__add-to-basket-btn {
+      min-width: 100px;
+      height: 40px;
+      line-height: 38px;
+      padding: 0 0.75rem;
+      font-size: calc(var(--design-body-font-size) - 4px);
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Elegant Product Grid",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "items_per_page",
+      "label": "Products per page",
+      "min": 6,
+      "max": 24,
+      "step": 3,
+      "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_quick_add",
+      "label": "Enable quick add to cart",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "quick_add_button_label",
+      "label": "Quick add button label",
+      "default": "In den Warenkorb"
+    },
+    {
+      "type": "select",
+      "id": "multi_variant_behavior",
+      "label": "Multi-variant product behavior",
+      "default": "redirect",
+      "options": [
+        {
+          "value": "redirect",
+          "label": "Redirect to product page"
+        },
+        {
+          "value": "add_first",
+          "label": "Add first variant to cart"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "Elegant Product Grid"
+    }
+  ]
+}
+{% endschema %}

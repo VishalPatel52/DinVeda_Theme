@@ -715,10 +715,19 @@ body.product-template-dinveda-premium .dinveda-product-hero__dynamic-checkout {
   opacity: 0.6;
   text-decoration: none;
   transition: opacity 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .dinveda-product-hero__share-link:hover {
   opacity: 1;
+}
+
+.dinveda-product-hero__share-link svg {
+  width: 20px;
+  height: 20px;
+  display: block;
 }
 
 /* Trust Bullets */

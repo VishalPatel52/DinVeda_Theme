@@ -1,0 +1,280 @@
+{% comment %}
+  DinVeda Journal Promotion Section
+  "Deepen Your Ritual" - Two-column layout with text and image
+{% endcomment %}
+
+{%- liquid
+  assign background_mode = section.settings.background_mode | default: 'design_bg'
+  assign journal_image = section.settings.image
+  assign title = section.settings.title | default: 'Deepen Your Ritual'
+  assign description = section.settings.description
+  assign cta_label = section.settings.cta_label | default: 'Read the Journal →'
+  assign cta_link = section.settings.cta_link
+-%}
+
+<section
+  id="dinveda-journal-promotion-{{ section.id }}"
+  class="dinveda-journal-promotion"
+  data-section-id="{{ section.id }}"
+  data-section-type="journal-promotion"
+>
+  <div class="dinveda-journal-promotion__container">
+    <div class="dinveda-journal-promotion__grid">
+      
+      {%- comment -%} Text Column (Left) {%- endcomment -%}
+      <div class="dinveda-journal-promotion__text-column">
+        <div class="dinveda-journal-promotion__content">
+          {% if title != blank %}
+            <h2 class="dinveda-journal-promotion__title">{{ title | escape }}</h2>
+          {% endif %}
+
+          {% if description != blank %}
+            <div class="dinveda-journal-promotion__description">
+              {{ description }}
+            </div>
+          {% endif %}
+
+          {% if cta_label != blank and cta_link != blank %}
+            <a
+              href="{{ cta_link }}"
+              class="dinveda-journal-promotion__cta"
+            >
+              {{ cta_label | escape }}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+
+      {%- comment -%} Image Column (Right) {%- endcomment -%}
+      <div class="dinveda-journal-promotion__image-column">
+        {% if journal_image != blank %}
+          <div class="dinveda-journal-promotion__image-wrapper">
+            <img
+              src="{{ journal_image | image_url: width: 800 }}"
+              srcset="{{ journal_image | image_url: width: 800 }} 1x, {{ journal_image | image_url: width: 1600 }} 2x"
+              alt="{{ journal_image.alt | escape | default: title }}"
+              class="dinveda-journal-promotion__image"
+              loading="lazy"
+              width="{{ journal_image.width }}"
+              height="{{ journal_image.height }}"
+            >
+          </div>
+        {% else %}
+          <div class="dinveda-journal-promotion__image-wrapper dinveda-journal-promotion__image-placeholder">
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% style %}
+  #dinveda-journal-promotion-{{ section.id }} {
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    {% case background_mode %}
+      {% when 'design_bg' %}
+        background-color: var(--design-bg-color, #FFF0DD);
+      {% when 'design_secondary_bg' %}
+        background-color: var(--design-secondary-bg, #FFF0DD);
+      {% when 'transparent' %}
+        background-color: transparent;
+    {% endcase %}
+  }
+
+  #dinveda-journal-promotion-{{ section.id }} .dinveda-journal-promotion__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  #dinveda-journal-promotion-{{ section.id }} .dinveda-journal-promotion__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  #dinveda-journal-promotion-{{ section.id }} .dinveda-journal-promotion__text-column {
+    display: flex;
+    align-items: center;
+  }
+
+  #dinveda-journal-promotion-{{ section.id }} .dinveda-journal-promotion__content {
+    width: 100%;
+  }
+
+  #dinveda-journal-promotion-{{ section.id }} .dinveda-journal-promotion__title {
+    font-family: var(--heading-family);
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--design-text-color, #C17129);
+    margin: 0 0 1.5rem;
+    line-height: 1.2;
+  }
+
+  #dinveda-journal-promotion-{{ section.id }} .dinveda-journal-promotion__description {
+    font-family: var(--main-family);
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--text-color);
+    margin: 0 0 2rem;
+    opacity: 0.9;
+  }
+
+  #dinveda-journal-promotion-{{ section.id }} .dinveda-journal-promotion__cta {
+    display: inline-block;
+    font-family: var(--main-family);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--design-text-color, #C17129);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  #dinveda-journal-promotion-{{ section.id }} .dinveda-journal-promotion__cta:hover {
+    opacity: 0.7;
+    text-decoration: underline;
+  }
+
+  #dinveda-journal-promotion-{{ section.id }} .dinveda-journal-promotion__image-column {
+    position: relative;
+  }
+
+  #dinveda-journal-promotion-{{ section.id }} .dinveda-journal-promotion__image-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+    background: var(--design-bg-color, #FFF0DD);
+  }
+
+  #dinveda-journal-promotion-{{ section.id }} .dinveda-journal-promotion__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  #dinveda-journal-promotion-{{ section.id }} .dinveda-journal-promotion__image-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 767px) {
+    #dinveda-journal-promotion-{{ section.id }} .dinveda-journal-promotion__container {
+      padding: 0 1rem;
+    }
+
+    #dinveda-journal-promotion-{{ section.id }} .dinveda-journal-promotion__grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    #dinveda-journal-promotion-{{ section.id }} .dinveda-journal-promotion__title {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+
+    #dinveda-journal-promotion-{{ section.id }} .dinveda-journal-promotion__description {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Journal Promotion",
+  "tag": "section",
+  "class": "dynamic-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Deepen Your Ritual"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Our Journal explores the intersection of ancient Ayurveda and modern science. Learn how to craft a daily ritual that serves your mind, body, and spirit.</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA button label",
+      "default": "Read the Journal →"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link",
+      "info": "Link to blog or journal page"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Square image recommended (1:1 ratio)"
+    },
+    {
+      "type": "select",
+      "id": "background_mode",
+      "label": "Background mode",
+      "default": "design_bg",
+      "options": [
+        {
+          "value": "design_bg",
+          "label": "Design background"
+        },
+        {
+          "value": "design_secondary_bg",
+          "label": "Design secondary background"
+        },
+        {
+          "value": "transparent",
+          "label": "Transparent"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "Journal Promotion"
+    }
+  ]
+}
+{% endschema %}

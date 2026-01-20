@@ -13,87 +13,44 @@
       "type": "dv-collection-hero",
       "settings": {
         "hero_image": "shopify://shop_images/ChatGPT_Image_Dec_21_2025_11_35_09_PM.png",
-        "subtitle": "Reinste Naturkraft für deine täglichen Rituale. Entdecke unsere handverlesenen Mischungen.",
+        "subtitle": "Find balance with our curated Ayurvedic blends, guarded by ancient wisdom and modern clarity.",
         "text_alignment": "center",
         "show_text_overlay": true,
-        "heading": "Die Kollektion",
+        "heading": "Choose Your Ritual",
         "border_radius": 24,
         "overlay_opacity": 40,
         "container_max_width": 1400
       }
     },
-    "trust_chips": {
-      "type": "dinveda-trust-cards",
-      "blocks": {
-        "trust_chip_1": {
-          "type": "trust_card",
-          "settings": {
-            "icon": "eco",
-            "icon_style": "monochrome",
-            "title": "BIO Certified",
-            "text": "100 % Bio-Zutaten"
-          }
-        },
-        "trust_chip_2": {
-          "type": "trust_card",
-          "settings": {
-            "icon": "germany",
-            "icon_style": "monochrome",
-            "title": "Made in Germany",
-            "text": "Crafted with precision"
-          }
-        },
-        "trust_chip_3": {
-          "type": "trust_card",
-          "settings": {
-            "icon": "water_drop",
-            "icon_style": "monochrome",
-            "title": "Small Batches",
-            "text": "Maximum freshness"
-          }
-        }
-      },
-      "block_order": [
-        "trust_chip_1",
-        "trust_chip_2",
-        "trust_chip_3"
-      ],
-      "settings": {}
-    },
-    "collection_products": {
-      "type": "dinveda-collection-ritual-cards",
+    "elegant_product_grid": {
+      "type": "dinveda-elegant-product-grid",
       "settings": {
         "items_per_page": 12,
-        "layout": "grid_4",
-        "background_mode": "design_bg",
-        "button_label": "Zu diesem Ritual",
+        "columns_mobile": 2,
         "enable_quick_add": true,
         "quick_add_button_label": "In den Warenkorb",
-        "show_price_on_button": false,
-        "quick_add_button_style": "primary",
-        "multi_variant_behavior": "redirect"
+        "multi_variant_behavior": "redirect",
+        "padding_top": 48,
+        "padding_bottom": 48
       }
     },
-    "brand_story": {
-      "type": "dinveda-split-story",
-      "disabled": true,
+    "journal_promotion": {
+      "type": "dinveda-journal-promotion",
       "settings": {
-        "eyebrow": "OUR PHILOSOPHY",
-        "title": "Guided by Nature's Wisdom",
-        "body": "<p>We believe true wellness isn't about fixing what's broken, but aligning with the natural rhythms of life. Our blends are inspired by the wisdom of the animal kingdom. Each ritual is an invitation to pause, breathe, and reconnect with your inner nature. Not medicine, but a way of life.</p>",
-        "cta_label": "READ OUR STORY →",
+        "title": "Deepen Your Ritual",
+        "description": "<p>Our Journal explores the intersection of ancient Ayurveda and modern science. Learn how to craft a daily ritual that serves your mind, body, and spirit.</p>",
+        "cta_label": "Read the Journal →",
         "cta_link": "",
-        "cta2_label": "CONTACT SUPPORT",
-        "cta2_link": "",
-        "cta2_icon": "mail",
-        "background_mode": "design_bg"
+        "image": "",
+        "background_mode": "design_bg",
+        "padding_top": 64,
+        "padding_bottom": 64
       }
     }
   },
   "order": [
     "hero",
-    "trust_chips",
-    "collection_products",
-    "brand_story"
+    "elegant_product_grid",
+    "journal_promotion"
   ]
 }
