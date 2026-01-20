@@ -779,11 +779,45 @@
         });
       }
 
-      // Buy Now button: Redirect to checkout (cart already has items)
+      // Buy Now button: Add to cart and redirect to checkout
       if (buyNowBtn) {
         buyNowBtn.addEventListener('click', function() {
           if (this.disabled) return;
-          window.location.href = '/checkout';
+          
+          const variantId = this.getAttribute('data-variant-id') || getCurrentVariantId();
+          const quantity = qtyInput ? parseInt(qtyInput.value, 10) || 1 : 1;
+          
+          if (!variantId) {
+            console.error('Variant ID not found');
+            return;
+          }
+
+          // Disable button during request
+          this.disabled = true;
+          
+          // Add to cart via AJAX
+          fetch('/cart/add.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              id: variantId,
+              quantity: quantity
+            })
+          })
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(data) {
+            // Success - redirect to checkout
+            window.location.href = '/checkout';
+          })
+          .catch(function(error) {
+            console.error('Error adding to cart:', error);
+            // Re-enable button on error
+            buyNowBtn.disabled = false;
+          });
         });
       }
     }
