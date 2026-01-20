@@ -1,9 +1,39 @@
 /* DV_Footer Styles - Theme Integrated */
+/* Base footer styles - matches homepage footer exactly */
 
 .dv-footer {
   display: block;
   width: 100%;
-  color: var(--design-text-color, #C17129);
+  background-color: var(--design-bg-color, #FFF0DD) !important;
+  color: var(--design-text-color, #C17129) !important;
+}
+
+/* Override inline styles to ensure consistency across all pages */
+.dv-footer[style*="background-color"] {
+  background-color: var(--design-bg-color, #FFF0DD) !important;
+}
+
+.dv-footer[style*="color"] {
+  color: var(--design-text-color, #C17129) !important;
+}
+
+/* Ensure all footer text elements use consistent colors across all pages */
+.dv-footer a,
+.dv-footer p,
+.dv-footer small,
+.dv-footer h1,
+.dv-footer h2,
+.dv-footer h3,
+.dv-footer h4,
+.dv-footer h5,
+.dv-footer h6,
+.dv-footer span,
+.dv-footer div,
+.dv-footer li,
+.dv-footer label,
+.dv-footer strong,
+.dv-footer em {
+  color: var(--design-text-color, #C17129) !important;
 }
 
 .dv-footer__container {
