@@ -34,9 +34,13 @@
   
   # Animal image: Priority from product metafield, fallback to section setting
   assign animal_image = null
-  if product and product.metafields.custom.dv_animal_image and product.metafields.custom.dv_animal_image.value
-    assign animal_image = product.metafields.custom.dv_animal_image.value
-  elsif section.settings.fox_icon != blank
+  if product and product.metafields.custom.dv_animal_image
+    assign metafield_file = product.metafields.custom.dv_animal_image.value
+    if metafield_file and metafield_file != blank
+      assign animal_image = metafield_file
+    endif
+  endif
+  if animal_image == null and section.settings.fox_icon != blank
     assign animal_image = section.settings.fox_icon
   endif
   
@@ -98,7 +102,9 @@
       {%- comment -%} Centered Icon (Editorial Focal Point) {%- endcomment -%}
       {% if section.settings.show_fox_icon and animal_image != blank %}
         <div class="dv-story-card__icon-wrapper" style="width: {{ icon_size }}px; height: {{ icon_size }}px;">
-          <img src="{{ animal_image | image_url: width: icon_size | times: 2 }}" alt="" class="dv-story-card__icon" width="{{ icon_size }}" height="{{ icon_size }}">
+          {%- assign animal_alt_text = animal_name | default: 'Animal icon' | escape -%}
+          {%- assign image_width = icon_size | times: 2 -%}
+          {{ animal_image | image_url: width: image_width | image_tag: alt: animal_alt_text, class: 'dv-story-card__icon', loading: 'lazy', width: icon_size, height: icon_size }}
         </div>
       {% endif %}
 
