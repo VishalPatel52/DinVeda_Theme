@@ -29,6 +29,7 @@
           "type": "trust_card",
           "settings": {
             "icon": "eco",
+            "icon_style": "monochrome",
             "title": "BIO Certified",
             "text": "100 % Bio-Zutaten"
           }
@@ -37,6 +38,7 @@
           "type": "trust_card",
           "settings": {
             "icon": "germany",
+            "icon_style": "monochrome",
             "title": "Made in Germany",
             "text": "Crafted with precision"
           }
@@ -45,6 +47,7 @@
           "type": "trust_card",
           "settings": {
             "icon": "water_drop",
+            "icon_style": "monochrome",
             "title": "Small Batches",
             "text": "Maximum freshness"
           }
@@ -172,6 +175,7 @@
     },
     "featured_collection_fGxgmh": {
       "type": "featured-collection",
+      "disabled": true,
       "name": "Featured collection",
       "settings": {
         "title": "Unsere Ritualblends",
@@ -186,6 +190,7 @@
     },
     "brand_story": {
       "type": "dinveda-split-story",
+      "disabled": true,
       "settings": {
         "eyebrow": "OUR PHILOSOPHY",
         "title": "Guided by Nature's Wisdom",
