@@ -33,9 +33,9 @@
   endif
 -%}
 
-<section
+<div
   id="dinveda-elegant-product-grid-{{ section.id }}"
-  class="section-featured-collection dinveda-ritual-picker dinveda-ritual-picker-{{ section.id }}"
+  class="section-featured-collection dinveda-ritual-picker dinveda-ritual-picker-{{ section.id }} global__section"
   data-section-id="{{ section.id }}"
   data-section-type="dinveda-ritual-picker"
 >
@@ -54,8 +54,8 @@
                   endif
                   assign product_available = current_variant.available
                   
-                  # Map product metafields to card content (matching ritual picker)
-                  # Phase label: ritual_timing with tag fallback
+                  # Map product metafields to card content (EXACT match to homepage ritual picker)
+                  # Phase label: ritual_timing (uppercase)
                   assign phase_label = product.metafields.dinveda.ritual_timing
                   if phase_label == blank
                     if product.tags contains 'Morgen'
@@ -74,29 +74,19 @@
                   # Blend name: product title
                   assign blend_name = product.title
                   
-                  # Quote line: animal_quote or ritual_tagline
+                  # Quote line: animal_quote (preferred) or ritual_tagline (fallback)
                   assign quote_line = product.metafields.dinveda.animal_quote
                   if quote_line == blank
                     assign quote_line = product.metafields.dinveda.ritual_tagline
                   endif
                   
-                  # Descriptor: first line of ritual_usage or product description
+                  # Descriptor: from ritual_usage metafield (first sentence/line)
                   assign descriptor = ''
                   assign ritual_usage = product.metafields.dinveda.ritual_usage
                   if ritual_usage != blank
                     assign desc_stripped = ritual_usage | strip_html
-                    assign desc_first_line = desc_stripped | split: '.' | first | split: '!' | first | split: '?' | first
-                    if desc_first_line.size > 80
-                      assign descriptor = desc_first_line | truncate: 80, '...'
-                    else
-                      assign descriptor = desc_first_line
-                    endif
-                  elsif product.description != blank
-                    assign desc_stripped = product.description | strip_html
-                    assign desc_first_line = desc_stripped | split: '.' | first | split: '!' | first | split: '?' | first
-                    if desc_first_line.size > 80
-                      assign descriptor = desc_first_line | truncate: 80, '...'
-                    else
+                    assign desc_first_line = desc_stripped | split: '.' | first | split: '!' | first | split: '?' | first | strip
+                    if desc_first_line != blank
                       assign descriptor = desc_first_line
                     endif
                   endif
@@ -108,7 +98,7 @@
                     assign attribution_line = '— sagt der ' | append: animal_name
                   endif
                   
-                  # Animal overlay image
+                  # Animal image for attribution (small, in attribution line)
                   assign animal_image = null
                   if product.metafields.custom.dv_animal_image
                     assign metafield_file = product.metafields.custom.dv_animal_image.value
@@ -117,46 +107,68 @@
                     endif
                   endif
                   
+                  # Overlay image (same as animal_image, used for overlay sticker)
+                  assign overlay_image = animal_image
+                  
                   # Product image
                   assign card_image = product.featured_image
-                  assign image_alt = product.featured_image.alt | default: product.title
+                  if card_image != blank
+                    assign image_alt = card_image.alt | default: blend_name | default: phase_label
+                  else
+                    assign image_alt = blend_name | default: phase_label
+                  endif
                   assign card_link = product.url
+                  
+                  # Quick add availability check
+                  assign has_quick_add = false
+                  if section.settings.enable_quick_add and product.id != blank and current_variant != blank and current_variant.id != blank and product_available
+                    assign has_quick_add = true
+                  endif
                 -%}
                 
                 <article 
-                  class="dinveda-ritual-picker__card product-loop__item dropshadow--{{ has_dropshadow }} padding--{{ has_padding }} {{ mobile_per_row }} {{ grid_width }} relative dinveda-ritual-picker__card--has-link"
-                  data-product-id="{{ product.id }}"
+                  class="dinveda-ritual-picker__card product-loop__item dropshadow--{{ has_dropshadow }} padding--{{ has_padding }} {{ mobile_per_row }} {{ grid_width }} relative{% if card_link != blank %} dinveda-ritual-picker__card--has-link{% endif %}"
                   data-product-handle="{{ product.handle }}"
+                  data-product-id="{{ product.id }}"
                   data-single-variant="{{ is_single_variant }}"
                   data-variant-id="{{ current_variant.id }}"
                 >
-                  <a href="{{ card_link }}" class="dinveda-ritual-picker__card-link" aria-label="{{ blend_name | escape }}">
-                    
-                    <div class="dinveda-ritual-picker__card-inner">
+                  {% if card_link != blank %}
+                    {%- liquid
+                      assign link_aria_label = blend_name | default: phase_label | default: 'Ritual card'
+                    -%}
+                    <a href="{{ card_link }}" class="dinveda-ritual-picker__card-link" aria-label="{{ link_aria_label | escape }}">
+                  {% endif %}
+                  
+                  <div class="dinveda-ritual-picker__card-inner">
+                
+                    {%- comment -%} Image {%- endcomment -%}
+                    {% if card_image != blank %}
+                      {%- liquid
+                        assign image_alt_escaped = image_alt | escape
+                      -%}
+                      <div class="dinveda-ritual-picker__image-wrapper">
+                        {{ card_image | image_url: width: 600 | image_tag: alt: image_alt_escaped, loading: 'lazy', class: 'dinveda-ritual-picker__image' }}
+                      </div>
+                    {% else %}
+                      <div class="dinveda-ritual-picker__image-wrapper dinveda-ritual-picker__image-wrapper--placeholder">
+                        {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                      </div>
+                    {% endif %}
+
+                    {%- comment -%} Content {%- endcomment -%}
+                    <div class="dinveda-ritual-picker__content">
                       
-                      {%- comment -%} Image {%- endcomment -%}
-                      {% if card_image != blank %}
-                        <div class="dinveda-ritual-picker__image-wrapper">
-                          {{ card_image | image_url: width: 600 | image_tag: alt: image_alt, loading: 'lazy', class: 'dinveda-ritual-picker__image' }}
-                        </div>
-                      {% else %}
-                        <div class="dinveda-ritual-picker__image-wrapper dinveda-ritual-picker__image-wrapper--placeholder">
-                          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
-                        </div>
+                      {% if phase_label != blank %}
+                        <p class="dinveda-ritual-picker__phase-label">{{ phase_label | escape }}</p>
                       {% endif %}
 
-                      {%- comment -%} Content {%- endcomment -%}
-                      <div class="dinveda-ritual-picker__content">
-                        
-                        {% if phase_label != blank %}
-                          <p class="dinveda-ritual-picker__phase-label">{{ phase_label | escape }}</p>
-                        {% endif %}
+                      {% if blend_name != blank %}
+                        <h3 class="dinveda-ritual-picker__blend-name">{{ blend_name | escape }}</h3>
+                      {% endif %}
 
-                        {% if blend_name != blank %}
-                          <h3 class="dinveda-ritual-picker__blend-name">{{ blend_name | escape }}</h3>
-                        {% endif %}
-
-                        {%- comment -%} Price Display (Collection page only) {%- endcomment -%}
+                      {%- comment -%} Price Display (Collection page only) {%- endcomment -%}
+                      {% if current_variant.price %}
                         <div class="dinveda-ritual-picker__price">
                           <span class="dinveda-ritual-picker__price-main">{{ current_variant.price | money }}</span>
                           {% if current_variant.compare_at_price > current_variant.price %}
@@ -166,35 +178,39 @@
                             <span class="dinveda-ritual-picker__price-unit">{{ current_variant.unit_price | money }} / {{ current_variant.unit_price_measurement.reference_value }}{{ current_variant.unit_price_measurement.reference_unit }}</span>
                           {% endif %}
                         </div>
+                      {% endif %}
 
-                        {% if quote_line != blank or descriptor != blank or attribution_line != blank %}
-                          <div class="dinveda-ritual-picker__quote-block">
-                            {% if quote_line != blank %}
-                              <p class="dinveda-ritual-picker__quote-line">{{ quote_line | escape }}</p>
-                            {% endif %}
-                            {% if descriptor != blank %}
-                              <p class="dinveda-ritual-picker__descriptor">{{ descriptor | escape }}</p>
-                            {% endif %}
-                            {% if attribution_line != blank %}
-                              <div class="dinveda-ritual-picker__attribution-wrapper">
-                                <div class="dinveda-ritual-picker__attribution-line">
-                                  {% if animal_image != blank %}
-                                    <img src="{{ animal_image | image_url: width: 40 }}" alt="{{ attribution_line | escape }}" class="dinveda-ritual-picker__animal-image">
-                                  {% endif %}
-                                  <p class="dinveda-ritual-picker__animal-name">{{ attribution_line | escape }}</p>
-                                </div>
+                      {% if quote_line != blank or descriptor != blank or attribution_line != blank %}
+                        <div class="dinveda-ritual-picker__quote-block">
+                          {% if quote_line != blank %}
+                            <p class="dinveda-ritual-picker__quote-line">{{ quote_line | escape }}</p>
+                          {% endif %}
+                          {% if descriptor != blank %}
+                            <p class="dinveda-ritual-picker__descriptor">{{ descriptor | escape }}</p>
+                          {% endif %}
+                          {% if attribution_line != blank %}
+                            <div class="dinveda-ritual-picker__attribution-wrapper">
+                              <div class="dinveda-ritual-picker__attribution-line">
+                                {% if animal_image != blank %}
+                                  <img src="{{ animal_image | image_url: width: 40 }}" alt="{{ attribution_line | escape }}" class="dinveda-ritual-picker__animal-image">
+                                {% endif %}
+                                <p class="dinveda-ritual-picker__animal-name">{{ attribution_line | escape }}</p>
                               </div>
-                            {% endif %}
-                          </div>
-                        {% endif %}
-
-                      </div>
+                            </div>
+                          {% endif %}
+                        </div>
+                      {% endif %}
 
                     </div>
-                  </a>
+
+                  </div>
+
+                  {% if card_link != blank %}
+                    </a>
+                  {% endif %}
                   
                   {%- comment -%} Add to Basket Button (replaces plus icon) {%- endcomment -%}
-                  {% if section.settings.enable_quick_add and product_available %}
+                  {% if has_quick_add %}
                     <button 
                       class="dinveda-ritual-picker__add-to-basket-btn no-js-hidden"
                       type="button"
@@ -216,10 +232,10 @@
                   {% endif %}
                   
                   {%- comment -%} Animal Overlay (positioned outside card-inner, relative to card) {%- endcomment -%}
-                  {% if animal_image != blank %}
+                  {% if overlay_image != blank %}
                     <div class="dinveda-ritual-picker__overlay dinveda-ritual-picker__overlay--top_left"
                          style="--ov-size: 96px; --ov-x: -9px; --ov-y: -56px;">
-                      {{ animal_image | image_url: width: 400 | image_tag: alt: attribution_line | default: blend_name, class: 'dinveda-ritual-picker__overlay-img', loading: 'lazy' }}
+                      {{ overlay_image | image_url: width: 400 | image_tag: alt: attribution_line | default: blend_name, class: 'dinveda-ritual-picker__overlay-img', loading: 'lazy' }}
                     </div>
                   {% endif %}
                 </article>
@@ -233,7 +249,7 @@
       {% endif %}
     {% endpaginate %}
   </div>
-</section>
+</div>
 
 <script>
 (function() {
@@ -385,6 +401,30 @@
     background-color: var(--design-bg-color, #FFF0DD);
   }
 
+  /* Override section-featured-collection.css styles for ritual picker cards */
+  #dinveda-elegant-product-grid-{{ section.id }} .dinveda-ritual-picker__card.product-loop__item {
+    background: transparent !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+  }
+
+  #dinveda-elegant-product-grid-{{ section.id }} .dinveda-ritual-picker__card-inner {
+    background-color: var(--design-secondary-bg);
+    border-radius: max(var(--design-button-radius, 16px), 18px);
+    padding: 24px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+    position: relative;
+    overflow: visible;
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+
   /* Add to Basket Button Styling (replaces plus icon) */
   #dinveda-elegant-product-grid-{{ section.id }} .dinveda-ritual-picker__add-to-basket-btn {
     display: block;
@@ -404,10 +444,11 @@
     border: none;
     border-radius: 4px;
     font-family: var(--main-family);
+    font-style: var(--main-style);
     font-size: calc(var(--design-body-font-size) - 2px);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    font-weight: var(--main-weight);
+    text-transform: var(--buttons-transform, uppercase);
+    letter-spacing: var(--buttons-spacing, 0.05em);
     cursor: pointer;
     transition: all 0.3s ease;
     z-index: 10;
@@ -452,10 +493,10 @@
     display: inline-block;
   }
 
-  /* Price Display - Matches ritual card spacing */
+  /* Price Display - Matches ritual card spacing exactly */
   #dinveda-elegant-product-grid-{{ section.id }} .dinveda-ritual-picker__price {
-    margin: var(--dv-space-title-to-quote) 0;
-    margin-bottom: calc(var(--dv-space-title-to-quote) * 0.75);
+    margin-top: var(--dv-space-title-to-quote);
+    margin-bottom: 0;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -465,17 +506,27 @@
     width: 100%;
   }
 
+  /* Adjust quote-block margin when price is present - reduce to maintain total spacing */
+  #dinveda-elegant-product-grid-{{ section.id }} .dinveda-ritual-picker__price + .dinveda-ritual-picker__quote-block {
+    margin-top: calc(var(--dv-space-title-to-quote) * 0.5);
+  }
+
   #dinveda-elegant-product-grid-{{ section.id }} .dinveda-ritual-picker__price-main {
     font-family: var(--heading-family);
+    font-style: var(--heading-style);
     font-size: var(--design-h3-size);
     font-weight: var(--heading-weight);
-    color: var(--design-text-color, #C17129);
+    letter-spacing: var(--heading-spacing);
+    color: var(--design-accent-color, #C17129);
     line-height: 1.2;
   }
 
   #dinveda-elegant-product-grid-{{ section.id }} .dinveda-ritual-picker__price-compare {
     font-family: var(--main-family);
+    font-style: var(--main-style);
     font-size: calc(var(--design-body-font-size) - 2px);
+    font-weight: var(--main-weight);
+    letter-spacing: var(--main-spacing);
     color: var(--text-color);
     text-decoration: line-through;
     opacity: 0.6;
@@ -483,7 +534,10 @@
 
   #dinveda-elegant-product-grid-{{ section.id }} .dinveda-ritual-picker__price-unit {
     font-family: var(--main-family);
+    font-style: var(--main-style);
     font-size: calc(var(--design-body-font-size) - 4px);
+    font-weight: var(--main-weight);
+    letter-spacing: var(--main-spacing);
     color: var(--text-color);
     opacity: 0.6;
   }
@@ -491,7 +545,13 @@
   #dinveda-elegant-product-grid-{{ section.id }} .dinveda-ritual-picker__empty {
     text-align: center;
     padding: 4rem 2rem;
+    font-family: var(--main-family);
+    font-style: var(--main-style);
+    font-size: var(--design-body-font-size);
+    font-weight: var(--main-weight);
+    letter-spacing: var(--main-spacing);
     color: var(--text-color);
+    line-height: 1.5;
   }
 
   @media (max-width: 767px) {

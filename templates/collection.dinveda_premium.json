@@ -22,16 +22,66 @@
         "container_max_width": 1400
       }
     },
-    "elegant_product_grid": {
-      "type": "dinveda-elegant-product-grid",
+    "trust_badges": {
+      "type": "dinveda-trust-badges",
+      "blocks": {
+        "trust_badge_1": {
+          "type": "trust_badge",
+          "settings": {
+            "media_type": "image",
+            "icon": "return",
+            "icon_style": "monochrome",
+            "image": "shopify://shop_images/eu-logo.jpg",
+            "label": "REINE BIO-QUALITÄT"
+          }
+        },
+        "trust_badge_2": {
+          "type": "trust_badge",
+          "settings": {
+            "media_type": "icon",
+            "icon": "clock",
+            "icon_style": "monochrome",
+            "label": "RITUALE FÜR JEDEN TAG"
+          }
+        },
+        "trust_badge_3": {
+          "type": "trust_badge",
+          "settings": {
+            "media_type": "icon",
+            "icon": "flower",
+            "icon_style": "monochrome",
+            "label": "AYURVEDISCHE WEISHEIT"
+          }
+        },
+        "trust_badge_4": {
+          "type": "trust_badge",
+          "settings": {
+            "media_type": "icon",
+            "icon": "germany",
+            "icon_style": "monochrome",
+            "label": "BEWUSST HERGESTELLT"
+          }
+        }
+      },
+      "block_order": [
+        "trust_badge_1",
+        "trust_badge_2",
+        "trust_badge_3",
+        "trust_badge_4"
+      ],
+      "settings": {}
+    },
+    "ritual_cards": {
+      "type": "dinveda-collection-ritual-cards",
       "settings": {
+        "section_title": "Ayurvedische Rituale für jeden Moment deines Tages",
         "items_per_page": 12,
-        "columns_mobile": 2,
+        "layout": "grid_4",
+        "background_mode": "design_bg",
+        "button_label": "Zu diesem Ritual",
         "enable_quick_add": true,
         "quick_add_button_label": "In den Warenkorb",
-        "multi_variant_behavior": "redirect",
-        "padding_top": 48,
-        "padding_bottom": 48
+        "multi_variant_behavior": "redirect"
       }
     },
     "journal_promotion": {
@@ -50,7 +100,8 @@
   },
   "order": [
     "hero",
-    "elegant_product_grid",
+    "trust_badges",
+    "ritual_cards",
     "journal_promotion"
   ]
 }

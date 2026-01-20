@@ -38,11 +38,13 @@
 
 /* Section Header */
 .dinveda-ritual-picker__header {
-  text-align: center;
+  text-align: left;
   margin-bottom: 48px;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 100%;
+}
+
+.dinveda-ritual-picker--collection .dinveda-ritual-picker__header {
+  text-align: left;
 }
 
 .dinveda-ritual-picker__title {

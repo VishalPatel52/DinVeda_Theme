@@ -29,13 +29,20 @@
 
 <section
   id="dinveda-collection-ritual-cards-{{ section.id }}"
-  class="dinveda-ritual-picker dinveda-ritual-picker--layout-{{ layout }}"
+  class="dinveda-ritual-picker dinveda-ritual-picker--layout-{{ layout }} dinveda-ritual-picker--collection"
   data-section-id="{{ section.id }}"
   data-section-type="dinveda-collection-ritual-cards"
   data-collection-handle="{{ collection.handle }}"
   data-empty="{{ empty_collection }}"
 >
   <div class="dinveda-ritual-picker__container">
+    
+    {%- comment -%} Section Header {%- endcomment -%}
+    {% if section.settings.section_title != blank %}
+      <div class="dinveda-ritual-picker__header">
+        <h2 class="dinveda-ritual-picker__title">{{ section.settings.section_title | escape }}</h2>
+      </div>
+    {% endif %}
     
     {% paginate collection.products by page_limit %}
       {%- if collection.products.size >= 1 -%}
@@ -100,13 +107,6 @@
                   endif
                 endif
                 
-                # Attribution: animal_name formatted as "— sagt der {animal}"
-                assign animal_name = product.metafields.dinveda.animal_name
-                assign attribution_line = ''
-                if animal_name != blank
-                  assign attribution_line = '— sagt der ' | append: animal_name
-                endif
-                
                 # Image: product featured image
                 assign card_image = product.featured_image
                 
@@ -161,16 +161,26 @@
                       <h3 class="dinveda-ritual-picker__blend-name">{{ blend_name | escape }}</h3>
                     {% endif %}
 
-                    {% if quote_line != blank or descriptor != blank or attribution_line != blank %}
+                    {%- comment -%} Price Display {%- endcomment -%}
+                    {% if current_variant.price %}
+                      <div class="dinveda-ritual-picker__price">
+                        <span class="dinveda-ritual-picker__price-main">{{ current_variant.price | money }}</span>
+                        {% if current_variant.compare_at_price > current_variant.price %}
+                          <span class="dinveda-ritual-picker__price-compare">{{ current_variant.compare_at_price | money }}</span>
+                        {% endif %}
+                        {% if current_variant.unit_price %}
+                          <span class="dinveda-ritual-picker__price-unit">{{ current_variant.unit_price | money }} / {{ current_variant.unit_price_measurement.reference_value }}{{ current_variant.unit_price_measurement.reference_unit }}</span>
+                        {% endif %}
+                      </div>
+                    {% endif %}
+
+                    {% if quote_line != blank or descriptor != blank %}
                       <div class="dinveda-ritual-picker__quote-block">
                         {% if quote_line != blank %}
                           <p class="dinveda-ritual-picker__quote-line">{{ quote_line | escape }}</p>
                         {% endif %}
                         {% if descriptor != blank %}
                           <p class="dinveda-ritual-picker__descriptor">{{ descriptor | escape }}</p>
-                        {% endif %}
-                        {% if attribution_line != blank %}
-                          <p class="dinveda-ritual-picker__animal-name">{{ attribution_line | escape }}</p>
                         {% endif %}
                       </div>
                     {% endif %}
@@ -281,6 +291,17 @@
   .dinveda-ritual-picker__quick-add-button {
     width: 100%;
     position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .dinveda-ritual-picker__quick-add-button .dinveda-ritual-picker__quick-add-text {
+    white-space: nowrap;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
   }
   
   .dinveda-ritual-picker__quick-add-button:disabled {
@@ -316,6 +337,55 @@
   .dinveda-ritual-picker__quick-add-error {
     background-color: #f8d7da;
     color: #721c24;
+  }
+
+  /* Price Display - Matches ritual card spacing exactly */
+  #dinveda-collection-ritual-cards-{{ section.id }} .dinveda-ritual-picker__price {
+    margin-top: var(--dv-space-title-to-quote);
+    margin-bottom: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    flex-shrink: 0;
+    width: 100%;
+  }
+
+  /* Adjust quote-block margin when price is present - reduce to maintain total spacing */
+  #dinveda-collection-ritual-cards-{{ section.id }} .dinveda-ritual-picker__price + .dinveda-ritual-picker__quote-block {
+    margin-top: calc(var(--dv-space-title-to-quote) * 0.5);
+  }
+
+  #dinveda-collection-ritual-cards-{{ section.id }} .dinveda-ritual-picker__price-main {
+    font-family: var(--heading-family);
+    font-style: var(--heading-style);
+    font-size: var(--design-h3-size);
+    font-weight: var(--heading-weight);
+    letter-spacing: var(--heading-spacing);
+    color: var(--design-accent-color, #C17129);
+    line-height: 1.2;
+  }
+
+  #dinveda-collection-ritual-cards-{{ section.id }} .dinveda-ritual-picker__price-compare {
+    font-family: var(--main-family);
+    font-style: var(--main-style);
+    font-size: calc(var(--design-body-font-size) - 2px);
+    font-weight: var(--main-weight);
+    letter-spacing: var(--main-spacing);
+    color: var(--text-color);
+    text-decoration: line-through;
+    opacity: 0.6;
+  }
+
+  #dinveda-collection-ritual-cards-{{ section.id }} .dinveda-ritual-picker__price-unit {
+    font-family: var(--main-family);
+    font-style: var(--main-style);
+    font-size: calc(var(--design-body-font-size) - 4px);
+    font-weight: var(--main-weight);
+    letter-spacing: var(--main-spacing);
+    color: var(--text-color);
+    opacity: 0.6;
   }
 {% endstyle %}
 
@@ -431,6 +501,17 @@
   "tag": "section",
   "class": "dynamic-section",
   "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section title",
+      "default": "Ayurvedische Rituale für jeden Moment deines Tages",
+      "info": "Header text displayed above the ritual cards"
+    },
     {
       "type": "header",
       "content": "Pagination"
