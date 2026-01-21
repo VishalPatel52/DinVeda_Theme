@@ -22,7 +22,8 @@
         "link": "https://dinveda.com/",
         "empty_cart_message": "Dein Warenkorb ist leer",
         "empty_cart_button_text": "Jetzt Einkaufen",
-        "empty_cart_button_link": "https://dinveda.com/"
+        "empty_cart_button_link": "https://dinveda.com/",
+        "empty_cart_fox_image": "shopify://shop_images/ChatGPT_Image_Jan_12_2026_08_34_22_PM.png"
       }
     },
     "image-with-text": {
