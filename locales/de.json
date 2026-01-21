@@ -99,7 +99,8 @@
     "general": {
       "title": "Mein Einkaufswagen",
       "close_cart": "Schließen",
-      "empty": "Ihr Einkaufswagen ist momentan leer.",
+      "empty": "Dein Warenkorb ist leer",
+      "shop_now": "Jetzt Einkaufen",
       "price": "Preis",
       "qty": "Menge",
       "remove": "Entfernen",

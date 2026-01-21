@@ -1,5 +1,34 @@
+{%- liquid
+  if section.settings.empty_cart_message != blank
+    assign empty_message = section.settings.empty_cart_message
+  else
+    assign empty_message = 'cart.general.empty' | t
+  endif
+  
+  if section.settings.empty_cart_button_text != blank
+    assign button_text = section.settings.empty_cart_button_text
+  else
+    assign button_text = 'cart.general.shop_now' | t
+    if button_text == 'cart.general.shop_now'
+      assign button_text = 'Jetzt Einkaufen'
+    endif
+  endif
+  
+  if section.settings.empty_cart_button_link != blank
+    assign button_link = section.settings.empty_cart_button_link
+  else
+    assign button_link = '/collections/all'
+  endif
+-%}
 {% if cart.item_count == 0 %}
-  <p class="ajax-cart__empty-cart a-center pt6 js-cart-empty {{ isEmpty }}">{{ 'cart.general.empty' | t }}</p>
+  <div class="ajax-cart__empty-cart-wrapper a-center pt6 js-cart-empty {{ isEmpty }}">
+    <p class="ajax-cart__empty-cart-message mb3">{{ empty_message }}</p>
+    {% if button_text != blank and button_link != blank %}
+      <a href="{{ button_link }}" class="button btn-outline btn-secondary ajax-cart__empty-cart-button">
+        {{ button_text }}
+      </a>
+    {% endif %}
+  </div>
 {% else %}
 {% render 'cart-form',
    drawer: false,

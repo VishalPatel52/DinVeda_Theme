@@ -883,7 +883,8 @@ WAU.AjaxCart = {
         cartEmpty: '.js-cart-empty',
         cartForm: '.js-cart-form',
         cartAccordion: '.js-cart-accordion',
-        cartCount: '.js-cart-count'
+        cartCount: '.js-cart-count',
+        cartPaymentButtons: '.js-cart-payment-buttons, .ajax-cart__footer-wrapper'
       };
 
       if (Cart.item_count === 0) {
@@ -895,6 +896,10 @@ WAU.AjaxCart = {
         document.querySelectorAll(selectors.cartEmpty).forEach((item, i) => {
           item.classList.remove('hide');
         });
+        // Hide payment buttons
+        document.querySelectorAll(selectors.cartPaymentButtons).forEach((item, i) => {
+          item.classList.add('hide');
+        });
         // Update cart count
         document.querySelectorAll(selectors.cartCount).forEach((item, i) => {
           item.innerHTML = '0';
@@ -903,6 +908,10 @@ WAU.AjaxCart = {
         // Hide empty msg
         document.querySelectorAll(selectors.cartEmpty).forEach((item, i) => {
           item.classList.add('hide');
+        });
+        // Show payment buttons if they exist
+        document.querySelectorAll(selectors.cartPaymentButtons).forEach((item, i) => {
+          item.classList.remove('hide');
         });
         // Update cart count
         document.querySelectorAll(selectors.cartCount).forEach((item, i) => {

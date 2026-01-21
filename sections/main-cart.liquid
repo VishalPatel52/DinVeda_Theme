@@ -39,13 +39,13 @@
   </div>
 
   <div class="ajax-cart__form-wrapper--nojs js-ajax-cart-content-nojs">
-    {% render "cart-no-js", cart: cart %}
+    {% render "cart-no-js", cart: cart, section: section %}
   </div>
   <div class="ajax-cart__form-wrapper cart-wrapper js-ajax-cart-content">
   </div>
   {%- unless request.design_mode -%}
     {%- if additional_checkout_buttons -%}
-      <div class="ajax-cart__footer-wrapper grid__wrapper edge">
+      <div class="ajax-cart__footer-wrapper grid__wrapper edge js-cart-payment-buttons {% if cart.item_count == 0 %}hide{% endif %}">
         <div class="span-12 auto">
           <p class="sm-caps or-divider mt2 mb2 a-center"><span>{{ 'cart.general.or' | t }}</span></p>
           <div class="ajax-cart__buttons-additional">
@@ -65,6 +65,28 @@
       "type": "url",
       "id": "link",
       "label": "Continue shopping link"
+    },
+    {
+      "type": "header",
+      "content": "Empty Cart Settings"
+    },
+    {
+      "type": "text",
+      "id": "empty_cart_message",
+      "label": "Empty cart message",
+      "default": "Dein Warenkorb ist leer"
+    },
+    {
+      "type": "text",
+      "id": "empty_cart_button_text",
+      "label": "Shop now button text",
+      "default": "Jetzt Einkaufen"
+    },
+    {
+      "type": "url",
+      "id": "empty_cart_button_link",
+      "label": "Shop now button link",
+      "default": "/collections/all"
     }
   ]
 }

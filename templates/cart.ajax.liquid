@@ -32,8 +32,25 @@
     "item_count": {{ cart.item_count }}
   }
 </template>
+{%- liquid
+  assign empty_message = 'cart.general.empty' | t
+  assign button_text = 'cart.general.shop_now' | t
+  if button_text == 'cart.general.shop_now'
+    assign button_text = 'Jetzt Einkaufen'
+  endif
+  assign button_link = '/collections/all'
+-%}
 <template data-html="content">
-  <p class="ajax-cart__empty-cart a-center pt6 js-cart-empty {{ isEmpty }}">{{ 'cart.general.empty' | t }}</p>
+  {% if cart.item_count < 1 %}
+    <div class="ajax-cart__empty-cart-wrapper a-center pt6 js-cart-empty {{ isEmpty }}">
+      <p class="ajax-cart__empty-cart-message mb3">{{ empty_message }}</p>
+      {% if button_text != blank and button_link != blank %}
+        <a href="{{ button_link }}" class="button btn-outline btn-secondary ajax-cart__empty-cart-button">
+          {{ button_text }}
+        </a>
+      {% endif %}
+    </div>
+  {% endif %}
   {% render 'cart-form',
      drawer: drawer,
      modal: modal,
