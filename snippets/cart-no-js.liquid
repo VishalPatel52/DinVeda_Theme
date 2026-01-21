@@ -1,33 +1,49 @@
 {%- liquid
-  if section.settings.empty_cart_message != blank
-    assign empty_message = section.settings.empty_cart_message
-  else
-    assign empty_message = 'cart.general.empty' | t
+  assign empty_message = section.settings.empty_cart_message
+  if empty_message == blank or empty_message == null
+    assign empty_message = 'Dein Warenkorb ist leer'
   endif
   
-  if section.settings.empty_cart_button_text != blank
-    assign button_text = section.settings.empty_cart_button_text
-  else
-    assign button_text = 'cart.general.shop_now' | t
-    if button_text == 'cart.general.shop_now'
-      assign button_text = 'Jetzt Einkaufen'
-    endif
+  assign button_text = section.settings.empty_cart_button_text
+  if button_text == blank or button_text == null
+    assign button_text = 'Jetzt Einkaufen'
   endif
   
-  if section.settings.empty_cart_button_link != blank
-    assign button_link = section.settings.empty_cart_button_link
-  else
+  assign button_link = section.settings.empty_cart_button_link
+  if button_link == blank or button_link == null
     assign button_link = '/collections/all'
   endif
 -%}
 {% if cart.item_count == 0 %}
   <div class="ajax-cart__empty-cart-wrapper a-center pt6 js-cart-empty {{ isEmpty }}">
-    <p class="ajax-cart__empty-cart-message mb3">{{ empty_message }}</p>
-    {% if button_text != blank and button_link != blank %}
-      <a href="{{ button_link }}" class="button btn-outline btn-secondary ajax-cart__empty-cart-button">
-        {{ button_text }}
-      </a>
-    {% endif %}
+    <div class="ajax-cart__empty-cart-content">
+      <div class="ajax-cart__empty-cart-fox">
+        <svg width="120" height="120" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="64" cy="76" rx="32" ry="26" fill="#FF8C42"/>
+          <circle cx="64" cy="44" r="26" fill="#FF8C42"/>
+          <path d="M64 32C64 32 52 44 52 58C52 61 56 64 58 64C60 64 64 61 64 58C64 61 68 64 70 64C72 64 76 61 76 58C76 44 64 32 64 32Z" fill="white"/>
+          <path d="M44 26L52 12L58 26L44 26Z" fill="#FF8C42"/>
+          <path d="M70 26L78 12L84 26L70 26Z" fill="#FF8C42"/>
+          <path d="M48 22L54 16L54 26L48 22Z" fill="black"/>
+          <path d="M74 22L80 16L80 26L74 22Z" fill="black"/>
+          <circle cx="58" cy="44" r="6" fill="black"/>
+          <circle cx="58" cy="44" r="3" fill="white"/>
+          <path d="M74 48C74 46 76 44 78 44" stroke="black" stroke-width="8" stroke-linecap="round" fill="none"/>
+          <circle cx="64" cy="54" r="3" fill="black"/>
+          <path d="M64 58L60 62L64 64L68 62" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <ellipse cx="90" cy="70" rx="20" ry="12" fill="#FF8C42" transform="rotate(-20 90 70)"/>
+          <ellipse cx="38" cy="70" rx="20" ry="12" fill="#FF8C42" transform="rotate(20 38 70)"/>
+        </svg>
+      </div>
+      <div class="ajax-cart__empty-cart-message-wrapper">
+        <p class="ajax-cart__empty-cart-message">{{ empty_message }}</p>
+        {% if button_text != blank and button_link != blank %}
+          <a href="{{ button_link }}" class="button btn-outline btn-secondary ajax-cart__empty-cart-button">
+            {{ button_text }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
   </div>
 {% else %}
 {% render 'cart-form',

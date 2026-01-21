@@ -858,12 +858,34 @@ WAU.AjaxCart = {
     fetch(url, data)
     .then(res => res.text())
     .then(response => {
-      let html = WAU.AjaxCart.getAjaxCart(response);
+      let result = WAU.AjaxCart.getAjaxCart(response);
+      let html = typeof result === 'string' ? result : result.content;
+      const el = document.createElement('div');
+      el.innerHTML = response;
+      const optionsEl = el.querySelector('[data-options]');
+      let responseOptions = {};
+      if (optionsEl) {
+        try {
+          responseOptions = JSON.parse(optionsEl.innerHTML);
+        } catch(e) {
+          console.log('Error parsing cart options:', e);
+        }
+      }
 
       // Replace cart content
       document.querySelectorAll('.js-ajax-cart-content').forEach((item, i) => {
-        item.innerHTML = html.content;
+        item.innerHTML = html;
       });
+
+      // If cart is empty, ensure empty state is visible
+      if (responseOptions.item_count === 0) {
+        document.querySelectorAll('.js-cart-empty').forEach((item, i) => {
+          item.classList.remove('hide');
+        });
+        document.querySelectorAll('.js-cart-form').forEach((item, i) => {
+          item.classList.add('hide');
+        });
+      }
 
     }).catch(error => {
       console.log(error)
@@ -888,6 +910,10 @@ WAU.AjaxCart = {
       };
 
       if (Cart.item_count === 0) {
+        // Replace cart page and drawer content first
+        document.querySelectorAll(selectors.cartContent).forEach((item, i) => {
+          item.innerHTML = html.content;
+        });
         // Hide form
         document.querySelectorAll(selectors.cartForm).forEach((item, i) => {
           item.classList.add('hide');
