@@ -929,25 +929,14 @@ WAU.AjaxCart = {
             }
           }
           
-          // Add custom image to all empty cart fox containers, or keep default panda SVG
+          // Add custom image to all empty cart fox containers (hide if none)
           const foxContainers = document.querySelectorAll('.ajax-cart__empty-cart-fox, .dinveda-cart-items__empty-fox');
           if (foxContainers.length > 0) {
             foxContainers.forEach((foxContainer, i) => {
-              // Always ensure container is visible
-              foxContainer.style.display = '';
-              foxContainer.style.visibility = '';
-              
               if (customFoxImageUrl && customFoxImageUrl !== '') {
-                // Check if image already exists
                 const existingImg = foxContainer.querySelector('img');
-                const existingSvg = foxContainer.querySelector('svg');
-                
                 if (!existingImg) {
-                  // Remove any existing SVG
-                  if (existingSvg) {
-                    existingSvg.remove();
-                  }
-                  // Add custom image
+                  foxContainer.innerHTML = '';
                   const img = document.createElement('img');
                   img.src = customFoxImageUrl;
                   img.alt = 'Animal';
@@ -955,38 +944,20 @@ WAU.AjaxCart = {
                   img.loading = 'lazy';
                   img.onerror = function() {
                     console.log('Failed to load custom animal image:', customFoxImageUrl);
-                    // On error, keep default SVG visible (don't hide container)
-                    if (!foxContainer.querySelector('svg')) {
-                      // Re-add default panda SVG if image fails
-                      const defaultSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                      defaultSvg.setAttribute('class', 'ajax-cart__empty-cart-fox-img dinveda-cart-items__empty-fox-img');
-                      defaultSvg.setAttribute('width', '240');
-                      defaultSvg.setAttribute('height', '240');
-                      defaultSvg.setAttribute('viewBox', '0 0 240 240');
-                      defaultSvg.setAttribute('fill', 'none');
-                      defaultSvg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-                      // Add panda SVG content (simplified - full SVG would be added here)
-                      foxContainer.appendChild(defaultSvg);
-                    }
+                    foxContainer.style.display = 'none';
                   };
                   foxContainer.appendChild(img);
                 } else {
-                  // Update existing image src if URL changed
-                  const currentSrc = existingImg.src.split('?')[0]; // Remove query params for comparison
+                  const currentSrc = existingImg.src.split('?')[0];
                   const newSrc = customFoxImageUrl.split('?')[0];
                   if (currentSrc !== newSrc) {
                     existingImg.src = customFoxImageUrl;
                   }
                 }
+                foxContainer.style.display = '';
+                foxContainer.style.visibility = '';
               } else {
-                // No custom image - ensure default SVG is visible (it should already be there from Liquid)
-                const existingSvg = foxContainer.querySelector('svg');
-                const existingImg = foxContainer.querySelector('img');
-                if (existingImg) {
-                  // Remove custom image if no URL is provided
-                  existingImg.remove();
-                }
-                // Default SVG should already be present from Liquid template
+                foxContainer.style.display = 'none';
               }
             });
           }
@@ -1047,25 +1018,14 @@ WAU.AjaxCart = {
             }
           }
           
-          // Add custom image to all empty cart fox containers, or keep default panda SVG
+          // Add custom image to all empty cart fox containers (hide if none)
           const foxContainers = document.querySelectorAll('.ajax-cart__empty-cart-fox, .dinveda-cart-items__empty-fox');
           if (foxContainers.length > 0) {
             foxContainers.forEach((foxContainer, i) => {
-              // Always ensure container is visible
-              foxContainer.style.display = '';
-              foxContainer.style.visibility = '';
-              
               if (customFoxImageUrl && customFoxImageUrl !== '') {
-                // Check if image already exists
                 const existingImg = foxContainer.querySelector('img');
-                const existingSvg = foxContainer.querySelector('svg');
-                
                 if (!existingImg) {
-                  // Remove any existing SVG
-                  if (existingSvg) {
-                    existingSvg.remove();
-                  }
-                  // Add custom image
+                  foxContainer.innerHTML = '';
                   const img = document.createElement('img');
                   img.src = customFoxImageUrl;
                   img.alt = 'Animal';
@@ -1073,38 +1033,20 @@ WAU.AjaxCart = {
                   img.loading = 'lazy';
                   img.onerror = function() {
                     console.log('Failed to load custom animal image:', customFoxImageUrl);
-                    // On error, keep default SVG visible (don't hide container)
-                    if (!foxContainer.querySelector('svg')) {
-                      // Re-add default panda SVG if image fails
-                      const defaultSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                      defaultSvg.setAttribute('class', 'ajax-cart__empty-cart-fox-img dinveda-cart-items__empty-fox-img');
-                      defaultSvg.setAttribute('width', '240');
-                      defaultSvg.setAttribute('height', '240');
-                      defaultSvg.setAttribute('viewBox', '0 0 240 240');
-                      defaultSvg.setAttribute('fill', 'none');
-                      defaultSvg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-                      // Add panda SVG content (simplified - full SVG would be added here)
-                      foxContainer.appendChild(defaultSvg);
-                    }
+                    foxContainer.style.display = 'none';
                   };
                   foxContainer.appendChild(img);
                 } else {
-                  // Update existing image src if URL changed
-                  const currentSrc = existingImg.src.split('?')[0]; // Remove query params for comparison
+                  const currentSrc = existingImg.src.split('?')[0];
                   const newSrc = customFoxImageUrl.split('?')[0];
                   if (currentSrc !== newSrc) {
                     existingImg.src = customFoxImageUrl;
                   }
                 }
+                foxContainer.style.display = '';
+                foxContainer.style.visibility = '';
               } else {
-                // No custom image - ensure default SVG is visible (it should already be there from Liquid)
-                const existingSvg = foxContainer.querySelector('svg');
-                const existingImg = foxContainer.querySelector('img');
-                if (existingImg) {
-                  // Remove custom image if no URL is provided
-                  existingImg.remove();
-                }
-                // Default SVG should already be present from Liquid template
+                foxContainer.style.display = 'none';
               }
             });
           }
