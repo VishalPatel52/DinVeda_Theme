@@ -76,7 +76,17 @@
         "purity_promise_badge_1_crossed": false,
         "purity_promise_badge_2_crossed": false,
         "purity_promise_badge_3_crossed": false,
-        "show_social_share": true
+        "show_social_share": true,
+        "show_facebook": false,
+        "facebook_url": "",
+        "show_twitter": false,
+        "twitter_url": "",
+        "show_pinterest": false,
+        "pinterest_url": "",
+        "show_instagram": true,
+        "instagram_url": "",
+        "show_youtube": true,
+        "youtube_url": ""
       }
     },
     "dv_story_card": {

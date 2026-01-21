@@ -19,7 +19,10 @@
     "main": {
       "type": "main-cart",
       "settings": {
-        "link": "shopify://collections/all"
+        "link": "https://dinveda.com/",
+        "empty_cart_message": "Dein Warenkorb ist leer",
+        "empty_cart_button_text": "Jetzt Einkaufen",
+        "empty_cart_button_link": "https://dinveda.com/"
       }
     },
     "image-with-text": {
