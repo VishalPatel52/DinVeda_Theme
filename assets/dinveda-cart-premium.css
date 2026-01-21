@@ -636,6 +636,14 @@
   min-width: 200px;
 }
 
+.dinveda-cart-items__empty-fox-img,
+.ajax-cart__empty-cart-fox-img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  display: block;
+}
+
 /* Responsive Styles */
 @media screen and (max-width: 1023px) {
   .template-cart.dinveda-premium .dinveda-cart-items__main,

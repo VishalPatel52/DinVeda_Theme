@@ -38,7 +38,7 @@
   if button_text == 'cart.general.shop_now'
     assign button_text = 'Jetzt Einkaufen'
   endif
-  assign button_link = '/collections/all'
+  assign button_link = routes.root_url
 -%}
 <template data-html="content">
   {% if cart.item_count < 1 %}

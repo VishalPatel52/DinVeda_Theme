@@ -348,6 +348,13 @@ input[type=number].ajax-cart__qty-input {
   min-width: 200px;
 }
 
+.ajax-cart__empty-cart-fox-img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  display: block;
+}
+
 .ajax-cart__page-wrapper .ajax-cart__cart-form {
   padding-left: 7% !important;
   padding-right: 7% !important;
