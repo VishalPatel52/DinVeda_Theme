@@ -38,11 +38,26 @@
   assign show_tax_note = section.settings.show_tax_note
 -%}
 
+{%- liquid
+  assign fox_image_url = ''
+  assign fox_image_setting = section.settings.empty_cart_fox_image
+  if fox_image_setting != blank and fox_image_setting != null
+    assign fox_image_url = fox_image_setting | image_url: width: 240
+  endif
+-%}
+{% if fox_image_url != blank and fox_image_url != '' %}
+<script type="application/json" id="cart-fox-image-config">
+  {
+    "fox_image_url": {{ fox_image_url | json }}
+  }
+</script>
+{% endif %}
 <section
   class="dinveda-cart-items dinveda-cart-items-{{ section.id }} cart-page ajax-cart__page-wrapper pt8 mb8"
   data-section-id="{{ section.id }}"
   data-section-type="cart-template"
   data-section-loaded="false"
+  {% if fox_image_url != blank and fox_image_url != '' %}data-empty-cart-fox-image="{{ fox_image_url }}"{% endif %}
 >
   <div class="loading-wrapper js-mini-cart-loader no-js-hidden">
     <div class="loading-ripple"><div></div><div></div></div>
@@ -202,7 +217,7 @@
             <div class="dinveda-cart-items__empty js-cart-empty">
               <div class="dinveda-cart-items__empty-content">
                 <div class="dinveda-cart-items__empty-fox">
-                  {% if fox_image != blank %}
+                  {% if fox_image != blank and fox_image != null %}
                     {{ fox_image | image_url: width: 240 | image_tag: alt: 'Fox', loading: 'lazy', class: 'dinveda-cart-items__empty-fox-img' }}
                   {% else %}
                     <svg width="120" height="120" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">

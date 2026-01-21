@@ -885,6 +885,48 @@ WAU.AjaxCart = {
         document.querySelectorAll('.js-cart-form').forEach((item, i) => {
           item.classList.add('hide');
         });
+        
+        // Replace default SVG fox with custom image if available
+        // Use setTimeout to ensure DOM is updated before searching
+        setTimeout(function() {
+          // First, try to get fox image URL from global config script
+          let customFoxImageUrl = null;
+          const foxImageConfig = document.getElementById('cart-fox-image-config');
+          if (foxImageConfig) {
+            try {
+              const config = JSON.parse(foxImageConfig.innerHTML);
+              if (config.fox_image_url) {
+                customFoxImageUrl = config.fox_image_url;
+              }
+            } catch(e) {
+              console.log('Error parsing fox image config:', e);
+            }
+          }
+          
+          // Fallback: find any cart section with the fox image data attribute
+          if (!customFoxImageUrl) {
+            const mainCartSection = document.querySelector('main [data-section-id][data-empty-cart-fox-image]');
+            const cartSection = mainCartSection || document.querySelector('[data-section-id][data-empty-cart-fox-image]');
+            if (cartSection) {
+              customFoxImageUrl = cartSection.dataset.emptyCartFoxImage || cartSection.getAttribute('data-empty-cart-fox-image');
+            }
+          }
+          
+          // Replace SVG with custom image in all empty cart foxes
+          if (customFoxImageUrl && customFoxImageUrl !== '') {
+            document.querySelectorAll('.ajax-cart__empty-cart-fox, .dinveda-cart-items__empty-fox').forEach((foxContainer, i) => {
+              const svg = foxContainer.querySelector('svg');
+              if (svg) {
+                const img = document.createElement('img');
+                img.src = customFoxImageUrl;
+                img.alt = 'Fox';
+                img.className = 'ajax-cart__empty-cart-fox-img dinveda-cart-items__empty-fox-img';
+                img.loading = 'lazy';
+                svg.replaceWith(img);
+              }
+            });
+          }
+        }, 150);
       }
 
     }).catch(error => {
@@ -914,6 +956,49 @@ WAU.AjaxCart = {
         document.querySelectorAll(selectors.cartContent).forEach((item, i) => {
           item.innerHTML = html.content;
         });
+        
+        // Replace default SVG fox with custom image if available
+        // Use setTimeout to ensure DOM is updated before searching
+        setTimeout(function() {
+          // First, try to get fox image URL from global config script
+          let customFoxImageUrl = null;
+          const foxImageConfig = document.getElementById('cart-fox-image-config');
+          if (foxImageConfig) {
+            try {
+              const config = JSON.parse(foxImageConfig.innerHTML);
+              if (config.fox_image_url) {
+                customFoxImageUrl = config.fox_image_url;
+              }
+            } catch(e) {
+              console.log('Error parsing fox image config:', e);
+            }
+          }
+          
+          // Fallback: find any cart section with the fox image data attribute
+          if (!customFoxImageUrl) {
+            const mainCartSection = document.querySelector('main [data-section-id][data-empty-cart-fox-image]');
+            const cartSection = mainCartSection || document.querySelector('[data-section-id][data-empty-cart-fox-image]');
+            if (cartSection) {
+              customFoxImageUrl = cartSection.dataset.emptyCartFoxImage || cartSection.getAttribute('data-empty-cart-fox-image');
+            }
+          }
+          
+          // Replace SVG with custom image in all empty cart foxes
+          if (customFoxImageUrl && customFoxImageUrl !== '') {
+            document.querySelectorAll('.ajax-cart__empty-cart-fox, .dinveda-cart-items__empty-fox').forEach((foxContainer, i) => {
+              const svg = foxContainer.querySelector('svg');
+              if (svg) {
+                const img = document.createElement('img');
+                img.src = customFoxImageUrl;
+                img.alt = 'Fox';
+                img.className = 'ajax-cart__empty-cart-fox-img dinveda-cart-items__empty-fox-img';
+                img.loading = 'lazy';
+                svg.replaceWith(img);
+              }
+            });
+          }
+        }, 150);
+        
         // Hide form
         document.querySelectorAll(selectors.cartForm).forEach((item, i) => {
           item.classList.add('hide');

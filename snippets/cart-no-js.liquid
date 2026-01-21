@@ -20,7 +20,7 @@
   <div class="ajax-cart__empty-cart-wrapper a-center pt6 js-cart-empty {{ isEmpty }}">
     <div class="ajax-cart__empty-cart-content">
       <div class="ajax-cart__empty-cart-fox">
-        {% if fox_image != blank %}
+        {% if fox_image != blank and fox_image != null %}
           {{ fox_image | image_url: width: 240 | image_tag: alt: 'Fox', loading: 'lazy', class: 'ajax-cart__empty-cart-fox-img' }}
         {% else %}
           <svg width="120" height="120" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
