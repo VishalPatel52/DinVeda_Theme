@@ -182,13 +182,26 @@
             </form>
           {% else %}
             {%- liquid
-              assign empty_message = section.settings.empty_cart_message | default: 'cart.general.empty' | t
-              if empty_message == 'cart.general.empty'
+              if section.settings.empty_cart_message != blank
+                assign empty_message = section.settings.empty_cart_message
+              else
                 assign empty_message = 'cart.general.empty' | t
               endif
               
-              assign button_text = section.settings.empty_cart_button_text | default: 'Jetzt Einkaufen'
-              assign button_link = section.settings.empty_cart_button_link | default: '/collections/all'
+              if section.settings.empty_cart_button_text != blank
+                assign button_text = section.settings.empty_cart_button_text
+              else
+                assign button_text = 'cart.general.shop_now' | t
+                if button_text == 'cart.general.shop_now'
+                  assign button_text = 'Jetzt Einkaufen'
+                endif
+              endif
+              
+              if section.settings.empty_cart_button_link != blank
+                assign button_link = section.settings.empty_cart_button_link
+              else
+                assign button_link = '/collections/all'
+              endif
             -%}
             <div class="dinveda-cart-items__empty js-cart-empty">
               <p class="dinveda-cart-items__empty-text">{{ empty_message }}</p>
