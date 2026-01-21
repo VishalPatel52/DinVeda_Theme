@@ -696,23 +696,9 @@
 }
 
 /* ============================================
-   Footer (Homepage Override)
+   Footer (Removed - Footer is now handled globally in section-dv-footer.css)
    ============================================ */
 
-/* Match footer background to reference beige/cream color on homepage */
-body.template-index .section-footer {
-  background-color: var(--design-bg-color, #FFF0DD);
-}
-
-body.template-index .section-footer a,
-body.template-index .section-footer p,
-body.template-index .section-footer small,
-body.template-index .section-footer h1,
-body.template-index .section-footer h2,
-body.template-index .section-footer h3,
-body.template-index .section-footer h4,
-body.template-index .section-footer h5,
-body.template-index .section-footer h6 {
-  color: var(--design-text-color, #C17129);
-}
+/* Note: Footer styling is now consistent across all pages via section-dv-footer.css */
+/* Homepage-specific footer overrides have been removed to ensure consistency */
 

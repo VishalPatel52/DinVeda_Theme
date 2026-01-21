@@ -1,24 +1,30 @@
 /* DV_Footer Styles - Theme Integrated */
 /* Base footer styles - matches homepage footer exactly */
+/* Enforced globally across ALL pages for consistency */
 
 .dv-footer {
-  display: block;
-  width: 100%;
+  display: block !important;
+  width: 100% !important;
   background-color: var(--design-bg-color, #FFF0DD) !important;
   color: var(--design-text-color, #C17129) !important;
 }
 
 /* Override inline styles to ensure consistency across all pages */
-.dv-footer[style*="background-color"] {
+.dv-footer[style*="background-color"],
+.dv-footer[style] {
   background-color: var(--design-bg-color, #FFF0DD) !important;
 }
 
-.dv-footer[style*="color"] {
+.dv-footer[style*="color"],
+.dv-footer[style] {
   color: var(--design-text-color, #C17129) !important;
 }
 
 /* Ensure all footer text elements use consistent colors across all pages */
 .dv-footer a,
+.dv-footer a:visited,
+.dv-footer a:hover,
+.dv-footer a:focus,
 .dv-footer p,
 .dv-footer small,
 .dv-footer h1,
@@ -32,7 +38,8 @@
 .dv-footer li,
 .dv-footer label,
 .dv-footer strong,
-.dv-footer em {
+.dv-footer em,
+.dv-footer button {
   color: var(--design-text-color, #C17129) !important;
 }
 
@@ -57,7 +64,7 @@
 .dv-footer__brand-name {
   font-family: var(--heading-family, inherit);
   font-weight: var(--heading-weight, 700);
-  color: var(--design-text-color, #C17129);
+  color: var(--design-text-color, #C17129) !important;
   margin: 0 0 20px;
   line-height: 1.2;
 }
@@ -125,8 +132,12 @@
 
 .dv-footer__description {
   font-family: var(--main-family, inherit);
-  color: var(--design-text-color, #C17129);
+  color: var(--design-text-color, #C17129) !important;
   line-height: 1.7;
+}
+
+.dv-footer__description p {
+  color: var(--design-text-color, #C17129) !important;
 }
 
 .dv-footer__description p {
@@ -141,7 +152,7 @@
 .dv-footer__heading {
   font-family: var(--heading-family, inherit);
   font-weight: var(--heading-weight, 700);
-  color: var(--design-text-color, #C17129);
+  color: var(--design-text-color, #C17129) !important;
   margin: 0;
   line-height: 1.3;
 }
@@ -157,10 +168,14 @@
 
 .dv-footer__link {
   font-family: var(--main-family, inherit);
-  color: var(--design-text-color, #C17129);
+  color: var(--design-text-color, #C17129) !important;
   text-decoration: none;
   transition: opacity 0.3s ease, text-decoration 0.3s ease;
   line-height: 1.5;
+}
+
+.dv-footer__link:visited {
+  color: var(--design-text-color, #C17129) !important;
 }
 
 .dv-footer__link:hover {
@@ -180,21 +195,25 @@
 .dv-footer__contact-label {
   font-family: var(--main-family, inherit);
   font-weight: 600;
-  color: var(--design-text-color, #C17129);
+  color: var(--design-text-color, #C17129) !important;
   margin-bottom: 4px;
   display: block;
 }
 
 .dv-footer__contact-value {
   font-family: var(--main-family, inherit);
-  color: var(--design-text-color, #C17129);
+  color: var(--design-text-color, #C17129) !important;
   line-height: 1.6;
 }
 
 .dv-footer__contact-value a {
-  color: var(--design-text-color, #C17129);
+  color: var(--design-text-color, #C17129) !important;
   text-decoration: none;
   transition: opacity 0.3s ease;
+}
+
+.dv-footer__contact-value a:visited {
+  color: var(--design-text-color, #C17129) !important;
 }
 
 .dv-footer__contact-value a:hover {
@@ -213,7 +232,7 @@
 
 .dv-footer__copyright {
   font-family: var(--main-family, inherit);
-  color: var(--design-text-color, #C17129);
+  color: var(--design-text-color, #C17129) !important;
 }
 
 .dv-footer__social {
@@ -225,8 +244,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--design-text-color, #C17129);
+  color: var(--design-text-color, #C17129) !important;
   transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dv-footer__social-link:visited {
+  color: var(--design-text-color, #C17129) !important;
 }
 
 .dv-footer__social-link:hover {
