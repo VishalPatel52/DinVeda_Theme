@@ -21,23 +21,40 @@
     <div class="ajax-cart__empty-cart-content">
       <div class="ajax-cart__empty-cart-fox">
         {% if fox_image != blank and fox_image != null %}
-          {{ fox_image | image_url: width: 240 | image_tag: alt: 'Fox', loading: 'lazy', class: 'ajax-cart__empty-cart-fox-img' }}
+          {{ fox_image | image_url: width: 240 | image_tag: alt: 'Animal', loading: 'lazy', class: 'ajax-cart__empty-cart-fox-img' }}
         {% else %}
-          <svg width="120" height="120" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="64" cy="76" rx="32" ry="26" fill="#FF8C42"/>
-            <circle cx="64" cy="44" r="26" fill="#FF8C42"/>
-            <path d="M64 32C64 32 52 44 52 58C52 61 56 64 58 64C60 64 64 61 64 58C64 61 68 64 70 64C72 64 76 61 76 58C76 44 64 32 64 32Z" fill="white"/>
-            <path d="M44 26L52 12L58 26L44 26Z" fill="#FF8C42"/>
-            <path d="M70 26L78 12L84 26L70 26Z" fill="#FF8C42"/>
-            <path d="M48 22L54 16L54 26L48 22Z" fill="black"/>
-            <path d="M74 22L80 16L80 26L74 22Z" fill="black"/>
-            <circle cx="58" cy="44" r="6" fill="black"/>
-            <circle cx="58" cy="44" r="3" fill="white"/>
-            <path d="M74 48C74 46 76 44 78 44" stroke="black" stroke-width="8" stroke-linecap="round" fill="none"/>
-            <circle cx="64" cy="54" r="3" fill="black"/>
-            <path d="M64 58L60 62L64 64L68 62" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            <ellipse cx="90" cy="70" rx="20" ry="12" fill="#FF8C42" transform="rotate(-20 90 70)"/>
-            <ellipse cx="38" cy="70" rx="20" ry="12" fill="#FF8C42" transform="rotate(20 38 70)"/>
+          {% comment %} Default panda SVG - cute baby panda {% endcomment %}
+          <svg class="ajax-cart__empty-cart-fox-img" width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Head (white) -->
+            <ellipse cx="120" cy="100" rx="55" ry="60" fill="#FFFFFF"/>
+            <!-- Left ear (black) -->
+            <ellipse cx="85" cy="65" rx="18" ry="22" fill="#000000"/>
+            <!-- Right ear (black) -->
+            <ellipse cx="155" cy="65" rx="18" ry="22" fill="#000000"/>
+            <!-- Left eye patch (black) -->
+            <ellipse cx="100" cy="90" rx="16" ry="18" fill="#000000"/>
+            <!-- Right eye patch (black) -->
+            <ellipse cx="140" cy="90" rx="16" ry="18" fill="#000000"/>
+            <!-- Left eye (white highlight) -->
+            <circle cx="105" cy="92" r="6" fill="#FFFFFF"/>
+            <!-- Right eye (white highlight) -->
+            <circle cx="135" cy="92" r="6" fill="#FFFFFF"/>
+            <!-- Left eye pupil -->
+            <circle cx="107" cy="93" r="3" fill="#8B4513"/>
+            <!-- Right eye pupil -->
+            <circle cx="137" cy="93" r="3" fill="#8B4513"/>
+            <!-- Nose (black) -->
+            <ellipse cx="120" cy="108" rx="6" ry="5" fill="#000000"/>
+            <!-- Mouth (smile) -->
+            <path d="M115 115 Q120 120 125 115" stroke="#000000" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <!-- Body (white) -->
+            <ellipse cx="120" cy="165" rx="40" ry="45" fill="#FFFFFF"/>
+            <!-- Chest/neck band (black) -->
+            <ellipse cx="120" cy="145" rx="30" ry="20" fill="#000000"/>
+            <!-- Left arm (black) -->
+            <ellipse cx="85" cy="150" rx="12" ry="25" fill="#000000" transform="rotate(-20 85 150)"/>
+            <!-- Right arm (black) -->
+            <ellipse cx="155" cy="150" rx="12" ry="25" fill="#000000" transform="rotate(20 155 150)"/>
           </svg>
         {% endif %}
       </div>

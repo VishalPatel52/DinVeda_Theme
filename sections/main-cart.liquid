@@ -15,6 +15,12 @@
     "fox_image_url": {{ fox_image_url | json }}
   }
 </script>
+<script>
+  // Store animal image URL globally for drawer access
+  if (typeof window !== 'undefined') {
+    window.cartFoxImageUrl = {{ fox_image_url | json }};
+  }
+</script>
 {% endif %}
 {% comment %} Cart template {% endcomment %}
 <section class="cart-page ajax-cart__page-wrapper pt8 mb8 cart-type--{{ settings.cart_type }} cart__section--main"
@@ -107,8 +113,8 @@
     {
       "type": "image_picker",
       "id": "empty_cart_fox_image",
-      "label": "Fox image",
-      "info": "Upload a custom fox image. If not provided, default SVG fox will be used."
+      "label": "Animal image",
+      "info": "Upload an animal image to display above the empty cart message. The image will appear above the white speech bubble."
     }
   ]
 }

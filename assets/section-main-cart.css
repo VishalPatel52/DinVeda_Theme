@@ -299,8 +299,9 @@ input[type=number].ajax-cart__qty-input {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   animation: float 3s ease-in-out infinite;
+  order: 1;
 }
 
 @keyframes float {
@@ -318,28 +319,53 @@ input[type=number].ajax-cart__qty-input {
   align-items: center;
   gap: 2rem;
   position: relative;
+  background-color: #fffaf2;
+  border-radius: 12px;
+  padding: 24px 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(234, 221, 207, 0.3);
+  order: 2;
+  margin-top: 0;
 }
 
 .ajax-cart__empty-cart-message-wrapper::before {
   content: '';
   position: absolute;
-  top: -2rem;
+  bottom: -20px;
   left: 50%;
   transform: translateX(-50%);
   width: 0;
   height: 0;
   border-left: 15px solid transparent;
   border-right: 15px solid transparent;
-  border-bottom: 20px solid rgba(193, 113, 41, 0.1);
+  border-top: 20px solid #fffaf2;
+  z-index: 1;
+}
+
+.ajax-cart__empty-cart-message-wrapper::after {
+  content: '';
+  position: absolute;
+  bottom: -21px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 16px solid transparent;
+  border-right: 16px solid transparent;
+  border-top: 21px solid rgba(234, 221, 207, 0.3);
+  z-index: 0;
 }
 
 .ajax-cart__empty-cart-message {
-  font-size: clamp(24px, 4vw, 32px);
-  font-weight: 500;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: clamp(18px, 3vw, 24px);
+  font-style: italic;
+  font-weight: 400;
   color: var(--text-color, #5a4533);
-  line-height: 1.4;
+  line-height: 1.5;
   margin: 0;
   max-width: 100%;
+  text-align: center;
 }
 
 .ajax-cart__empty-cart-button {
