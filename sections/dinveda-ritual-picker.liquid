@@ -25,13 +25,10 @@
     assign section_padding = 'mt0 pb0'
   endif
 
-  if settings.section_title_align == 'left'
-    assign heading_align = 'a-left'
-  elsif settings.section_title_align == 'right'
-    assign heading_align = 'a-right'
-  else 
-    assign heading_align = 'a-center'
-  endif
+  comment
+    Force center alignment for ritual picker section
+  endcomment
+  assign heading_align = 'a-center'
 
   assign items_per_row = section.settings.items_per_row | default: 4
 
@@ -141,16 +138,24 @@
       </div>
     {% endif %}
     
-    {%- comment -%} Coming Soon Banner {%- endcomment -%}
-    {% if section.settings.coming_soon_mode %}
-      <div class="dinveda-ritual-picker__coming-soon-banner {{ heading_width }}">
-        <p class="dinveda-ritual-picker__banner-text">{{ section.settings.coming_soon_banner_text | escape }}</p>
-      </div>
-    {% endif %}
     
     {%- comment -%} View All Button {%- endcomment -%}
     {% if section.settings.show_view_all and section.settings.view_all_url != blank %}
       <a href="{{ section.settings.view_all_url }}" class="button view--all_button{% if heading_align == 'a-left'%} align--right{% endif %}">{{ 'products.general.view_all' | t }}</a>
+    {% endif %}
+
+    {%- comment -%} Middle Section Content {%- endcomment -%}
+    {% if section.settings.middle_section_title != blank or section.settings.middle_section_text != blank %}
+      <div class="{{ heading_width }} dinveda-ritual-picker__middle-section">
+        {% if section.settings.middle_section_title != blank %}
+          <h2 class="dinveda-ritual-picker__middle-title {{ heading_align }}">{{ section.settings.middle_section_title | escape }}</h2>
+        {% endif %}
+        {% if section.settings.middle_section_text != blank %}
+          <div class="dinveda-ritual-picker__middle-text {{ heading_align }}">
+            <p>{{ section.settings.middle_section_text | escape }}</p>
+          </div>
+        {% endif %}
+      </div>
     {% endif %}
 
     {%- comment -%} Ritual Cards Grid/Carousel {%- endcomment -%}
@@ -280,6 +285,22 @@
                       {% endif %}
                     </div>
                   {% endif %}
+                  
+                  {%- comment -%} Coming Soon Notification Button (inside card content) {%- endcomment -%}
+                  {% if section.settings.coming_soon_mode %}
+                    <div class="dinveda-ritual-picker__notify-btn-wrapper">
+                      <button 
+                        class="dinveda-ritual-picker__notify-btn-full no-js-hidden"
+                        type="button"
+                        name="button"
+                        aria-label="{{ section.settings.notify_button_text | escape }}"
+                        data-product-handle="{{ product_handle }}"
+                        data-modal-target="coming-soon-modal-{{ section.id }}"
+                      >
+                        {{ section.settings.notify_button_text | escape }}
+                      </button>
+                    </div>
+                  {% endif %}
 
                 </div>
 
@@ -289,27 +310,8 @@
                 </a>
               {% endif %}
               
-              {%- comment -%} Conditional Button: Quick Add vs Notify Me {%- endcomment -%}
-              {% if section.settings.coming_soon_mode %}
-                {%- comment -%} Coming Soon Notification Button {%- endcomment -%}
-                <button 
-                  class="dinveda-ritual-picker__notify-btn no-js-hidden"
-                  type="button"
-                  name="button"
-                  aria-label="{{ section.settings.notify_button_text | escape }}"
-                  data-product-handle="{{ product_handle }}"
-                  data-modal-target="coming-soon-modal-{{ section.id }}"
-                >
-                  {% render 'snip-icons',
-                    wrapper: '.dinveda-ritual-picker__notify-btn',
-                    type: 'theme', 
-                    icon: 'mail',
-                    classes: 'notify-trigger--mail vib-center',
-                    size: '18px',
-                    fill: 'var(--directional-text)',
-                    hover: 'var(--directional-text)' %}
-                </button>
-              {% else %}
+              {%- comment -%} Quick Add Button (for normal mode) {%- endcomment -%}
+              {% unless section.settings.coming_soon_mode %}
                 {%- comment -%} Original Quick Add Button (existing code) {%- endcomment -%}
                 {% if has_quick_add and linked_product != blank and linked_product.id != blank and current_variant != blank and current_variant.id != blank and product_available %}
                   <button 
@@ -348,7 +350,7 @@
                       hover: 'var(--directional-text)' %}
                   </button>
                 {% endif %}
-              {% endif %}
+              {% endunless %}
               
               {%- comment -%} Animal Overlay (positioned outside card-inner, relative to card) {%- endcomment -%}
               {% if block.settings.overlay_image != blank %}
@@ -702,7 +704,7 @@
     var section = document.querySelector('.dinveda-ritual-picker-{{ section.id }}');
     if (!section || section.dataset.comingSoonMode !== 'true') return;
     
-    var notifyButtons = section.querySelectorAll('.dinveda-ritual-picker__notify-btn');
+    var notifyButtons = section.querySelectorAll('.dinveda-ritual-picker__notify-btn-full');
     var modal = document.getElementById('coming-soon-modal-{{ section.id }}');
     var form = modal ? modal.querySelector('[data-coming-soon-form]') : null;
     
@@ -809,6 +811,20 @@
       "id": "subtitle",
       "label": "Subtitle",
       "default": "Ayurvedische Rituale für jeden Moment deines Tages"
+    },
+    {
+      "type": "text",
+      "id": "middle_section_title",
+      "label": "Middle Section Title",
+      "default": "Bald Erhältlich",
+      "info": "Main heading displayed between section title and ritual cards"
+    },
+    {
+      "type": "textarea",
+      "id": "middle_section_text",
+      "label": "Middle Section Text",
+      "default": "Unsere neuen rituellen Mischungen sind fast fertig. Jedes Produkt ist inspiriert von der Weisheit des Tierreichs und sorgfältig für deinen modernen Alltag formuliert.",
+      "info": "Descriptive text displayed below the middle section title"
     },
     {
       "type": "header",
@@ -978,15 +994,8 @@
       "type": "checkbox",
       "id": "coming_soon_mode",
       "label": "Enable Coming Soon Mode",
-      "default": false,
+      "default": true,
       "info": "Enable for soft launch. Shows notification signup instead of add-to-cart. Disable when ready to sell normally."
-    },
-    {
-      "type": "text",
-      "id": "coming_soon_banner_text",
-      "label": "Coming Soon Banner Text", 
-      "default": "Sind bald erhältlich",
-      "info": "Text displayed in the section banner when coming soon mode is active"
     },
     {
       "type": "text",

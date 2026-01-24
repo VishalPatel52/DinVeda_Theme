@@ -858,25 +858,49 @@
   text-transform: none; /* Not uppercase */
 }
 
-/* Coming Soon Mode Styles */
-.dinveda-ritual-picker__coming-soon-banner {
-  background: var(--design-secondary-bg);
-  border: 2px solid var(--design-accent-color);
-  border-radius: 8px;
-  padding: 16px 24px;
-  margin-bottom: 32px;
+/* Middle Section Styles */
+.dinveda-ritual-picker__middle-section {
+  margin: 48px 0 64px 0;
   text-align: center;
 }
 
-.dinveda-ritual-picker__banner-text {
+.dinveda-ritual-picker__middle-title {
   font-family: var(--heading-family);
-  font-size: var(--design-h4-size);
+  font-size: var(--design-h2-size);
   font-weight: var(--heading-weight);
-  color: var(--design-accent-color);
-  margin: 0;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  font-style: var(--heading-style);
+  letter-spacing: var(--heading-spacing);
+  line-height: 1.2;
+  color: var(--design-text-color);
+  margin: 0 0 20px 0;
 }
+
+.dinveda-ritual-picker__middle-text {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.dinveda-ritual-picker__middle-text p {
+  font-family: var(--main-family);
+  font-size: var(--design-body-font-size);
+  font-weight: var(--main-weight);
+  line-height: 1.6;
+  color: var(--design-text-color);
+  margin: 0;
+  opacity: 0.85;
+}
+
+@media (max-width: 767px) {
+  .dinveda-ritual-picker__middle-section {
+    margin: 32px 0 48px 0;
+  }
+  
+  .dinveda-ritual-picker__middle-title {
+    margin-bottom: 16px;
+  }
+}
+
+/* Coming Soon Mode Styles */
 
 .dinveda-ritual-picker__product-tag {
   position: absolute;
@@ -895,25 +919,35 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.dinveda-ritual-picker__notify-btn {
-  display: block !important;
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  background: var(--design-accent-color);
-  color: var(--design-bg-color);
-  width: 44px;
-  height: 44px;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 15;
+.dinveda-ritual-picker__notify-btn-wrapper {
+  margin-top: 20px;
+  width: 100%;
 }
 
-.dinveda-ritual-picker__notify-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+.dinveda-ritual-picker__notify-btn-full {
+  display: block;
+  width: 100%;
+  padding: 12px 24px;
+  background: transparent;
+  color: var(--design-accent-color);
+  border: 2px solid var(--design-accent-color);
+  border-radius: 6px;
+  font-family: var(--main-family);
+  font-size: var(--design-body-font-size);
+  font-weight: 500;
+  text-align: center !important;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: none;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dinveda-ritual-picker__notify-btn-full:hover {
+  background: var(--design-accent-color);
+  color: var(--design-bg-color);
 }
 
 /* Coming Soon Modal Styles */
