@@ -26,16 +26,6 @@
       "confirmation": "Danke, dass Sie unseren Newsletter abonniert haben.",
       "submit": "Werden Sie Mitglied"
     },
-    "product_notification": {
-      "popup_title": "Bleib im Rhythmus",
-      "popup_text": "Sei der Erste, der erfährt, wenn unser Golden Boost erhältlich ist. Tritt unserem Kreis bei.",
-      "email_placeholder": "deine@email.de",
-      "submit": "JETZT EINTRAGEN",
-      "gdpr_text": "Ich akzeptiere die",
-      "gdpr_link": "Datenschutzbestimmungen",
-      "confirmation": "Vielen Dank! Du wirst benachrichtigt, sobald Golden Boost verfügbar ist.",
-      "success_message": "Erfolgreich angemeldet für Produktbenachrichtigungen"
-    },
     "onboarding": {
       "no_content": "Dieser Abschnitt enthält derzeit keine Inhalte. Fügen Sie diesem Abschnitt über die Seitenleiste Inhalte Hinzu."
     },

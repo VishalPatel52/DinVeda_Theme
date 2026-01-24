@@ -10,234 +10,116 @@
   width: 100%;
   height: 100%;
   z-index: 11;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.25);
 }
 
 .newsletter__popup-container {
   position: fixed;
   top: 50%;
   left: 50%;
+  right: 20px;
   z-index: 99;
-  background: var(--design-bg-color, #FFF0DD);
-  border: none;
-  border-radius: 20px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-  width: 480px;
-  max-width: 90vw;
-  max-height: 90vh;
-  transform: translate(-50%, -50%);
-  overflow: hidden;
+  background: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+  width: 900px;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
 }
 
 .newsletter__popup-container-close {
   position: absolute;
-  right: 16px;
-  top: 16px;
-  width: 28px;
-  height: 28px;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  right: 5px;
+  top: 5px;
+  width: 35px;
+  text-align: center;
   cursor: pointer;
-  transition: background-color 0.2s ease;
-  z-index: 10;
-}
-
-.newsletter__popup-container-close:hover {
-  background: rgba(255, 255, 255, 1);
-}
-
-.newsletter__popup-illustration {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 32px 0 16px 0;
-  margin-bottom: 8px;
-}
-
-.newsletter__popup-illustration img,
-.newsletter__popup-illustration svg {
-  width: 120px;
-  height: 80px;
-  object-fit: contain;
 }
 
 .newsletter__popup-text {
-  padding: 0 40px;
+  padding: 0 25px;
+  margin: 20px auto 0;
   text-align: center;
-  margin-bottom: 32px;
 }
 
-.newsletter__popup-text h3 {
-  color: var(--design-text-color, #C17129);
-  font-size: 28px;
-  font-weight: 600;
-  margin-bottom: 16px;
-  line-height: 1.2;
-}
-
-.newsletter__popup-text p {
-  color: var(--design-text-color, #C17129);
-  font-size: 16px;
-  line-height: 1.5;
-  margin-bottom: 0;
+.newsletter__popup-text .gdpr-text {
+  font-size: var(--font-size);
+  margin-top: 10px;
 }
 
 .newsletter__popup-form {
-  padding: 0 40px 40px 40px;
+  padding: 0 25px;
+  margin: 20px auto 0;
   text-align: center;
+  padding-bottom: 25px;
+}
+
+.newsletter__popup-form small.validation-message {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.newsletter__popup-text h3 {
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.1;
+  letter-spacing: var(--heading-spacing);
 }
 
 .newsletter__popup-form input[type="email"] {
-  width: 100%;
-  padding: 16px 20px;
-  font-size: 16px;
-  border: 1px solid rgba(193, 113, 41, 0.3);
-  border-radius: 8px;
-  background: transparent;
-  color: var(--design-text-color, #C17129);
-  text-align: center;
-  margin-bottom: 20px;
-  transition: border-color 0.2s ease;
-}
-
-.newsletter__popup-form input[type="email"]:focus {
-  outline: none;
-  border-color: var(--design-text-color, #C17129);
-}
-
-.newsletter__popup-form input[type="email"]::placeholder {
-  color: rgba(193, 113, 41, 0.7);
-  font-size: 16px;
-}
-
-.gdpr-checkbox-wrapper {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 24px;
   text-align: left;
+  margin-bottom: 10px;
+  border-bottom: 1px solid !important;
 }
 
-.gdpr-checkbox-wrapper input[type="checkbox"] {
-  margin-right: 12px;
-  margin-top: 2px;
-  flex-shrink: 0;
-}
-
-.gdpr-checkbox-label {
-  font-size: 14px;
-  color: var(--design-text-color, #C17129);
-  line-height: 1.4;
-}
-
-.gdpr-checkbox-label a {
-  color: var(--design-text-color, #C17129);
-  text-decoration: underline;
-}
-
-.newsletter__popup-submit-btn {
-  width: 100%;
-  padding: 16px 24px;
-  background-color: var(--design-text-color, #C17129);
-  color: var(--design-bg-color, #FFF0DD);
-  border: none;
-  border-radius: 25px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  text-transform: none;
-  letter-spacing: 0.5px;
-}
-
-.newsletter__popup-submit-btn:hover {
-  background-color: #A05A1F;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(193, 113, 41, 0.3);
+.newsletter__popup-form input[type="submit"] {
+  margin-bottom: 0px;
 }
 
 .newsletter__popup-contentid {
-  width: 100%;
+  width: 900px;
+  text-align: center;
   overflow: hidden;
+  margin: 0 auto;
 }
-
-.newsletter__popup-contentWrapper {
-  width: 100%;
-}
-
-.gdpr-text.before-signup {
-  margin-top: 16px;
-  font-size: 12px;
-  color: rgba(193, 113, 41, 0.8);
-  line-height: 1.4;
-}
-
 .gdpr-text.before-signup p {
-  font-size: 12px;
-  margin-bottom: 0;
+  font-size: var(--font-size-sm);
+  margin-bottom: 0 !important;
   padding: 0;
 }
-
 .gdpr-text.before-signup a {
-  font-size: 12px;
-  color: var(--design-text-color, #C17129);
-  text-decoration: underline;
+  font-size: var(--font-size-sm);
 }
 
-/* Mobile responsive styles */
-@media screen and (max-width: 640px) {
+/* Allow mobile */
+@media screen and (max-width: 740px) {
   .newsletter__popup-container {
-    width: 95vw;
-    max-width: 380px;
-    margin: 0 auto;
+      width: 90%;
   }
   
-  .newsletter__popup-illustration {
-    padding: 24px 0 12px 0;
+  #newsletter__popup-content .newsletter__popup-image,
+  .newsletter__popup-contentWrapper.span-6.md-span-6.sm-span-6.auto.v-center {
+      grid-column: auto/span 12 !important;
   }
-  
-  .newsletter__popup-illustration img,
-  .newsletter__popup-illustration svg {
-    width: 100px;
-    height: 67px;
+
+  .newsletter__popup-form input#newsletter__popup-form__email {
+    width: 100% !important;
+    padding: 0;
+    text-align: center;
   }
-  
-  .newsletter__popup-text {
-    padding: 0 24px;
-    margin-bottom: 24px;
+
+  .newsletter__popup-form button.button {
+      width: 100% !important;
+      margin-bottom: var(--space-7) !important;
+      display: block;
   }
-  
-  .newsletter__popup-text h3 {
-    font-size: 24px;
-    margin-bottom: 12px;
+
+  #newsletter__popup-content .newsletter__popup-image {
+    min-height: 350px !important;
   }
-  
-  .newsletter__popup-text p {
-    font-size: 14px;
-  }
-  
-  .newsletter__popup-form {
-    padding: 0 24px 32px 24px;
-  }
-  
-  .newsletter__popup-form input[type="email"] {
-    padding: 14px 16px;
-    font-size: 16px;
-    margin-bottom: 16px;
-  }
-  
-  .gdpr-checkbox-wrapper {
-    margin-bottom: 20px;
-  }
-  
-  .gdpr-checkbox-label {
-    font-size: 13px;
-  }
-  
-  .newsletter__popup-submit-btn {
-    padding: 14px 20px;
-    font-size: 15px;
-  }
+
 }
