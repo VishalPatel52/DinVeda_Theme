@@ -173,6 +173,15 @@
   margin: 0;
 }
 
+.dv-main-product__quote-separator {
+  font-style: normal;
+}
+
+.dv-main-product__quote-attribution {
+  font-style: italic;
+  font-weight: 600;
+}
+
 /* Star Ratings */
 .dv-main-product__ratings {
   display: flex;

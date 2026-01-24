@@ -215,10 +215,7 @@
         {%- comment -%} Quote {%- endcomment -%}
         {% if quote != blank %}
           <div class="dv-main-product__quote-card">
-            <blockquote class="dv-main-product__quote-text">{{ quote | newline_to_br }}</blockquote>
-            {% if animal_name != blank %}
-              <cite class="dv-main-product__quote-attribution">{{ animal_name | escape }}</cite>
-            {% endif %}
+            <p class="dv-main-product__quote-text">"{{ quote | strip_newlines }}"{% if animal_name != blank %} <span class="dv-main-product__quote-separator">–</span> <cite class="dv-main-product__quote-attribution">{{ animal_name | escape }}</cite>{% endif %}</p>
           </div>
         {% endif %}
 
