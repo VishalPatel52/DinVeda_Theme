@@ -168,6 +168,7 @@
   font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
   font-size: 16px;
   font-style: italic;
+  font-weight: 600;
   line-height: 1.6;
   color: var(--dv-text-color);
   margin: 0;
