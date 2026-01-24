@@ -300,109 +300,125 @@
           </div>
         {% endif %}
 
-        {%- comment -%} Price {%- endcomment -%}
-        {% if product and current_variant %}
-          <div class="dv-main-product__price-section">
-            <div class="dv-main-product__price-wrapper">
-              <div class="dv-main-product__price" data-product-price>
-                <span data-regular-price>{{ current_variant.price | money }}</span>
-                {% if current_variant.compare_at_price > current_variant.price %}
-                  <span class="dv-main-product__compare-price" data-compare-price>
-                    {{ current_variant.compare_at_price | money }}
-                  </span>
-                {% endif %}
-              </div>
-              {% if section.settings.price_note != blank %}
-                <span class="dv-main-product__price-note">{{ section.settings.price_note | escape }}</span>
-              {% endif %}
-            </div>
-          </div>
+        {%- comment -%} Coming Soon Mode Check {%- endcomment -%}
+        {%- assign is_coming_soon = section.settings.coming_soon_mode | default: false -%}
 
-          {%- comment -%} Product Form {%- endcomment -%}
-          {% form 'product', product,
-            id: product_form_id,
-            class: "dv-main-product__form js-prod-form-submit"
-          %}
-            
-            <input type="hidden" name="id" id="formVariantId" value="{{ current_variant.id }}">
-
-            {%- comment -%} Variants {%- endcomment -%}
-            {% unless product.has_only_default_variant %}
-            <div class="dv-main-product__variants" data-section="{{ section.id }}">
-              {% for option in product.options_with_values %}
-                <div class="dv-main-product__variant-option">
-                  <label class="dv-main-product__variant-label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
-                    {{ option.name }}
-                  </label>
-                  <div class="dv-main-product__variant-select">
-                    <select
-                      id="Option-{{ section.id }}-{{ forloop.index0 }}"
-                      class="js-variant-selector"
-                      name="options[{{ option.name | escape }}]"
-                    >
-                      {% for value in option.values %}
-                        <option
-                          value="{{ value | escape }}"
-                          {% if option.selected_value == value %}selected="selected"{% endif %}
-                        >
-                          {{ value }}
-                        </option>
-                      {% endfor %}
-                    </select>
-                  </div>
-                </div>
-              {% endfor %}
-            </div>
-          {% endunless %}
-
-            {%- comment -%} Purchase Controls (Quantity + Buy Button) {%- endcomment -%}
-            <div class="dv-main-product__purchase-controls">
-              {%- comment -%} Quantity Row (Selector + Stock Status) {%- endcomment -%}
-              {% if section.settings.show_quantity %}
-                <div class="dv-main-product__quantity-row">
-                  <div class="dv-main-product__quantity">
-                    <div class="dv-main-product__quantity-selector">
-                      <button type="button" class="dv-main-product__quantity-btn" data-quantity-decrease>-</button>
-                      <input
-                        type="number"
-                        id="Quantity-{{ section.id }}"
-                        name="quantity"
-                        value="1"
-                        min="1"
-                        class="dv-main-product__quantity-input"
-                        data-quantity-input
-                      >
-                      <button type="button" class="dv-main-product__quantity-btn" data-quantity-increase>+</button>
-                    </div>
-                  </div>
-                  {% if current_variant and current_variant.available %}
-                    <span class="dv-main-product__stock-status">In stock</span>
+        {%- comment -%} Price - Hidden in Coming Soon mode {%- endcomment -%}
+        {% unless is_coming_soon %}
+          {% if product and current_variant %}
+            <div class="dv-main-product__price-section">
+              <div class="dv-main-product__price-wrapper">
+                <div class="dv-main-product__price" data-product-price>
+                  <span data-regular-price>{{ current_variant.price | money }}</span>
+                  {% if current_variant.compare_at_price > current_variant.price %}
+                    <span class="dv-main-product__compare-price" data-compare-price>
+                      {{ current_variant.compare_at_price | money }}
+                    </span>
                   {% endif %}
                 </div>
-              {% endif %}
-
-              {%- comment -%} Buy Now Button {%- endcomment -%}
-              {%- assign show_buy_now = section.settings.enable_buy_now | default: true -%}
-              {% if show_buy_now %}
-                <button
-                  type="button"
-                  class="dv-main-product__buy-now"
-                  data-buy-now
-                  data-variant-id="{{ current_variant.id }}"
-                  {% unless current_variant.available %}disabled{% endunless %}
-                >
-                  <svg class="dv-main-product__buy-now-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 3H5.5L6.5 10H13L14.5 5H5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                    <circle cx="7" cy="13" r="1" fill="currentColor"/>
-                    <circle cx="13" cy="13" r="1" fill="currentColor"/>
-                  </svg>
-                  <span>{{ section.settings.buy_now_label | default: "Jetzt kaufen" | escape }}</span>
-                </button>
-              {% endif %}
+                {% if section.settings.price_note != blank %}
+                  <span class="dv-main-product__price-note">{{ section.settings.price_note | escape }}</span>
+                {% endif %}
+              </div>
             </div>
+          {% endif %}
+        {% endunless %}
 
-          {% endform %}
+        {%- comment -%} Coming Soon Message - Shown only in Coming Soon mode {%- endcomment -%}
+        {% if is_coming_soon %}
+          <div class="dv-main-product__coming-soon">
+            <span class="dv-main-product__coming-soon-text">{{ section.settings.coming_soon_text | default: 'Demnächst verfügbar' }}</span>
+          </div>
         {% endif %}
+
+        {%- comment -%} Product Form - Hidden in Coming Soon mode {%- endcomment -%}
+        {% unless is_coming_soon %}
+          {% if product and current_variant %}
+            {% form 'product', product,
+              id: product_form_id,
+              class: "dv-main-product__form js-prod-form-submit"
+            %}
+              
+              <input type="hidden" name="id" id="formVariantId" value="{{ current_variant.id }}">
+
+              {%- comment -%} Variants {%- endcomment -%}
+              {% unless product.has_only_default_variant %}
+              <div class="dv-main-product__variants" data-section="{{ section.id }}">
+                {% for option in product.options_with_values %}
+                  <div class="dv-main-product__variant-option">
+                    <label class="dv-main-product__variant-label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
+                      {{ option.name }}
+                    </label>
+                    <div class="dv-main-product__variant-select">
+                      <select
+                        id="Option-{{ section.id }}-{{ forloop.index0 }}"
+                        class="js-variant-selector"
+                        name="options[{{ option.name | escape }}]"
+                      >
+                        {% for value in option.values %}
+                          <option
+                            value="{{ value | escape }}"
+                            {% if option.selected_value == value %}selected="selected"{% endif %}
+                          >
+                            {{ value }}
+                          </option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            {% endunless %}
+
+              {%- comment -%} Purchase Controls (Quantity + Buy Button) {%- endcomment -%}
+              <div class="dv-main-product__purchase-controls">
+                {%- comment -%} Quantity Row (Selector + Stock Status) {%- endcomment -%}
+                {% if section.settings.show_quantity %}
+                  <div class="dv-main-product__quantity-row">
+                    <div class="dv-main-product__quantity">
+                      <div class="dv-main-product__quantity-selector">
+                        <button type="button" class="dv-main-product__quantity-btn" data-quantity-decrease>-</button>
+                        <input
+                          type="number"
+                          id="Quantity-{{ section.id }}"
+                          name="quantity"
+                          value="1"
+                          min="1"
+                          class="dv-main-product__quantity-input"
+                          data-quantity-input
+                        >
+                        <button type="button" class="dv-main-product__quantity-btn" data-quantity-increase>+</button>
+                      </div>
+                    </div>
+                    {% if current_variant and current_variant.available %}
+                      <span class="dv-main-product__stock-status">In stock</span>
+                    {% endif %}
+                  </div>
+                {% endif %}
+
+                {%- comment -%} Buy Now Button {%- endcomment -%}
+                {%- assign show_buy_now = section.settings.enable_buy_now | default: true -%}
+                {% if show_buy_now %}
+                  <button
+                    type="button"
+                    class="dv-main-product__buy-now"
+                    data-buy-now
+                    data-variant-id="{{ current_variant.id }}"
+                    {% unless current_variant.available %}disabled{% endunless %}
+                  >
+                    <svg class="dv-main-product__buy-now-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M3 3H5.5L6.5 10H13L14.5 5H5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                      <circle cx="7" cy="13" r="1" fill="currentColor"/>
+                      <circle cx="13" cy="13" r="1" fill="currentColor"/>
+                    </svg>
+                    <span>{{ section.settings.buy_now_label | default: "Jetzt kaufen" | escape }}</span>
+                  </button>
+                {% endif %}
+              </div>
+
+            {% endform %}
+          {% endif %}
+        {% endunless %}
 
         {%- comment -%} Free Shipping Note {%- endcomment -%}
         {% if section.settings.show_shipping_note %}
@@ -1051,6 +1067,28 @@
       "id": "price_note",
       "label": "Price note",
       "default": "inkl. MwSt. / 100g Dose"
+    },
+    {
+      "type": "header",
+      "content": "Coming Soon Mode"
+    },
+    {
+      "type": "paragraph",
+      "content": "Enable this mode for out-of-stock or upcoming products. Hides price and disables purchase options."
+    },
+    {
+      "type": "checkbox",
+      "id": "coming_soon_mode",
+      "label": "Enable Coming Soon mode",
+      "default": true,
+      "info": "When enabled, hides the price and purchase buttons. Shows a 'Coming Soon' message instead."
+    },
+    {
+      "type": "text",
+      "id": "coming_soon_text",
+      "label": "Coming Soon text",
+      "default": "Demnächst verfügbar",
+      "info": "Text to display instead of the buy button"
     },
     {
       "type": "header",

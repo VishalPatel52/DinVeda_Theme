@@ -286,21 +286,6 @@
                     </div>
                   {% endif %}
                   
-                  {%- comment -%} Coming Soon Notification Button (inside card content) {%- endcomment -%}
-                  {% if section.settings.coming_soon_mode %}
-                    <div class="dinveda-ritual-picker__notify-btn-wrapper">
-                      <button 
-                        class="dinveda-ritual-picker__notify-btn-full no-js-hidden"
-                        type="button"
-                        name="button"
-                        aria-label="{{ section.settings.notify_button_text | escape }}"
-                        data-product-handle="{{ product_handle }}"
-                        data-modal-target="coming-soon-modal-{{ section.id }}"
-                      >
-                        {{ section.settings.notify_button_text | escape }}
-                      </button>
-                    </div>
-                  {% endif %}
 
                 </div>
 
