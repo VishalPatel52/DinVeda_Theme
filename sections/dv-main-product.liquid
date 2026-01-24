@@ -172,6 +172,46 @@
           <h1 class="dv-main-product__title">Product Title</h1>
         {% endif %}
 
+        {%- comment -%} Star Ratings {%- endcomment -%}
+        {% if section.settings.show_ratings %}
+          {%- liquid
+            assign rating_value = section.settings.rating_value | default: '4.3' | plus: 0
+            assign full_stars = rating_value | floor
+            assign partial_fill = rating_value | minus: full_stars | times: 100 | round
+            assign empty_stars = 5 | minus: full_stars
+            if partial_fill > 0
+              assign empty_stars = empty_stars | minus: 1
+            endif
+          -%}
+          <div class="dv-main-product__ratings">
+            <span class="dv-main-product__stars">
+              {%- comment -%} Full stars {%- endcomment -%}
+              {% for i in (1..full_stars) %}
+                <svg class="dv-main-product__star dv-main-product__star--full" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              {% endfor %}
+              {%- comment -%} Partial star {%- endcomment -%}
+              {% if partial_fill > 0 %}
+                <span class="dv-main-product__star dv-main-product__star--partial" style="--partial-fill: {{ partial_fill }}%;">
+                  <svg class="dv-main-product__star-empty" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
+                  <svg class="dv-main-product__star-fill" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
+                </span>
+              {% endif %}
+              {%- comment -%} Empty stars {%- endcomment -%}
+              {% for i in (1..empty_stars) %}
+                <svg class="dv-main-product__star dv-main-product__star--empty" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              {% endfor %}
+            </span><span class="dv-main-product__review-count"><a href="#reviews">{{ section.settings.review_count | default: '128' }} {{ section.settings.review_text | default: 'REZENSIONEN' }}</a></span>
+          </div>
+        {% endif %}
+
         {%- comment -%} Quote {%- endcomment -%}
         {% if quote != blank %}
           <div class="dv-main-product__quote-card">
@@ -181,60 +221,46 @@
             {% endif %}
           </div>
         {% endif %}
-        
-        {%- comment -%} Product Badges/Features (MetaObjects from theme editor, blocks fallback) {%- endcomment -%}
-        {%- liquid
-          assign has_trust_badges_meta = false
-          if trust_badges_meta and trust_badges_meta.size > 0
-            assign has_trust_badges_meta = true
-          endif
-          
-          assign has_badge_blocks = false
-          if section.blocks.size > 0
-            for block in section.blocks
-              if block.type == 'product_badge'
-                assign has_badge_blocks = true
-                break
-              endif
-            endfor
-          endif
-        -%}
-        
-        {% if has_trust_badges_meta or has_badge_blocks %}
-          <div class="dv-main-product__badges">
-            {%- comment -%} Priority: MetaObjects from theme editor {%- endcomment -%}
-            {% if has_trust_badges_meta %}
-              {% for trust_badge in trust_badges_meta %}
-                <div class="dv-main-product__badge">
-                  {% if trust_badge.icon_svg != blank %}
-                    <span class="dv-main-product__badge-icon">{{ trust_badge.icon_svg }}</span>
-                  {% elsif trust_badge.icon != blank %}
-                    <span class="dv-main-product__badge-icon">
-                      <img src="{{ trust_badge.icon | image_url: width: 24 }}" alt="" width="24" height="24">
-                    </span>
-                  {% elsif trust_badge.icon_material != blank %}
-                    <span class="dv-main-product__badge-icon">{{ trust_badge.icon_material | escape }}</span>
-                  {% endif %}
-                  {% if trust_badge.text != blank %}
-                    <span class="dv-main-product__badge-text">{{ trust_badge.text | escape }}</span>
-                  {% endif %}
-                </div>
-              {% endfor %}
-            {%- comment -%} Fallback: Blocks {%- endcomment -%}
-            {% elsif has_badge_blocks %}
-              {% for block in section.blocks %}
-                {% if block.type == 'product_badge' %}
-                  <div class="dv-main-product__badge" {{ block.shopify_attributes }}>
-                    {% if block.settings.icon_emoji != blank %}
-                      <span class="dv-main-product__badge-emoji">{{ block.settings.icon_emoji | escape }}</span>
-                    {% endif %}
-                    {% if block.settings.text != blank %}
-                      <span class="dv-main-product__badge-text">{{ block.settings.text | escape }}</span>
-                    {% endif %}
-                  </div>
-                {% endif %}
-              {% endfor %}
-            {% endif %}
+
+        {%- comment -%} Product Description {%- endcomment -%}
+        {% if section.settings.product_description != blank %}
+          <p class="dv-main-product__description">{{ section.settings.product_description }}</p>
+        {% endif %}
+
+        {%- comment -%} Ritual auf einen Blick (horizontal with icons) {%- endcomment -%}
+        {% if section.settings.show_ritual_glance %}
+          <div class="dv-main-product__ritual-glance">
+            <div class="dv-main-product__ritual-glance-item">
+              <span class="dv-main-product__ritual-glance-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="12" r="4"/>
+                  <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                </svg>
+              </span>
+              <span class="dv-main-product__ritual-glance-label">TAGESZEIT</span>
+              <span class="dv-main-product__ritual-glance-value">{{ ritual_time | escape }}</span>
+            </div>
+            <div class="dv-main-product__ritual-glance-divider"></div>
+            <div class="dv-main-product__ritual-glance-item">
+              <span class="dv-main-product__ritual-glance-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M17 8h1a4 4 0 1 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/>
+                </svg>
+              </span>
+              <span class="dv-main-product__ritual-glance-label">ZUBEREITUNG</span>
+              <span class="dv-main-product__ritual-glance-value">{{ ritual_prep | escape }}</span>
+            </div>
+            <div class="dv-main-product__ritual-glance-divider"></div>
+            <div class="dv-main-product__ritual-glance-item">
+              <span class="dv-main-product__ritual-glance-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M12 6v6l4 2"/>
+                </svg>
+              </span>
+              <span class="dv-main-product__ritual-glance-label">RITUALDAUER</span>
+              <span class="dv-main-product__ritual-glance-value">{{ ritual_duration | escape }}</span>
+            </div>
           </div>
         {% endif %}
 
@@ -378,22 +404,9 @@
           {% endform %}
         {% endif %}
 
-        {%- comment -%} Ritual auf einen Blick (from tags) {%- endcomment -%}
-        {% if section.settings.show_ritual_glance %}
-          <div class="dv-main-product__ritual-glance">
-            <div class="dv-main-product__ritual-glance-item">
-              <span class="dv-main-product__ritual-glance-label">Tageszeit</span>
-              <span class="dv-main-product__ritual-glance-value">{{ ritual_time | escape }}</span>
-            </div>
-            <div class="dv-main-product__ritual-glance-item">
-              <span class="dv-main-product__ritual-glance-label">Zubereitung</span>
-              <span class="dv-main-product__ritual-glance-value">{{ ritual_prep | escape }}</span>
-            </div>
-            <div class="dv-main-product__ritual-glance-item">
-              <span class="dv-main-product__ritual-glance-label">Dauer</span>
-              <span class="dv-main-product__ritual-glance-value">{{ ritual_duration | escape }}</span>
-            </div>
-          </div>
+        {%- comment -%} Free Shipping Note {%- endcomment -%}
+        {% if section.settings.show_shipping_note %}
+          <p class="dv-main-product__shipping-note">{{ section.settings.shipping_note | default: 'KOSTENLOSER VERSAND AB 50€' }}</p>
         {% endif %}
 
         {%- comment -%} Social Share (if enabled) {%- endcomment -%}
@@ -979,6 +992,59 @@
       "id": "animal_name",
       "label": "Animal Name",
       "info": "Click 'Connect dynamic source' to link to product.metafields.custom.dv_animal_name (DV Animal Name) or enter text manually. Used for quote attribution."
+    },
+    {
+      "type": "textarea",
+      "id": "product_description",
+      "label": "Product Description",
+      "info": "Short description paragraph displayed after the quote. Can be connected to product metafield."
+    },
+    {
+      "type": "header",
+      "content": "Star Ratings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_ratings",
+      "label": "Show star ratings",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "rating_value",
+      "label": "Rating value",
+      "default": "4.3",
+      "info": "Rating out of 5 (e.g., 4.3, 4.5, 5). Supports decimals for partial stars."
+    },
+    {
+      "type": "text",
+      "id": "review_count",
+      "label": "Review count",
+      "default": "128",
+      "info": "Number of reviews to display"
+    },
+    {
+      "type": "text",
+      "id": "review_text",
+      "label": "Review text",
+      "default": "REZENSIONEN",
+      "info": "Text to display after the review count (e.g., REZENSIONEN, REVIEWS, etc.)"
+    },
+    {
+      "type": "header",
+      "content": "Shipping Note"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shipping_note",
+      "label": "Show free shipping note",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "shipping_note",
+      "label": "Shipping note text",
+      "default": "KOSTENLOSER VERSAND AB 50€"
     },
     {
       "type": "text",
