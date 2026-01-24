@@ -22,37 +22,79 @@
            fill: section.settings.popup_text_color,
            hover: section.settings.popup_text_color %}
       </button>
-    <div id="newsletter__popup-content" class="newsletter__popup-contentid grid__wrapper edge cg0 rg0">
-      {% if section.settings.email_image != blank and section.settings.popup_image == 'content' %}
-        <div class="newsletter__popup-image span-6 md-span-6 sm-span-6 auto"></div>
-        {% assign content_width = 'span-6 md-span-6 sm-span-6' %}
-      {% else %}
-        {% assign content_width = 'span-12 md-span-12 sm-span-12' %}
-      {% endif %}
-      <div class="newsletter__popup-contentWrapper {{ content_width }} auto v-center">
+    <div id="newsletter__popup-content" class="newsletter__popup-contentid">
+      <!-- Fox illustration at the top -->
+      <div class="newsletter__popup-illustration">
+        {% if section.settings.fox_illustration != blank %}
+          <img src="{{ section.settings.fox_illustration | image_url: width: 120 }}" alt="Fox illustration" width="120" height="80">
+        {% else %}
+          {{ 'fox-illustration.svg' | asset_url | img_tag: 'Fox illustration', 'width: 120, height: 80' }}
+        {% endif %}
+      </div>
+      
+      <!-- Single column content wrapper -->
+      <div class="newsletter__popup-contentWrapper">
         <div class="newsletter__popup-text">
-          {% if section.settings.mail_popup_title %}
-            <h3>{{ section.settings.mail_popup_title }}</h3>
-          {% endif %}
-          {% if section.settings.mail_popup_text %}
-            <p>{{ section.settings.mail_popup_text }}</p>
+          {% if section.settings.popup_type == 'product-notification' %}
+            <h3>{{ 'product_notification.popup_title' | t }}</h3>
+            <p>{{ 'product_notification.popup_text' | t }}</p>
+          {% else %}
+            {% if section.settings.mail_popup_title %}
+              <h3>{{ section.settings.mail_popup_title }}</h3>
+            {% endif %}
+            {% if section.settings.mail_popup_text %}
+              <p>{{ section.settings.mail_popup_text }}</p>
+            {% endif %}
           {% endif %}
         </div>
+        
         <div class="newsletter__popup-form">
           {% form 'customer', id: 'mailing-popup-form' %}
             <div class="form form-vertical v-center">
-              <input type="hidden" name="contact[tags]" value="prospect, newsletter">
-              <label class="visually-hidden" for="newsletter__popup-form__email">{{ 'general.newsletter_form.email_placeholder' | t }}</label>
-              <input type="email" id="newsletter__popup-form__email" name="contact[email]" placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}">
-              <button type="submit" class="button btn-outline">{{ 'general.newsletter_form.submit' | t }}</button>
-              {% if section.settings.mail_gdpr_text %}
+              {% if section.settings.popup_type == 'product-notification' %}
+                <input type="hidden" name="contact[tags]" value="product-notification, golden-boost">
+              {% else %}
+                <input type="hidden" name="contact[tags]" value="prospect, newsletter">
+              {% endif %}
+              
+              <label class="visually-hidden" for="newsletter__popup-form__email">
+                {% if section.settings.popup_type == 'product-notification' %}
+                  {{ 'product_notification.email_placeholder' | t }}
+                {% else %}
+                  {{ 'general.newsletter_form.email_placeholder' | t }}
+                {% endif %}
+              </label>
+              
+              <input type="email" 
+                     id="newsletter__popup-form__email" 
+                     name="contact[email]" 
+                     placeholder="{% if section.settings.popup_type == 'product-notification' %}{{ 'product_notification.email_placeholder' | t }}{% else %}{{ 'general.newsletter_form.email_placeholder' | t }}{% endif %}">
+              
+              {% if section.settings.popup_type == 'product-notification' and section.settings.show_gdpr_checkbox %}
+                <div class="gdpr-checkbox-wrapper">
+                  <input type="checkbox" id="gdpr-consent" name="gdpr_consent" required>
+                  <label for="gdpr-consent" class="gdpr-checkbox-label">
+                    {{ 'product_notification.gdpr_text' | t }} 
+                    <a href="{{ section.settings.privacy_policy_url | default: '/policies/privacy-policy' }}" target="_blank">{{ 'product_notification.gdpr_link' | t }}</a>
+                  </label>
+                </div>
+              {% endif %}
+              
+              <button type="submit" class="newsletter__popup-submit-btn">
+                {% if section.settings.popup_type == 'product-notification' %}
+                  {{ 'product_notification.submit' | t }}
+                {% else %}
+                  {{ section.settings.mail_button_text | default: 'general.newsletter_form.submit' | t }}
+                {% endif %}
+              </button>
+              
+              {% if section.settings.popup_type != 'product-notification' and section.settings.mail_gdpr_text %}
                 <div class="gdpr-text before-signup">{{ section.settings.mail_gdpr_text }}</div>
               {% endif %}
             </div>
           {% endform %}
         </div>
       </div>
-      <div class="clear"></div>
     </div>
   </div>
   <style>
@@ -127,12 +169,23 @@
   "settings": [
     {
       "type": "header",
-      "content": "Mailing Popup"
+      "content": "Popup Configuration"
     },
     {
       "type": "checkbox",
       "id": "popup",
-      "label": "Show mailing list popup"
+      "label": "Show popup",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "popup_type",
+      "options": [
+        { "value": "newsletter", "label": "Newsletter signup"},
+        { "value": "product-notification", "label": "Product availability notification"}
+      ],
+      "label": "Popup type",
+      "default": "product-notification"
     },
     {
       "type": "range",
@@ -156,7 +209,66 @@
     },
     {
       "type": "header",
-      "content": "Image"
+      "content": "Illustration"
+    },
+    {
+      "type": "image_picker",
+      "id": "fox_illustration",
+      "label": "Fox illustration",
+      "info": "Upload custom fox illustration (120x80px recommended). If empty, default SVG will be used."
+    },
+    {
+      "type": "header",
+      "content": "Content (Newsletter Mode)"
+    },
+    {
+      "type": "text",
+      "id": "mail_popup_title",
+      "label": "Heading",
+      "default": "Keep In Touch"
+    },
+    {
+      "type": "text",
+      "id": "mail_popup_text",
+      "label": "Subheading",
+      "default": "Signup for exclusive offers and promotions."
+    },
+    {
+      "type": "text",
+      "id": "mail_button_text",
+      "label": "Button text",
+      "default": "Signup"
+    },
+    {
+      "type": "richtext",
+      "id": "mail_gdpr_text",
+      "label": "GDPR text",
+      "default": "<p>*By completing this form you're signing up to receive our emails and can unsubscribe at any time.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Product Notification Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_gdpr_checkbox",
+      "label": "Show GDPR consent checkbox",
+      "default": true,
+      "info": "Required for product notification popup type"
+    },
+    {
+      "type": "url",
+      "id": "privacy_policy_url",
+      "label": "Privacy policy URL",
+      "info": "Link for GDPR consent checkbox. Defaults to /policies/privacy-policy if not set."
+    },
+    {
+      "type": "header",
+      "content": "Legacy Image Settings"
+    },
+    {
+      "type": "paragraph",
+      "content": "These settings are for backward compatibility with old popup design."
     },
     {
      "type": "select",
@@ -165,45 +277,17 @@
       { "value": "background", "label": "Background image"},
       { "value": "content", "label": "Content image"}
     ],
-     "label": "Image type"
+     "label": "Image type (Legacy)"
    },
    {
     "type": "image_picker",
     "id": "email_image",
-    "label": "Image",
-    "info": "Background image: 600px x 650px / Content image: 600px x 400px recommended."
+    "label": "Background/Content Image (Legacy)",
+    "info": "Only used with old popup design. Background image: 600px x 650px / Content image: 600px x 400px recommended."
   },
   {
     "type": "header",
-    "content": "Content"
-  },
-  {
-    "type": "text",
-    "id": "mail_popup_title",
-    "label": "Heading",
-    "default": "Keep In Touch"
-  },
-  {
-    "type": "text",
-    "id": "mail_popup_text",
-    "label": "Subheading",
-    "default": "Signup for exclusive offers and promotions."
-  },
-  {
-    "type": "text",
-    "id": "mail_button_text",
-    "label": "Button text",
-    "default": "Signup"
-  },
-  {
-    "type": "richtext",
-    "id": "mail_gdpr_text",
-    "label": "GDPR text",
-    "default": "<p>*By completing this form you're signing up to receive our emails and can unsubscribe at any time.</p>"
-  },
-  {
-    "type": "header",
-    "content": "Style"
+    "content": "Legacy Style Settings"
   },
   {
     "type": "range",
@@ -212,8 +296,8 @@
     "max": 48,
     "step": 1,
     "unit": "px",
-    "label": "Heading size",
-    "default": 48
+    "label": "Heading size (Legacy)",
+    "default": 28
   },
   {
     "type": "range",
@@ -222,20 +306,22 @@
     "max": 20,
     "step": 1,
     "unit": "px",
-    "label": "Subheading size",
-    "default": 14
+    "label": "Subheading size (Legacy)",
+    "default": 16
   },
   {
     "type": "color",
     "id": "popup_text_color",
-    "label": "Text",
-    "default": "#000000"
+    "label": "Text color (Legacy)",
+    "default": "#C17129",
+    "info": "Uses theme color variables by default"
   },
   {
     "type": "color",
     "id": "popup_background_color",
-    "label": "Background",
-    "default": "#ffffff"
+    "label": "Background color (Legacy)",
+    "default": "#FFF0DD",
+    "info": "Uses theme color variables by default"
   }
 ]
 }
