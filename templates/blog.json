@@ -23,7 +23,7 @@
         "items_per_page": 20,
         "items_per_row": 3,
         "text_align": "left",
-        "show_date": true,
+        "show_date": false,
         "show_author": false,
         "show_tags": true,
         "show_comments": false
