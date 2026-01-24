@@ -216,7 +216,7 @@
             >
               {%- liquid
                 assign has_quick_add = false
-                if section.settings.enable_quick_add and is_product_link and linked_product != blank and linked_product.id != blank and current_variant != blank and current_variant.id != blank and product_available
+                if section.settings.enable_quick_add and is_product_link and linked_product != blank and linked_product.id != blank and current_variant != blank and current_variant.id != blank
                   assign has_quick_add = true
                 endif
               -%}
@@ -313,7 +313,7 @@
               {%- comment -%} Quick Add Button (for normal mode) {%- endcomment -%}
               {% unless section.settings.coming_soon_mode %}
                 {%- comment -%} Original Quick Add Button (existing code) {%- endcomment -%}
-                {% if has_quick_add and linked_product != blank and linked_product.id != blank and current_variant != blank and current_variant.id != blank and product_available %}
+                {% if has_quick_add and linked_product != blank and linked_product.id != blank and current_variant != blank and current_variant.id != blank %}
                   <button 
                     class="quick-view-{{ linked_product.id }} product-listing__quickview-trigger dinveda-ritual-picker__quick-add-btn no-js-hidden"
                     type="button"
@@ -994,7 +994,7 @@
       "type": "checkbox",
       "id": "coming_soon_mode",
       "label": "Enable Coming Soon Mode",
-      "default": true,
+      "default": false,
       "info": "Enable for soft launch. Shows notification signup instead of add-to-cart. Disable when ready to sell normally."
     },
     {
