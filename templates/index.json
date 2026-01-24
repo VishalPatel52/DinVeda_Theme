@@ -244,8 +244,10 @@
         "ritual_abend"
       ],
       "settings": {
-        "title": "Dein Tag in Balance",
-        "subtitle": "Pflanzenbasierte Rituale für jeden Moment deines Tages",
+        "title": "",
+        "subtitle": "",
+        "middle_section_title": "Dein Tag in Balance - Bald Erhältlich",
+        "middle_section_text": "Unsere neuen rituellen Mischungen sind fast fertig. Jedes Produkt ist inspiriert von der Weisheit des Tierreichs und sorgfältig für deinen modernen Alltag formuliert.",
         "display_type": "grid",
         "items_per_row": 4,
         "mobile_items_per_row": "2",
@@ -258,6 +260,9 @@
         "show_price_on_button": false,
         "quick_add_button_style": "primary",
         "multi_variant_behavior": "redirect",
+        "coming_soon_mode": true,
+        "product_tag_text": "BALD ERHÄLTLICH",
+        "notify_button_text": "BENACHRICHTIGE MICH",
         "debug_mode": false
       }
     },
