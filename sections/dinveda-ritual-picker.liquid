@@ -120,6 +120,7 @@
   id="dein-tag-in-balance"
   data-section-id="{{ section.id }}"
   data-section-type="{% if carousel %}carousel{% else %}dinveda-ritual-picker{% endif %}"
+  data-coming-soon-mode="{{ section.settings.coming_soon_mode }}"
   {% if carousel %}data-section-loaded="false" data-asset-url="{{ 'carousel.js' | asset_url }}"{% endif %}
 >
   {%- comment -%} Debug Marker {%- endcomment -%}
@@ -137,6 +138,13 @@
     {% if section.settings.subtitle != blank %}
       <div class="{{ heading_width }} dinveda-ritual-picker__subtitle-wrapper">
         <p class="dinveda-ritual-picker__subtitle {{ heading_align }}">{{ section.settings.subtitle | escape }}</p>
+      </div>
+    {% endif %}
+    
+    {%- comment -%} Coming Soon Banner {%- endcomment -%}
+    {% if section.settings.coming_soon_mode %}
+      <div class="dinveda-ritual-picker__coming-soon-banner {{ heading_width }}">
+        <p class="dinveda-ritual-picker__banner-text">{{ section.settings.coming_soon_banner_text | escape }}</p>
       </div>
     {% endif %}
     
@@ -224,10 +232,20 @@
                   -%}
                   <div class="dinveda-ritual-picker__image-wrapper">
                     {{ card_image | image_url: width: 600 | image_tag: alt: image_alt_escaped, loading: 'lazy', class: 'dinveda-ritual-picker__image' }}
+                    {% if section.settings.coming_soon_mode %}
+                      <div class="dinveda-ritual-picker__product-tag">
+                        {{ section.settings.product_tag_text | escape }}
+                      </div>
+                    {% endif %}
                   </div>
                 {% else %}
                   <div class="dinveda-ritual-picker__image-wrapper dinveda-ritual-picker__image-wrapper--placeholder">
                     {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                    {% if section.settings.coming_soon_mode %}
+                      <div class="dinveda-ritual-picker__product-tag">
+                        {{ section.settings.product_tag_text | escape }}
+                      </div>
+                    {% endif %}
                   </div>
                 {% endif %}
 
@@ -271,43 +289,65 @@
                 </a>
               {% endif %}
               
-              {%- comment -%} Plus Button (Quick Add to Cart) {%- endcomment -%}
-              {% if has_quick_add and linked_product != blank and linked_product.id != blank and current_variant != blank and current_variant.id != blank and product_available %}
+              {%- comment -%} Conditional Button: Quick Add vs Notify Me {%- endcomment -%}
+              {% if section.settings.coming_soon_mode %}
+                {%- comment -%} Coming Soon Notification Button {%- endcomment -%}
                 <button 
-                  class="quick-view-{{ linked_product.id }} product-listing__quickview-trigger dinveda-ritual-picker__quick-add-btn no-js-hidden"
+                  class="dinveda-ritual-picker__notify-btn no-js-hidden"
                   type="button"
                   name="button"
-                  aria-label="Add to cart"
-                  data-variant-id="{{ current_variant.id }}"
-                  data-product-id="{{ linked_product.id }}"
+                  aria-label="{{ section.settings.notify_button_text | escape }}"
                   data-product-handle="{{ product_handle }}"
-                  {% unless product_available %}disabled{% endunless %}
+                  data-modal-target="coming-soon-modal-{{ section.id }}"
                 >
                   {% render 'snip-icons',
-                    wrapper: '.product-listing__quickview-trigger--modal',
-                    type: 'theme',
-                    icon: 'plus',
-                    classes: 'quickview-trigger--plus vib-center',
-                    size: '18px',
-                    fill: 'var(--directional-text)',
-                    hover: 'var(--directional-text)' %}
-                  {% render 'snip-icons',
-                    wrapper: '.product-listing__quickview-trigger--modal',
-                    type: 'theme',
-                    icon: 'checkmark',
-                    classes: 'quickview-trigger--check vib-center',
-                    size: '18px',
-                    fill: 'var(--directional-text)',
-                    hover: 'var(--directional-text)' %}
-                  {% render 'snip-icons',
-                    wrapper: '.product-listing__quickview-trigger--modal',
-                    type: 'apollo',
-                    icon: 'spinner',
-                    classes: 'quickview-trigger--loading vib-center',
+                    wrapper: '.dinveda-ritual-picker__notify-btn',
+                    type: 'theme', 
+                    icon: 'mail',
+                    classes: 'notify-trigger--mail vib-center',
                     size: '18px',
                     fill: 'var(--directional-text)',
                     hover: 'var(--directional-text)' %}
                 </button>
+              {% else %}
+                {%- comment -%} Original Quick Add Button (existing code) {%- endcomment -%}
+                {% if has_quick_add and linked_product != blank and linked_product.id != blank and current_variant != blank and current_variant.id != blank and product_available %}
+                  <button 
+                    class="quick-view-{{ linked_product.id }} product-listing__quickview-trigger dinveda-ritual-picker__quick-add-btn no-js-hidden"
+                    type="button"
+                    name="button"
+                    aria-label="Add to cart"
+                    data-variant-id="{{ current_variant.id }}"
+                    data-product-id="{{ linked_product.id }}"
+                    data-product-handle="{{ product_handle }}"
+                    {% unless product_available %}disabled{% endunless %}
+                  >
+                    {% render 'snip-icons',
+                      wrapper: '.product-listing__quickview-trigger--modal',
+                      type: 'theme',
+                      icon: 'plus',
+                      classes: 'quickview-trigger--plus vib-center',
+                      size: '18px',
+                      fill: 'var(--directional-text)',
+                      hover: 'var(--directional-text)' %}
+                    {% render 'snip-icons',
+                      wrapper: '.product-listing__quickview-trigger--modal',
+                      type: 'theme',
+                      icon: 'checkmark',
+                      classes: 'quickview-trigger--check vib-center',
+                      size: '18px',
+                      fill: 'var(--directional-text)',
+                      hover: 'var(--directional-text)' %}
+                    {% render 'snip-icons',
+                      wrapper: '.product-listing__quickview-trigger--modal',
+                      type: 'apollo',
+                      icon: 'spinner',
+                      classes: 'quickview-trigger--loading vib-center',
+                      size: '18px',
+                      fill: 'var(--directional-text)',
+                      hover: 'var(--directional-text)' %}
+                  </button>
+                {% endif %}
               {% endif %}
               
               {%- comment -%} Animal Overlay (positioned outside card-inner, relative to card) {%- endcomment -%}
@@ -326,6 +366,46 @@
     {% endif %}
   </div>
 </div>
+
+{%- comment -%} Coming Soon Email Signup Modal {%- endcomment -%}
+{% if section.settings.coming_soon_mode %}
+  {% capture modal_content %}
+    <div class="dinveda-coming-soon-modal__content">
+      <h3 class="dinveda-coming-soon-modal__title">{{ 'coming_soon.modal_title' | t }}</h3>
+      <p class="dinveda-coming-soon-modal__description">{{ 'coming_soon.modal_description' | t }}</p>
+      
+      <form class="dinveda-coming-soon-modal__form" data-coming-soon-form>
+        <div class="dinveda-coming-soon-modal__input-group">
+          <input 
+            type="email" 
+            name="email"
+            class="dinveda-coming-soon-modal__email-input"
+            placeholder="{{ 'coming_soon.email_placeholder' | t }}"
+            required
+            aria-label="{{ 'coming_soon.email_placeholder' | t }}"
+          />
+          <button 
+            type="submit"
+            class="dinveda-coming-soon-modal__submit-btn"
+          >
+            {{ 'coming_soon.submit' | t }}
+          </button>
+        </div>
+        <div class="dinveda-coming-soon-modal__success-message" style="display: none;">
+          {{ 'coming_soon.success' | t }}
+        </div>
+        <div class="dinveda-coming-soon-modal__error-message" style="display: none;">
+          {{ 'coming_soon.error' | t }}
+        </div>
+      </form>
+    </div>
+  {% endcapture %}
+  
+  {% render 'snip-modal', 
+    id: 'coming-soon-modal-' | append: section.id, 
+    content: modal_content,
+    attributes: 'data-coming-soon-modal' %}
+{% endif %}
 
 {% style %}
   .dinveda-ritual-picker-{{ section.id }} {
@@ -613,6 +693,101 @@
 })();
 </script>
 
+<script>
+(function() {
+  'use strict';
+  
+  // Coming Soon Mode Handler
+  function initComingSoonMode() {
+    var section = document.querySelector('.dinveda-ritual-picker-{{ section.id }}');
+    if (!section || section.dataset.comingSoonMode !== 'true') return;
+    
+    var notifyButtons = section.querySelectorAll('.dinveda-ritual-picker__notify-btn');
+    var modal = document.getElementById('coming-soon-modal-{{ section.id }}');
+    var form = modal ? modal.querySelector('[data-coming-soon-form]') : null;
+    
+    // Handle notify button clicks
+    notifyButtons.forEach(function(button) {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        var productHandle = button.dataset.productHandle;
+        if (modal) {
+          modal.showPopover();
+          // Store product handle for form submission
+          if (form) {
+            form.dataset.productHandle = productHandle;
+          }
+        }
+      });
+    });
+    
+    // Handle form submission
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        var email = form.querySelector('input[name="email"]').value;
+        var productHandle = form.dataset.productHandle;
+        
+        // Submit to Shopify Customer API or third-party service
+        submitNotificationRequest(email, productHandle, form);
+      });
+    }
+  }
+  
+  function submitNotificationRequest(email, productHandle, form) {
+    var submitBtn = form.querySelector('.dinveda-coming-soon-modal__submit-btn');
+    var successMsg = form.querySelector('.dinveda-coming-soon-modal__success-message');
+    var errorMsg = form.querySelector('.dinveda-coming-soon-modal__error-message');
+    
+    submitBtn.textContent = '{{ "coming_soon.submitting" | t }}';
+    submitBtn.disabled = true;
+    
+    // Use Shopify's customer API for email collection
+    fetch('/contact#contact_form', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        'form_type': 'customer',
+        'utf8': '✓',
+        'contact[tags]': 'newsletter,coming-soon,' + productHandle,
+        'contact[email]': email,
+        'contact[body]': 'Coming soon notification request for: ' + productHandle
+      })
+    })
+    .then(function(response) {
+      if (response.ok) {
+        successMsg.style.display = 'block';
+        form.style.display = 'none';
+        
+        setTimeout(function() {
+          var modal = document.getElementById('coming-soon-modal-{{ section.id }}');
+          if (modal) modal.hidePopover();
+        }, 2000);
+      } else {
+        throw new Error('Network error');
+      }
+    })
+    .catch(function(error) {
+      errorMsg.style.display = 'block';
+      submitBtn.disabled = false;
+      submitBtn.textContent = '{{ "coming_soon.submit" | t }}';
+    });
+  }
+  
+  // Initialize when ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initComingSoonMode);
+  } else {
+    initComingSoonMode();
+  }
+})();
+</script>
+
 {% schema %}
 {
   "name": "DinVeda Ritual Picker",
@@ -794,6 +969,38 @@
       ],
       "default": "redirect",
       "info": "What happens when clicking add to cart on products with multiple variants"
+    },
+    {
+      "type": "header", 
+      "content": "Coming Soon Mode"
+    },
+    {
+      "type": "checkbox",
+      "id": "coming_soon_mode",
+      "label": "Enable Coming Soon Mode",
+      "default": false,
+      "info": "Enable for soft launch. Shows notification signup instead of add-to-cart. Disable when ready to sell normally."
+    },
+    {
+      "type": "text",
+      "id": "coming_soon_banner_text",
+      "label": "Coming Soon Banner Text", 
+      "default": "Sind bald erhältlich",
+      "info": "Text displayed in the section banner when coming soon mode is active"
+    },
+    {
+      "type": "text",
+      "id": "product_tag_text",
+      "label": "Product Tag Text",
+      "default": "BALD ERHÄLTLICH", 
+      "info": "Text displayed on individual product images"
+    },
+    {
+      "type": "text",
+      "id": "notify_button_text",
+      "label": "Notification Button Text",
+      "default": "BENACHRICHTIGE MICH",
+      "info": "Text for the notification signup button"
     },
     {
       "type": "header",

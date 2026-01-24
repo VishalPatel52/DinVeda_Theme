@@ -512,6 +512,15 @@
   "date_formats": {
     "month_date_year": "%B %d %Y"
   },
+  "coming_soon": {
+    "modal_title": "Benachrichtigung erhalten",
+    "modal_description": "Trage dich ein und wir informieren dich, sobald dieses Ritual verfügbar ist.",
+    "email_placeholder": "Deine E-Mail-Adresse",
+    "submit": "Benachrichtigen",
+    "submitting": "Wird gesendet...",
+    "success": "Vielen Dank! Wir benachrichtigen dich, sobald das Ritual verfügbar ist.",
+    "error": "Ein Fehler ist aufgetreten. Bitte versuche es erneut."
+  },
   "help": {
     "general": {
       "category_label": "KUNDENSERVICE",
