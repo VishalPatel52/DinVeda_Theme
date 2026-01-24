@@ -382,7 +382,8 @@
               {% endif %}
 
               {%- comment -%} Buy Now Button {%- endcomment -%}
-              {% if section.settings.enable_buy_now %}
+              {%- assign show_buy_now = section.settings.enable_buy_now | default: true -%}
+              {% if show_buy_now %}
                 <button
                   type="button"
                   class="dv-main-product__buy-now"
