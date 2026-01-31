@@ -58,7 +58,7 @@
       "age_enter": "Ja — Site eingeben"
     },
     "header": {
-      "search": "Search",
+      "search": "Suchen",
       "login": "Einloggen",
       "account": "Konto",
       "logout": "Ausloggen",
@@ -151,6 +151,9 @@
     },
     "progress": {
       "information": "Information",
+      "cart": "Warenkorb",
+      "checkout": "Kasse",
+      "confirmation": "Bestätigung",
       "shipping": "Versand",
       "payment": "Zahlung"
     },
@@ -171,6 +174,7 @@
       "city": "Stadt",
       "country": "Land",
       "postal_code": "Postleitzahl",
+      "province": "Bundesland / Region",
       "phone": "Telefon (optional)",
       "save_info": "Diese Informationen für das nächste Mal speichern"
     },
@@ -182,13 +186,17 @@
       "shipping": "Versand",
       "shipping_calculated": "(Wird im nächsten Schritt berechnet)",
       "total": "Gesamt",
+      "carbon_offset": "Klimaausgleich",
+      "included": "Inklusive",
       "discount_placeholder": "Rabattcode oder Geschenkkarte",
       "apply": "ANWENDEN"
     },
     "security": {
       "secure_payment": "SICHERE ZAHLUNG",
       "fast_shipping": "SCHNELLER VERSAND",
-      "carbon_neutral": "KLIMANEUTRAL"
+      "carbon_neutral": "KLIMANEUTRAL",
+      "secure_ssl": "SICHERE SSL-VERSCHLÜSSELUNG",
+      "dhl_gogreen": "DHL GOGREEN klimaneutral"
     }
   },
   "collections": {
@@ -243,7 +251,7 @@
       "max_price": "Der höchste Preis ist {{ price }}",
       "reset": "Zurücksetzen",
       "sort_by_placeholder": "Relevanz",
-      "to": "To",
+      "to": "bis",
       "no_results": "Keine Ergebnisse",
       "use_fewer_filters": "Verwenden Sie weniger Filter.",
       "type_to_filter": "Zum Filtern eingeben",

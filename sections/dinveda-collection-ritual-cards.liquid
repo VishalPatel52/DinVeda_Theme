@@ -205,14 +205,14 @@
                               {{ section.settings.quick_add_button_label | default: 'In den Warenkorb' }}
                             </span>
                             <span class="dinveda-ritual-picker__quick-add-loading" style="display: none;">
-                              {{ 'products.product.adding' | t | default: 'Adding...' }}
+                              {{ 'products.product.adding' | t | default: 'Wird hinzugefügt...' }}
                             </span>
                           </button>
                           <div class="dinveda-ritual-picker__quick-add-message dinveda-ritual-picker__quick-add-success" style="display: none;">
-                            {{ 'products.product.added' | t | default: 'Added to cart!' }}
+                            {{ 'products.product.added' | t | default: 'Zum Warenkorb hinzugefügt!' }}
                           </div>
                           <div class="dinveda-ritual-picker__quick-add-message dinveda-ritual-picker__quick-add-error" style="display: none;">
-                            {{ 'cart.general.cart_error' | t | default: 'Error adding to cart' }}
+                            {{ 'cart.general.cart_error' | t | default: 'Fehler beim Hinzufügen zum Warenkorb' }}
                           </div>
                         </div>
                       {% endif %}

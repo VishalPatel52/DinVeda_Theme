@@ -17,7 +17,7 @@
   elsif product
     assign call_to_action = 'products.product.add_to_cart' | t
   else
-    assign call_to_action = 'Add to cart'
+    assign call_to_action = 'products.product.add_to_cart' | t
   endif
 
   if current_variant and current_variant.available == false
