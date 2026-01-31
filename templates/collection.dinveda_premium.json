@@ -85,24 +85,11 @@
         "quick_add_button_style": "primary",
         "multi_variant_behavior": "redirect"
       }
-    },
-    "journal_promotion": {
-      "type": "dinveda-journal-promotion",
-      "settings": {
-        "title": "Deepen Your Ritual",
-        "description": "<p>Our Journal explores the intersection of ancient Ayurveda and modern science. Learn how to craft a daily ritual that serves your mind, body, and spirit.</p>",
-        "cta_label": "Read the Journal →",
-        "cta_link": "",
-        "background_mode": "design_bg",
-        "padding_top": 64,
-        "padding_bottom": 64
-      }
     }
   },
   "order": [
     "hero",
     "trust_badges",
-    "ritual_cards",
-    "journal_promotion"
+    "ritual_cards"
   ]
 }

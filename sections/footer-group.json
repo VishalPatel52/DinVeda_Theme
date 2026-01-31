@@ -15,7 +15,7 @@
       "type": "pre-footer",
       "disabled": true,
       "settings": {
-        "show_prefooter": true,
+        "show_prefooter": false,
         "prefooter_heading": "Join the Treat Club",
         "prefooter_heading_size": 47,
         "prefooter_heading_style": "normal",
