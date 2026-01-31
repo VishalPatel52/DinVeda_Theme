@@ -79,7 +79,7 @@
         "layout": "grid_4",
         "background_mode": "design_bg",
         "button_label": "Zu diesem Ritual",
-        "enable_quick_add": true,
+        "enable_quick_add": false,
         "quick_add_button_label": "In den Warenkorb",
         "show_price_on_button": false,
         "quick_add_button_style": "primary",
