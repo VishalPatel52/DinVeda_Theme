@@ -13,10 +13,10 @@
       "type": "dv-collection-hero",
       "settings": {
         "hero_image": "shopify://shop_images/ChatGPT_Image_Dec_21_2025_11_35_09_PM.png",
-        "subtitle": "Find balance with our curated Ayurvedic blends, guarded by ancient wisdom and modern clarity.",
+        "subtitle": "Finde deine Balance mit unseren kuratierten Ayurveda-Mischungen – getragen von alter Weisheit und moderner Klarheit",
         "text_alignment": "center",
         "show_text_overlay": true,
-        "heading": "Choose Your Ritual",
+        "heading": "Finde dein Wohlfühlritual",
         "border_radius": 24,
         "overlay_opacity": 40,
         "container_max_width": 1400
@@ -81,6 +81,8 @@
         "button_label": "Zu diesem Ritual",
         "enable_quick_add": true,
         "quick_add_button_label": "In den Warenkorb",
+        "show_price_on_button": false,
+        "quick_add_button_style": "primary",
         "multi_variant_behavior": "redirect"
       }
     },
@@ -91,7 +93,6 @@
         "description": "<p>Our Journal explores the intersection of ancient Ayurveda and modern science. Learn how to craft a daily ritual that serves your mind, body, and spirit.</p>",
         "cta_label": "Read the Journal →",
         "cta_link": "",
-        "image": "",
         "background_mode": "design_bg",
         "padding_top": 64,
         "padding_bottom": 64
