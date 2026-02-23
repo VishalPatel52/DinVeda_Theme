@@ -16,7 +16,7 @@
       "disabled": true,
       "settings": {
         "show_prefooter": false,
-        "prefooter_heading": "Join the Treat Club",
+        "prefooter_heading": "",
         "prefooter_heading_size": 47,
         "prefooter_heading_style": "normal",
         "color_scheme": "2"
@@ -27,6 +27,7 @@
       "blocks": {
         "judge_me_reviews_cards_carousel_ifftLB": {
           "type": "shopify://apps/judge-me-reviews/blocks/cards_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "disabled": true,
           "settings": {
             "show_sample_reviews": false,
             "reviews_selection": "all",

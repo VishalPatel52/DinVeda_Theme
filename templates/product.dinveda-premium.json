@@ -67,12 +67,12 @@
         "show_shipping_note": false,
         "shipping_note": "KOSTENLOSER VERSAND AB 50€",
         "price_note": "inkl. MwSt. / 100g Dose",
-        "coming_soon_mode": true,
+        "coming_soon_mode": false,
         "coming_soon_text": "Demnächst verfügbar",
-        "show_quantity": false,
+        "show_quantity": true,
         "add_to_cart_label": "IN DEN WARENKORB",
         "enable_buy_now": false,
-        "buy_now_label": "Coming Soon",
+        "buy_now_label": "IN DEN WARENKORB",
         "show_ritual_glance": false,
         "ritual_timing": "{{ product.metafields.custom.dv_ritual_timing.value }}",
         "preparation_mode": "",
@@ -180,95 +180,11 @@
             "label": "Nicht-EU Landwirtschaft",
             "background_color": ""
           }
-        },
-        "ingredient_item_De3Nej": {
-          "type": "ingredient_item",
-          "source": "{{ metaobjects.dv_ingredient_highlight[\"dv-ingredient-highlights\"] }}",
-          "settings": {
-            "icon": "{{ metaobjects.dv_ingredient_highlight[\"dv-ingredient-highlights\"].icon.value }}",
-            "name": "{{ metaobjects.dv_ingredient_highlight[\"dv-ingredient-highlights\"].name.value }}",
-            "description": "<p>{{ metaobjects.dv_ingredient_highlight[\"dv-ingredient-highlights\"].description | metafield_tag }}</p>"
-          }
-        },
-        "ingredient_item_piDPUa": {
-          "type": "ingredient_item",
-          "source": "{{ metaobjects.dv_ingredient_highlight.ingwer }}",
-          "settings": {
-            "icon": "{{ metaobjects.dv_ingredient_highlight.ingwer.icon.value }}",
-            "name": "{{ metaobjects.dv_ingredient_highlight.ingwer.name.value }}",
-            "description": "<p>{{ metaobjects.dv_ingredient_highlight.ingwer.description | metafield_tag }}</p>"
-          }
-        },
-        "ingredient_item_HKQ4bg": {
-          "type": "ingredient_item",
-          "source": "{{ metaobjects.dv_ingredient_highlight.maca }}",
-          "settings": {
-            "icon": "{{ metaobjects.dv_ingredient_highlight.maca.icon.value }}",
-            "name": "{{ metaobjects.dv_ingredient_highlight.maca.name.value }}",
-            "description": "<p>{{ metaobjects.dv_ingredient_highlight.maca.description | metafield_tag }}</p>"
-          }
-        },
-        "ingredient_item_U4PiBm": {
-          "type": "ingredient_item",
-          "source": "{{ metaobjects.dv_ingredient_highlight[\"ceylon-zimt\"] }}",
-          "settings": {
-            "icon": "{{ metaobjects.dv_ingredient_highlight[\"ceylon-zimt\"].icon.value }}",
-            "name": "{{ metaobjects.dv_ingredient_highlight[\"ceylon-zimt\"].name.value }}",
-            "description": "<p>{{ metaobjects.dv_ingredient_highlight[\"ceylon-zimt\"].description | metafield_tag }}</p>"
-          }
-        },
-        "ingredient_item_773Fej": {
-          "type": "ingredient_item",
-          "disabled": true,
-          "source": "{{ metaobjects.dv_ingredient_highlight.orangenschale }}",
-          "settings": {
-            "icon": "{{ metaobjects.dv_ingredient_highlight.orangenschale.icon.value }}",
-            "name": "{{ metaobjects.dv_ingredient_highlight.orangenschale.name.value }}",
-            "description": "<p>{{ metaobjects.dv_ingredient_highlight.orangenschale.description | metafield_tag }}</p>"
-          }
-        },
-        "ingredient_item_gymJyz": {
-          "type": "ingredient_item",
-          "disabled": true,
-          "source": "{{ metaobjects.dv_ingredient_highlight[\"schwarzer-pfeffer\"] }}",
-          "settings": {
-            "icon": "{{ metaobjects.dv_ingredient_highlight[\"schwarzer-pfeffer\"].icon.value }}",
-            "name": "{{ metaobjects.dv_ingredient_highlight[\"schwarzer-pfeffer\"].name.value }}",
-            "description": "<p>{{ metaobjects.dv_ingredient_highlight[\"schwarzer-pfeffer\"].description | metafield_tag }}</p>"
-          }
-        },
-        "ingredient_item_LAjYcL": {
-          "type": "ingredient_item",
-          "disabled": true,
-          "source": "{{ metaobjects.dv_ingredient_highlight.muskatnuss }}",
-          "settings": {
-            "icon": "{{ metaobjects.dv_ingredient_highlight.muskatnuss.icon.value }}",
-            "name": "{{ metaobjects.dv_ingredient_highlight.muskatnuss.name.value }}",
-            "description": "<p>{{ metaobjects.dv_ingredient_highlight.muskatnuss.description | metafield_tag }}</p>"
-          }
-        },
-        "ingredient_item_dDxner": {
-          "type": "ingredient_item",
-          "disabled": true,
-          "source": "{{ metaobjects.dv_ingredient_highlight.kardamom }}",
-          "settings": {
-            "icon": "{{ metaobjects.dv_ingredient_highlight.kardamom.icon.value }}",
-            "name": "{{ metaobjects.dv_ingredient_highlight.kardamom.name.value }}",
-            "description": "<p>{{ metaobjects.dv_ingredient_highlight.kardamom.description | metafield_tag }}</p>"
-          }
         }
       },
       "block_order": [
         "trust_badge_ELYNbJ",
-        "trust_badge_ybmkd7",
-        "ingredient_item_De3Nej",
-        "ingredient_item_piDPUa",
-        "ingredient_item_HKQ4bg",
-        "ingredient_item_U4PiBm",
-        "ingredient_item_773Fej",
-        "ingredient_item_gymJyz",
-        "ingredient_item_LAjYcL",
-        "ingredient_item_dDxner"
+        "trust_badge_ybmkd7"
       ],
       "settings": {
         "section_heading": "",
@@ -396,7 +312,7 @@
           "type": "promise_item",
           "settings": {
             "label": "Füllstoffe",
-            "description": "Kein Zucker, Kein Salz",
+            "description": "ohne zugesetzten Zucker & Salz",
             "show_crossed_out": true
           }
         }
