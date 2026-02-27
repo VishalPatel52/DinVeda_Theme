@@ -420,6 +420,25 @@
   color: var(--dv-text-light);
 }
 
+.dv-main-product__unit-price {
+  font-family: var(--main-family, "Helvetica Neue", Helvetica, Arial, sans-serif);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--dv-text-light);
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+}
+
+.dv-main-product__unit-price span {
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.dv-main-product__unit-price-label {
+  font-weight: 600;
+}
+
 /* Form */
 .dv-main-product__form {
   display: flex;

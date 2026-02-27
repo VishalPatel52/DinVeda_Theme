@@ -122,56 +122,56 @@
           "type": "ingredient_item",
           "settings": {
             "name": "Kurkuma",
-            "description": "Das „Gold des Ayurveda“ – traditionell in wärmenden Gewürzmischungen für Pitta-/Kapha-Routinen geschätzt."
+            "description": "<p>Das „Gold des Ayurveda“ – traditionell in wärmenden Gewürzmischungen für Pitta-/Kapha-Routinen geschätzt.</p>"
           }
         },
         "ingredient_item_rDhP79": {
           "type": "ingredient_item",
           "settings": {
             "name": "Ingwer",
-            "description": "Die Feuerwurzel – im Ayurveda klassisch als Begleiter des Agni in Tee- und Küchenrezepturen verwendet."
+            "description": "<p>Die Feuerwurzel – im Ayurveda klassisch als Begleiter des Agni in Tee- und Küchenrezepturen verwendet.</p>"
           }
         },
         "ingredient_item_AeBR4w": {
           "type": "ingredient_item",
           "settings": {
             "name": "Maca",
-            "description": "Anden-Power trifft Ayurveda – in ayurvedisch inspirierten Tonics und Morgenroutinen traditionell eingebunden."
+            "description": "<p>Anden-Power trifft Ayurveda – in ayurvedisch inspirierten Tonics und Morgenroutinen traditionell eingebunden.</p>"
           }
         },
         "ingredient_item_LXJQVN": {
           "type": "ingredient_item",
           "settings": {
             "name": "Ceylon-Zimt",
-            "description": "Feiner, warmer Zimt – traditionell in Kapha-orientierten Rezepturen und Chai-Mischungen genutzt."
+            "description": "<p>Feiner, warmer Zimt – traditionell in Kapha-orientierten Rezepturen und Chai-Mischungen genutzt.</p>"
           }
         },
         "ingredient_item_ckJaHV": {
           "type": "ingredient_item",
           "settings": {
             "name": "Orangenschale",
-            "description": "Sonnige Zitrusnote – im Ayurveda traditionell in Tees und Gewürzkompositionen für Leichtigkeit geschätzt."
+            "description": "<p>Sonnige Zitrusnote – im Ayurveda traditionell in Tees und Gewürzkompositionen für Leichtigkeit geschätzt.</p>"
           }
         },
         "ingredient_item_wHFMQq": {
           "type": "ingredient_item",
           "settings": {
             "name": "Schwarzer Pfeffer",
-            "description": "Der „Träger“ in Mischungen – traditionell als Yogavahi in Ayurveda-Rezepturen beschrieben."
+            "description": "<p>Der „Träger“ in Mischungen – traditionell als Yogavahi in Ayurveda-Rezepturen beschrieben.</p>"
           }
         },
         "ingredient_item_em6cCj": {
           "type": "ingredient_item",
           "settings": {
             "name": "Muskatnuss",
-            "description": "Würzig & sanft – traditionell in kleinen Mengen in abendlichen Ayurveda-Rezepturen verwendet."
+            "description": "<p>Würzig & sanft – traditionell in kleinen Mengen in abendlichen Ayurveda-Rezepturen verwendet.</p>"
           }
         },
         "ingredient_item_gGnyBG": {
           "type": "ingredient_item",
           "settings": {
             "name": "Kardamom",
-            "description": "Die edle Aromakapsel – im Ayurveda traditionell als ausgleichendes Gewürz in Chai und Süßspeisen beliebt."
+            "description": "<p>Die edle Aromakapsel – im Ayurveda traditionell als ausgleichendes Gewürz in Chai und Süßspeisen beliebt.</p>"
           }
         },
         "trust_badge_xE3CQ9": {

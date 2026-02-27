@@ -319,6 +319,19 @@
                 {% if section.settings.price_note != blank %}
                   <span class="dv-main-product__price-note">{{ section.settings.price_note | escape }}</span>
                 {% endif %}
+                {% if current_variant.unit_price %}
+                  <div class="dv-main-product__unit-price js-unit-price-wrapper">
+                    <span class="dv-main-product__unit-price-label">{{ 'general.accessibility.unit_price_label' | t }}:</span>
+                    <span class="js-unit-price">{{ current_variant.unit_price | money }}</span>
+                    <span aria-hidden="true">/</span>
+                    <span>
+                      {%- if current_variant.unit_price_measurement.reference_value != 1 -%}
+                        {{ current_variant.unit_price_measurement.reference_value }}
+                      {%- endif -%}
+                      {{ current_variant.unit_price_measurement.reference_unit }}
+                    </span>
+                  </div>
+                {% endif %}
               </div>
             </div>
           {% endif %}
