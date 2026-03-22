@@ -140,7 +140,8 @@
       "input_label": "Quantité pour {{ product }}",
       "increase": "Augmenter la quantité de {{ product }}",
       "decrease": "Réduire la quantité de {{ product }}",
-      "or":"ou"
+      "or": "ou",
+      "shop_now": "Acheter maintenant"
     }
   },
   "collections": {
@@ -199,7 +200,7 @@
       "no_results": "Aucun résultat trouvé",
       "use_fewer_filters": "Ue moins de filtres.",
       "type_to_filter": "Tapez à filtrer",
-      "match_all":"Tout associer"
+      "match_all": "Tout associer"
     }
   },
   "customer": {
@@ -231,7 +232,7 @@
       "city": "Ville",
       "country": "Pays",
       "province": "Province",
-      "zip": "Code postal \/ Zip",
+      "zip": "Code postal / Zip",
       "phone": "Téléphone",
       "set_default": "Définir comme adresse par défaut",
       "add": "Ajoutez l'adresse",
@@ -281,6 +282,20 @@
         "total": "Total",
         "fulfilled_at_html": "Fulfilled {{ date }}",
         "subtotal": "Total"
+      },
+      "confirmation": {
+        "order_number_label": "COMMANDE #%order_number% CONFIRMÉE",
+        "thank_you_message": "Merci beaucoup, %name%",
+        "subtitle": "Votre voyage vers l'équilibre a commencé. Nous avons bien reçu votre commande et préparons vos rituels avec soin.",
+        "track_order_label": "SUIVRE LE STATUT DE LA COMMANDE",
+        "items_heading": "Votre sélection de rituels",
+        "items_subtitle": "INCLUS DANS CETTE COMMANDE",
+        "status_confirmation_title": "Confirmation envoyée",
+        "status_confirmation_description": "Vérifiez votre boîte de réception pour les détails.",
+        "status_preparation_title": "Préparation en cours",
+        "status_preparation_description": "Fabriqué dans notre manufacture allemande.",
+        "status_shipping_title": "Expédition prochaine",
+        "status_shipping_description": "Livraison estimée : 2-3 jours ouvrables."
       }
     },
     "recover_password": {
@@ -317,7 +332,7 @@
       "view_full": "Voir tous les détails",
       "sale_price": "Prix soldé",
       "regular_price": "Prix ordinaire",
-      "view_all":"Voir tout"
+      "view_all": "Voir tout"
     },
     "product": {
       "designer": "Designer",
@@ -326,7 +341,7 @@
       "unavailable": "Non disponible",
       "compare_at": "Comparer à",
       "include_taxes": "Taxes incluses.",
-      "shipping_policy_html": "<a href=\"{{ link }}\">Frais d'expédition<\/a> calculés lors du paiement.",
+      "shipping_policy_html": "<a href=\"{{ link }}\">Frais d'expédition</a> calculés lors du paiement.",
       "pre_order": "Pré-commander",
       "add_to_cart": "Ajouter au panier",
       "view_options": "Voir les options",
@@ -340,12 +355,12 @@
       "view_cart": "Voir le panier",
       "continue": "Continer les achats",
       "quantity": "Quantité",
-      "required":"obligatoire",
+      "required": "obligatoire",
       "product_details": "Détails du produit",
       "product_info": "Information sur le produit",
       "product_type": "Type de produit",
       "brand": "Marque",
-      "product":"Produit",
+      "product": "Produit",
       "collection": "Collection",
       "product_description": "Description du produit",
       "product_more_details": "En détail",
@@ -374,7 +389,7 @@
       "pick_up_available": "Ramassage disponible",
       "pick_up_currently_unavailable": "Ramassage actuellement indisponible",
       "pick_up_available_at_html": "Ramassage disponible à {{ location_name }}",
-      "pick_up_unavailable_at_html": "Ramassage actuellement indisponible à <strong>{{ location_name }}<\/strong>",
+      "pick_up_unavailable_at_html": "Ramassage actuellement indisponible à <strong>{{ location_name }}</strong>",
       "pickup": "Ramasser"
     }
   },
@@ -450,5 +465,86 @@
   },
   "date_formats": {
     "month_date_year": "%B %d %Y"
+  },
+  "checkout": {
+    "general": {
+      "title": "Caisse",
+      "back_to_cart": "Retour au panier"
+    },
+    "progress": {
+      "cart": "Panier",
+      "checkout": "Caisse",
+      "confirmation": "Confirmation",
+      "shipping": "Envoi",
+      "payment": "Paiement"
+    },
+    "contact": {
+      "title": "Coordonnées",
+      "already_have_account": "Vous avez déjà un compte ?",
+      "log_in": "Se connecter",
+      "email": "Adresse e-mail",
+      "email_placeholder": "Adresse e-mail",
+      "newsletter": "Recevoir des e-mails avec des actualités et des offres concernant les rituels"
+    },
+    "shipping": {
+      "title": "Adresse de livraison",
+      "first_name": "Prénom",
+      "last_name": "Nom de famille",
+      "apartment": "Appartement, suite, etc. (facultatif)",
+      "city": "Ville",
+      "country": "Pays",
+      "postal_code": "Code postal",
+      "province": "État fédéré / Région",
+      "phone": "Téléphone (facultatif)",
+      "save_info": "Enregistrer ces informations pour la prochaine fois"
+    },
+    "actions": {
+      "return_to_cart": "< Retour au panier"
+    },
+    "summary": {
+      "subtotal": "Sous-total",
+      "shipping": "Expédition",
+      "shipping_calculated": "(Sera calculé à l'étape suivante)",
+      "total": "Total",
+      "carbon_offset": "Compensation carbone",
+      "included": "Inclusif",
+      "discount_placeholder": "Code de réduction ou carte cadeau",
+      "apply": "APPLIQUER"
+    },
+    "security": {
+      "secure_payment": "PAIEMENT SÉCURISÉ",
+      "fast_shipping": "EXPÉDITION RAPIDE",
+      "carbon_neutral": "CLIMATIQUEMENT NEUTRE",
+      "secure_ssl": "CRYPTAGE SSL SÉCURISÉ",
+      "dhl_gogreen": "DHL GOGREEN neutre en carbone"
+    }
+  },
+  "coming_soon": {
+    "modal_title": "Notification reçue",
+    "modal_description": "Inscris-toi et nous t'informerons dès que ce rituel sera disponible.",
+    "email_placeholder": "Votre adresse e-mail",
+    "submit": "Notifier",
+    "submitting": "Envoi en cours...",
+    "success": "Merci beaucoup ! Nous te préviendrons dès que le rituel sera disponible.",
+    "error": "Une erreur est survenue. Veuillez réessayer."
+  },
+  "help": {
+    "general": {
+      "category_label": "SERVICE CLIENT",
+      "page_title": "Aide et assistance",
+      "page_subtitle": "Trouvez des réponses aux questions fréquentes sur nos rituels, nos ingrédients et nos services. Nous sommes là pour vous accompagner dans votre voyage.",
+      "search_placeholder": "Rechercher des réponses...",
+      "all_category": "TOUS",
+      "support_heading": "As-tu encore besoin d'aide ?",
+      "support_text": "Notre équipe d'assistance est disponible du lundi au vendredi, de 9h à 17h HEC. Nous serons ravis de vous aider personnellement.",
+      "email_button": "ASSISTANCE E-MAIL",
+      "live_chat_button": "CHAT EN DIRECT"
+    },
+    "categories": {
+      "ordering_shipping": "COMMANDE & EXPÉDITION",
+      "product_info": "INFORMATIONS SUR LE PRODUIT",
+      "returns_refunds": "RETOUR ET REMBOURSEMENT",
+      "account_management": "GESTION DE COMPTE"
+    }
   }
 }
