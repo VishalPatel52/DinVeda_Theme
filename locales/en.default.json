@@ -77,7 +77,8 @@
       "tagged": "Tagged",
       "comments": "Comment(s)",
       "by": "By:",
-      "read_more": "Read More"
+      "read_more": "Read More",
+      "all_posts": "All posts"
     },
     "comments": {
       "title": "Leave a comment",
@@ -139,7 +140,8 @@
       "input_label": "Quantity for {{ product }}",
       "increase": "Increase quantity for {{ product }}",
       "decrease": "Decrease quantity for {{ product }}",
-      "or": "or"
+      "or": "or",
+      "shop_now": "Shop Now"
     }
   },
   "collections": {
@@ -280,6 +282,20 @@
         "total": "Total",
         "fulfilled_at_html": "Fulfilled {{ date }}",
         "subtotal": "Subtotal"
+      },
+      "confirmation": {
+        "order_number_label": "ORDER #%order_number% CONFIRMED",
+        "thank_you_message": "Thank you, %name%",
+        "subtitle": "Your journey to balance has begun. We have received your order and are carefully preparing your rituals.",
+        "track_order_label": "TRACK ORDER STATUS",
+        "items_heading": "Your Ritual Selection",
+        "items_subtitle": "INCLUDED IN THIS ORDER",
+        "status_confirmation_title": "Confirmation sent",
+        "status_confirmation_description": "Check your inbox for details.",
+        "status_preparation_title": "Being prepared",
+        "status_preparation_description": "Made in our German manufacture.",
+        "status_shipping_title": "Shipping soon",
+        "status_shipping_description": "Expected delivery: 2-3 business days."
       }
     },
     "recover_password": {
@@ -437,7 +453,8 @@
       "message_label": "Message (optional)",
       "message": "Message",
       "max_characters": "{{ max_chars }} characters max",
-      "send_on_label": "send on"
+      "send_on_label": "send on",
+      "email_label_optional": "Recipient's email address (optional)"
     }
   },
   "social": {
@@ -449,5 +466,86 @@
   },
   "date_formats": {
     "month_date_year": "%B %d %Y"
+  },
+  "checkout": {
+    "general": {
+      "title": "Checkout",
+      "back_to_cart": "Back to cart"
+    },
+    "progress": {
+      "cart": "Shopping Cart",
+      "checkout": "Checkout",
+      "confirmation": "Confirmation",
+      "shipping": "Shipping",
+      "payment": "Payment"
+    },
+    "contact": {
+      "title": "Contact Information",
+      "already_have_account": "Already have an account?",
+      "log_in": "Log in",
+      "email": "Email address",
+      "email_placeholder": "Email address",
+      "newsletter": "Receive emails with news and offers on Rituals"
+    },
+    "shipping": {
+      "title": "Shipping address",
+      "first_name": "First name",
+      "last_name": "Last Name",
+      "address": "Address",
+      "apartment": "Apartment, Suite, etc. (optional)",
+      "city": "City",
+      "country": "Country",
+      "postal_code": "Postal Code",
+      "province": "Federal State / Region",
+      "phone": "Phone (optional)",
+      "save_info": "Save this information for next time"
+    },
+    "actions": {
+      "return_to_cart": "< Back to Cart"
+    },
+    "summary": {
+      "subtotal": "Subtotal",
+      "shipping": "Shipping",
+      "shipping_calculated": "(Will be calculated in the next step)",
+      "total": "Total",
+      "carbon_offset": "Climate compensation",
+      "included": "Included",
+      "discount_placeholder": "Discount code or gift card",
+      "apply": "APPLY"
+    },
+    "security": {
+      "secure_payment": "SECURE PAYMENT",
+      "fast_shipping": "FAST SHIPPING",
+      "carbon_neutral": "CLIMATE-NEUTRAL",
+      "secure_ssl": "SECURE SSL ENCRYPTION",
+      "dhl_gogreen": "DHL GOGREEN carbon neutral"
+    }
+  },
+  "coming_soon": {
+    "modal_title": "Notification received",
+    "modal_description": "Sign up and we'll notify you as soon as this ritual is available.",
+    "email_placeholder": "Your email address",
+    "submit": "Notify",
+    "submitting": "Sending...",
+    "success": "Thank you! We will notify you as soon as the ritual is available.",
+    "error": "An error has occurred. Please try again."
+  },
+  "help": {
+    "general": {
+      "category_label": "CUSTOMER SERVICE",
+      "page_title": "Help & Support",
+      "page_subtitle": "Find answers to frequently asked questions about our rituals, ingredients, and service. We are here to accompany you on your journey.",
+      "search_placeholder": "Searching for answers...",
+      "all_category": "ALL",
+      "support_heading": "Do you still need help?",
+      "support_text": "Our support team is available Monday to Friday, 9 AM - 5 PM CET. We are happy to help you personally.",
+      "email_button": "EMAIL SUPPORT"
+    },
+    "categories": {
+      "ordering_shipping": "ORDER & SHIPPING",
+      "product_info": "PRODUCT INFORMATION",
+      "returns_refunds": "RETURNS & REFUNDS",
+      "account_management": "ACCOUNT MANAGEMENT"
+    }
   }
 }

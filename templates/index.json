@@ -167,7 +167,7 @@
         "ritual_morgen": {
           "type": "ritual_card",
           "settings": {
-            "image": "shopify://shop_images/gb_front.png",
+            "image": "shopify://shop_images/golden_boost-bio_gew_rzmischung-kurkuma_ingwer_maca-golden_milk_gew_rz-ceylon_zimt_kardamom-orangenschale_pfeffer-ayurveda_gew_rzblend-dinveda_fuchs.png",
             "phase_label": "MORGEN | AKTIVIEREN",
             "blend_name": "Golden Boost",
             "quote_line": "Ich starte clever und klar in den Tag.",
@@ -185,7 +185,7 @@
         "ritual_tag": {
           "type": "ritual_card",
           "settings": {
-            "image": "shopify://shop_images/fg_front_new.png",
+            "image": "shopify://shop_images/flow_glow-bio_gew_rzmischung-fenchel_kreuzk_mmel_koriander-ayurveda_gew_rz-ceylon_zimt_ingwer-bockshornklee_gew_rz-gew_rzdrink_nach_dem_essen-dinveda_panda_blend.png",
             "phase_label": "TAG | ZENTRIEREN",
             "blend_name": "Flow & Glow",
             "quote_line": "Ich genieße Balance und Ruhe.",
@@ -203,7 +203,7 @@
         "ritual_nachmittag": {
           "type": "ritual_card",
           "settings": {
-            "image": "shopify://shop_images/oh_front_new.png",
+            "image": "shopify://shop_images/ova_harmony-bio_kr_utermix-ayurveda_kr_utermischung-shatavari_amla_fenchel-rosenbl_ten_kr_uter-kr_utermix_tee-pflanzenmilch_latte_kr_uter-selfcare_ritual_blend.png",
             "phase_label": "BALANCE | AUSGLEICHEN",
             "blend_name": "Ova Harmony",
             "quote_line": "Ich blühe in Leichtigkeit & Harmonie.",
@@ -221,7 +221,7 @@
         "ritual_abend": {
           "type": "ritual_card",
           "settings": {
-            "image": "shopify://shop_images/mr_front.png",
+            "image": "shopify://shop_images/moon_rest-bio_abendmischung-ayurveda_abendritual-ashwagandha_brahmi_shatavari-moon_milk_mix-ceylon_zimt_kardamom-rosenbl_ten_blend-dinveda_koala.png",
             "phase_label": "ABEND | LOSLASSEN",
             "blend_name": "Moon Rest",
             "quote_line": "Ich finde Ruhe am Abend und lasse los.",
