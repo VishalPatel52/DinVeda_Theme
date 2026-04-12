@@ -1,0 +1,336 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "dv_main_product": {
+      "type": "dv-main-product",
+      "blocks": {
+        "product_badge_a": {
+          "type": "product_badge",
+          "settings": {
+            "icon_emoji": "🌿",
+            "text": "100 % Bio & vegan"
+          }
+        },
+        "product_badge_b": {
+          "type": "product_badge",
+          "source": "{{ metaobjects.dv_trust_badge[\"ohne-zusatze\"] }}",
+          "settings": {
+            "icon_emoji": "{{ metaobjects.dv_trust_badge[\"ohne-zusatze\"].icon_material.value }}",
+            "text": "{{ metaobjects.dv_trust_badge[\"ohne-zusatze\"].text.value }}"
+          }
+        },
+        "product_badge_c": {
+          "type": "product_badge",
+          "source": "{{ metaobjects.dv_trust_badge[\"100-bio-vegan\"] }}",
+          "settings": {
+            "icon_emoji": "{{ metaobjects.dv_trust_badge[\"100-bio-vegan\"].icon_material.value }}",
+            "text": "{{ metaobjects.dv_trust_badge[\"100-bio-vegan\"].text.value }}"
+          }
+        },
+        "product_badge_d": {
+          "type": "product_badge",
+          "source": "{{ metaobjects.dv_trust_badge[\"ayurvedisch-inspiriert\"] }}",
+          "settings": {
+            "icon_emoji": "{{ metaobjects.dv_trust_badge[\"ayurvedisch-inspiriert\"].icon_material.value }}",
+            "text": "{{ metaobjects.dv_trust_badge[\"ayurvedisch-inspiriert\"].text.value }}"
+          }
+        }
+      },
+      "block_order": [
+        "product_badge_a",
+        "product_badge_b",
+        "product_badge_c",
+        "product_badge_d"
+      ],
+      "settings": {
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "show_thumbnails": true,
+        "show_organic_label": true,
+        "show_vegan_label": true,
+        "subtitle": "{{ product.metafields.custom.dinveda_dv_subtitle.value }}",
+        "quote": "{{ product.metafields.custom.dv_product_quote.value }}",
+        "animal_name": "",
+        "product_description": "",
+        "show_ratings": true,
+        "rating_value": "5",
+        "review_count": "12",
+        "review_text": "REZENSIONEN",
+        "show_shipping_note": false,
+        "shipping_note": "KOSTENLOSER VERSAND AB 50€",
+        "price_note": "inkl. MwSt. / 100g Dose",
+        "coming_soon_mode": false,
+        "coming_soon_text": "Demnächst verfügbar",
+        "show_quantity": true,
+        "add_to_cart_label": "IN DEN WARENKORB",
+        "enable_buy_now": false,
+        "buy_now_label": "IN DEN WARENKORB",
+        "show_ritual_glance": false,
+        "ritual_timing": "{{ product.metafields.custom.dv_ritual_timing.value }}",
+        "preparation_mode": "",
+        "ritual_duration": "",
+        "time_fallback": "",
+        "prep_fallback": "",
+        "duration_fallback": "",
+        "enable_purity_promise_badge": false,
+        "purity_promise_background_color": "#c17129",
+        "purity_promise_badge_1_crossed": false,
+        "purity_promise_badge_2_crossed": false,
+        "purity_promise_badge_3_crossed": false,
+        "show_social_share": true,
+        "show_facebook": false,
+        "facebook_url": "",
+        "show_twitter": false,
+        "twitter_url": "",
+        "show_pinterest": false,
+        "pinterest_url": "",
+        "show_instagram": true,
+        "instagram_url": "",
+        "show_youtube": true,
+        "youtube_url": ""
+      }
+    },
+    "dv_story_card": {
+      "type": "dv-story-card",
+      "settings": {
+        "title": "{{ product.metafields.custom.dv_story_title.value }}",
+        "animal_name": "",
+        "content": "{{ product.metafields.custom.dv_story_content | metafield_tag }}",
+        "traditional_benefits": "",
+        "show_when_empty": false,
+        "show_fox_icon": false,
+        "fox_icon": "",
+        "icon_size": 140,
+        "checklist_heading": "Traditionell geschätzt für …",
+        "show_disclaimer": false,
+        "disclaimer_text": "AYURVEDISCH INSPIRIERTE GENUSS-TRADITION. KEIN HEILVERSPRECHEN.",
+        "background_color": "#fdf0de",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "dv_product_benefits": {
+      "type": "dv-product-benefits",
+      "settings": {
+        "title": "{{ product.metafields.custom.dv_product_benefits_section_title.value }}",
+        "show_when_empty": false,
+        "padding_top": 48,
+        "padding_bottom": 48
+      },
+      "blocks": {
+        "benefit_item_a1": {
+          "type": "benefit_item",
+          "source": "{{ metaobjects.dv_product_benefits[\"ashwagandha-benefit-1\"] }}",
+          "settings": {
+            "icon": "{{ metaobjects.dv_product_benefits[\"ashwagandha-benefit-1\"].icon.value }}",
+            "title": "{{ metaobjects.dv_product_benefits[\"ashwagandha-benefit-1\"].title.value }}",
+            "description": "{{ metaobjects.dv_product_benefits[\"ashwagandha-benefit-1\"].description | metafield_tag }}"
+          }
+        },
+        "benefit_item_a2": {
+          "type": "benefit_item",
+          "source": "{{ metaobjects.dv_product_benefits[\"ashwagandha-benefit-2\"] }}",
+          "settings": {
+            "icon": "{{ metaobjects.dv_product_benefits[\"ashwagandha-benefit-2\"].icon.value }}",
+            "title": "{{ metaobjects.dv_product_benefits[\"ashwagandha-benefit-2\"].title.value }}",
+            "description": "{{ metaobjects.dv_product_benefits[\"ashwagandha-benefit-2\"].description | metafield_tag }}"
+          }
+        },
+        "benefit_item_a3": {
+          "type": "benefit_item",
+          "source": "{{ metaobjects.dv_product_benefits[\"ashwagandha-benefit-3\"] }}",
+          "settings": {
+            "icon": "{{ metaobjects.dv_product_benefits[\"ashwagandha-benefit-3\"].icon.value }}",
+            "title": "{{ metaobjects.dv_product_benefits[\"ashwagandha-benefit-3\"].title.value }}",
+            "description": "{{ metaobjects.dv_product_benefits[\"ashwagandha-benefit-3\"].description | metafield_tag }}"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_item_a1",
+        "benefit_item_a2",
+        "benefit_item_a3"
+      ]
+    },
+    "dv_detail_grid": {
+      "type": "dv-detail-grid",
+      "settings": {
+        "section_heading": "",
+        "layout_mode": "both",
+        "tradition_title": "{{ product.metafields.custom.dv_detail_left_title.value }}",
+        "tradition_body": "{{ product.metafields.custom.dv_detail_left_body | metafield_tag }}",
+        "facts_title": "{{ product.metafields.custom.dv_facts_title.value }}",
+        "show_eu_bio_badges": true,
+        "eu_bio_code": "{{ product.metafields.custom.dv_control_code.value }}",
+        "eu_non_eu_label": "{{ product.metafields.custom.dv_origin.value }}",
+        "eu_bio_badges_bg_color": "#F3E9DC",
+        "zutaten_heading": "",
+        "first_ingredients": "{{ product.metafields.custom.dv_first_ingredients | metafield_tag }}",
+        "organic_note": "100 % Bio – aus kontrolliert biologischem Anbau",
+        "allergens_notes": "{{ product.metafields.custom.dv_allergens_notes | metafield_tag }}",
+        "show_when_empty": false,
+        "padding_top": 24,
+        "padding_bottom": 24,
+        "background_color": "",
+        "trust_badges_bg_color": "#F3E9DC"
+      }
+    },
+    "dv_recipe_cards": {
+      "type": "dv-recipe-cards",
+      "settings": {
+        "heading": "{{ product.metafields.custom.dv_recipe_cards_section_heading.value }}",
+        "show_when_empty": false,
+        "padding_top": 32,
+        "padding_bottom": 32
+      },
+      "blocks": {
+        "recipe_card_a1": {
+          "type": "recipe_card",
+          "source": "{{ metaobjects.dv_recipe_card[\"ashwagandha-recipe-1\"] }}",
+          "settings": {
+            "icon": "{{ metaobjects.dv_recipe_card[\"ashwagandha-recipe-1\"].icon.value }}",
+            "title": "{{ metaobjects.dv_recipe_card[\"ashwagandha-recipe-1\"].title.value }}",
+            "description": "{{ metaobjects.dv_recipe_card[\"ashwagandha-recipe-1\"].body | metafield_tag }}",
+            "usage_instruction": "{{ metaobjects.dv_recipe_card[\"ashwagandha-recipe-1\"].usage_instruction.value }}"
+          }
+        },
+        "recipe_card_a2": {
+          "type": "recipe_card",
+          "source": "{{ metaobjects.dv_recipe_card[\"ashwagandha-recipe-2\"] }}",
+          "settings": {
+            "icon": "{{ metaobjects.dv_recipe_card[\"ashwagandha-recipe-2\"].icon.value }}",
+            "title": "{{ metaobjects.dv_recipe_card[\"ashwagandha-recipe-2\"].title.value }}",
+            "description": "{{ metaobjects.dv_recipe_card[\"ashwagandha-recipe-2\"].body | metafield_tag }}",
+            "usage_instruction": "{{ metaobjects.dv_recipe_card[\"ashwagandha-recipe-2\"].usage_instruction.value }}"
+          }
+        },
+        "recipe_card_a3": {
+          "type": "recipe_card",
+          "source": "{{ metaobjects.dv_recipe_card[\"ashwagandha-recipe-3\"] }}",
+          "settings": {
+            "icon": "{{ metaobjects.dv_recipe_card[\"ashwagandha-recipe-3\"].icon.value }}",
+            "title": "{{ metaobjects.dv_recipe_card[\"ashwagandha-recipe-3\"].title.value }}",
+            "description": "{{ metaobjects.dv_recipe_card[\"ashwagandha-recipe-3\"].body | metafield_tag }}",
+            "usage_instruction": "{{ metaobjects.dv_recipe_card[\"ashwagandha-recipe-3\"].usage_instruction.value }}"
+          }
+        },
+        "recipe_card_a4": {
+          "type": "recipe_card",
+          "source": "{{ metaobjects.dv_recipe_card[\"ashwagandha-recipe-4\"] }}",
+          "settings": {
+            "icon": "{{ metaobjects.dv_recipe_card[\"ashwagandha-recipe-4\"].icon.value }}",
+            "title": "{{ metaobjects.dv_recipe_card[\"ashwagandha-recipe-4\"].title.value }}",
+            "description": "{{ metaobjects.dv_recipe_card[\"ashwagandha-recipe-4\"].body | metafield_tag }}",
+            "usage_instruction": "{{ metaobjects.dv_recipe_card[\"ashwagandha-recipe-4\"].usage_instruction.value }}"
+          }
+        }
+      },
+      "block_order": [
+        "recipe_card_a1",
+        "recipe_card_a2",
+        "recipe_card_a3",
+        "recipe_card_a4"
+      ]
+    },
+    "dv_nutrition_table": {
+      "type": "dv-nutrition-table",
+      "settings": {
+        "accordion_title": "Nährwertangaben (pro 100 g)",
+        "heading": "Nährwertangaben (pro 100 g)",
+        "nutrition_content": "",
+        "show_when_empty": false,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "dv_compliance_accordion": {
+      "type": "dv-compliance-accordion",
+      "settings": {
+        "accordion_title": "Wichtige Hinweise & Lagerung",
+        "heading": "Wichtige Hinweise",
+        "storage_label": "Lagerung",
+        "storage_content": "",
+        "legal_label": "Rechtlicher Hinweis",
+        "legal_content": "",
+        "show_when_empty": false,
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "dv_purity_promise": {
+      "type": "dv-purity-promise",
+      "blocks": {
+        "promise_a": {
+          "type": "promise_item",
+          "settings": {
+            "label": "Aromen",
+            "description": "Keine Zusätze",
+            "show_crossed_out": true
+          }
+        },
+        "promise_b": {
+          "type": "promise_item",
+          "settings": {
+            "label": "100% Bio",
+            "description": "Reine Naturkraft",
+            "show_crossed_out": false
+          }
+        },
+        "promise_c": {
+          "type": "promise_item",
+          "settings": {
+            "label": "Füllstoffe",
+            "description": "ohne zugesetzten Zucker & Salz",
+            "show_crossed_out": true
+          }
+        }
+      },
+      "block_order": [
+        "promise_a",
+        "promise_b",
+        "promise_c"
+      ],
+      "settings": {
+        "title": "Unser Reinheitsversprechen",
+        "tagline": "Ohne Kompromisse. 100% Natur.",
+        "show_when_empty": false,
+        "background_color": "#c17129",
+        "padding_top": 64,
+        "padding_bottom": 56
+      }
+    },
+    "dv_complete_ritual": {
+      "type": "dv-complete-ritual",
+      "settings": {
+        "heading": "Passend dazu",
+        "subheading": "",
+        "view_all_label": "",
+        "view_all_link": "",
+        "button_label": "",
+        "show_empty_message": false,
+        "empty_message": "",
+        "padding_top": 48,
+        "padding_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "dv_main_product",
+    "dv_story_card",
+    "dv_product_benefits",
+    "dv_detail_grid",
+    "dv_recipe_cards",
+    "dv_nutrition_table",
+    "dv_compliance_accordion",
+    "dv_purity_promise",
+    "dv_complete_ritual"
+  ]
+}

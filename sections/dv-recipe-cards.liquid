@@ -16,10 +16,14 @@
   # Recipe cards from metaobject list (product metafield)
   assign recipe_cards_meta = null
   assign has_recipe_cards_meta = false
-  if product.metafields.custom.dv_recipe_cards
-    assign recipe_cards_meta = product.metafields.custom.dv_recipe_cards.value
-    if recipe_cards_meta and recipe_cards_meta.size > 0
-      assign has_recipe_cards_meta = true
+  assign recipes_metafield = product.metafields.custom.dv_recipe_cards
+  if recipes_metafield != blank
+    assign recipe_cards_meta = recipes_metafield.value
+    if recipe_cards_meta != blank and recipe_cards_meta != empty
+      assign recipes_count = recipe_cards_meta | size
+      if recipes_count > 0
+        assign has_recipe_cards_meta = true
+      endif
     endif
   endif
   

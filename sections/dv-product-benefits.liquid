@@ -16,9 +16,10 @@
   # Product benefits from metaobject list (product metafield)
   assign product_benefits_meta = null
   assign has_product_benefits_meta = false
-  if product.metafields.custom.dv_product_benefits
-    assign product_benefits_meta = product.metafields.custom.dv_product_benefits.value
-    if product_benefits_meta and product_benefits_meta.size > 0
+  assign benefits_metafield = product.metafields.custom.dv_product_benefits
+  if benefits_metafield != blank
+    assign product_benefits_meta = benefits_metafield.value
+    if product_benefits_meta != blank and product_benefits_meta != empty
       assign has_product_benefits_meta = true
     endif
   endif
@@ -87,7 +88,18 @@
             {%- comment -%} Description {%- endcomment -%}
             {% if benefit.description != blank %}
               <div class="dv-product-benefits__item-description rte">
-                {{ benefit.description.value | default: benefit.description | metafield_tag }}
+                {%- assign desc_raw = benefit.description.value -%}
+                {%- if desc_raw contains '"value":"' -%}
+                  {%- assign desc_parts = desc_raw | split: '"value":"' -%}
+                  {%- if desc_parts.size > 1 -%}
+                    {%- assign desc_text = desc_parts[1] | split: '"}' | first -%}
+                    <p>{{ desc_text }}</p>
+                  {%- else -%}
+                    {{ benefit.description | metafield_tag }}
+                  {%- endif -%}
+                {%- else -%}
+                  {{ benefit.description | metafield_tag }}
+                {%- endif -%}
               </div>
             {% endif %}
           </div>

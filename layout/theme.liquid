@@ -66,7 +66,7 @@
   {%- endif -%}
   
   {%- comment -%} Load DV template CSS for dinveda-premium template {%- endcomment -%}
-  {%- if template.name == 'product' and template.suffix == 'dinveda-premium' -%}
+  {%- if template.name == 'product' -%}
     <link rel="preload" href="{{ 'dv-pdp.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="{{ 'dv-pdp.css' | asset_url }}"></noscript>
     <link rel="preload" href="{{ 'dv-product-benefits.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">

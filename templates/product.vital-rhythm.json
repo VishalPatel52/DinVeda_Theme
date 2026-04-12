@@ -1,0 +1,377 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "dv_main_product": {
+      "type": "dv-main-product",
+      "blocks": {
+        "product_badge_7M67Tc": {
+          "type": "product_badge",
+          "settings": {
+            "icon_emoji": "🌿",
+            "text": "100 % Bio & vegan"
+          }
+        },
+        "product_badge_UzGNLX": {
+          "type": "product_badge",
+          "source": "{{ metaobjects.dv_trust_badge[\"ohne-zusatze\"] }}",
+          "settings": {
+            "icon_emoji": "{{ metaobjects.dv_trust_badge[\"ohne-zusatze\"].icon_material.value }}",
+            "text": "{{ metaobjects.dv_trust_badge[\"ohne-zusatze\"].text.value }}"
+          }
+        },
+        "product_badge_rzxECF": {
+          "type": "product_badge",
+          "source": "{{ metaobjects.dv_trust_badge[\"100-bio-vegan\"] }}",
+          "settings": {
+            "icon_emoji": "{{ metaobjects.dv_trust_badge[\"100-bio-vegan\"].icon_material.value }}",
+            "text": "{{ metaobjects.dv_trust_badge[\"100-bio-vegan\"].text.value }}"
+          }
+        },
+        "product_badge_wJTQ46": {
+          "type": "product_badge",
+          "source": "{{ metaobjects.dv_trust_badge[\"ayurvedisch-inspiriert\"] }}",
+          "settings": {
+            "icon_emoji": "{{ metaobjects.dv_trust_badge[\"ayurvedisch-inspiriert\"].icon_material.value }}",
+            "text": "{{ metaobjects.dv_trust_badge[\"ayurvedisch-inspiriert\"].text.value }}"
+          }
+        }
+      },
+      "block_order": [
+        "product_badge_7M67Tc",
+        "product_badge_UzGNLX",
+        "product_badge_rzxECF",
+        "product_badge_wJTQ46"
+      ],
+      "settings": {
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "show_thumbnails": true,
+        "show_organic_label": true,
+        "show_vegan_label": true,
+        "subtitle": "{{ product.metafields.custom.dinveda_dv_subtitle.value }}",
+        "quote": "{{ product.metafields.custom.dv_product_quote.value }}",
+        "animal_name": "{{ product.metafields.custom.dv_animal_name.value }}",
+        "product_description": "",
+        "show_ratings": true,
+        "rating_value": "5",
+        "review_count": "20",
+        "review_text": "REZENSIONEN",
+        "show_shipping_note": false,
+        "shipping_note": "KOSTENLOSER VERSAND AB 50€",
+        "price_note": "inkl. MwSt. / 100g Dose",
+        "coming_soon_mode": false,
+        "coming_soon_text": "Demnächst verfügbar",
+        "show_quantity": true,
+        "add_to_cart_label": "IN DEN WARENKORB",
+        "enable_buy_now": false,
+        "buy_now_label": "IN DEN WARENKORB",
+        "show_ritual_glance": false,
+        "ritual_timing": "{{ product.metafields.custom.dv_ritual_timing.value }}",
+        "preparation_mode": "",
+        "ritual_duration": "",
+        "time_fallback": "",
+        "prep_fallback": "",
+        "duration_fallback": "",
+        "enable_purity_promise_badge": false,
+        "purity_promise_background_color": "#c17129",
+        "purity_promise_badge_1_crossed": false,
+        "purity_promise_badge_2_crossed": false,
+        "purity_promise_badge_3_crossed": false,
+        "show_social_share": true,
+        "show_facebook": false,
+        "facebook_url": "",
+        "show_twitter": false,
+        "twitter_url": "",
+        "show_pinterest": false,
+        "pinterest_url": "",
+        "show_instagram": true,
+        "instagram_url": "",
+        "show_youtube": true,
+        "youtube_url": ""
+      }
+    },
+    "dv_story_card": {
+      "type": "dv-story-card",
+      "settings": {
+        "title": "{{ product.metafields.custom.dv_story_title.value }}",
+        "animal_name": "{{ product.metafields.custom.dv_animal_name.value }}",
+        "content": "{{ product.metafields.custom.dv_story_content | metafield_tag }}",
+        "traditional_benefits": "",
+        "show_when_empty": false,
+        "show_fox_icon": true,
+        "fox_icon": "shopify://shop_images/ChatGPT_Image_Jan_12_2026_08_34_22_PM.png",
+        "icon_size": 140,
+        "checklist_heading": "Traditionell geschätzt für …",
+        "show_disclaimer": false,
+        "disclaimer_text": "AYURVEDISCH INSPIRIERTE GENUSS-TRADITION. KEIN HEILVERSPRECHEN.",
+        "background_color": "#fdf0de",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "dv_product_benefits": {
+      "type": "dv-product-benefits",
+      "blocks": {
+        "benefit_item_vr1": {
+          "type": "benefit_item",
+          "source": "{{ metaobjects.dv_product_benefits[\"cardiovascular-innerer-fluss\"] }}",
+          "settings": {
+            "icon": "{{ metaobjects.dv_product_benefits[\"cardiovascular-innerer-fluss\"].icon.value }}",
+            "title": "{{ metaobjects.dv_product_benefits[\"cardiovascular-innerer-fluss\"].title.value }}",
+            "description": "{{ metaobjects.dv_product_benefits[\"cardiovascular-innerer-fluss\"].description | metafield_tag }}"
+          }
+        },
+        "benefit_item_vr2": {
+          "type": "benefit_item",
+          "source": "{{ metaobjects.dv_product_benefits[\"cardiovascular-ausdauer-der-natur\"] }}",
+          "settings": {
+            "icon": "{{ metaobjects.dv_product_benefits[\"cardiovascular-ausdauer-der-natur\"].icon.value }}",
+            "title": "{{ metaobjects.dv_product_benefits[\"cardiovascular-ausdauer-der-natur\"].title.value }}",
+            "description": "{{ metaobjects.dv_product_benefits[\"cardiovascular-ausdauer-der-natur\"].description | metafield_tag }}"
+          }
+        },
+        "benefit_item_vr3": {
+          "type": "benefit_item",
+          "source": "{{ metaobjects.dv_product_benefits[\"cardiovascular-ganzheitliche-balance\"] }}",
+          "settings": {
+            "icon": "{{ metaobjects.dv_product_benefits[\"cardiovascular-ganzheitliche-balance\"].icon.value }}",
+            "title": "{{ metaobjects.dv_product_benefits[\"cardiovascular-ganzheitliche-balance\"].title.value }}",
+            "description": "{{ metaobjects.dv_product_benefits[\"cardiovascular-ganzheitliche-balance\"].description | metafield_tag }}"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_item_vr1",
+        "benefit_item_vr2",
+        "benefit_item_vr3"
+      ],
+      "settings": {
+        "title": "{{ product.metafields.custom.dv_product_benefits_section_title.value }}",
+        "show_when_empty": false,
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "dv_detail_grid": {
+      "type": "dv-detail-grid",
+      "blocks": {
+        "trust_badge_ELYNbJ": {
+          "type": "trust_badge",
+          "disabled": true,
+          "settings": {
+            "icon": "shopify://shop_images/eu-logo.jpg",
+            "label": "DE-ÖKO-037",
+            "background_color": ""
+          }
+        },
+        "trust_badge_ybmkd7": {
+          "type": "trust_badge",
+          "disabled": true,
+          "settings": {
+            "icon": "shopify://shop_images/show-th-ewhole-globe-and-all-countires.png",
+            "label": "Nicht-EU Landwirtschaft",
+            "background_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "trust_badge_ELYNbJ",
+        "trust_badge_ybmkd7"
+      ],
+      "settings": {
+        "section_heading": "",
+        "layout_mode": "both",
+        "tradition_title": "{{ product.metafields.custom.dv_detail_left_title.value }}",
+        "tradition_body": "{{ product.metafields.custom.dv_detail_left_body | metafield_tag }}",
+        "facts_title": "{{ product.metafields.custom.dv_facts_title.value }}",
+        "show_eu_bio_badges": true,
+        "eu_bio_code": "{{ product.metafields.custom.dv_control_code.value }}",
+        "eu_non_eu_label": "{{ product.metafields.custom.dv_origin.value }}",
+        "eu_bio_badges_bg_color": "#F3E9DC",
+        "zutaten_heading": "",
+        "first_ingredients": "{{ product.metafields.custom.dv_first_ingredients | metafield_tag }}",
+        "organic_note": "100 % Bio – aus kontrolliert biologischem Anbau",
+        "allergens_notes": "{{ product.metafields.custom.dv_allergens_notes | metafield_tag }}",
+        "show_when_empty": false,
+        "padding_top": 24,
+        "padding_bottom": 24,
+        "background_color": "",
+        "trust_badges_bg_color": "#F3E9DC"
+      }
+    },
+    "dv_recipe_cards": {
+      "type": "dv-recipe-cards",
+      "blocks": {
+        "recipe_card_vr1": {
+          "type": "recipe_card",
+          "source": "{{ metaobjects.dv_recipe_card[\"cardiovascular-vitaler-morgen-smoothie\"] }}",
+          "settings": {
+            "icon": "{{ metaobjects.dv_recipe_card[\"cardiovascular-vitaler-morgen-smoothie\"].icon.value }}",
+            "title": "{{ metaobjects.dv_recipe_card[\"cardiovascular-vitaler-morgen-smoothie\"].title.value }}",
+            "description": "{{ metaobjects.dv_recipe_card[\"cardiovascular-vitaler-morgen-smoothie\"].body | metafield_tag }}",
+            "usage_instruction": "{{ metaobjects.dv_recipe_card[\"cardiovascular-vitaler-morgen-smoothie\"].usage_instruction.value }}"
+          }
+        },
+        "recipe_card_vr2": {
+          "type": "recipe_card",
+          "source": "{{ metaobjects.dv_recipe_card[\"cardiovascular-w-rmender-herzens-trunk\"] }}",
+          "settings": {
+            "icon": "{{ metaobjects.dv_recipe_card[\"cardiovascular-w-rmender-herzens-trunk\"].icon.value }}",
+            "title": "{{ metaobjects.dv_recipe_card[\"cardiovascular-w-rmender-herzens-trunk\"].title.value }}",
+            "description": "{{ metaobjects.dv_recipe_card[\"cardiovascular-w-rmender-herzens-trunk\"].body | metafield_tag }}",
+            "usage_instruction": "{{ metaobjects.dv_recipe_card[\"cardiovascular-w-rmender-herzens-trunk\"].usage_instruction.value }}"
+          }
+        },
+        "recipe_card_vr3": {
+          "type": "recipe_card",
+          "source": "{{ metaobjects.dv_recipe_card[\"vital-rhythm-hibiskus-bowl\"] }}",
+          "settings": {
+            "icon": "{{ metaobjects.dv_recipe_card[\"vital-rhythm-hibiskus-bowl\"].icon.value }}",
+            "title": "{{ metaobjects.dv_recipe_card[\"vital-rhythm-hibiskus-bowl\"].title.value }}",
+            "description": "{{ metaobjects.dv_recipe_card[\"vital-rhythm-hibiskus-bowl\"].body | metafield_tag }}",
+            "usage_instruction": "{{ metaobjects.dv_recipe_card[\"vital-rhythm-hibiskus-bowl\"].usage_instruction.value }}"
+          }
+        },
+        "recipe_card_vr4": {
+          "type": "recipe_card",
+          "source": "{{ metaobjects.dv_recipe_card[\"vital-rhythm-kuchen-gewurz\"] }}",
+          "settings": {
+            "icon": "{{ metaobjects.dv_recipe_card[\"vital-rhythm-kuchen-gewurz\"].icon.value }}",
+            "title": "{{ metaobjects.dv_recipe_card[\"vital-rhythm-kuchen-gewurz\"].title.value }}",
+            "description": "{{ metaobjects.dv_recipe_card[\"vital-rhythm-kuchen-gewurz\"].body | metafield_tag }}",
+            "usage_instruction": "{{ metaobjects.dv_recipe_card[\"vital-rhythm-kuchen-gewurz\"].usage_instruction.value }}"
+          }
+        }
+      },
+      "block_order": [
+        "recipe_card_vr1",
+        "recipe_card_vr2",
+        "recipe_card_vr3",
+        "recipe_card_vr4"
+      ],
+      "settings": {
+        "heading": "{{ product.metafields.custom.dv_recipe_cards_section_heading.value }}",
+        "show_when_empty": false,
+        "padding_top": 32,
+        "padding_bottom": 32
+      }
+    },
+    "dv_nutrition_table": {
+      "type": "dv-nutrition-table",
+      "settings": {
+        "accordion_title": "Nährwertangaben (pro 100 g)",
+        "heading": "Nährwertangaben (pro 100 g)",
+        "nutrition_content": "",
+        "show_when_empty": false,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "dv_compliance_accordion": {
+      "type": "dv-compliance-accordion",
+      "settings": {
+        "accordion_title": "Wichtige Hinweise & Lagerung",
+        "heading": "Wichtige Hinweise",
+        "storage_label": "Lagerung",
+        "storage_content": "",
+        "legal_label": "Rechtlicher Hinweis",
+        "legal_content": "",
+        "show_when_empty": false,
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "dv_purity_promise": {
+      "type": "dv-purity-promise",
+      "blocks": {
+        "promise_item_gV8DXQ": {
+          "type": "promise_item",
+          "settings": {
+            "label": "Aromen",
+            "description": "Keine Zusätze",
+            "show_crossed_out": true
+          }
+        },
+        "promise_item_GDanbG": {
+          "type": "promise_item",
+          "settings": {
+            "label": "100% Bio",
+            "description": "Reine Naturkraft",
+            "show_crossed_out": false
+          }
+        },
+        "promise_item_pBxQpC": {
+          "type": "promise_item",
+          "settings": {
+            "label": "Füllstoffe",
+            "description": "ohne zugesetzten Zucker & Salz",
+            "show_crossed_out": true
+          }
+        }
+      },
+      "block_order": [
+        "promise_item_gV8DXQ",
+        "promise_item_GDanbG",
+        "promise_item_pBxQpC"
+      ],
+      "settings": {
+        "title": "Unser Reinheitsversprechen",
+        "tagline": "Ohne Kompromisse. 100% Natur.",
+        "show_when_empty": false,
+        "background_color": "#c17129",
+        "padding_top": 64,
+        "padding_bottom": 56
+      }
+    },
+    "dv_complete_ritual": {
+      "type": "dv-complete-ritual",
+      "settings": {
+        "heading": "Vervollständige dein Ritual",
+        "subheading": "",
+        "view_all_label": "",
+        "view_all_link": "",
+        "button_label": "",
+        "show_empty_message": false,
+        "empty_message": "No products available",
+        "padding_top": 48,
+        "padding_bottom": 0
+      }
+    },
+    "rich_text_meiiUX": {
+      "type": "rich-text",
+      "disabled": true,
+      "name": "Rich text",
+      "settings": {
+        "title": "Welcome",
+        "rich_text": "{{ product.description }}",
+        "page": "",
+        "heading_size": 40,
+        "text_size": 20,
+        "alignment": "a-center",
+        "content_width": 60,
+        "section_padding": "both",
+        "color_scheme": "1"
+      }
+    }
+  },
+  "order": [
+    "dv_main_product",
+    "dv_story_card",
+    "dv_product_benefits",
+    "dv_detail_grid",
+    "dv_recipe_cards",
+    "dv_nutrition_table",
+    "dv_compliance_accordion",
+    "dv_purity_promise",
+    "dv_complete_ritual",
+    "rich_text_meiiUX"
+  ]
+}

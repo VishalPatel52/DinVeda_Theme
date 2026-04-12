@@ -202,7 +202,6 @@
         },
         "ritual_nachmittag": {
           "type": "ritual_card",
-          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/ova_harmony-bio_kr_utermix-ayurveda_kr_utermischung-shatavari_amla_fenchel-rosenbl_ten_kr_uter-kr_utermix_tee-pflanzenmilch_latte_kr_uter-selfcare_ritual_blend.png",
             "phase_label": "BALANCE | AUSGLEICHEN",
@@ -221,7 +220,6 @@
         },
         "ritual_abend": {
           "type": "ritual_card",
-          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/moon_rest-bio_abendmischung-ayurveda_abendritual-ashwagandha_brahmi_shatavari-moon_milk_mix-ceylon_zimt_kardamom-rosenbl_ten_blend-dinveda_koala.png",
             "phase_label": "ABEND | LOSLASSEN",
